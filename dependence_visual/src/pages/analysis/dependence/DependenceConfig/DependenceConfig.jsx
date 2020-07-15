@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { useMount } from "react-use";
 import _ from "lodash";
 import { Card, Drawer } from "antd";
-import ConfigBox from "@/components/ConfigBox";
+import ConfigBox from "components/ConfigBoxHook";
 import {
   queryConfig,
   createConfig,
   updateConfig,
   deleteConfig,
-} from "@/api/dependence/dependenceConfig";
+} from "api/dependence/dependenceConfig";
 import { configType } from "./config";
 
 import "@/mock/config";
