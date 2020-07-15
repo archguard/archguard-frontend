@@ -1,0 +1,8 @@
+.evaluation-item {
+    height: 100px;
+    margin-bottom: 32px;
+    padding: 16px;
+    border-radius: 10px;
+    border-left: 16px solid #ccc;
+    white-space: pre-line;
+}

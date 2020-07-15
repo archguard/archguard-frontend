@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+      - uses: actions/cache@v2
+        with:
+          path: dependence_visual/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+      - name: build
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+          CI: false
+          BUILD_TARGET: zh
+        run: |
+          cd dependence_visual
+          npm install
+          npm run build-zh
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_NAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: archguard/dependence_visual
+          tag_with_ref: true

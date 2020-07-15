@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  dependence_api:
+    image: "dependence_api"
+    container_name: dependence_api
+    depends_on: 
+      - dependence_mysql
+    networks:
+      - dependence_network
+    ports:
+      - "9000:9000"
+
+  dependence_mysql:
+    image: "mysql"
+    container_name: dependence_mysql
+    networks:
+      - dependence_network
+    volumes:
+      - "./MySql/init:/docker-entrypoint-initdb.d/"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: prisma
+
+  dependence_visual:
+    image: "dependence_visual"
+    container_name: dependence_visual
+    depends_on: 
+      - dependence_mysql
+      - dependence_api
+    networks:
+      - dependence_network
+    ports:
+      - "80:80"
+
+networks:
+  dependence_network:

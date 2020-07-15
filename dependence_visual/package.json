@@ -1,0 +1,69 @@
+{
+  "name": "d3ia",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ant-design/icons": "^4.0.6",
+    "@antv/g6": "^3.5.8",
+    "ahooks": "^2.0.1",
+    "antd": "^4.3.4",
+    "axios": "^0.19.2",
+    "classname": "^0.0.0",
+    "codemirror": "^5.53.2",
+    "common-tags": "^1.8.0",
+    "copy-to-clipboard": "^3.3.1",
+    "cytoscape": "^3.15.0",
+    "cytoscape-elk": "^1.1.10",
+    "d3": "latest",
+    "dagre-d3": "0.6.4",
+    "echarts": "^4.7.0",
+    "echarts-for-react": "^2.0.15-beta.1",
+    "font-awesome": "^4.7.0",
+    "markdown-navbar": "^1.4.2",
+    "mockjs": "^1.1.0",
+    "monaco-editor": "^0.20.0",
+    "query-string": "^6.11.0",
+    "react": "^16.13.0",
+    "react-autosuggest": "^9.3.4",
+    "react-codemirror2": "^7.1.0",
+    "react-dom": "^16.6.3",
+    "react-markdown": "^4.3.1",
+    "react-monaco-editor": "^0.34.0",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^3.4.0",
+    "react-use": "^15.3.0",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "xlsx": "^0.16.2"
+  },
+  "scripts": {
+    "start": "react-app-rewired start",
+    "start-zh": "cross-env BUILD_TARGET=zh react-app-rewired start",
+    "build": "react-app-rewired build",
+    "build-zh": "cross-env BUILD_TARGET=zh react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "proxy": "https://localhost:10443",
+  "devDependencies": {
+    "babel-plugin-import": "^1.13.0",
+    "cross-env": "^7.0.2",
+    "customize-cra": "^1.0.0",
+    "less": "^3.11.3",
+    "less-loader": "^6.1.1",
+    "monaco-editor-webpack-plugin": "^1.9.0",
+    "prettier": "^2.0.5",
+    "react-app-rewired": "^2.1.5",
+    "webpack-bundle-analyzer": "^3.7.0"
+  }
+}

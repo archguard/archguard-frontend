@@ -1,0 +1,16 @@
+.scanner-config > * {
+    margin-bottom: 8px;
+}
+
+.tool-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tool-item > * {
+    padding: 8px 8px 8px 0;
+    width: 25%;
+}
+

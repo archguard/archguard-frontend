@@ -1,0 +1,14 @@
+logs
+target
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
+.vscode/
+project/
+**/.idea
+.DS_Store
+**/.DS_Store
+*.iml
