@@ -1,11 +1,16 @@
+import React, { useState } from "react";
 import { Button } from "antd";
-import { queryAllModuleDependence } from "api/module/module";
 import CollapsibleCard from "components/CollapsibleCard";
 import InvokeGraph from "components/InvokeGraph";
-import React, { useState } from "react";
+
 import { couplings } from "../../config";
+import {
+  queryAllModuleDependence,
+  queryAllModuleDubboDependence,
+} from "api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
+import useModuleType from "../../globalStates/useModuleType";
 
 function transformData(data) {
   data.nodes = data.nodes.map((item) => ({
@@ -36,9 +41,16 @@ function ModuleDependenceGraph() {
   const [graphData, setGraphData] = useState();
   const [moduleCoupling] = useModuleCoupling();
   const [selectedNode] = useSelectedNode();
+  const [getModuleType] = useModuleType();
 
   function showAllModuleDependence() {
-    queryAllModuleDependence().then((res) => {
+    const queryMap = {
+      normal: queryAllModuleDependence,
+      dubbo: queryAllModuleDubboDependence,
+      springCloud: queryAllModuleDubboDependence,
+    };
+    const queryMethod = queryMap[getModuleType()];
+    queryMethod().then((res) => {
       setGraphData(transformData(res));
     });
   }

@@ -110,3 +110,11 @@ export function queryAllModuleDependence() {
     method: "GET",
   });
 }
+
+export function queryAllModuleDubboDependence() {
+  return axios({
+    baseURL: baseURL,
+    url: "/logic-modules/graph-dubbo",
+    method: "GET",
+  });
+}
