@@ -1,4 +1,4 @@
-export const scrollToAnchor = (anchorName) => {
+export const scrollToAnchor = (anchorName: string) => {
   if (anchorName) {
     // 找到锚点
     let anchorElement = document.getElementById(anchorName);
