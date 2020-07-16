@@ -72,7 +72,7 @@ export default function ConfigBoxItem(props) {
 
   function onChangeHandle(id, value) {
     formData[id] = value
-    setFormData(formData);
+    setFormData({ ...formData });
   }
 
   function renderColSelect(item) {
