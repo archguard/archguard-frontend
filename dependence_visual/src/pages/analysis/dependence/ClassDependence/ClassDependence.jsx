@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { queryClassDependence } from "@/api/dependence/dependenceGraph";
 import ArgsArea from "@/components/ArgsArea";
 import InvokeGraph from "@/components/InvokeGraph";
-import { formItems, buttons } from "./config";
-import { queryClassDependence } from "@/api/dependence/dependenceGraph";
+import React, { useEffect, useState } from "react";
+import useUrlQuery from "../../../../utils/hooks/use-url-query";
+import { buttons, formItems } from "./config";
 
-function ClassDependence(props) {
-  const { query } = props;
+function ClassDependence() {
+  const query = useUrlQuery();
 
   const [graphData, setGraphData] = useState({});
   const [className, setClassName] = useState("");
@@ -65,4 +66,4 @@ function ClassDependence(props) {
   );
 }
 
-export default ClassDependence
+export default ClassDependence;

@@ -1,30 +1,26 @@
-import React, { useState } from "react";
-import { Tabs } from "antd";
-import queryString from "query-string";
+import { FEATURES, getFeature } from "@/config/buildTargets";
 import SettingFilled from "@ant-design/icons/SettingFilled";
-
-import "./index.css";
-
-import MethodDependence from "./MethodDependence";
+import { Tabs } from "antd";
+import React, { useState } from "react";
+import { useHistory, useParams } from "umi";
 import ClassDependence from "./ClassDependence";
-import PackageDependence from "./PackageDependence";
-import ModuleDependence from "./ModuleDependence";
 import DependenceConfig from "./DependenceConfig";
 import DependenceScanner from "./DependenceScanner";
+import "./index.css";
+import MethodDependence from "./MethodDependence";
+import ModuleDependence from "./ModuleDependence";
+import PackageDependence from "./PackageDependence";
 
-import { getFeature, FEATURES } from "@/config/buildTargets";
-
-function Dependence(props) {
-  const { location, match, history } = props;
-
-  const query = queryString.parse(location.search);
+export default function Dependence() {
+  const history = useHistory();
+  const { type } = useParams();
 
   const [configVisible, setConfigVisible] = useState(false);
 
   return (
     <div>
       <Tabs
-        activeKey={match.params.type}
+        activeKey={type}
         tabBarExtraContent={
           <div className="dependence-extra-content">
             {getFeature(FEATURES.CODE_SCANNER) && <DependenceScanner />}
@@ -40,15 +36,13 @@ function Dependence(props) {
           <PackageDependence />
         </Tabs.TabPane>
         <Tabs.TabPane tab="class" key="class">
-          <ClassDependence query={query} />
+          <ClassDependence />
         </Tabs.TabPane>
         <Tabs.TabPane tab="method" key="method">
-          <MethodDependence query={query} />
+          <MethodDependence />
         </Tabs.TabPane>
       </Tabs>
       <DependenceConfig visible={configVisible} hide={() => setConfigVisible(false)} />
     </div>
   );
 }
-
-export default Dependence;
