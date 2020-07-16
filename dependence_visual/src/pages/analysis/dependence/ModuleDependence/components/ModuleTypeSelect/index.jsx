@@ -7,8 +7,7 @@ import "./index.less";
 
 const { Option } = Select;
 export default function ModuleTypeSelect() {
-  const [getModuleType, setModuleType] = useModuleType();
-  const moduleType = getModuleType();
+  const [moduleType, setModuleType] = useModuleType();
   return (
     <Form.Item className="module-type-select" label="模块类型">
       <Select value={moduleType} onChange={setModuleType}>

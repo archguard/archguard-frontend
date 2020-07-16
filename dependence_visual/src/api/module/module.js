@@ -103,7 +103,7 @@ export function reverseAllModules() {
   });
 }
 
-export function queryAllModuleDependence() {
+export function queryAllModuleDependence(moduleType) {
   return axios({
     baseURL: baseURL,
     url: "/logic-modules/graph",
@@ -117,4 +117,14 @@ export function queryAllModuleDubboDependence() {
     url: "/logic-modules/graph-dubbo",
     method: "GET",
   });
+}
+
+const queryMap = {
+  normal: queryAllModuleDependence,
+  dubbo: queryAllModuleDubboDependence,
+  springCloud: queryAllModuleDubboDependence, // TODO replace it by spring cloud interface
+};
+export function queryAllModuleDependenceByType(moduleType) {
+  const queryMethod = queryMap[moduleType];
+  return queryMethod();
 }
