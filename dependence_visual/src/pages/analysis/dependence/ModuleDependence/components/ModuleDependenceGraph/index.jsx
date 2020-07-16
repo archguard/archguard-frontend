@@ -3,7 +3,7 @@ import { Button } from "antd";
 import CollapsibleCard from "@/components/CollapsibleCard";
 import InvokeGraph from "@/components/InvokeGraph";
 import { couplings } from "../../config";
-import { queryAllModuleDependenceByType } from "api/module/module";
+import { queryAllModuleDependenceByType } from "@/api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
 import useModuleType from "../../globalStates/useModuleType";
