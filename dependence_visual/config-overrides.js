@@ -1,8 +1,9 @@
 const webpack = require("webpack");
+const rewireTypescript = require("react-app-rewire-typescript");
 const { override, fixBabelImports, addLessLoader } = require("customize-cra");
 
 // const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const addMyPlugin = (config) => {
+const addMyPlugin = (config, env) => {
   config.plugins.push(
     new webpack.EnvironmentPlugin(["NODE_ENV", "BUILD_TARGET"])
   );
@@ -21,5 +22,6 @@ module.exports = override(
       javascriptEnabled: true,
     },
   }),
-  addMyPlugin
+  addMyPlugin,
+  // rewireTypescript
 );

@@ -1,6 +1,8 @@
 import axios from "axios";
 import { notification } from "antd";
-import Loading from "components/Loading";
+
+// TODO: 替换redux
+import Loading from "../components/Loading";
 
 const instance = axios.create({
   baseURL: "",
@@ -11,8 +13,7 @@ const instance = axios.create({
 const err = (error) => {
   Loading.reduceCount();
   const message =
-    (error.response && error.response.data && error.response.data.message) ||
-    error.message;
+    (error.response && error.response.data && error.response.data.message) || error.message;
 
   notification.error({
     message: message,

@@ -4,19 +4,11 @@ import GraphOperation from "./components/GraphOperation";
 import { initCytoscape, drawByData, showHighlightBrachNode } from "./drawGraph";
 import { transform } from "./transform";
 import { filterDataWithConfig } from "../utils";
-import { scrollToAnchor } from "utils/anchor";
+import { scrollToAnchor } from "@/utils/anchor";
 import FullscreenContainer from "../../FullscreenContainer";
 
 export default function Graph(props) {
-  const {
-    id,
-    data,
-    title,
-    configs,
-    measurements,
-    selectedNode,
-    nodeLabel,
-  } = props;
+  const { id, data, title, configs, measurements, selectedNode, nodeLabel } = props;
 
   const [cy, setCy] = useState();
   const [graphLayout, setGraphLayout] = useState({
@@ -32,12 +24,7 @@ export default function Graph(props) {
   }, []);
 
   useEffect(() => {
-    drawByData(
-      cy,
-      transform(filterDataWithConfig(data, configs)),
-      graphLayout,
-      title
-    );
+    drawByData(cy, transform(filterDataWithConfig(data, configs)), graphLayout, title);
   }, [data, title, configs]);
 
   useEffect(() => {

@@ -38,12 +38,13 @@
     "xlsx": "^0.16.2"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "start-zh": "cross-env BUILD_TARGET=zh react-app-rewired start",
-    "build": "react-app-rewired build",
-    "build-zh": "cross-env BUILD_TARGET=zh react-app-rewired build",
-    "test": "react-app-rewired test",
-    "eject": "react-scripts eject"
+    "start": "umi dev",
+    "start-zh": "cross-env BUILD_TARGET=zh umi dev",
+    "build": "umi build",
+    "build-zh": "cross-env BUILD_TARGET=zh umi build",
+    "test": "umi test",
+    "lint": "eslint {src,mock,tests}/**/*.{ts,tsx} --fix",
+    "precommit": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -56,14 +57,38 @@
   ],
   "proxy": "https://localhost:10443",
   "devDependencies": {
+    "@types/jest": "^26.0.4",
+    "@types/react": "^16.9.43",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-test-renderer": "^16.9.2",
+    "@umijs/preset-react": "^1.5.17",
+    "babel-eslint": "^10.1.0",
     "babel-plugin-import": "^1.13.0",
     "cross-env": "^7.0.2",
-    "customize-cra": "^1.0.0",
+    "eslint": "^7.4.0",
+    "eslint-config-umi": "^1.6.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-react": "^7.20.3",
+    "husky": "^4.2.5",
     "less": "^3.11.3",
     "less-loader": "^6.1.1",
+    "lint-staged": "^10.2.11",
     "monaco-editor-webpack-plugin": "^1.9.0",
     "prettier": "^2.0.5",
-    "react-app-rewired": "^2.1.5",
+    "react-test-renderer": "^16.13.1",
+    "umi": "^3.2.9",
     "webpack-bundle-analyzer": "^3.7.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }

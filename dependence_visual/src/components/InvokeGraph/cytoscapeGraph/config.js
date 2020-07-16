@@ -1,4 +1,4 @@
-import { lightenDarkenColor } from "utils/transformColor";
+import { lightenDarkenColor } from "@/utils/transformColor";
 
 const defaultNodeColor = "#808080";
 const defaultEdgeColor = "#cccccc";

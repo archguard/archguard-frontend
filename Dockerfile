@@ -4,7 +4,7 @@ FROM tiangolo/node-frontend:10 as build-stage
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:1.15
 
-COPY ./dependence_visual/build/ /usr/share/nginx/html
+COPY ./dependence_visual/dist/ /usr/share/nginx/html
 
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/pass_file /etc/nginx/pass_file
