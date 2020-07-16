@@ -3,10 +3,9 @@ import ArgsArea from "@/components/ArgsArea";
 import InvokeGraph from "@/components/InvokeGraph";
 import { formItems, buttons } from "./config";
 import { queryClassDependence } from "@/api/dependence/dependenceGraph";
-import { connect } from "react-redux";
 
 function ClassDependence(props) {
-  const { query, configs } = props;
+  const { query } = props;
 
   const [graphData, setGraphData] = useState({});
   const [className, setClassName] = useState("");
@@ -47,7 +46,6 @@ function ClassDependence(props) {
         id="classDependenceGraph"
         data={graphData}
         title={className}
-        configs={configs}
         nodeLabel={{
           placeholder: "类名显示",
           options: [
@@ -67,8 +65,4 @@ function ClassDependence(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  configs: state.dependence.config,
-});
-
-export default connect(mapStateToProps)(ClassDependence);
+export default ClassDependence

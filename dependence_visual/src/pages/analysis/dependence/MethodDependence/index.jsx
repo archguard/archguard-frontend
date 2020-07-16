@@ -3,10 +3,9 @@ import ArgsArea from "@/components/ArgsArea";
 import InvokeGraph from "@/components/InvokeGraph";
 import { queryMethodDependence } from "@/api/dependence/dependenceGraph";
 import { formItems, buttons } from "./config";
-import { connect } from "react-redux";
 
 function MethodDependence(props) {
-  const { query, configs } = props;
+  const { query } = props;
 
   const [graphData, setGraphData] = useState({});
   const [className, setClassName] = useState("");
@@ -50,7 +49,6 @@ function MethodDependence(props) {
           id="methodDependenceGraph"
           data={graphData}
           title={className + "." + methodName}
-          configs={configs}
           nodeLabel={{
             placeholder: "方法名显示",
             options: [
@@ -76,8 +74,4 @@ function MethodDependence(props) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  configs: state.dependence.config,
-});
-
-export default connect(mapStateToProps)(MethodDependence);
+export default MethodDependence;
