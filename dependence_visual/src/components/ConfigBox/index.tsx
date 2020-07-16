@@ -1,6 +1,6 @@
+import { Button, Col, notification, Row } from "antd";
 import React from "react";
-import { Button, notification, Row, Col } from "antd";
-import ConfigItem from "./components/ConfigItem";
+import ConfigItem from "./components/configItem";
 import "./index.css";
 
 export default class ConfigBox extends React.Component {
