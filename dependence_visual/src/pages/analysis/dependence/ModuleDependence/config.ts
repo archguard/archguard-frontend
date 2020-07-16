@@ -1,4 +1,9 @@
-export const couplings = [
+export type Coupling = {
+  label: string;
+  value: string;
+  introduction: string;
+};
+export const couplings: Array<Coupling> = [
   {
     label: "OCA",
     value: "outerModuleCouplingAverage",
@@ -41,9 +46,20 @@ export const couplings = [
   },
 ];
 
-export const defaultModuleType = "normal";
-export const moduleTypes = [
-  { label: "常规", value: "normal" },
-  { label: "Dubbo", value: "dubbo" },
-  { label: "SpringCloud", value: "springCloud" },
+export enum ModuleType {
+  NORMAL = "normal",
+  DUBBO = "dubbo",
+  SPRINGCLOUD = "springCloud",
+}
+
+export type ModuleItemType = {
+  label: string;
+  value: ModuleType;
+};
+
+export const defaultModuleType: ModuleType = ModuleType.NORMAL;
+export const moduleTypes: Array<ModuleItemType> = [
+  { label: "常规", value: ModuleType.NORMAL },
+  { label: "Dubbo", value: ModuleType.DUBBO },
+  { label: "SpringCloud", value: ModuleType.SPRINGCLOUD },
 ];

@@ -1,6 +1,7 @@
 import axios from "../axios";
 import _ from "lodash";
 import { baseURL } from "./config";
+import { ModuleType } from "../../pages/analysis/dependence/ModuleDependence/config";
 
 const subUrl = "/logic-modules";
 
@@ -12,7 +13,7 @@ export function queryModule() {
   }).then((res) => _.orderBy(res, ["status", "name"], ["desc", "asc"]));
 }
 
-export function deleteModule(parameter) {
+export function deleteModule(parameter: {id: string}) {
   return axios({
     baseURL: baseURL,
     url: subUrl + "/" + parameter.id,
@@ -20,7 +21,7 @@ export function deleteModule(parameter) {
   });
 }
 
-export function updateModule(parameter) {
+export function updateModule(parameter: {id: string}) {
   return axios({
     baseURL: baseURL,
     url: subUrl + "/" + parameter.id,
@@ -29,7 +30,7 @@ export function updateModule(parameter) {
   });
 }
 
-export function createModule(parameter) {
+export function createModule(parameter: {}) {
   return axios({
     baseURL: baseURL,
     url: subUrl,
@@ -62,7 +63,7 @@ export function autoDefineModuleWithInterface() {
   });
 }
 
-export function queryModuleDependencies(parameter) {
+export function queryModuleDependencies(parameter: {}) {
   return axios({
     baseURL: baseURL,
     url: subUrl + "/dependencies",
@@ -103,7 +104,7 @@ export function reverseAllModules() {
   });
 }
 
-export function queryAllModuleDependence(moduleType) {
+export function queryAllModuleDependence() {
   return axios({
     baseURL: baseURL,
     url: "/logic-modules/graph",
@@ -118,13 +119,12 @@ export function queryAllModuleDubboDependence() {
     method: "GET",
   });
 }
-
-const queryMap = {
-  normal: queryAllModuleDependence,
-  dubbo: queryAllModuleDubboDependence,
-  springCloud: queryAllModuleDubboDependence, // TODO replace it by spring cloud interface
+const queryMap:{[key in ModuleType]: Function} = {
+  [ModuleType.NORMAL]: queryAllModuleDependence,
+  [ModuleType.DUBBO]: queryAllModuleDubboDependence,
+  [ModuleType.SPRINGCLOUD]: queryAllModuleDubboDependence,
 };
-export function queryAllModuleDependenceByType(moduleType) {
+export function queryAllModuleDependenceByType(moduleType: ModuleType) {
   const queryMethod = queryMap[moduleType];
   return queryMethod();
 }
