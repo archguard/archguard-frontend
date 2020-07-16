@@ -31,7 +31,7 @@ function Dependence(props) {
             <SettingFilled onClick={() => setConfigVisible(true)} />
           </div>
         }
-        onChange={(activeKey) => history.replace("/dependence/" + activeKey)}
+        onChange={(activeKey) => history.replace("/analysis/dependence/" + activeKey)}
       >
         <Tabs.TabPane tab="module" key="module">
           <ModuleDependence />
