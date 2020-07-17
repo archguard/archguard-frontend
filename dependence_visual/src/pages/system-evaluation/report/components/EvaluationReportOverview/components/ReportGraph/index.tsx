@@ -27,9 +27,19 @@ const colors = [
   "#c4ccd3",
 ];
 
-export default function ReportGraph(props) {
-  let data = props.data || [];
-  data = transformData(data);
+export type Dimension = {
+  name: string;
+reportDms: {
+  [key: string]: string
+}
+}
+
+interface ReportGraphPops {
+  dimensions: Dimension[]
+}
+
+export default function ReportGraph({dimensions = []}: ReportGraphPops) {
+  const data = transformData(dimensions);
   const states = getStates(data);
   data.forEach((item) => (item.color = colors[states.indexOf(item.state)]));
   const option = setOption(data);
@@ -38,11 +48,11 @@ export default function ReportGraph(props) {
       <div style={{ textAlign: "center" }}>
         <Space>
           {states.map((item, index) => (
-            <Badge color={colors[index]} text={item} key={item}/>
-          ))}
+              <Badge color={colors[index]} text={item} key={item}/>
+        ))}
         </Space>
       </div>
       <ReactEcharts echarts={echarts} option={option} />
     </div>
-  );
+);
 }

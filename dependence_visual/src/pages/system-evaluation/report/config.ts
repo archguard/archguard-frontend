@@ -30,11 +30,14 @@ export const map = {
   LatestModuleInstability: "热点模块不稳定性",
 };
 
-const transformedMap = {};
+export type EvaludationIndexType = typeof map;
+export type EvaludationKeys = keyof EvaludationIndexType;
+
+const transformedMap: { [key: string]: string } = {};
 for (let key in map) {
-  transformedMap[key.toLowerCase()] = map[key];
+  transformedMap[key.toLowerCase()] = map[key as EvaludationKeys];
 }
 
-export function mapToLabel(s) {
+export function mapToLabel(s: string) {
   return transformedMap[s.toLowerCase()] || s;
 }

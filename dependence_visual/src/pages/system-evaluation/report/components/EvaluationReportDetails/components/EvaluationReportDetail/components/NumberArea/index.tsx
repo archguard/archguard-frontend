@@ -1,8 +1,11 @@
 import React from "react";
 import { Row, Col, Card, Statistic } from "antd";
 
-export default function NumberArea(props) {
-  const data = props.data;
+type NumberItem = {
+  type: string;
+  data: string;
+};
+export default function NumberArea({ data }: { data: NumberItem[] }) {
   return (
     <Row gutter={16}>
       {data.map((item, index) => {

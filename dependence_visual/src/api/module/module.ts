@@ -1,7 +1,7 @@
 import axios from "../axios";
 import _ from "lodash";
 import { baseURL } from "./config";
-import { ModuleType } from "../../pages/analysis/dependence/ModuleDependence/config";
+import { ModuleType } from "@/pages/analysis/dependence/ModuleDependence/config";
 
 const subUrl = "/logic-modules";
 
@@ -13,7 +13,7 @@ export function queryModule() {
   }).then((res) => _.orderBy(res, ["status", "name"], ["desc", "asc"]));
 }
 
-export function deleteModule(parameter: {id: string}) {
+export function deleteModule(parameter: { id: string }) {
   return axios({
     baseURL: baseURL,
     url: subUrl + "/" + parameter.id,
@@ -21,7 +21,7 @@ export function deleteModule(parameter: {id: string}) {
   });
 }
 
-export function updateModule(parameter: {id: string}) {
+export function updateModule(parameter: { id: string }) {
   return axios({
     baseURL: baseURL,
     url: subUrl + "/" + parameter.id,
@@ -119,7 +119,7 @@ export function queryAllModuleDubboDependence() {
     method: "GET",
   });
 }
-const queryMap:{[key in ModuleType]: Function} = {
+const queryMap: { [key in ModuleType]: Function } = {
   [ModuleType.NORMAL]: queryAllModuleDependence,
   [ModuleType.DUBBO]: queryAllModuleDubboDependence,
   [ModuleType.SPRINGCLOUD]: queryAllModuleDubboDependence,
