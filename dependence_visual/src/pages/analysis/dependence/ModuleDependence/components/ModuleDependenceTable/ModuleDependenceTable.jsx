@@ -24,6 +24,11 @@ function filterData(data, dataIndex, value, matchType) {
   }
 }
 
+function getRowKey(item) {
+  const { callee, calleeClass, calleeMethod, caller, callerClass, callerMethod } = item;
+  return `${caller}-${callerClass}-${callerMethod}-${callee}-${calleeClass}-${calleeMethod}`;
+}
+
 const defaultFormData = {
   matchType: "fuzz",
   dependenceType: "callerClass",
@@ -62,7 +67,7 @@ export default function ModuleDependence(props) {
     <CollapsibleCard title="模块间函数调用">
       <div key="module-function-invoke">
         <ArgsArea formItems={formItems} buttons={buttons} defaultFormData={defaultFormData} />
-        <Table columns={columns} dataSource={tableData} bordered />
+        <Table columns={columns} dataSource={tableData} bordered rowKey={getRowKey} />
       </div>
     </CollapsibleCard>
   );
