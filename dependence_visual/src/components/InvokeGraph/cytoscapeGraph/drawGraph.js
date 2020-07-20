@@ -17,15 +17,20 @@ cytoscape.use(elk);
 export function initCytoscape(id = "cy", onEvent = {}) {
   const cy = cytoscape({
     container: document.getElementById(id),
-    style: [
-      {
+    style: [{
         selector: "node",
-        style: { ...defaultNodeStyle, label: "data(label)" },
+        style: {
+          ...defaultNodeStyle,
+          label: "data(label)"
+        },
       },
 
       {
         selector: "edge",
-        style: { ...defaultEdgeStyle, label: "data(label)" },
+        style: {
+          ...defaultEdgeStyle,
+          label: "data(label)"
+        },
       },
     ],
   });
@@ -58,7 +63,9 @@ export function drawByData(cy, data, layout, title) {
   drawByLayout(cy, layout);
 }
 
-export function drawByLayout(cy, layout = { name: "elk" }) {
+export function drawByLayout(cy, layout = {
+  name: "elk"
+}) {
   cy.layout(layout).run();
 }
 
@@ -115,7 +122,10 @@ function showNodeColorByConfig(nodes) {
   nodes.forEach((e) => {
     const color = e.data("properties").color;
     if (color) {
-      e.style({ "background-color": color, color });
+      e.style({
+        "background-color": color,
+        color
+      });
     }
   });
 }
