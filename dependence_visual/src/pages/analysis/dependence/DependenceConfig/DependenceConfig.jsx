@@ -3,7 +3,7 @@ import { useMount } from "react-use";
 import _ from "lodash";
 import { Card, Drawer, notification } from "antd";
 import ConfigForm from "./ConfigForm";
-import { queryConfig, updateConfiguration } from "@/api/dependence/dependenceConfig";
+import { queryConfig, updateConfig } from '@/api/module/dependenceConfig';
 import { configType } from "./config.ts";
 
 const DependenceConfig = (props) => {
@@ -23,12 +23,13 @@ const DependenceConfig = (props) => {
   const updateConfigData = (data) => {
     const type = Object.keys(data)[0];
 
-    updateConfiguration(type, data[type]).then(() => {
-      notification.success({
-        message: "保存成功",
-      });
-    });
-  };
+    updateConfig(type, data[type])
+      .then(() => {
+        notification.success({
+          message: '保存成功'
+        })
+      })
+  }
 
   return (
     <Drawer title="配置" placement="right" width="50%" visible={visible} onClose={() => hide()}>
