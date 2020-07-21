@@ -17,7 +17,7 @@ const PackageGraph = forwardRef((props, ref) => {
       ref.current = g;
       return g;
     }
-  }, [ref, graphRef]);
+  }, [ref, graphRef.current]);
 
   useEffect(() => {
     if (graph) {
