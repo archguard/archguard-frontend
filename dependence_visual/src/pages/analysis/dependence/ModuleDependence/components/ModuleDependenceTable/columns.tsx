@@ -1,76 +1,53 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+const classColumn = (dataIndex: String) => {
+  const column = {
+    title: "class",
+    dataIndex: [dataIndex, "className"],
+    render: (text: string) => (
+      <Link
+        to={{
+          pathname: "/analysis/dependence/class",
+          search: "className=" + text + "&dependenceType=dependences",
+        }}
+      >
+        {text}
+      </Link>
+    ),
+  };
+  return column;
+};
+
+const methodColumn = (dataIndex: String) => {
+  const column = {
+    title: "method",
+    dataIndex: [dataIndex, "name"],
+    render: (text: string, record: { [x: string]: { [x: string]: string } }) => {
+      const method = dataIndex == "caller" ? record.caller : record.callee
+      return (
+        <Link
+          to={{
+            pathname: "/analysis/dependence/method",
+            search: "className=" + method.className + "&methodName=" + method.name + "&dependenceType=invokes",
+          }}
+        >
+          {text}
+        </Link>
+      );
+    },
+  };
+  return column;
+};
+
 const columns = [
   {
-    title: "callerClass",
-    dataIndex: "callerClass",
-    key: "callerClass",
-    render: (text: string) => (
-      <Link
-        to={{
-          pathname: "/analysis/dependence/class",
-          search: "className=" + text + "&dependenceType=dependences",
-        }}
-      >
-        {text}
-      </Link>
-    ),
+    title: "caller",
+    children: [classColumn("caller"), methodColumn("caller")],
   },
   {
-    title: "callerMethod",
-    dataIndex: "callerMethod",
-    key: "callerMethod",
-    render: (text: string, record: { callerClass: string; callerMethod: string }) => (
-      <Link
-        to={{
-          pathname: "/analysis/dependence/method",
-          search:
-            "className=" +
-            record.callerClass +
-            "&methodName=" +
-            record.callerMethod +
-            "&dependenceType=invokes",
-        }}
-      >
-        {text}
-      </Link>
-    ),
-  },
-  {
-    title: "calleeClass",
-    dataIndex: "calleeClass",
-    key: "calleeClass",
-    render: (text: string) => (
-      <Link
-        to={{
-          pathname: "/analysis/dependence/class",
-          search: "className=" + text + "&dependenceType=dependences",
-        }}
-      >
-        {text}
-      </Link>
-    ),
-  },
-  {
-    title: "calleeMethod",
-    dataIndex: "calleeMethod",
-    key: "calleeMethod",
-    render: (text: string, record: { calleeClass: string; calleeMethod: string }) => (
-      <Link
-        to={{
-          pathname: "/analysis/dependence/method",
-          search:
-            "className=" +
-            record.calleeClass +
-            "&methodName=" +
-            record.calleeMethod +
-            "&dependenceType=invokes",
-        }}
-      >
-        {text}
-      </Link>
-    ),
+    title: "callee",
+    children: [classColumn("callee"), methodColumn("callee")],
   },
 ];
 

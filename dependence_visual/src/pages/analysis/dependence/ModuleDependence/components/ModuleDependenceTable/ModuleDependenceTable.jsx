@@ -25,8 +25,8 @@ function filterData(data, dataIndex, value, matchType) {
 }
 
 function getRowKey(item) {
-  const { callee, calleeClass, calleeMethod, caller, callerClass, callerMethod } = item;
-  return `${caller}-${callerClass}-${callerMethod}-${callee}-${calleeClass}-${calleeMethod}`;
+  const { caller, callee } = item;
+  return `${caller.fullName}-${callee.fullName}`;
 }
 
 const defaultFormData = {
