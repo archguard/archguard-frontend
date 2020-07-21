@@ -1,38 +1,28 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import { Spin } from "antd";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./index.css";
 
-let div = document.createElement("div");
-document.body.appendChild(div);
+let setLoadingCount: Dispatch<SetStateAction<number>>;
 
-class Loading extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loadingCount: 0,
-    };
-  }
+export default function Loading() {
+  const [count, setCount] = useState(0);
 
-  addCount() {
-    const loadingCount = this.state.loadingCount + 1;
-    console.log("loadingCount", loadingCount);
-    this.setState({ loadingCount });
-  }
+  useEffect(() => {
+    setLoadingCount = setCount;
+  }, [setCount]);
 
-  reduceCount() {
-    const loadingCount = this.state.loadingCount - 1;
-    console.log("loadingCount", loadingCount);
-    this.setState({ loadingCount });
-  }
-
-  render() {
-    return (
-      <div className={this.state.loadingCount ? "loading-warp" : "loading-hidden"}>
-        <Spin size="large" />
-      </div>
-    );
-  }
+  return count > 0 ? (
+    <div className="loading-warp">
+      <Spin size="large" />
+    </div>
+  ) : null;
 }
 
-export default ReactDOM.render(React.createElement(Loading), div);
+export const util = {
+  increase() {
+    setLoadingCount((count: number) => count + 1);
+  },
+  reduce() {
+    setLoadingCount((count: number) => count - 1);
+  },
+};

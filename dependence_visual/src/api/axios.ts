@@ -1,8 +1,6 @@
-import axios from "axios";
 import { notification } from "antd";
-
-// TODO: 替换redux
-import Loading from "../components/Loading";
+import axios from "axios";
+import { util as loadingUtil } from "../components/Loading";
 
 const instance = axios.create({
   baseURL: "",
@@ -10,11 +8,9 @@ const instance = axios.create({
   withCredentials: true, // 允许跨域携带cookie
 });
 
-const err = (error) => {
-  Loading.reduceCount();
-  const message =
-    (error.response && error.response.data && error.response.data.message) || error.message;
-
+const handleError = (error: any) => {
+  loadingUtil.reduce();
+  const message = error?.response?.data?.message ?? error.message;
   notification.error({
     message: message,
     duration: 0,
@@ -24,14 +20,14 @@ const err = (error) => {
 
 // request 拦截器
 instance.interceptors.request.use((config) => {
-  Loading.addCount();
+  loadingUtil.increase();
   return config;
-}, err);
+}, handleError);
 
 // response 拦截器
 instance.interceptors.response.use((response) => {
-  Loading.reduceCount();
+  loadingUtil.reduce();
   return response.data;
-}, err);
+}, handleError);
 
 export default instance;
