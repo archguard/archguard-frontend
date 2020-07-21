@@ -26,7 +26,7 @@ export default function Graph(props) {
 
   useEffect(() => {
     drawByData(cy, transform(filterDataWithConfig(data, configs)), graphLayout, title);
-  }, [data, cy, title, graphLayout, configs]);
+  }, [data, title, graphLayout, configs]);
 
   useEffect(() => {
     if (!selectedNode) return;
