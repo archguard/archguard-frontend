@@ -1,0 +1,23 @@
+.form-items {
+  display: flex;
+  align-items: flex-start;
+
+  &.header {
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  & > div {
+    min-width: calc((100% - 20px - 22px) / 3);
+
+    &:last-of-type > span {
+      min-width: 20px;
+      line-height: 32px;
+      transition: .3s color ease-in-out;
+
+      &:hover {
+        color: #ff4d4f;
+      }
+    }
+  }
+}

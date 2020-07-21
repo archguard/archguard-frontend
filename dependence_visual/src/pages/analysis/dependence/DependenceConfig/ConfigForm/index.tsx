@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, Space, Input, Button, Select } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { FormItem } from './config'
+import './index.less'
 
 const ConfigForm = (props) => {
   const { configType, formItems, data, updateConfig } = props
+  const [isDisabled, setIsDisabled] = useState(true)
   const getDefaultConfigValue = () =>
     formItems.map((item: FormItem) => {
       const obj = {}
@@ -18,7 +20,19 @@ const ConfigForm = (props) => {
       if (!item.type) item.type = configType
       return item
     })
+    setIsDisabled(true)
     return updateConfig(values)
+  }
+  const onFormChange = () => setIsDisabled(false)
+
+  const renderHeader = () => {
+    return (
+      <Space className="form-items header">
+        { formItems.map((item: FormItem) => (
+          <div key={item.id}>{item.label}</div>
+        )) }
+      </Space>
+    )
   }
 
   const renderInputByFormItem = (field, item: FormItem) => {
@@ -44,7 +58,6 @@ const ConfigForm = (props) => {
       >
         <Select
           placeholder={ item.label }
-          style={{ minWidth: "170px" }}
         >
           { item.options.map(item => {
             return (
@@ -59,13 +72,14 @@ const ConfigForm = (props) => {
   }
 
   return (
-    <Form autoComplete="off" initialValues={data} onFinish={onFinish}>
+    <Form autoComplete="off" initialValues={data} onFinish={onFinish} onFieldsChange={onFormChange}>
+      {renderHeader()}
       <Form.List name={configType}>
         {(fields, { add, remove }) => {
           return (
             <div>
               {fields.map(field => (
-                <Space key={field.name} align="baseline">
+                <Space key={field.name} className="form-items">
                   { formItems.map(item => item.type === 'select' ?
                       renderSelectByFormItem(field, item) :
                       renderInputByFormItem(field, item))}
@@ -85,7 +99,7 @@ const ConfigForm = (props) => {
         }}
       </Form.List>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" disabled={isDisabled}>
           保存
         </Button>
       </Form.Item>

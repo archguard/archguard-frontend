@@ -26,7 +26,6 @@ export const configType: ConfigType[] = [
       { id: "order", label: "应用顺序", type: "number", defaultValue: 1, },
       {
         id: "value", label: "颜色", type: "color", defaultValue: "#ffffff",
-        style: { width: "100px", transform: "translateY(2px)" }
       }
     ]
   },

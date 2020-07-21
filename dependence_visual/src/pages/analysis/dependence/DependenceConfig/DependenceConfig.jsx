@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { useMount } from "react-use";
 import _ from "lodash";
 import { Card, Drawer, notification } from "antd";
-import ConfigForm from "./ConfigForm";
+import ConfigForm from "./ConfigForm/index";
 import { queryConfig, updateConfig } from '@/api/module/dependenceConfig';
-import { configType } from "./config.ts";
+import { configType } from "./ConfigForm/config.ts";
 
 const DependenceConfig = (props) => {
   const { visible, hide } = props;
