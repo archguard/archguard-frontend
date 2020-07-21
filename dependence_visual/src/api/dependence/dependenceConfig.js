@@ -42,3 +42,12 @@ export function refreshConfig() {
     method: "GET"
   });
 }
+
+export function updateConfiguration(type, parameter) {
+  return axios({
+    baseURL: baseURL,
+    url: `/configures/types/${type}`,
+    method: 'POST',
+    data: parameter
+  })
+}
