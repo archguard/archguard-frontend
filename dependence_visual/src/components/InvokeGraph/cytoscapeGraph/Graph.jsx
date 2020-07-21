@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { message } from "antd";
-import GraphOperation from "./components/GraphOperation";
-import { initCytoscape, drawByData, showHighlightBrachNode } from "./drawGraph";
-import { transform } from "./transform";
-import { filterDataWithConfig } from "../utils";
 import { scrollToAnchor } from "@/utils/anchor";
+import { useMount } from "ahooks";
+import { message } from "antd";
+import React, { useEffect, useState } from "react";
 import FullscreenContainer from "../../FullscreenContainer";
+import { filterDataWithConfig } from "../utils";
+import GraphOperation from "./components/GraphOperation";
+import { drawByData, initCytoscape, showHighlightBrachNode } from "./drawGraph";
+import { transform } from "./transform";
 
 export default function Graph(props) {
   const { id, data, title, configs, measurements, selectedNode, nodeLabel } = props;
@@ -18,25 +19,25 @@ export default function Graph(props) {
   });
 
   const onEvent = { cxttap: () => message.success("复制成功") };
-  useEffect(() => {
+  useMount(() => {
     console.log("init cy");
     setCy(initCytoscape(id, onEvent));
   }, []);
 
   useEffect(() => {
     drawByData(cy, transform(filterDataWithConfig(data, configs)), graphLayout, title);
-  }, [data, title, configs]);
+  }, [data, cy, title, graphLayout, configs]);
 
   useEffect(() => {
     if (!selectedNode) return;
     const data = selectedNode.data;
     const key = selectedNode.key || "id";
     if (!data) return;
-    const selectedElement = cy.filter((e) => e.data(key) == data)[0];
+    const selectedElement = cy.filter((e) => e.data(key) === data)[0];
     if (!selectedElement) return;
     showHighlightBrachNode(cy, selectedElement);
     scrollToAnchor(id);
-  }, [selectedNode]);
+  }, [selectedNode, cy, id]);
 
   return (
     <FullscreenContainer

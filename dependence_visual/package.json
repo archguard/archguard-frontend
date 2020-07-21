@@ -43,8 +43,8 @@
     "build": "umi build",
     "build-zh": "cross-env BUILD_TARGET=zh umi build",
     "test": "umi test",
-    "lint": "eslint {src,mock,tests}/**/*.{ts,tsx} --fix",
-    "precommit": "lint-staged"
+    "lint": "umi-lint ./src --eslint.ext='ts,tsx,js,jsx'",
+    "precommit": "umi-lint --staged --eslint.ext='ts,tsx,js,jsx' --stylelint --prettier --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,7 +55,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "https://localhost:10443",
   "devDependencies": {
     "@types/echarts": "^4.6.3",
     "@types/jest": "^26.0.4",
@@ -72,6 +71,7 @@
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
     "husky": "^4.2.5",
     "less": "^3.12.0",
     "less-loader": "^6.2.0",
@@ -79,17 +79,9 @@
     "monaco-editor-webpack-plugin": "^1.9.0",
     "prettier": "^2.0.5",
     "react-test-renderer": "^16.13.1",
+    "typescript": "^3.9.7",
     "umi": "^3.2.10",
+    "umi-lint": "^2.0.2",
     "webpack-bundle-analyzer": "^3.8.0"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.{js,jsx}": [
-      "eslint --fix",
-      "git add"
-    ]
   }
 }

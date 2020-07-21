@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { forwardRef, useEffect, useMemo, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useMeasure } from "react-use";
 import "./packageGraph.less";
 import "./packageGraphExtends";
 import { createGraph } from "./packageGraphUtil";
-import { forwardRef } from "react";
 
 const PackageGraph = forwardRef((props, ref) => {
   const { data } = props;
@@ -18,13 +17,13 @@ const PackageGraph = forwardRef((props, ref) => {
       ref.current = g;
       return g;
     }
-  }, [graphRef.current]);
+  }, [ref, graphRef]);
 
   useEffect(() => {
     if (graph) {
       graph.changeSize(width, height);
     }
-  }, [width, height]);
+  }, [graph, width, height]);
 
   useEffect(() => {
     if (graph) {
@@ -33,11 +32,7 @@ const PackageGraph = forwardRef((props, ref) => {
   }, [data, graph]);
 
   return (
-    <div
-      ref={containerRef}
-      className="graph-container"
-      style={{ width: "100%", height: "100%" }}
-    >
+    <div ref={containerRef} className="graph-container" style={{ width: "100%", height: "100%" }}>
       <div ref={graphRef} />
     </div>
   );

@@ -17,11 +17,12 @@ cytoscape.use(elk);
 export function initCytoscape(id = "cy", onEvent = {}) {
   const cy = cytoscape({
     container: document.getElementById(id),
-    style: [{
+    style: [
+      {
         selector: "node",
         style: {
           ...defaultNodeStyle,
-          label: "data(label)"
+          label: "data(label)",
         },
       },
 
@@ -29,7 +30,7 @@ export function initCytoscape(id = "cy", onEvent = {}) {
         selector: "edge",
         style: {
           ...defaultEdgeStyle,
-          label: "data(label)"
+          label: "data(label)",
         },
       },
     ],
@@ -63,9 +64,12 @@ export function drawByData(cy, data, layout, title) {
   drawByLayout(cy, layout);
 }
 
-export function drawByLayout(cy, layout = {
-  name: "elk"
-}) {
+export function drawByLayout(
+  cy,
+  layout = {
+    name: "elk",
+  },
+) {
   cy.layout(layout).run();
 }
 
@@ -109,7 +113,7 @@ export function showLoop(cy, path) {
   setStyle(elements, hiddenNodeStyle, hiddenEdgeStyle);
   cy.edges().forEach((e) => {
     for (let i = 1; i < path.length; i++) {
-      if (e.source().id() == path[i - 1] && e.target().id() == path[i]) {
+      if (e.source().id() === path[i - 1] && e.target().id() === path[i]) {
         e.style(focusEdgeStyle);
         e.source().style(focusNodeStyle);
         e.target().style(focusNodeStyle);
@@ -124,7 +128,7 @@ function showNodeColorByConfig(nodes) {
     if (color) {
       e.style({
         "background-color": color,
-        color
+        color,
       });
     }
   });
@@ -134,11 +138,7 @@ export function showHighlightBrachNode(cy, node) {
   setHiddenStyle(cy);
   if (!node) return;
   setStyle(node.successors(), highlightBrachNodeStyle, highlightBrachEdgeStyle);
-  setStyle(
-    node.predecessors(),
-    highlightBrachNodeStyle,
-    highlightBrachEdgeStyle
-  );
+  setStyle(node.predecessors(), highlightBrachNodeStyle, highlightBrachEdgeStyle);
   node.style(focusNodeStyle);
 }
 
@@ -146,17 +146,9 @@ function showHighlightBrachEdge(cy, edge) {
   setHiddenStyle(cy);
   if (!edge) return;
   edge.target().style(highlightBrachNodeStyle);
-  setStyle(
-    edge.target().successors(),
-    highlightBrachNodeStyle,
-    highlightBrachEdgeStyle
-  );
+  setStyle(edge.target().successors(), highlightBrachNodeStyle, highlightBrachEdgeStyle);
   edge.source().style(highlightBrachNodeStyle);
-  setStyle(
-    edge.source().predecessors(),
-    highlightBrachNodeStyle,
-    highlightBrachEdgeStyle
-  );
+  setStyle(edge.source().predecessors(), highlightBrachNodeStyle, highlightBrachEdgeStyle);
   edge.style(focusEdgeStyle);
 }
 

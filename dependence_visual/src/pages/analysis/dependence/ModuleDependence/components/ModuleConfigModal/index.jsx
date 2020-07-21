@@ -1,11 +1,9 @@
-import React, { useEffect, useRef } from "react";
-import { Form, Input, Modal, notification, Select } from "antd";
-import "./index.less";
-import { useAsync } from "react-use";
 import { createModule, queryModuleOptions, updateModule } from "@/api/module/module";
+import { Form, Input, Modal, notification } from "antd";
+import React, { useEffect, useRef } from "react";
+import { useAsync } from "react-use";
+import "./index.less";
 import MembersInput from "./MembersInput";
-
-const Option = Select.Option;
 
 function ModuleConfigModal(props) {
   const { visible, onClose, onSuccess, module } = props;

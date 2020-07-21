@@ -1,5 +1,3 @@
-import React, { useMemo, useState } from "react";
-import { Button, notification, Table, Tag, Tooltip } from "antd";
 import {
   autoDefineModule,
   autoDefineModuleWithInterface,
@@ -10,6 +8,7 @@ import {
   showAllModules,
   updateModule,
 } from "@/api/module/module";
+import CollapsibleCard from "@/components/CollapsibleCard";
 import {
   DeleteOutlined,
   EyeInvisibleOutlined,
@@ -17,28 +16,35 @@ import {
   FormOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import "./index.less";
-import ModuleConfigModal from "../ModuleConfigModal";
-import CollapsibleCard from "@/components/CollapsibleCard";
+import { Button, notification, Table, Tag, Tooltip } from "antd";
+import React, { useCallback, useMemo, useState } from "react";
 import useModules from "../../../states/useModules";
+import ModuleConfigModal from "../ModuleConfigModal";
+import "./index.less";
 
 export default function ModuleConfig(props) {
   const [{ loading, value = [] }, load] = useModules();
   const [editingModule, setEditingModule] = useState();
 
-  const removeModule = (module) => {
-    deleteModule(module).then(() => {
-      load();
-      notification.success({
-        message: "删除模块成功！",
+  const removeModule = useCallback(
+    (module) => {
+      deleteModule(module).then(() => {
+        load();
+        notification.success({
+          message: "删除模块成功！",
+        });
       });
-    });
-  };
+    },
+    [load],
+  );
 
-  const toggleHiddenModule = (module) => {
-    module.status = module.status === "HIDE" ? "NORMAL" : "HIDE";
-    updateModule(module).then(load);
-  };
+  const toggleHiddenModule = useCallback(
+    (module) => {
+      module.status = module.status === "HIDE" ? "NORMAL" : "HIDE";
+      updateModule(module).then(load);
+    },
+    [load],
+  );
 
   const columns = useMemo(() => {
     return [
@@ -78,7 +84,7 @@ export default function ModuleConfig(props) {
         },
       },
     ];
-  }, [value]);
+  }, [removeModule, toggleHiddenModule]);
 
   const onReverseAll = () => {
     reverseAllModules().then((res) => {

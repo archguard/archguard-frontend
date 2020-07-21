@@ -38,7 +38,7 @@ export default class ConfigItem extends React.Component {
     return (
       <Fragment>
         {formItems.map((item) => {
-          if (item.hidden) return;
+          if (item.hidden) return null;
           if (item.type === "select") {
             return (
               <Col span={item.span} key={item.id}>

@@ -1,12 +1,11 @@
-import React, { useMemo, useState } from "react";
-import { Table, Button } from "antd";
+import { queryModuleDependencies } from "@/api/module/module";
+import ArgsArea from "@/components/ArgsArea";
 import CollapsibleCard from "@/components/CollapsibleCard";
+import { Table } from "antd";
+import React, { useMemo, useState } from "react";
+import useModules from "../../../states/useModules";
 import columns from "./columns";
 import { buildFormItems } from "./config";
-import ArgsArea from "@/components/ArgsArea";
-
-import { queryModuleDependencies } from "@/api/module/module";
-import useModules from "../../../states/useModules";
 
 function filterData(data, dataIndex, value, matchType) {
   if (!value) return data;
@@ -37,6 +36,7 @@ const defaultFormData = {
 export default function ModuleDependence(props) {
   const [tableData, setTableData] = useState([]);
   const [{ value: modules }] = useModules();
+
   const buttons = useMemo(() => {
     return [
       {
@@ -57,7 +57,7 @@ export default function ModuleDependence(props) {
         },
       },
     ];
-  }, [tableData, setTableData]);
+  }, [setTableData]);
 
   const formItems = useMemo(() => {
     return buildFormItems(modules);

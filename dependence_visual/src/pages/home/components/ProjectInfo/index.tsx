@@ -1,14 +1,11 @@
-import React from "react";
 import { Button, Col, Input, notification, Row } from "antd";
-
+import Select from "antd/es/select";
+import React from "react";
 import {
   createProjectInfo,
   queryProjectInfo,
   updateProjectInfo,
 } from "../../../../api/addition/projectInfo";
-import Select from "antd/es/select";
-
-const { TextArea } = Input;
 
 export default class ProjectInfo extends React.Component {
   constructor(props) {

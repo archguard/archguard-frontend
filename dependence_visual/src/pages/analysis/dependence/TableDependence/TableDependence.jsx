@@ -16,7 +16,7 @@ export default function TableDependence() {
     <div>
       <TableGraph data={tableData} />
       <UsedTable data={tableDataWithClass} />
-      <UnusedTable data={tableData.filter((item) => item.used == 0)} />
+      <UnusedTable data={tableData.filter((item) => item.used === 0)} />
     </div>
   );
 }

@@ -24,12 +24,17 @@ const methodColumn = (dataIndex: String) => {
     title: "method",
     dataIndex: [dataIndex, "name"],
     render: (text: string, record: { [x: string]: { [x: string]: string } }) => {
-      const method = dataIndex == "caller" ? record.caller : record.callee
+      const method = dataIndex === "caller" ? record.caller : record.callee;
       return (
         <Link
           to={{
             pathname: "/analysis/dependence/method",
-            search: "className=" + method.className + "&methodName=" + method.name + "&dependenceType=invokes",
+            search:
+              "className=" +
+              method.className +
+              "&methodName=" +
+              method.name +
+              "&dependenceType=invokes",
           }}
         >
           {text}

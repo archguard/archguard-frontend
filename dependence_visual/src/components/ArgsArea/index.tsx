@@ -1,22 +1,22 @@
 import React from "react";
-import {Button, Col, Input, notification, Radio, Row, Select} from "antd";
-import {useControllableValue} from "ahooks";
+import { Button, Col, Input, notification, Radio, Row, Select } from "antd";
+import { useControllableValue } from "ahooks";
 import { useEffect } from "react";
 
 function FormItem(props) {
-  const {item = {}, value, onChange} = props;
+  const { item = {}, value, onChange } = props;
   if (item.type === "select") {
     return (
       <Select
         placeholder={item.label}
         value={value}
         mode={item.mode}
-        style={{width: "100%"}}
+        style={{ width: "100%" }}
         showSearch
-        onChange={value => onChange(item.id, value)}
+        onChange={(value) => onChange(item.id, value)}
         tokenSeparators={item.tokenSeparators}
       >
-        {item.options.map(item => {
+        {item.options.map((item) => {
           return (
             <Select.Option value={item.value} key={item.value}>
               {item.label}
@@ -30,7 +30,7 @@ function FormItem(props) {
       <Radio.Group
         value={value}
         options={item.options}
-        onChange={e => onChange(item.id, e.target.value)}
+        onChange={(e) => onChange(item.id, e.target.value)}
       />
     );
   } else {
@@ -41,75 +41,67 @@ function FormItem(props) {
         type={item.type}
         min={item.min}
         max={item.max}
-        onChange={e => onChange(item.id, e.target.value)}
+        onChange={(e) => onChange(item.id, e.target.value)}
       />
     );
   }
 }
 
 export default function ArgsArea(props) {
-  const {formItems, buttons, defaultFormData} = props;
-  const [value = {}, setValue] = useControllableValue(props, {defaultValue: defaultFormData})
+  const { formItems, buttons, defaultFormData } = props;
+  const [value = {}, setValue] = useControllableValue(props, { defaultValue: defaultFormData });
 
   const onItemValueChange = (id, itemVal) => {
     setValue({
       ...value,
-      [id]: itemVal
-    })
-  }
+      [id]: itemVal,
+    });
+  };
 
   useEffect(() => {
-    setValue(defaultFormData)
-  }, [defaultFormData]);
+    setValue(defaultFormData);
+  }, [defaultFormData, setValue]);
 
   const validateForm = () => {
     for (const item of formItems) {
       if (item.required && !value[item.id]) {
         const message = item.label + "必填";
         notification.warn({
-          message
+          message,
         });
-        return {isValidate: false, message};
+        return { isValidate: false, message };
       }
 
       if (typeof item.validate === "function") {
         const validate = item.validate(value[item.id]);
         if (validate && validate.isValidate === false) {
           notification.warn({
-            message: validate.message
+            message: validate.message,
           });
           return validate;
         }
       }
     }
-    return {isValidate: true, message: ""};
-  }
+    return { isValidate: true, message: "" };
+  };
 
   return (
     <div>
       <Row align="middle">
-        {formItems.map(item => {
+        {formItems.map((item) => {
           return (
-            <Col
-              span={item.span || 8}
-              key={item.id}
-              style={{padding: "8px 8px 8px 0"}}
-            >
-              <FormItem item={item} value={value[item.id]} onChange={onItemValueChange}/>
+            <Col span={item.span || 8} key={item.id} style={{ padding: "8px 8px 8px 0" }}>
+              <FormItem item={item} value={value[item.id]} onChange={onItemValueChange} />
             </Col>
           );
         })}
         {buttons.map((item, index) => {
           return (
-            <Col
-              span={item.span || 8}
-              key={item.id || index}
-              style={{padding: "8px"}}
-            >
+            <Col span={item.span || 8} key={item.id || index} style={{ padding: "8px" }}>
               <Button
                 onClick={() => item.onClick(value, validateForm())}
                 type={item.type}
-                style={{float: item.float}}
+                style={{ float: item.float }}
               >
                 {item.text}
               </Button>
@@ -120,4 +112,3 @@ export default function ArgsArea(props) {
     </div>
   );
 }
-
