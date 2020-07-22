@@ -1,4 +1,10 @@
-export const scanTools = {
+export const scanTools: {
+  [key: string]: {
+    integration: string[];
+    introduction: string;
+    configuration?: string[];
+  };
+} = {
   BadSmell: {
     integration: ["Coca", "DesignateJava"],
     introduction: `检测出代码中的坏味道
