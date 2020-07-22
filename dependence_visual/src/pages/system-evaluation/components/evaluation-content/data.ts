@@ -1,11 +1,17 @@
-export const data = [
+export interface EvaluationContentItemType {
+  title: string;
+  type?: string;
+  detail: string;
+}
+
+export const data: EvaluationContentItemType[] = [
   {
     title: "Tim-To-Market\n市场响应力评估",
     detail:
       "新功能总是延期？或者根本做不了?\n即使是紧急需求，也要等很久才能上生产环境？\n总需要约好几个团队排期更改，测试，上线？",
   },
   {
-    type:"QUALITY",
+    type: "QUALITY",
     title: "Quality\n质量评估",
     detail:
       "测试翻修率高？\n总是出现线上失败，需要进行hot fix？\n线上功能出错频率高？老是被客户投诉？",

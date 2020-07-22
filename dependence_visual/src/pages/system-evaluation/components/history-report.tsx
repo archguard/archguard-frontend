@@ -1,76 +1,52 @@
-import React from "react";
-import { Divider, Tooltip, Button } from "antd";
-import { withRouter } from "react-router-dom";
-import { queryEvaluationList } from "../../../api/addition/evaluations";
 import SyncOutlined from "@ant-design/icons/SyncOutlined";
+import { Button, Divider, Tooltip } from "antd";
+import React, { useMemo, useState } from "react";
+import { useAsyncFn, useMount } from "react-use";
+import { useHistory } from "umi";
+import { queryEvaluationList } from "../../../api/addition/evaluations";
 
-// import "mock/evaluationReport";
+export default function HistoryReport() {
+  const [showListNum, setShowListNum] = useState(5);
+  const [{ value: data = [] }, load] = useAsyncFn(queryEvaluationList, []);
+  const list = useMemo(() => data.slice(0, showListNum), [data]);
+  const history = useHistory();
 
-class HistoryReport extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      showListNum: 5,
-    };
-  }
+  useMount(load);
 
-  componentDidMount() {
-    this.updateEvaluationList();
-  }
-
-  updateEvaluationList() {
-    queryEvaluationList().then((res) => {
-      this.setState({ data: res });
-    });
-  }
-
-  renderShowMore() {
-    if (this.state.data.length <= this.state.showListNum) return;
-    return (
-      <div style={{ textAlign: "center" }}>
-        <Button
-          type="link"
-          onClick={() => this.setState({ showListNum: this.state.showListNum + 5 })}
-        >
-          查看更多
-        </Button>
+  return (
+    <div>
+      <h2>
+        历史评估报告&nbsp;
+        <Tooltip title="刷新">
+          <SyncOutlined onClick={load} />
+        </Tooltip>
+      </h2>
+      <Divider />
+      <div
+        style={{
+          backgroundColor: "rgba(176,180,180,0.09)",
+          padding: "16px",
+        }}
+      >
+        {list.map((item, index) => (
+          <div
+            key={index}
+            style={{ cursor: "pointer" }}
+            onClick={() => history.push(`/system-evaluation/report/${item.id}`)}
+          >
+            <h3>{item.name}</h3>
+            <p>{item.createdDate}</p>
+          </div>
+        ))}
       </div>
-    );
-  }
 
-  render() {
-    const data = this.state.data.slice(0, this.state.showListNum);
-    return (
-      <div>
-        <h2>
-          历史评估报告{" "}
-          <Tooltip title="刷新">
-            <SyncOutlined onClick={() => this.updateEvaluationList()} />
-          </Tooltip>
-        </h2>
-        <Divider></Divider>
-        <div
-          style={{
-            backgroundColor: "rgba(176,180,180,0.09)",
-            padding: "16px",
-          }}
-        >
-          {data.map((item, index) => (
-            <div
-              key={index}
-              style={{ cursor: "pointer" }}
-              onClick={() => this.props.history.push("/system-evaluation/report/" + item.id)}
-            >
-              <h3>{item.name}</h3>
-              <p>{item.createdDate}</p>
-            </div>
-          ))}
+      {data.length > showListNum && (
+        <div style={{ textAlign: "center" }}>
+          <Button type="link" onClick={() => setShowListNum((count) => count + 5)}>
+            查看更多
+          </Button>
         </div>
-        {this.renderShowMore()}
-      </div>
-    );
-  }
+      )}
+    </div>
+  );
 }
-
-export default withRouter(HistoryReport);

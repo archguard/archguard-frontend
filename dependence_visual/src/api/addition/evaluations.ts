@@ -1,7 +1,8 @@
+import { SystemEvaluationHistoryType } from "../../models/system-evaluation";
 import axios from "../axios";
 import { baseURL } from "./config";
 export function queryEvaluationList() {
-  return axios.get(`${baseURL}/evaluations`);
+  return axios.get<{}, SystemEvaluationHistoryType[]>(`${baseURL}/evaluations`);
 }
 
 export function queryEvaluation<T>(id: string) {
