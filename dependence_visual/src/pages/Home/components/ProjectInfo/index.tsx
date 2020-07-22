@@ -142,6 +142,7 @@ export default class ProjectInfo extends React.Component {
           <div className="content">
             <Input
               placeholder="密码"
+              type="password"
               value={this.state.password}
               onChange={(e) => this.onChang("password", e.target.value)}
             ></Input>
