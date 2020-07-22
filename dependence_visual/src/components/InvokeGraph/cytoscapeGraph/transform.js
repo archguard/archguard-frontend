@@ -9,6 +9,7 @@ export function transform(data) {
         label: item.title,
         fullName: item.title,
         properties: item.properties,
+        children: item.children
       },
     };
   });
@@ -21,5 +22,8 @@ export function transform(data) {
   }));
 
   console.log(nodes);
-  return { nodes, edges };
+  return {
+    nodes,
+    edges
+  };
 }

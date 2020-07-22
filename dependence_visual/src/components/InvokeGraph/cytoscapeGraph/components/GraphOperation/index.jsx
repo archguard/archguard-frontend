@@ -95,8 +95,8 @@ export default function GraphOperation(props) {
         options={loopPaths.map((pathNodeIds, index) => {
           const firstNodeId = pathNodeIds[pathNodeIds.length - 1];
           const lastNodeId = pathNodeIds[0];
-          const firstNode = graphNodeMap[firstNodeId];
-          const lastNode = graphNodeMap[lastNodeId];
+          const firstNode = graphNodeMap[firstNodeId] || {};
+          const lastNode = graphNodeMap[lastNodeId] || {};
           return {
             label: `循环: ${firstNode.title} -> ${lastNode.title}`,
             value: index,

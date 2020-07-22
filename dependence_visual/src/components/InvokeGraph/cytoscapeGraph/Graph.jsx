@@ -1,12 +1,18 @@
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { scrollToAnchor } from "@/utils/anchor";
 import { useMount } from "ahooks";
 import { message } from "antd";
-import React, { useEffect, useState } from "react";
 import FullscreenContainer from "../../FullscreenContainer";
 import { filterDataWithConfig } from "../utils";
 import GraphOperation from "./components/GraphOperation";
 import { drawByData, initCytoscape, showHighlightBrachNode } from "./drawGraph";
 import { transform } from "./transform";
+import {
+  buildDependenceTree,
+  getVisibleTreeNodeByDeep,
+  expandNode,
+  collpaseNode,
+} from "./components/GraphOperation/utils";
 
 export default function Graph(props) {
   const { id, data, title, configs, measurements, selectedNode, nodeLabel } = props;
@@ -18,6 +24,30 @@ export default function Graph(props) {
     fit: true,
   });
 
+  const { dependenceTree, nodeEdges } = useMemo(() => {
+    const dependenceTree = buildDependenceTree(data);
+    const nodeEdges = getVisibleTreeNodeByDeep(dependenceTree, 2);
+    return {
+      dependenceTree,
+      nodeEdges,
+    };
+  }, [data]);
+
+  const onNodeClick = useCallback(
+    (event) => {
+      const node = event.target.data();
+      const { id, children } = node;
+      const hasChild = children && children.length > 0;
+      if (hasChild) {
+        const firstChild = children[0];
+        const isExpand = firstChild.visible;
+        const newNodeEdges = isExpand ? collpaseNode(node, nodeEdges) : expandNode(node, nodeEdges);
+        // drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title);
+      }
+    },
+    [dependenceTree],
+  );
+
   const onEvent = { cxttap: () => message.success("复制成功") };
   useMount(() => {
     console.log("init cy");
@@ -25,8 +55,15 @@ export default function Graph(props) {
   }, []);
 
   useEffect(() => {
-    drawByData(cy, transform(filterDataWithConfig(data, configs)), graphLayout, title);
-  }, [data, title, graphLayout, configs]);
+    console.log("nodeEdges", dependenceTree, nodeEdges);
+    drawByData(cy, transform(filterDataWithConfig(nodeEdges, configs)), graphLayout, title);
+    if (cy) {
+      cy.on("tap", "node", onNodeClick);
+    }
+    return () => {
+      cy && cy.off("tap", "node", onNodeClick);
+    };
+  }, [dependenceTree, title, graphLayout, configs]);
 
   useEffect(() => {
     if (!selectedNode) return;
