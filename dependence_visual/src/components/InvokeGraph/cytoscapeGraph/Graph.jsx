@@ -11,11 +11,12 @@ import {
   buildDependenceTree,
   getVisibleTreeNodeByDeep,
   expandNode,
-  collpaseNode,
+  collapseNode,
+  isExpand,
 } from "./components/GraphOperation/utils";
 
 export default function Graph(props) {
-  const { id, data, title, configs, measurements, selectedNode, nodeLabel } = props;
+  const { id, data, title, configs, measurements, selectedNode, nodeLabel, deep } = props;
 
   const [cy, setCy] = useState();
   const [graphLayout, setGraphLayout] = useState({
@@ -23,29 +24,27 @@ export default function Graph(props) {
     nodeDimensionsIncludeLabels: true,
     fit: true,
   });
+  const [visibleNodeEdges, setNodeEdges] = useState({ nodes: [], edges: [] });
 
-  const { dependenceTree, nodeEdges } = useMemo(() => {
-    const dependenceTree = buildDependenceTree(data);
-    const nodeEdges = getVisibleTreeNodeByDeep(dependenceTree, 2);
-    return {
-      dependenceTree,
-      nodeEdges,
-    };
+  const dependenceTree = useMemo(() => {
+    return buildDependenceTree(data);
   }, [data]);
 
   const onNodeClick = useCallback(
     (event) => {
       const node = event.target.data();
-      const { id, children } = node;
+      const { children } = node;
       const hasChild = children && children.length > 0;
       if (hasChild) {
-        const firstChild = children[0];
-        const isExpand = firstChild.visible;
-        const newNodeEdges = isExpand ? collpaseNode(node, nodeEdges) : expandNode(node, nodeEdges);
-        // drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title);
+        const isNodeExpand = isExpand(node, visibleNodeEdges.edges);
+        const newNodeEdges = isNodeExpand
+          ? collapseNode(node, visibleNodeEdges)
+          : expandNode(node, visibleNodeEdges);
+        setNodeEdges(newNodeEdges);
+        drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title);
       }
     },
-    [dependenceTree],
+    [visibleNodeEdges],
   );
 
   const onEvent = { cxttap: () => message.success("复制成功") };
@@ -55,15 +54,17 @@ export default function Graph(props) {
   }, []);
 
   useEffect(() => {
-    console.log("nodeEdges", dependenceTree, nodeEdges);
-    drawByData(cy, transform(filterDataWithConfig(nodeEdges, configs)), graphLayout, title);
-    if (cy) {
-      cy.on("tap", "node", onNodeClick);
-    }
+    cy && cy.on("tap", "node", onNodeClick);
     return () => {
       cy && cy.off("tap", "node", onNodeClick);
     };
-  }, [dependenceTree, title, graphLayout, configs]);
+  }, [visibleNodeEdges]);
+
+  useEffect(() => {
+    const visibleNodeEdges = getVisibleTreeNodeByDeep(dependenceTree, deep);
+    drawByData(cy, transform(filterDataWithConfig(visibleNodeEdges, configs)), graphLayout, title);
+    setNodeEdges(visibleNodeEdges);
+  }, [dependenceTree, title, graphLayout, configs, deep]);
 
   useEffect(() => {
     if (!selectedNode) return;
@@ -86,7 +87,7 @@ export default function Graph(props) {
     >
       <GraphOperation
         cy={cy}
-        graphData={data}
+        graphData={visibleNodeEdges}
         graphLayout={graphLayout}
         graphLayoutCallBack={(graphLayout) => setGraphLayout(graphLayout)}
         measurements={measurements}

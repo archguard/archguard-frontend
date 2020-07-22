@@ -47,6 +47,7 @@ function ClassDependence() {
         id="classDependenceGraph"
         data={graphData}
         title={className}
+        deep={3}
         nodeLabel={{
           placeholder: "类名显示",
           options: [

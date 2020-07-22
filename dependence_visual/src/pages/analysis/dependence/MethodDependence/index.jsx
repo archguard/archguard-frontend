@@ -50,6 +50,7 @@ function MethodDependence() {
           id="methodDependenceGraph"
           data={graphData}
           title={className + "." + methodName}
+          deep={3}
           nodeLabel={{
             placeholder: "方法名显示",
             options: [

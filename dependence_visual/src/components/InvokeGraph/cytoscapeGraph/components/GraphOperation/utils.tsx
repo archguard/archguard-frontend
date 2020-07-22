@@ -1,4 +1,4 @@
-import { find, findIndex, forEach, remove, reduce } from "lodash";
+import { every, find, findIndex, forEach, remove, reduce, some } from "lodash";
 type Node = {
   id: string;
   title: string;
@@ -126,12 +126,16 @@ export function buildDependenceTree(
       //开始节点在树中还不存在
       tree[startNodeId] = startNode;
     }
-    startNode.children!.push(endNode);
+    if (startNode.children!.indexOf(endNode) === -1) {
+      startNode.children!.push(endNode);
+    }
 
     if (!endNode.parents) {
       endNode.parents = [];
     }
-    endNode.parents.push(startNode);
+    if (endNode.parents.indexOf(startNode) === -1) {
+      endNode.parents.push(startNode);
+    }
 
     /**
      * {a: 1, b: 2} => { 1: [2] }
@@ -153,6 +157,7 @@ export function getVisibleTreeNodeByDeep(
 ): { nodes: Node[]; edges: Edge[] } {
   const visibleNodes: Node[] = [];
   const visibleEdges: Edge[] = [];
+  let deepLevel = deep && deep > 0 ? deep : 100;
 
   const travelNode = (node: Node, nodeDeep: number, path: string[]) => {
     const nextDeep = nodeDeep + 1;
@@ -162,14 +167,21 @@ export function getVisibleTreeNodeByDeep(
       visibleNodes.push(node);
     }
 
+    if (nextDeep > deepLevel) {
+      path.pop();
+      return;
+    }
+
     const { children } = node;
     forEach(children, (childNode) => {
       const isNotLoop = path.indexOf(childNode.id) === -1;
       if (isNotLoop) {
-        visibleEdges.push({ a: node.id, b: childNode.id });
-        if (nextDeep <= deep) {
-          travelNode(childNode, nextDeep, path);
+        const edgeExist =
+          findIndex(visibleEdges, (edge) => edge.a === node.id && edge.b === childNode.id) === -1;
+        if (edgeExist) {
+          visibleEdges.push({ a: node.id, b: childNode.id });
         }
+        travelNode(childNode, nextDeep, path);
       }
     });
     path.pop();
@@ -203,28 +215,40 @@ export function expandNode(
   };
 }
 
-export function collpaseNode(
+export function collapseNode(
   node: Node,
   { nodes, edges }: { nodes: Node[]; edges: Edge[] },
 ): { nodes: Node[]; edges: Edge[] } {
   const newNodes = nodes.slice();
   const newEdges = edges.slice();
-  const { id } = node;
 
-  const length = newEdges.length;
-  for (let index = length; index < length; index--) {
-    const { a: source, b: target } = newEdges[index];
-    if (source === id) {
-      newEdges.splice(index, 1);
-
-      const targetNodeIndex = findIndex(newNodes, (item) => item.id === target);
-      const targetNode = newNodes[targetNodeIndex];
-      targetNode.visible = false;
-      newNodes.splice(targetNodeIndex, 1);
+  const hideChildNode = (parentId: string, node: Node) => {
+    const { id, parents, children } = node;
+    const hasParentVisble = some(parents, (parent) => {
+      return parent.id !== parentId && parent.visible;
+    });
+    if (!hasParentVisble) {
+      node.visible = false;
+      remove(newNodes, (item) => item.id === id);
+      forEach(children, (child) => {
+        if (child.visible && newNodes.indexOf(child) !== -1) {
+          hideChildNode(id, child);
+        }
+      });
     }
-  }
+    remove(newEdges, (edge) => edge.a === parentId && edge.b === id);
+  };
+
+  forEach(node.children, (child) => {
+    hideChildNode(node.id, child);
+  });
+
   return {
     nodes: newNodes,
     edges: newEdges,
   };
+}
+
+export function isExpand(node: Node, edges: Edge[]) {
+  return some(edges, (edge) => edge.a === node.id);
 }
