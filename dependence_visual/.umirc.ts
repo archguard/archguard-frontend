@@ -23,7 +23,7 @@ export default defineConfig({
       component: "@/layouts/base",
       routes: [
         { path: "/", component: "@/pages/index" },
-        { path: "/home", component: "@/pages/home" },
+        { path: "/home", component: "@/pages/home-new" },
         { path: "/help/:name?", component: "@/pages/help" },
         { path: "/project-scan", component: "@/pages/project-scan" },
         { path: "/system-evaluation", component: "@/pages/system-evaluation" },
