@@ -1,8 +1,8 @@
 import { queryEvaluationDetails } from "@/api/addition/evaluations";
 import { Tabs } from "antd";
 import React, { useEffect, useState } from "react";
-import { EvaludationKeys, mapToLabel } from "../../config";
-import EvaluationReportDetail from "./components/EvaluationReportDetail";
+import { EvaludationKeys, mapToLabel } from "../config";
+import EvaluationReportDetail from "./details";
 
 type EvaluationReportDetailsProps = { id: string };
 type EvaludationData = {

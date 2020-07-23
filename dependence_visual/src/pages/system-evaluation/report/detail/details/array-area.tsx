@@ -1,5 +1,5 @@
-import React from "react";
 import { Empty, Table } from "antd";
+import React from "react";
 
 type RowType = string | {};
 export default function ArrayArea({ data }: { data: Array<any> }) {

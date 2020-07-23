@@ -1,9 +1,7 @@
 import React from "react";
-
-import NumberArea from "./components/NumberArea";
-import ArrayArea from "./components/ArrayArea";
-
-import { mapToLabel } from "../../../../config";
+import { mapToLabel } from "../../config";
+import ArrayArea from "./array-area";
+import NumberArea from "./number-area";
 
 type ReportProperties = object;
 type EvaluationReportDetailProps = {

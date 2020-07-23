@@ -1,17 +1,15 @@
-import React from "react";
 import { Badge, Space } from "antd";
-
 import ReactEcharts from "echarts-for-react/lib/core";
-import echarts from "echarts/lib/echarts";
 import "echarts/lib/chart/pie";
 import "echarts/lib/chart/radar";
 import "echarts/lib/chart/scatter";
-import "echarts/lib/component/polar";
-import "echarts/lib/component/tooltip";
 import "echarts/lib/component/legend";
+import "echarts/lib/component/polar";
 import "echarts/lib/component/toolbox";
-
-import { transformData, getStates, setOption } from "./options/scatterOption";
+import "echarts/lib/component/tooltip";
+import echarts from "echarts/lib/echarts";
+import React from "react";
+import { getStates, setOption, transformData } from "./options/scatter-option";
 
 const colors = [
   "#c23531",
@@ -29,16 +27,16 @@ const colors = [
 
 export type Dimension = {
   name: string;
-reportDms: {
-  [key: string]: string
-}
-}
+  reportDms: {
+    [key: string]: string;
+  };
+};
 
 interface ReportGraphPops {
-  dimensions: Dimension[]
+  dimensions: Dimension[];
 }
 
-export default function ReportGraph({dimensions = []}: ReportGraphPops) {
+export default function ReportGraph({ dimensions = [] }: ReportGraphPops) {
   const data = transformData(dimensions);
   const states = getStates(data);
   data.forEach((item) => (item.color = colors[states.indexOf(item.state)]));
@@ -48,11 +46,11 @@ export default function ReportGraph({dimensions = []}: ReportGraphPops) {
       <div style={{ textAlign: "center" }}>
         <Space>
           {states.map((item, index) => (
-              <Badge color={colors[index]} text={item} key={item}/>
-        ))}
+            <Badge color={colors[index]} text={item} key={item} />
+          ))}
         </Space>
       </div>
       <ReactEcharts echarts={echarts} option={option} />
     </div>
-);
+  );
 }

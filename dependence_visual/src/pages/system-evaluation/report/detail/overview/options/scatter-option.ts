@@ -1,44 +1,42 @@
 import _ from "lodash";
-import { mapToLabel } from "../../../../../config";
+import { mapToLabel } from "../../../config";
 
-export function transformData(data) {
+export function transformData(data: any) {
   const transformedData = _.flattenDepth(
     data
-      .map((item) => ({
+      .map((item: any) => ({
         name: item.name,
         reportDms: _.groupBy(
           Object.keys(item.reportDms).map((key) => ({
             state: item.reportDms[key],
             value: key,
           })),
-          "state"
+          "state",
         ),
       }))
-      .map((item) =>
+      .map((item: any) =>
         Object.keys(item.reportDms).map((key) => ({
           dimension: item.name,
           state: key,
-          value: item.reportDms[key].map((subItem) =>
-            mapToLabel(subItem.value)
-          ),
-        }))
+          value: item.reportDms[key].map((subItem: any) => mapToLabel(subItem.value)),
+        })),
       ),
-    1
+    1,
   );
 
   console.log("trans", transformedData);
   return transformedData;
 }
 
-export function getStates(data) {
-  const states = [...new Set(data.map((item) => item.state))];
+export function getStates(data: any) {
+  const states = [...new Set(data.map((item: any) => item.state))];
   return states;
 }
 
-export function setOption(data) {
+export function setOption(data: any) {
   const option = {
     tooltip: {
-      formatter: function (params) {
+      formatter: function (params: any) {
         return params.value.value.join("<br />");
       },
     },
@@ -84,11 +82,11 @@ export function setOption(data) {
           radius: "state",
           angle: "dimension",
         },
-        symbolSize: function (val) {
+        symbolSize: function (val: any) {
           return val.value.length * 8;
         },
         itemStyle: {
-          color: (params) => {
+          color: (params: any) => {
             return params.data.color;
           },
         },

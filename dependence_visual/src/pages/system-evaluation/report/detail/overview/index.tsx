@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col } from "antd";
 import { queryEvaluation } from "@/api/addition/evaluations";
 
-import ReportGraph, { Dimension } from "./components/ReportGraph";
+import ReportGraph, { Dimension } from "./graph";
 
 type EvaluationReportOverviewProps = {
   id: string;

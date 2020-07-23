@@ -1,17 +1,17 @@
 import React from "react";
-import { useBoolean } from "ahooks"
-import { useHistory, useParams } from 'react-router-dom'
+import { useBoolean } from "ahooks";
+import { useHistory, useParams } from "react-router-dom";
 import { Button } from "antd";
 
-import EvaluationReportOverview from "./components/EvaluationReportOverview";
-import EvaluationReportDetails from "./components/EvaluationReportDetails";
+import EvaluationReportOverview from "./detail/overview";
+import EvaluationReportDetails from "./detail";
 
 // import "mock/evaluationReport";
 
-export default function EvaluationReport(){
-  const [showDetail, { toggle: toggleShowDetail }] = useBoolean(false)
-  const { id: reportId } = useParams()
-  const history = useHistory()
+export default function EvaluationReport() {
+  const [showDetail, { toggle: toggleShowDetail }] = useBoolean(false);
+  const { id: reportId } = useParams();
+  const history = useHistory();
   return (
     <div>
       <div>
@@ -20,11 +20,7 @@ export default function EvaluationReport(){
         </p>
       </div>
 
-      <Button
-        type="primary"
-        style={{ float: "right" }}
-        onClick={() => toggleShowDetail()}
-      >
+      <Button type="primary" style={{ float: "right" }} onClick={() => toggleShowDetail()}>
         {showDetail ? "收起详情" : "查看详情"}
       </Button>
 
