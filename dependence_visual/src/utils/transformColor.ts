@@ -1,4 +1,4 @@
-export function transformColorToRGBA(color, opacity) {
+export function transformColorToRGBA(color: string, opacity: number) {
   color = color.toLowerCase();
   const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
   if (color && reg.test(color)) {
@@ -16,7 +16,7 @@ export function transformColorToRGBA(color, opacity) {
   return color;
 }
 
-export function lightenDarkenColor(col, amt) {
+export function lightenDarkenColor(col: string, amt: number) {
   var usePound = false;
 
   if (col[0] === "#") {

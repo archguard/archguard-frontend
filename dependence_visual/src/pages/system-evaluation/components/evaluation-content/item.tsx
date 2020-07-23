@@ -1,5 +1,5 @@
 import { checkEvaluationState, createEvaluation } from "@/api/scanner/evaluations";
-import { transformColorToRGBA } from "@/utils/transformColor";
+import { transformColorToRGBA } from "@/utils/transformColor.ts";
 import ExceptionOutlined from "@ant-design/icons/ExceptionOutlined";
 import { Col, Divider, notification, Row, Tooltip } from "antd";
 import React, { useEffect, useState } from "react";
