@@ -24,7 +24,7 @@ export default function CodemirrorCodeEditor(props: CodemirrorCodeEditorProps) {
         theme: "blackboard",
         lineNumbers: true,
       }}
-      onBeforeChange={({ value }) => {onChange(value)}}
+      onBeforeChange={(editor, data, value) => {onChange(value)}}
     />
   );
 }

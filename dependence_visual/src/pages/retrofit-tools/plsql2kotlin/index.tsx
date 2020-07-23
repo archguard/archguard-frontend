@@ -35,7 +35,7 @@ const PlsqlToKotlin = () => {
       return;
     }
     transformPlsqlToKotlin(packageName, plsqlCode)
-      .then((res: any) =>  { setKotlinCode(res) });
+      .then(res => { setKotlinCode(res) });
   }
 
   return (
@@ -57,7 +57,6 @@ const PlsqlToKotlin = () => {
             </Button>
           </div>
         </Col>
-
         <Col span={11}>
           <h3>Kotlin Code</h3>
           <CodemirrorCodeEditor

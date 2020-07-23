@@ -1,5 +1,5 @@
 import { notification } from "antd";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { util as loadingUtil } from "../components/Loading";
 
 const instance = axios.create({
@@ -30,9 +30,9 @@ instance.interceptors.response.use((response) => {
   return response.data;
 }, handleError);
 
-export default instance;
+// export default instance;
 
-// export default async function axiosAgent<T>(config: AxiosConfig) {
-//   const res = await instance(config);
-//   return (res as unknown) as T;
-// }
+export default async function axiosAgent<T>(config: AxiosRequestConfig) {
+  const res = await instance(config);
+  return (res as unknown) as T;
+}
