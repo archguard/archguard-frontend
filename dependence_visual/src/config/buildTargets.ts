@@ -3,7 +3,13 @@ export const FEATURES = {
   INSIDE_FEATURE: "INSIDE_FEATURE",
 };
 
-const config = {
+export type FeatureType = keyof typeof FEATURES;
+
+const config: {
+  features: {
+    [key in FeatureType]: { [key: string]: boolean };
+  };
+} = {
   features: {
     CODE_SCANNER: {
       zh: false,
@@ -17,13 +23,13 @@ const config = {
 
 export const BUILD_TARGET = process.env.BUILD_TARGET || "default";
 
-export function getFeature(name) {
+export function getFeature(name: FeatureType) {
   const feature = config.features[name];
   const featureEnabled = feature[BUILD_TARGET];
   return featureEnabled !== undefined ? featureEnabled : true;
 }
 
-export function configForTargets(configs) {
+export function configForTargets(configs: { [key: string]: any }) {
   const config = configs[BUILD_TARGET];
   return config || configs["default"];
 }

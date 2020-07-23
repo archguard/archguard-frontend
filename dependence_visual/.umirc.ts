@@ -9,6 +9,9 @@ export default defineConfig({
   antd: {},
   dva: false,
   devServer: { port: 3000 },
+  define: {
+    "process.env.BUILD_TARGET": process.env.BUILD_TARGET,
+  },
   lessLoader: { javascriptEnabled: true },
   proxy: {
     "/api": {
