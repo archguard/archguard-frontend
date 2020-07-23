@@ -5,18 +5,26 @@ import "codemirror/theme/blackboard.css";
 import "codemirror/mode/sql/sql";
 import "codemirror/mode/clike/clike";
 
-import './CodemirrorCodeEditor.css'
+import './index.css'
 
-export default function CodemirrorCodeEditor(props) {
+interface CodemirrorCodeEditorProps {
+  value: string;
+  language: string;
+  onChange: Function;
+}
+
+export default function CodemirrorCodeEditor(props: CodemirrorCodeEditorProps) {
+  const { value, language, onChange } = props
+
   return (
     <CodeMirror
-      value={props.value}
+      value={value}
       options={{
-        mode: props.language,
+        mode: language,
         theme: "blackboard",
         lineNumbers: true,
       }}
-      onBeforeChange={(editor, data, value) => {props.onChange(value)}}
+      onBeforeChange={({ value }) => {onChange(value)}}
     />
   );
 }

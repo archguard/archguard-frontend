@@ -1,7 +1,12 @@
 import React from "react";
 import MonacoEditor from "react-monaco-editor";
 
-export default function MonacoCodeEditor(props) {
+interface MonacoCodeEditorProps {
+  value: string;
+  onChange: Function;
+}
+
+export default function MonacoCodeEditor(props: MonacoCodeEditorProps) {
   const editorOptions = {
     selectOnLineNumbers: true,
   };

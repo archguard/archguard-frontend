@@ -1,84 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import { Row, Col, Input, Button, notification } from "antd";
-import CodeEditor from "./components/CodeEditor";
+import CodemirrorCodeEditor from "./components/CodemirrorCodeEditor";
 
-import { transformPlsqlToKotlin } from "@/api/addition/plsqlToKotlin";
+import { transformPlsqlToKotlin } from "@/api/addition/plsqlToKotlin.ts";
 
-export default class PlsqlToKotlin extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      plsqlCode: "",
-      kotlinCode: "",
-      packageName: "",
-    };
-  }
+interface ValidateState {
+  message: string;
+  isValidate: boolean;
+}
 
-  onChange(id, value) {
-    this.setState({ [id]: value });
-  }
+const PlsqlToKotlin = () => {
+  const [plsqlCode, setPlsqlCode] = useState('')
+  const [kotlinCode, setKotlinCode] = useState('')
+  const [packageName, setPackageName] = useState('')
 
-  validate() {
-    if (!this.state.packageName) {
+  const getValidateState = (): ValidateState => {
+    if (!packageName) {
       return { isValidate: false, message: "包名不能为空" };
     }
 
-    if (!this.state.plsqlCode) {
+    if (!plsqlCode) {
       return { isValidate: false, message: "PL/SQL code 不能为空" };
     }
 
     return { isValidate: true, message: "" };
   }
 
-  transformCode() {
-    const validate = this.validate();
+  const transformCode = () => {
+    const validate = getValidateState()
     if (!validate.isValidate) {
       notification.warn({
         message: validate.message,
       });
       return;
     }
-    transformPlsqlToKotlin(this.state.packageName, this.state.plsqlCode).then((res) => {
-      this.setState({ kotlinCode: res });
-    });
+    transformPlsqlToKotlin(packageName, plsqlCode)
+      .then((res: any) =>  { setKotlinCode(res) });
   }
 
-  render() {
-    return (
-      <div>
-        <Input placeholder="包名" onChange={(e) => this.onChange("packageName", e.target.value)} />
-        <Row style={{ marginTop: "16px" }}>
-          <Col span={11}>
-            <h3>PL/SQL code</h3>
-            <CodeEditor
-              language="sql"
-              value={this.state.plsqlCode}
-              onChange={(value) => this.onChange("plsqlCode", value)}
-            />
-          </Col>
-          <Col span={2}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Button type="primary" onClick={() => this.transformCode()}>
-                转换
-              </Button>
-            </div>
-          </Col>
+  return (
+    <div>
+      <Input placeholder="包名" onChange={({ target: { value } }) => setPackageName(value)} />
+      <Row style={{ marginTop: "16px" }}>
+        <Col span={11}>
+          <h3>PL/SQL code</h3>
+          <CodemirrorCodeEditor
+            language="sql"
+            value={plsqlCode}
+            onChange={(code: string) => setPlsqlCode(code)}
+          />
+        </Col>
+        <Col span={2}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Button type="primary" onClick={() => transformCode()}>
+              转换
+            </Button>
+          </div>
+        </Col>
 
-          <Col span={11}>
-            <h3>Kotlin Code</h3>
-            <CodeEditor
-              language="text/x-kotlin"
-              value={this.state.kotlinCode}
-              onChange={(value) => this.onChange("kotlinCode", value)}
-            />
-          </Col>
-        </Row>
-      </div>
-    );
-  }
+        <Col span={11}>
+          <h3>Kotlin Code</h3>
+          <CodemirrorCodeEditor
+            language="text/x-kotlin"
+            value={kotlinCode}
+            onChange={(code: string) => setKotlinCode(code)}
+          />
+        </Col>
+      </Row>
+    </div>
+  )
 }
+
+export default PlsqlToKotlin;
