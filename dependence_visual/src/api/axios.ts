@@ -31,3 +31,8 @@ instance.interceptors.response.use((response) => {
 }, handleError);
 
 export default instance;
+
+// export default async function axiosAgent<T>(config: AxiosConfig) {
+//   const res = await instance(config);
+//   return (res as unknown) as T;
+// }
