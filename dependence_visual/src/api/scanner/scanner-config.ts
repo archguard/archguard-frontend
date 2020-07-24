@@ -3,8 +3,10 @@ import axios from "../axios";
 import { baseURL } from "./config";
 
 export function queryScannerConfig() {
-  return axios.get<{}, ScannerConfigType[]>("/config", {
+  return axios<ScannerConfigType>({
     baseURL: baseURL,
+    url: "/config",
+    method: "GET",
   });
 }
 

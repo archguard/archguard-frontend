@@ -12,8 +12,8 @@ export default function EvaluationReportDetails({ id }: EvaluationReportDetailsP
   const [data, setData] = useState<EvaludationData>({} as EvaludationData);
   const keys: Array<EvaludationKeys> = Object.keys(data) as EvaludationKeys[];
   useEffect(() => {
-    queryEvaluationDetails(id).then((res) => {
-      setData((res as unknown) as EvaludationData);
+    queryEvaluationDetails<EvaludationData>(id).then((res) => {
+      setData(res);
     });
   }, [id]);
   return (
