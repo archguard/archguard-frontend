@@ -75,7 +75,7 @@ export function queryModuleDependencies(parameter: {}) {
 export function queryModuleCoupling() {
   return axios({
     baseURL: baseURL,
-    url: "/logic-modules/coupling-detail",
+    url: "/logic-modules/metrics",
     method: "GET",
   });
 }
