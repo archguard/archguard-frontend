@@ -2,13 +2,13 @@ export const formItems = [
   {
     id: "projectName",
     label: "项目名称",
-    span: 6
+    span: 6,
   },
   {
     id: "gitRepo",
     label: "git仓库地址",
-    span: 16
-  }
+    span: 16,
+  },
 ];
 export const buttons = [
   {
@@ -16,5 +16,5 @@ export const buttons = [
     id: "save",
     type: "primary",
     span: 2,
-  }
+  },
 ];
