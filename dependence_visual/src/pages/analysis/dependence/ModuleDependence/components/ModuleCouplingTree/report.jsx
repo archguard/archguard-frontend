@@ -2,70 +2,70 @@ import React, { useMemo } from "react";
 import CouplingList from "./list";
 
 const moduleMapping = {
-  outerModuleInstabilityAverage: {
+  outerInstabilityAvg: {
     name: "OIA",
     desc: "OIA(外部不稳定平均数)",
   },
-  outerModuleInstabilityMedian: {
+  outerInstabilityMed: {
     name: "OIM",
     desc: "OIM(外部不稳定中位数)",
   },
-  outerModuleCouplingAverage: {
+  outerCouplingAvg: {
     name: "OCA",
     desc: "OCA(外部耦合平均数)",
   },
-  outerModuleCouplingMedian: {
+  outerCouplingMed: {
     name: "OCM",
     desc: "OCM(外部耦合中位数)",
   },
-  innerModuleCouplingAverage: {
+  innerCouplingAvg: {
     name: "ICA",
     desc: "ICA(内部耦合平均数)",
   },
-  innerModuleCouplingMedian: {
+  innerCouplingMed: {
     name: "ICM",
     desc: "ICA(内部耦合中位数)",
   },
-  innerModuleInstabilityAverage: {
+  innerInstabilityAvg: {
     name: "IIA",
     desc: "IIA(内部不稳定性平均数)",
   },
-  innerModuleInstabilityMedian: {
+  innerInstabilityMed: {
     name: "IIA",
     desc: "IIA(内部不稳定性中位数)",
   },
 };
 
 const packageMapping = {
-  outerPackageInstabilityAverage: {
+  outerInstabilityAvg: {
     name: "OIA",
     desc: "OIA(外部不稳定平均数)",
   },
-  outerPackageInstabilityMedian: {
+  outerInstabilityMed: {
     name: "OIM",
     desc: "OIM(外部不稳定中位数)",
   },
-  outerPackageCouplingAverage: {
+  outerCouplingAvg: {
     name: "OCA",
     desc: "OCA(外部耦合平均数)",
   },
-  outerPackageCouplingMedian: {
+  outerCouplingMed: {
     name: "OCM",
     desc: "OCM(外部耦合中位数)",
   },
-  innerPackageCouplingAverage: {
+  innerCouplingAvg: {
     name: "ICA",
     desc: "ICA(内部耦合平均数)",
   },
-  innerPackageCouplingMedian: {
+  innerCouplingMed: {
     name: "ICM",
     desc: "ICA(内部耦合中位数)",
   },
-  innerPackageInstabilityAverage: {
+  innerInstabilityAvg: {
     name: "IIA",
     desc: "IIA(内部不稳定性平均数)",
   },
-  innerPackageInstabilityMedian: {
+  innerInstabilityMed: {
     name: "IIA",
     desc: "IIA(内部不稳定性中位数)",
   },
@@ -88,19 +88,19 @@ const classMapping = {
     name: "OFO",
     desc: "outerFanOut",
   },
-  innerClassInstability: {
+  innerInstability: {
     name: "II",
     desc: "II(内部不稳定性)",
   },
-  innerClassCoupling: {
+  innerCoupling: {
     name: "IC",
     desc: "IC(内部耦合度)",
   },
-  outerClassInstability: {
+  outerInstability: {
     name: "OI",
     desc: "OI(外部不稳定性)",
   },
-  outerClassCoupling: {
+  outerCoupling: {
     name: "OC",
     desc: "OC(外部耦合度)",
   },
@@ -127,14 +127,14 @@ export default function Report(props) {
         label: "模块名",
         name: module.moduleName,
         props: mappingProps(module, moduleMapping),
-        list: module.packageCouplingReports.map((pkg, index) => {
+        list: module.packageMetrics.map((pkg, index) => {
           return {
             key: `package_${index}`,
             label: "包名",
             name: pkg.packageName,
             shortName: pkg.packageName.replace(`${module.moduleName}.`, ""),
             props: mappingProps(pkg, packageMapping),
-            list: pkg.classCouplingReports.map((cls, index) => {
+            list: pkg.classMetrics.map((cls, index) => {
               return {
                 key: `class_${index}`,
                 label: "类名",
