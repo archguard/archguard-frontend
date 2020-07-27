@@ -1,13 +1,13 @@
 import { FullscreenExitOutlined, FullscreenOutlined } from "@ant-design/icons";
 import cls from "classnames";
 import * as React from "react";
+import { PropsWithChildren } from "react";
 import { useToggle } from "react-use";
 import "./index.less";
 
-interface FullscreenContainerProps {
-  style: React.CSSProperties;
-  children: React.ReactChildren;
-}
+type FullscreenContainerProps = PropsWithChildren<{
+  style?: React.CSSProperties;
+}>;
 
 export default function FullscreenContainer(props: FullscreenContainerProps) {
   const [fullscreen, toggleFullscreen] = useToggle(false);

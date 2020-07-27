@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import EditableTag from "@/components/EditableTag";
+import EditableTag from "@/components/editable-tag";
 import { useList } from "react-use";
 import "./index.less";
 

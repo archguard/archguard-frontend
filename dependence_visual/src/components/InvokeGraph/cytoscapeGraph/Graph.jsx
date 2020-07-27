@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { scrollToAnchor } from "@/utils/anchor";
 import { useMount } from "ahooks";
 import { message } from "antd";
-import FullscreenContainer from "../../FullscreenContainer/index";
+import FullscreenContainer from "../../fullscreen-container";
 import { filterDataWithConfig } from "../utils";
 import GraphOperation from "./components/GraphOperation";
 import { drawByData, initCytoscape, showHighlightBrachNode } from "./drawGraph";

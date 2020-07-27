@@ -1,8 +1,8 @@
-import { Button, Col, Row, Select } from "antd";
 import { queryPackageDependencies } from "@/api/module/package";
+import FullscreenContainer from "@/components/fullscreen-container";
+import { Button, Col, Row, Select } from "antd";
 import React, { useMemo, useRef, useState } from "react";
 import { useAsync } from "react-use";
-import FullscreenContainer from "@/components/FullscreenContainer/index";
 import "./PackageDependence.css";
 import PackageGraph from "./packageGraph";
 
