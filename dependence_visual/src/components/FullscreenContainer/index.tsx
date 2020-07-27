@@ -4,7 +4,12 @@ import * as React from "react";
 import {FullscreenExitOutlined, FullscreenOutlined} from "@ant-design/icons";
 import cls from "classname"
 
-export default function FullscreenContainer(props) {
+interface FullscreenContainerProps {
+  style: React.CSSProperties;
+  children: string;
+}
+
+export default function FullscreenContainer(props: FullscreenContainerProps) {
   const [fullscreen, toggleFullscreen] = useToggle(false)
 
   return <div className="fullscreen-container" style={props.style}>
