@@ -1,39 +1,46 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, ReactNode } from "react";
 import { Card, Button } from "antd";
 import { CaretRightOutlined, CaretDownOutlined } from "@ant-design/icons";
 
-export default class CollapsibleCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      collapsed: this.props.collapsed === false || true,
-    };
-  }
-
-  onClick() {
-    this.setState({ collapsed: !this.state.collapsed });
-  }
-
-  render() {
-    const title = (
-      <Fragment>
-        <Button
-          icon={this.state.collapsed ? <CaretRightOutlined /> : <CaretDownOutlined />}
-          type="text"
-          onClick={() => this.onClick()}
-        />
-        {this.props.title}
-      </Fragment>
-    );
-
-    return (
-      <div>
-        <Card size={this.props.size} title={title} extra={this.props.extra}>
-          <div style={{ display: this.state.collapsed ? "none" : undefined }}>
-            {this.props.children}
-          </div>
-        </Card>
-      </div>
-    );
-  }
+interface CollapsibleCardProps {
+  collapsed: boolean;
+  title: string;
+  size: "default" | "small" | undefined;
+  extra: ReactNode;
+  children: string;
 }
+
+const CollapsibleCard = (props: CollapsibleCardProps) => {
+  const [collapsed, setCollapsed] = useState(props.collapsed)
+  const [children] = useState(props.children)
+  const [extra] = useState(props.extra)
+  const [title] = useState(props.title)
+  const [size] = useState(props.size)
+
+  const onClick = () => {
+    setCollapsed(!collapsed)
+  }
+
+  const titleTemplate = () => (
+    <Fragment>
+      <Button
+        icon={collapsed ? <CaretRightOutlined /> : <CaretDownOutlined />}
+        type="text"
+        onClick={() => onClick()}
+      />
+      {title}
+    </Fragment>
+  );
+
+  return (
+    <div>
+      <Card size={size} title={titleTemplate} extra={extra}>
+        <div style={{ display: collapsed ? "none" : undefined }}>
+          {children}
+        </div>
+      </Card>
+    </div>
+  );
+}
+
+export default CollapsibleCard;

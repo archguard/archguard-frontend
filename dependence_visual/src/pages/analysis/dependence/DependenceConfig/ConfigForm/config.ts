@@ -1,17 +1,9 @@
-export class FormItem {
-  id: string;
-  label: string;
-  type: string;
-  defaultValue?: string | number;
-  options?: any[];
-  rules?: any[];
-  style?: any;
-}
+import { FormInputItem, FormSelectItem } from '@/models/form';
 
-export class ConfigType {
+export interface ConfigType {
   type: string;
   label: string;
-  formItems: FormItem[]
+  formItems: Array<FormInputItem | FormSelectItem>
 }
 
 export const configType: ConfigType[] = [

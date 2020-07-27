@@ -2,10 +2,24 @@ import React from "react";
 import { Button, Col, Input, notification, Radio, Row, Select } from "antd";
 import { useControllableValue } from "ahooks";
 import { useEffect } from "react";
+import { FormItemModel } from '@/models/form';
 
-function FormItem(props) {
-  const { item = {}, value, onChange } = props;
+interface ArgsAreaProps {
+  formItems: FormItemModel[];
+  buttons: any[];
+  defaultFormData: any;
+}
+
+interface FormItemProps {
+  item: FormItemModel;
+  value: string;
+  onChange: Function;
+}
+
+function FormItem(props: FormItemProps) {
+  const { item, value, onChange } = props;
   if (item.type === "select") {
+    item.options = item.options || []
     return (
       <Select
         placeholder={item.label}
@@ -16,7 +30,7 @@ function FormItem(props) {
         onChange={(value) => onChange(item.id, value)}
         tokenSeparators={item.tokenSeparators}
       >
-        {item.options.map((item) => {
+        {item.options.map(item => {
           return (
             <Select.Option value={item.value} key={item.value}>
               {item.label}
@@ -47,11 +61,11 @@ function FormItem(props) {
   }
 }
 
-export default function ArgsArea(props) {
+export default function ArgsArea(props: ArgsAreaProps) {
   const { formItems, buttons, defaultFormData } = props;
   const [value = {}, setValue] = useControllableValue(props, { defaultValue: defaultFormData });
 
-  const onItemValueChange = (id, itemVal) => {
+  const onItemValueChange = (id: string, itemVal: string) => {
     setValue({
       ...value,
       [id]: itemVal,

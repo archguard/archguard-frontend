@@ -1,9 +1,19 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import "./index.less";
-import {AutoComplete, Tag} from "antd";
-import {CheckCircleOutlined, CloseCircleOutlined} from "@ant-design/icons";
+import { AutoComplete, Tag } from "antd";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 
-export default function EditableTag(props) {
+interface EditableTagProps {
+  value: string;
+  closable: boolean;
+  isEdit: boolean;
+  autoCompleteOptions: any[];
+  onChange: Function;
+  onRemove: Function;
+  onCancel: Function;
+}
+
+export default function EditableTag(props: EditableTagProps) {
   const {
     value,
     onChange,
