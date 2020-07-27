@@ -6,7 +6,7 @@ import cls from "classname"
 
 interface FullscreenContainerProps {
   style: React.CSSProperties;
-  children: string;
+  children: React.ReactChildren;
 }
 
 export default function FullscreenContainer(props: FullscreenContainerProps) {
