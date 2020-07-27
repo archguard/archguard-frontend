@@ -1,9 +1,9 @@
-import { FormInputItem, FormSelectItem } from '@/models/form';
+import { FormItemModel } from '@/models/form';
 
 export interface ConfigType {
   type: string;
   label: string;
-  formItems: Array<FormInputItem | FormSelectItem>
+  formItems: FormItemModel[];
 }
 
 export const configType: ConfigType[] = [
