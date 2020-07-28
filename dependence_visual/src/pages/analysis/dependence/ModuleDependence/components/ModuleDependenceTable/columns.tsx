@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Tooltip } from "antd";
 
 const classColumn = (dataIndex: String) => {
   const column = {
     title: "class",
-    dataIndex: [dataIndex, "className"],
+    dataIndex: [dataIndex, "clazz", "name"],
     render: (text: string) => (
       <Link
         to={{
@@ -26,19 +27,30 @@ const methodColumn = (dataIndex: String) => {
     render: (text: string, record: { [x: string]: { [x: string]: string } }) => {
       const method = dataIndex === "caller" ? record.caller : record.callee;
       return (
-        <Link
-          to={{
-            pathname: "/analysis/dependence/method",
-            search:
-              "className=" +
-              method.className +
-              "&methodName=" +
-              method.name +
-              "&dependenceType=invokes",
-          }}
+        <Tooltip
+          title={
+            <div>
+              <b>argument:</b>
+              <p>{method.argumentTypes}</p>
+              <b>returnType:</b>
+              <p>{method.returnType}</p>
+            </div>
+          }
         >
-          {text}
-        </Link>
+          <Link
+            to={{
+              pathname: "/analysis/dependence/method",
+              search:
+                "className=" +
+                method.className +
+                "&methodName=" +
+                method.name +
+                "&dependenceType=invokes",
+            }}
+          >
+            {text}
+          </Link>
+        </Tooltip>
       );
     },
   };
