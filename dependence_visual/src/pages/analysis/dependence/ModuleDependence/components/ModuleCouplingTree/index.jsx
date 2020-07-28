@@ -1,6 +1,5 @@
 import { queryModuleCoupling } from "@/api/module/module";
 import CollapsibleCard from "@/components/CollapsibleCard";
-import { exportJsonToExcel } from "@/utils/FileUtils.ts";
 import QuestionCircleOutlined from "@ant-design/icons/lib/icons/QuestionCircleOutlined";
 import { Button } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
@@ -25,10 +24,6 @@ function ModuleCouplingTable(props) {
       setModuleCoupling(res);
       onPageChange(1);
     });
-  }
-
-  function exportToExcel() {
-    exportJsonToExcel(moduleCoupling, "moduleCoupling.xlsx");
   }
 
   // function onModuleClick() {
@@ -58,7 +53,6 @@ function ModuleCouplingTable(props) {
           </Link>
         </Fragment>
       }
-      extra={<Button onClick={() => exportToExcel()}>导出到Excel</Button>}
     >
       <div>
         <Button

@@ -1,7 +1,12 @@
+import { ModuleMetric } from "@/models/analysis";
 import React, { useMemo } from "react";
-import CouplingList from "./list";
+import CouplingList from "./coupling-list";
 
-const moduleMapping = {
+interface ReportMapper {
+  [key: string]: { name: string; desc: string };
+}
+
+const moduleMapping: ReportMapper = {
   outerInstabilityAvg: {
     name: "OIA",
     desc: "OIA(外部不稳定平均数)",
@@ -36,7 +41,7 @@ const moduleMapping = {
   },
 };
 
-const packageMapping = {
+const packageMapping: ReportMapper = {
   outerInstabilityAvg: {
     name: "OIA",
     desc: "OIA(外部不稳定平均数)",
@@ -71,7 +76,7 @@ const packageMapping = {
   },
 };
 
-const classMapping = {
+const classMapping: ReportMapper = {
   innerFanIn: {
     name: "IFI",
     desc: "innerFanIn",
@@ -106,7 +111,7 @@ const classMapping = {
   },
 };
 
-function mappingProps(item, mapping) {
+function mappingProps(item: any, mapping: ReportMapper) {
   const props = Object.keys(mapping).map((key) => {
     const { desc, name } = mapping[key];
     let value = item[key];
@@ -118,7 +123,11 @@ function mappingProps(item, mapping) {
   return props;
 }
 
-export default function Report(props) {
+interface ReportProps {
+  data: ModuleMetric[];
+}
+
+export default function Report(props: ReportProps) {
   const { data = [] } = props;
   const reportData = useMemo(() => {
     return data.map((module, index) => {
