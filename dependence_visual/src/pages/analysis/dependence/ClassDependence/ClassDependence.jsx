@@ -4,6 +4,7 @@ import InvokeGraph from "@/components/InvokeGraph";
 import React, { useEffect, useState } from "react";
 import useUrlQuery from "../../../../utils/hooks/use-url-query";
 import { buttons, formItems } from "./config";
+import { buildClassTree, generateNodeEdges } from "../utils";
 
 function ClassDependence() {
   const query = useUrlQuery();
@@ -31,7 +32,9 @@ function ClassDependence() {
     return queryClassDependence(args.className, args.dependenceType, {
       deep: args.deep || null,
     }).then((res) => {
-      setGraphData(res);
+      const rootNodes = buildClassTree(res);
+      const nodeEdges = generateNodeEdges(rootNodes);
+      setGraphData(nodeEdges);
       setClassName(args.className);
     });
   }
