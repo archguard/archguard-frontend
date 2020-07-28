@@ -1,7 +1,6 @@
 import axios from "../axios";
 import _ from "lodash";
 import { baseURL } from "./config";
-import { ModuleType } from "@/pages/analysis/dependence/ModuleDependence/config";
 
 const subUrl = "/logic-modules";
 
@@ -107,24 +106,7 @@ export function reverseAllModules() {
 export function queryAllModuleDependence() {
   return axios({
     baseURL: baseURL,
-    url: "/logic-modules/graph",
+    url: "/logic-modules/dependencies/graph",
     method: "GET",
   });
-}
-
-export function queryAllModuleDubboDependence() {
-  return axios({
-    baseURL: baseURL,
-    url: "/logic-modules/graph-dubbo",
-    method: "GET",
-  });
-}
-const queryMap: { [key in ModuleType]: Function } = {
-  [ModuleType.NORMAL]: queryAllModuleDependence,
-  [ModuleType.DUBBO]: queryAllModuleDubboDependence,
-  [ModuleType.SPRINGCLOUD]: queryAllModuleDubboDependence,
-};
-export function queryAllModuleDependenceByType(moduleType: ModuleType) {
-  const queryMethod = queryMap[moduleType];
-  return queryMethod();
 }

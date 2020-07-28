@@ -45,21 +45,3 @@ export const couplings: Array<Coupling> = [
     introduction: "IIM(内部不稳定性中位数)",
   },
 ];
-
-export enum ModuleType {
-  NORMAL = "normal",
-  DUBBO = "dubbo",
-  SPRINGCLOUD = "springCloud",
-}
-
-export type ModuleItemType = {
-  label: string;
-  value: ModuleType;
-};
-
-export const defaultModuleType: ModuleType = ModuleType.NORMAL;
-export const moduleTypes: Array<ModuleItemType> = [
-  { label: "常规", value: ModuleType.NORMAL },
-  { label: "Dubbo", value: ModuleType.DUBBO },
-  { label: "SpringCloud", value: ModuleType.SPRINGCLOUD },
-];

@@ -3,10 +3,9 @@ import { Button } from "antd";
 import CollapsibleCard from "@/components/CollapsibleCard";
 import InvokeGraph from "@/components/InvokeGraph";
 import { couplings } from "../../config";
-import { queryAllModuleDependenceByType } from "@/api/module/module";
+import { queryAllModuleDependence } from "@/api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
-import useModuleType from "../../globalStates/useModuleType";
 
 function transformData(data) {
   data.nodes = data.nodes.map((item) => ({
@@ -37,10 +36,9 @@ function ModuleDependenceGraph() {
   const [graphData, setGraphData] = useState();
   const [moduleCoupling] = useModuleCoupling();
   const [selectedNode] = useSelectedNode();
-  const [moduleType] = useModuleType();
 
   function showAllModuleDependence() {
-    queryAllModuleDependenceByType(moduleType).then((res) => {
+    queryAllModuleDependence().then((res) => {
       setGraphData(transformData(res));
     });
   }
