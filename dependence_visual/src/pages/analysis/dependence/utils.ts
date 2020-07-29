@@ -11,9 +11,13 @@ interface JavaItem {
   module: string;
 }
 
-interface JClass extends JavaItem {
-  callees: JClass[];
-  callers: JClass[];
+interface ClassCall {
+  clazz: JClass;
+}
+
+export interface JClass extends JavaItem {
+  callees: ClassCall[];
+  callers: ClassCall[];
   classType: ClassType.NOT_DEFINED;
   dependencees: JClass[];
   dependencers: JClass[];
@@ -21,7 +25,7 @@ interface JClass extends JavaItem {
   id: string;
   implements: JClass[];
   interface: boolean;
-  methods: JClass;
+  methods: JMethod[];
   module: string;
   name: string;
   parents: JClass[];
@@ -36,7 +40,7 @@ interface TreeNode<T> {
   isImplement?: boolean;
 }
 
-interface JMethod extends JavaItem {
+export interface JMethod extends JavaItem {
   id: string;
   module: string;
   clazz: string;
@@ -49,13 +53,13 @@ interface JMethod extends JavaItem {
   implements: JMethod[];
 }
 
-type Node = {
+export type Node = {
   id: string;
   title: string;
   properties: { [key: string]: string };
   isImplement?: boolean;
 };
-type Edge = {
+export type Edge = {
   a: string;
   b: string;
   labels?: string;
@@ -91,80 +95,16 @@ const pushNode = <T>(node: TreeNode<T>, nodes: TreeNode<T>[]) => {
   }
 };
 
-const normalizeTreeNode = <T extends JavaItem>(
-  node: TreeNode<T>,
-  javaItem: JavaItem,
-  treeNodeMap: { [key: string]: TreeNode<T> },
-  pushCallback: (treeNode: TreeNode<T>) => void,
-  createTreeNode: (node: T) => TreeNode<T>,
-) => {
+const createTreeNode = <T extends JavaItem, U = TreeNode<T>>(
+  javaItem: T,
+  treeNodeMap: { [key: string]: U },
+  createMethod: (javaItem: T) => U,
+): U => {
   const { id } = javaItem;
   if (!treeNodeMap[id]) {
-    treeNodeMap[id] = createTreeNode(javaItem as T);
+    treeNodeMap[id] = createMethod(javaItem);
   }
-  const treeNode = treeNodeMap[id];
-  const isNotSame = id !== node.id;
-  if (isNotSame) {
-    pushCallback(treeNode);
-  }
-};
-
-const appendToParents = <T extends JClass | JMethod>(
-  node: TreeNode<T>,
-  dependenceParents: T[],
-  parentsKey: keyof T,
-  treeNodeMap: { [key: string]: TreeNode<T> },
-  createTreeNode: (node: T) => TreeNode<T>,
-) => {
-  forEach(dependenceParents, (dependenceParent) => {
-    normalizeTreeNode<T>(
-      node,
-      dependenceParent,
-      treeNodeMap,
-      (parentNode: TreeNode<T>) => {
-        pushNode(node, parentNode.children);
-        pushNode(parentNode, node.parents);
-
-        appendToParents(
-          parentNode,
-          (dependenceParent[parentsKey] as any) as T[],
-          parentsKey,
-          treeNodeMap,
-          createTreeNode,
-        );
-      },
-      createTreeNode,
-    );
-  });
-};
-
-const appendChildren = <T extends JClass | JMethod>(
-  node: TreeNode<T>,
-  dependenceChildren: T[],
-  childrenKey: keyof T,
-  treeNodeMap: { [key: string]: TreeNode<T> },
-  createTreeNode: (node: any) => TreeNode<T>,
-) => {
-  forEach(dependenceChildren, (dependenceChild) => {
-    normalizeTreeNode(
-      node,
-      dependenceChild,
-      treeNodeMap,
-      (childNode: TreeNode<T>) => {
-        pushNode(childNode, node.children);
-        pushNode(node, childNode.parents);
-
-        appendChildren(
-          childNode,
-          (dependenceChild[childrenKey] as any) as T[],
-          childrenKey,
-          treeNodeMap,
-          createTreeNode,
-        );
-      },
-      createTreeNode,
-    );
-  });
+  return treeNodeMap[id];
 };
 
 export const buildMethodTree = (jMethods: JMethod[]) => {
@@ -173,33 +113,31 @@ export const buildMethodTree = (jMethods: JMethod[]) => {
   const implementKey = "implements";
   const treeNodeMap: { [key: string]: TreeNode<JMethod> } = {};
 
-  const getTreeNode = (jMethod: JMethod): TreeNode<JMethod> => {
-    const { id } = jMethod;
-    if (!treeNodeMap[id]) {
-      treeNodeMap[id] = createJMethodNode(jMethod);
-    }
-    return treeNodeMap[id];
-  };
-
   const travelMethods = (jMethod: JMethod) => {
     const parentMethods = jMethod[parentsKey];
     const childrenMethods = jMethod[childrenKey];
     const methodImplements = jMethod[implementKey];
-    const treeNode = getTreeNode(jMethod);
+    const treeNode = createTreeNode<JMethod>(jMethod, treeNodeMap, createJMethodNode);
     forEach(parentMethods, (parentMethod) => {
-      const parentTreeNode = getTreeNode(parentMethod);
+      const parentTreeNode = createTreeNode<JMethod>(parentMethod, treeNodeMap, createJMethodNode);
       pushNode(treeNode, parentTreeNode.children);
       pushNode(parentTreeNode, treeNode.parents);
       travelMethods(parentMethod);
     });
+
     forEach(childrenMethods, (childMethod) => {
-      const childTreeNode = getTreeNode(childMethod);
+      const childTreeNode = createTreeNode<JMethod>(childMethod, treeNodeMap, createJMethodNode);
       pushNode(childTreeNode, treeNode.children);
       pushNode(treeNode, childTreeNode.parents);
       travelMethods(childMethod);
     });
+
     forEach(methodImplements, (implementMethod) => {
-      const implementTreeNode = getTreeNode(implementMethod);
+      const implementTreeNode = createTreeNode<JMethod>(
+        implementMethod,
+        treeNodeMap,
+        createJMethodNode,
+      );
       implementTreeNode.isImplement = true;
       pushNode(implementTreeNode, treeNode.children);
       pushNode(treeNode, implementTreeNode.parents);
@@ -208,8 +146,6 @@ export const buildMethodTree = (jMethods: JMethod[]) => {
   };
 
   forEach(jMethods, (jMethod) => {
-    const treeNode = createJMethodNode(jMethod);
-    treeNodeMap[treeNode.id] = treeNode;
     travelMethods(jMethod);
   });
 
@@ -218,16 +154,97 @@ export const buildMethodTree = (jMethods: JMethod[]) => {
   return rootNodes;
 };
 
-export const buildClassTree = (jClass: JClass): TreeNode<JClass>[] => {
+export const buildClassDependenceTree = (jClass: JClass): TreeNode<JClass>[] => {
   const parentsKey = "dependencers";
   const childrenKey = "dependencees";
   const treeNodeMap: { [key: string]: TreeNode<JClass> } = {};
 
-  const treeNode = createJClassNode(jClass);
-  treeNodeMap[treeNode.id] = treeNode;
+  const travelJClasses = (jClass: JClass): void => {
+    const treeNode = createTreeNode<JClass>(jClass, treeNodeMap, createJClassNode);
+    const parentJClasses = jClass[parentsKey];
+    const childrenJClasses = jClass[childrenKey];
 
-  appendToParents(treeNode, jClass[parentsKey], parentsKey, treeNodeMap, createJClassNode);
-  appendChildren(treeNode, jClass[childrenKey], childrenKey, treeNodeMap, createJClassNode);
+    forEach(parentJClasses, (parentJClass) => {
+      const parentTreeNode = createTreeNode<JClass>(parentJClass, treeNodeMap, createJClassNode);
+      pushNode(treeNode, parentTreeNode.children);
+      pushNode(parentTreeNode, treeNode.parents);
+      travelJClasses(parentJClass);
+    });
+
+    forEach(childrenJClasses, (childJClass) => {
+      const childTreeNode = createTreeNode<JClass>(childJClass, treeNodeMap, createJClassNode);
+      pushNode(childTreeNode, treeNode.children);
+      pushNode(treeNode, childTreeNode.parents);
+      travelJClasses(childJClass);
+    });
+  };
+
+  travelJClasses(jClass);
+
+  const rootNodes: TreeNode<JClass>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
+  return rootNodes;
+};
+
+export const buildClassInvokesTree = (jClass: JClass): TreeNode<JClass>[] => {
+  const parentsKey = "callers";
+  const childrenKey = "callees";
+  const treeNodeMap: { [key: string]: TreeNode<JClass> } = {};
+
+  const travelJClasses = (jClass: JClass): void => {
+    const treeNode = createTreeNode<JClass>(jClass, treeNodeMap, createJClassNode);
+    const parentJClasses = jClass[parentsKey];
+    const childrenJClasses = jClass[childrenKey];
+
+    forEach(parentJClasses, (parentJClass) => {
+      const clazz = parentJClass.clazz;
+      const parentTreeNode = createTreeNode<JClass>(clazz, treeNodeMap, createJClassNode);
+      pushNode(treeNode, parentTreeNode.children);
+      pushNode(parentTreeNode, treeNode.parents);
+      travelJClasses(clazz);
+    });
+
+    forEach(childrenJClasses, (childJClass) => {
+      const clazz = childJClass.clazz;
+      const childTreeNode = createTreeNode<JClass>(clazz, treeNodeMap, createJClassNode);
+      pushNode(childTreeNode, treeNode.children);
+      pushNode(treeNode, childTreeNode.parents);
+      travelJClasses(clazz);
+    });
+  };
+
+  travelJClasses(jClass);
+
+  const rootNodes: TreeNode<JClass>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
+  return rootNodes;
+};
+
+export const buildClassMethodInvokesTree = (jClass: JClass): TreeNode<JClass>[] => {
+  const parentsKey = "callers";
+  const childrenKey = "callees";
+  const jMethods: JMethod[] = jClass["methods"];
+  const treeNodeMap: { [key: string]: TreeNode<JClass> } = {};
+
+  const travelJMethod = (jMethod: JMethod): void => {
+    const treeNode = createTreeNode<JMethod>(jMethod, treeNodeMap, createJMethodNode);
+    const parentJMethods = jMethod[parentsKey];
+    const childrenJMethods = jMethod[childrenKey];
+
+    forEach(parentJMethods, (parentJMethod) => {
+      const parentTreeNode = createTreeNode<JMethod>(parentJMethod, treeNodeMap, createJMethodNode);
+      pushNode(treeNode, parentTreeNode.children);
+      pushNode(parentTreeNode, treeNode.parents);
+      travelJMethod(parentJMethod);
+    });
+
+    forEach(childrenJMethods, (childJMethod) => {
+      const childTreeNode = createTreeNode<JMethod>(childJMethod, treeNodeMap, createJMethodNode);
+      pushNode(childTreeNode, treeNode.children);
+      pushNode(treeNode, childTreeNode.parents);
+      travelJMethod(childJMethod);
+    });
+  };
+
+  forEach(jMethods, travelJMethod);
 
   const rootNodes: TreeNode<JClass>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
   return rootNodes;
@@ -262,7 +279,6 @@ export const generateNodeEdges = <T>(
   forEach(rootNodes, (node) => {
     travelNode(node, []);
   });
-  console.log(nodes);
   return {
     nodes,
     edges,

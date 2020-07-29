@@ -1,5 +1,4 @@
-export const formItems = [
-  {
+export const formItems = [{
     id: "className",
     label: "类名",
     required: true,
@@ -10,10 +9,9 @@ export const formItems = [
     label: "依赖方式",
     required: true,
     type: "select",
-    options: [
-      {
+    options: [{
         label: "类的依赖",
-        value: "dependences"
+        value: "dependencies"
       },
       {
         label: "类的类调用依赖",
@@ -33,18 +31,19 @@ export const formItems = [
     min: 0,
     validate: value => {
       if (value < 1) {
-        return { isValidate: false, message: "调用深度需大于1" };
+        return {
+          isValidate: false,
+          message: "调用深度需大于1"
+        };
       }
     },
     span: 2
   }
 ];
 
-export const buttons = [
-  {
-    text: "查询",
-    id: "show",
-    type: "primary",
-    span: 2
-  }
-];
+export const buttons = [{
+  text: "查询",
+  id: "show",
+  type: "primary",
+  span: 2
+}];

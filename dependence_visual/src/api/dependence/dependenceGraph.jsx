@@ -5,7 +5,7 @@ export function queryMethodDependence(className, methodName, dependenceType, par
   parameter.clazz = className;
   return axios({
     baseURL: "/api/module",
-    url: "/methods/" + methodName + "/invokes",
+    url: "/methods/" + methodName + "/" + dependenceType,
     method: "GET",
     params: parameter,
   });
@@ -14,7 +14,7 @@ export function queryMethodDependence(className, methodName, dependenceType, par
 export function queryClassDependence(className, dependenceType, parameter) {
   return axios({
     baseURL: "/api/module",
-    url: `/classes/${className}/dependencies`,
+    url: `/classes/${className}/${dependenceType}`,
     method: "GET",
     params: parameter,
   });

@@ -39,6 +39,12 @@ function MethodDependence() {
       setGraphData(nodeEdges);
       setClassName(args.className);
       setMethodName(args.methodName);
+      setDefaultFormData({
+        deep: args.deep,
+        dependenceType: args.dependenceType,
+        methodName: args.methodName,
+        className: args.className,
+      });
     });
   }
 

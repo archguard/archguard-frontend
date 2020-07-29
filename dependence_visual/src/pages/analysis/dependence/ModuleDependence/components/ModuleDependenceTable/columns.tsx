@@ -4,13 +4,13 @@ import { Tooltip } from "antd";
 
 type methodDependency = {
   caller: method;
-  callee: method
-}
+  callee: method;
+};
 
 type method = {
   name: string;
-  clazz: {module: string; name: string };
-  argumentTypes: string[]
+  clazz: { module: string; name: string };
+  argumentTypes: string[];
 };
 
 const classColumn = (dataIndex: String) => {
@@ -22,7 +22,7 @@ const classColumn = (dataIndex: String) => {
         <Link
           to={{
             pathname: "/analysis/dependence/class",
-            search: "className=" + text + "&dependenceType=dependences",
+            search: "className=" + text + "&dependenceType=dependencies",
           }}
         >
           {text.split(".").slice(-1)}
@@ -37,7 +37,7 @@ const methodColumn = (dataIndex: String) => {
   const column = {
     title: "method",
     dataIndex: [dataIndex, "name"],
-    render: (text: string, record: methodDependency ) => {
+    render: (text: string, record: methodDependency) => {
       const method = dataIndex === "caller" ? record.caller : record.callee;
       return (
         <Link
