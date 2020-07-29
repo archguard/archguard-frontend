@@ -2,6 +2,17 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
 
+type methodDependency = {
+  caller: method;
+  callee: method
+}
+
+type method = {
+  name: string;
+  clazz: {module: string; name: string };
+  argumentTypes: string[]
+};
+
 const classColumn = (dataIndex: String) => {
   const column = {
     title: "class",
@@ -26,7 +37,7 @@ const methodColumn = (dataIndex: String) => {
   const column = {
     title: "method",
     dataIndex: [dataIndex, "name"],
-    render: (text: string, record: { [x: string]: { [x: string]: string } }) => {
+    render: (text: string, record: methodDependency ) => {
       const method = dataIndex === "caller" ? record.caller : record.callee;
       return (
         <Link
@@ -34,7 +45,7 @@ const methodColumn = (dataIndex: String) => {
             pathname: "/analysis/dependence/method",
             search:
               "className=" +
-              method.className +
+              method.clazz.name +
               "&methodName=" +
               method.name +
               "&dependenceType=invokes",
