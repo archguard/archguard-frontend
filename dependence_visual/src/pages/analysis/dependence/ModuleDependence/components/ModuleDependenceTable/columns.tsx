@@ -7,14 +7,16 @@ const classColumn = (dataIndex: String) => {
     title: "class",
     dataIndex: [dataIndex, "clazz", "name"],
     render: (text: string) => (
-      <Link
-        to={{
-          pathname: "/analysis/dependence/class",
-          search: "className=" + text + "&dependenceType=dependences",
-        }}
-      >
-        {text}
-      </Link>
+      <Tooltip title={text}>
+        <Link
+          to={{
+            pathname: "/analysis/dependence/class",
+            search: "className=" + text + "&dependenceType=dependences",
+          }}
+        >
+          {text.split(".").slice(-1)}
+        </Link>
+      </Tooltip>
     ),
   };
   return column;
@@ -27,31 +29,31 @@ const methodColumn = (dataIndex: String) => {
     render: (text: string, record: { [x: string]: { [x: string]: string } }) => {
       const method = dataIndex === "caller" ? record.caller : record.callee;
       return (
-        <Tooltip
-          title={
-            <div>
-              <b>argument:</b>
-              <p>{method.argumentTypes}</p>
-              <b>returnType:</b>
-              <p>{method.returnType}</p>
-            </div>
-          }
+        <Link
+          to={{
+            pathname: "/analysis/dependence/method",
+            search:
+              "className=" +
+              method.className +
+              "&methodName=" +
+              method.name +
+              "&dependenceType=invokes",
+          }}
         >
-          <Link
-            to={{
-              pathname: "/analysis/dependence/method",
-              search:
-                "className=" +
-                method.className +
-                "&methodName=" +
-                method.name +
-                "&dependenceType=invokes",
-            }}
-          >
-            {text}
-          </Link>
-        </Tooltip>
+          {text}
+        </Link>
       );
+    },
+  };
+  return column;
+};
+
+const argumentColumn = (dataIndex: String) => {
+  const column = {
+    title: "argument",
+    dataIndex: [dataIndex, "argumentTypes"],
+    render: (text: string[]) => {
+      return text.map((arg) => arg.split(".").slice(-1));
     },
   };
   return column;
@@ -60,11 +62,11 @@ const methodColumn = (dataIndex: String) => {
 const columns = [
   {
     title: "caller",
-    children: [classColumn("caller"), methodColumn("caller")],
+    children: [classColumn("caller"), methodColumn("caller"), argumentColumn("caller")],
   },
   {
     title: "callee",
-    children: [classColumn("callee"), methodColumn("callee")],
+    children: [classColumn("callee"), methodColumn("callee"), argumentColumn("callee")],
   },
 ];
 
