@@ -21,8 +21,8 @@ export function filterDataWithConfig(data, configs) {
   for (let config of nodeHiddenConfigs) {
     for (let node of nodes) {
       if (
-        (config.key === "module" && node.title === config.value) ||
-        (config.key === "clz" && node.title.indexOf(config.value) >= 0)
+        (config.key === "Full" && node.title === config.value) ||
+        (config.key === "Fuzzy" && node.title.indexOf(config.value) >= 0)
       ) {
         hiddenNode(node, nodes, edgesFrom, edgesTo);
       }

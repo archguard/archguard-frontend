@@ -31,7 +31,7 @@ for (let i = 0; i < 3; i++) {
     Mock.mock({
       id: "@id",
       type: "nodeHidden",
-      "key|1": ["module", "clz"],
+      "key|1": ["Full", "Fuzzy"],
       value: "@string(5, 10)",
       "order|1-100": 100
     })

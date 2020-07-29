@@ -46,10 +46,10 @@ export const configType: ConfigType[] = [
     label: "隐藏配置",
     formItems: [
       {
-        id: "key", label: "隐藏类型", type: "select", defaultValue: "clz",
+        id: "key", label: "隐藏类型", type: "select", defaultValue: "Fuzzy",
         options: [
-          { label: "模糊匹配", value: "clz" },
-          { label: "全匹配", value: "module" },
+          { label: "模糊匹配", value: "Fuzzy" },
+          { label: "全匹配", value: "Full" },
         ],
       },
       {
