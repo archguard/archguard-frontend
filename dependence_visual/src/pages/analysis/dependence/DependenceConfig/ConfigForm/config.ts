@@ -6,6 +6,15 @@ export interface ConfigType {
   formItems: FormItemModel[];
 }
 
+export interface ConfigData {
+  [key: string]: {
+    key: string;
+    type: string;
+    value: string;
+    order?: number;
+  }[]
+}
+
 export const configType: ConfigType[] = [
   {
     type: "plugin",

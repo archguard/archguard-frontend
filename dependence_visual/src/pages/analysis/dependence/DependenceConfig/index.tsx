@@ -4,9 +4,14 @@ import _ from "lodash";
 import { Card, Drawer, notification } from "antd";
 import ConfigForm from "./ConfigForm/index";
 import { queryConfig, updateConfig } from '@/api/module/dependenceConfig';
-import { configType } from "./ConfigForm/config.ts";
+import { ConfigData, configType } from './ConfigForm/config';
 
-const DependenceConfig = (props) => {
+interface DependenceConfigProps {
+  visible: boolean;
+  hide: Function;
+}
+
+const DependenceConfig = (props: DependenceConfigProps) => {
   const { visible, hide } = props;
   const [configData, setConfigData] = useState({});
 
@@ -20,7 +25,7 @@ const DependenceConfig = (props) => {
     });
   };
 
-  const updateConfigData = (data) => {
+  const updateConfigData = (data: ConfigData) => {
     const type = Object.keys(data)[0];
 
     updateConfig(type, data[type])

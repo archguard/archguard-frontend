@@ -1,21 +1,36 @@
 import React, { useState } from 'react'
 import { Form, Space, Input, Button, Select } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
-import { FormItem } from './config'
 import './index.less'
+import { FormItemModel } from '@/models/form'
+import { ConfigData } from './config'
 
-const ConfigForm = (props) => {
+interface FieldData {
+  name: number;
+  key: number;
+  fieldKey: number;
+}
+
+interface ConfigFormProps {
+  configType: string;
+  formItems: FormItemModel[];
+  data: any;
+  updateConfig: Function;
+}
+
+const ConfigForm = (props: ConfigFormProps) => {
   const { configType, formItems, data, updateConfig } = props
   const [isDisabled, setIsDisabled] = useState(true)
   const getDefaultConfigValue = () =>
-    formItems.map((item: FormItem) => {
-      const obj = {}
+    formItems.map((item) => {
+      const obj: any = {}
       obj[item.id] = item.defaultValue
       return obj
     })
 
   const defaultConfigValue = Object.assign({}, ...getDefaultConfigValue())
-  const onFinish = (values) => {
+  const onFinish = (values: ConfigData) => {
+    console.log(values);
     values[configType].map(item => {
       if (!item.type) item.type = configType
       return item
@@ -28,14 +43,14 @@ const ConfigForm = (props) => {
   const renderHeader = () => {
     return (
       <Space className="form-items header">
-        { formItems.map((item: FormItem) => (
+        { formItems.map((item) => (
           <div key={item.id}>{item.label}</div>
         )) }
       </Space>
     )
   }
 
-  const renderInputByFormItem = (field, item: FormItem) => {
+  const renderInputByFormItem = (field: FieldData, item: FormItemModel) => {
     return (
       <Form.Item
         {...field}
@@ -49,7 +64,8 @@ const ConfigForm = (props) => {
     )
   }
 
-  const renderSelectByFormItem = (field, item) => {
+  const renderSelectByFormItem = (field: FieldData, item: FormItemModel) => {
+    if (!item.options) return
     return (
       <Form.Item
         {...field}
