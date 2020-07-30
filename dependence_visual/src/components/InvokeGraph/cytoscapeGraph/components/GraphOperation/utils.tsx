@@ -12,6 +12,7 @@ export type Node = {
   title: string;
   fullName: string;
   properties: NodeProperies;
+  isImplement?: boolean;
   children?: Node[];
   parents?: Node[];
   visible?: boolean;
@@ -193,7 +194,7 @@ export function getVisibleTreeNodeByDeep(
         const edgeExist =
           findIndex(visibleEdges, (edge) => edge.a === node.id && edge.b === childNode.id) === -1;
         if (edgeExist) {
-          visibleEdges.push({ a: node.id, b: childNode.id });
+          visibleEdges.push({ a: node.id, b: childNode.id, labels: childNode.isImplement ? ["implement"] : undefined, });
         }
         travelNode(childNode, nextDeep, path);
       }
@@ -221,7 +222,7 @@ export function expandNode(
   forEach(children, (item) => {
     item.visible = true;
     newNodes.push(item);
-    newEdges.push({ a: id, b: item.id });
+    newEdges.push({ a: id, b: item.id, labels: item.isImplement ? ["implement"] : undefined, });
   });
   return {
     nodes: newNodes,
