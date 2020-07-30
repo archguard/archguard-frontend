@@ -1,6 +1,7 @@
+import { Node, Edge, NodesEdges } from './cytoscapeGraph/components/GraphOperation/utils';
 import lodash from "lodash";
 
-export function filterDataWithConfig(data, configs) {
+export function filterDataWithConfig(data: NodesEdges, configs: any):any {
   if (!data || !data.nodes || !configs) return data;
   let nodes = lodash.cloneDeep(data.nodes);
   let edges = lodash.cloneDeep(data.edges);
@@ -33,7 +34,7 @@ export function filterDataWithConfig(data, configs) {
   edges = edges.filter(item => !item.hidden);
 
   const nodeColorConfigs = configs.nodeColor
-    ? configs.nodeColor.sort((a, b) => a.order - b.order)
+    ? configs.nodeColor.sort((a: any, b: any) => a.order - b.order)
     : [];
   for (let config of nodeColorConfigs) {
     for (let node of nodes) {
@@ -47,7 +48,8 @@ export function filterDataWithConfig(data, configs) {
   return { nodes, edges };
 }
 
-function hiddenNode(node, nodes, edgesFrom, edgesTo) {
+function hiddenNode(node: Node, nodes: Node[],
+  edgesFrom: lodash.Dictionary<Edge[]>, edgesTo: lodash.Dictionary<Edge[]>) {
   if (node.hidden) return;
   node.hidden = true;
   edgesTo[node.id] && edgesTo[node.id].forEach(edge => (edge.hidden = true));

@@ -10,20 +10,33 @@ import {
   resetNodeSize,
   resetNodeLabel,
 } from "../../drawGraph";
-import { findLoopPaths } from "./utils";
+import { findLoopPaths, NodesEdges } from "./utils";
+import { LayoutOptions, Core } from 'cytoscape';
+import { Measurements } from '@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph';
+import { NodeLabel } from '../../Graph';
+import { SelectValue } from 'antd/lib/select';
 
-export default function GraphOperation(props) {
+interface GraphOperationProps {
+  cy: Core;
+  graphData?: NodesEdges;
+  graphLayout: any;
+  graphLayoutCallBack?: Function;
+  measurements?: Measurements;
+  nodeLabel?: NodeLabel;
+}
+
+export default function GraphOperation(props: GraphOperationProps) {
   const { cy, graphData, graphLayout, graphLayoutCallBack, measurements, nodeLabel } = props;
 
   const [ownGraphLayout, setOwnGraphLayout] = useState(graphLayout);
-  const [loopPaths, setLoopPaths] = useState([]);
+  const [loopPaths, setLoopPaths] = useState<string[][]>([]);
 
   useEffect(() => {
     setOwnGraphLayout(graphLayout);
   }, [graphLayout]);
 
   useEffect(() => {
-    const edges = graphData?.edges;
+    const edges = graphData?.edges || []
     const paths = findLoopPaths(edges);
     setLoopPaths(paths);
   }, [graphData]);
@@ -32,7 +45,7 @@ export default function GraphOperation(props) {
     const nodes = graphData?.nodes;
     return reduce(
       nodes,
-      (nodeMap, node) => {
+      (nodeMap: any, node) => {
         nodeMap[node.id] = node;
         return nodeMap;
       },
@@ -40,24 +53,26 @@ export default function GraphOperation(props) {
     );
   }, [graphData]);
 
-  function onGraphLayoutChange(graphLayout) {
+  function onGraphLayoutChange(graphLayout: any) {
     const newGraphLayout = { ...ownGraphLayout, ...graphLayout };
     setOwnGraphLayout(newGraphLayout);
     drawByLayout(cy, newGraphLayout);
-    graphLayoutCallBack(newGraphLayout);
+    graphLayoutCallBack && graphLayoutCallBack(newGraphLayout);
   }
 
-  function onShowLoop(index) {
+  function onShowLoop(index: number) {
     const path = loopPaths[index];
     showLoop(cy, path);
   }
 
-  function onMeasurementsChange(measurement) {
-    const nodesSize = {};
+  function onMeasurementsChange(measurement: string) {
+    if (!measurements) return;
+
+    const nodesSize: any = {};
     const dataKey = measurements.dataKey || "id";
     const nodeKey = measurements.nodeKey || dataKey;
-    measurements.data.forEach((item) => {
-      nodesSize[item[dataKey]] = item[measurement] * 1000 + "%";
+    measurements.data.map((item: any) => {
+      return nodesSize[item[dataKey]] = item[measurement] * 1000 + "%";
     });
     resetNodeSize(cy, nodesSize, nodeKey);
   }
@@ -66,8 +81,9 @@ export default function GraphOperation(props) {
     resetDefaultStyle(cy);
   }
 
-  function onNodeLabelChange(type) {
-    resetNodeLabel(cy, (fullName) => nodeLabel.setLabel(fullName, type));
+  function onNodeLabelChange(type: SelectValue) {
+    if (!nodeLabel) return
+    resetNodeLabel(cy, (fullName: string) => nodeLabel.setLabel(fullName, type));
     drawByLayout(cy, graphLayout);
   }
 
@@ -84,8 +100,8 @@ export default function GraphOperation(props) {
       <Select
         defaultValue={ownGraphLayout.nodeDimensionsIncludeLabels}
         options={[
-          { label: "宽松", value: true },
-          { label: "紧缩", value: false },
+          { label: "宽松", value: 1 },
+          { label: "紧缩", value: 0 },
         ]}
         onChange={(value) => onGraphLayoutChange({ nodeDimensionsIncludeLabels: value })}
       />
@@ -102,13 +118,13 @@ export default function GraphOperation(props) {
             value: index,
           };
         })}
-        onChange={(value) => onShowLoop(value)}
+        onChange={(value: number) => onShowLoop(value)}
       />
       {measurements && (
         <Select
           placeholder={measurements.label}
           options={measurements.options}
-          onChange={(value) => onMeasurementsChange(value)}
+          onChange={(value: string) => onMeasurementsChange(value)}
         />
       )}
       {nodeLabel && (

@@ -2,18 +2,27 @@ import React, { useState } from "react";
 import { Button } from "antd";
 import CollapsibleCard from "@/components/CollapsibleCard";
 import InvokeGraph from "@/components/InvokeGraph";
-import { couplings } from "../../config";
+import { couplings, Coupling } from "../../config";
 import { queryAllModuleDependence } from "@/api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
+import { NodesEdges } from '@/components/InvokeGraph/cytoscapeGraph/components/GraphOperation/utils';
 
-function transformData(data) {
-  data.nodes = data.nodes.map((item) => ({
+export interface Measurements {
+  label: string;
+  options: Coupling[];
+  data: any[];
+  dataKey: string;
+  nodeKey: string;
+}
+
+function transformData(data: any): NodesEdges {
+  data.nodes = data.nodes.map((item: any) => ({
     id: item.id,
     title: item.name,
     properties: {},
   }));
-  data.edges = data.edges.map((item) => ({
+  data.edges = data.edges.map((item: any) => ({
     a: item.a,
     b: item.b,
     labels: [item.num],
@@ -21,24 +30,24 @@ function transformData(data) {
   return data;
 }
 
-function getMeasurements(moduleCoupling) {
+function getMeasurements(moduleCoupling?: any): Measurements | undefined {
   if (!moduleCoupling || moduleCoupling.length === 0) return;
-  const measurements = {};
-  measurements.label = "模块耦合度";
-  measurements.options = moduleCoupling && couplings;
-  measurements.data = moduleCoupling;
-  measurements.dataKey = "moduleName";
-  measurements.nodeKey = "fullName";
-  return measurements;
+  return {
+    label: "模块耦合度",
+    options: moduleCoupling && couplings,
+    data: moduleCoupling,
+    dataKey: "moduleName",
+    nodeKey: "fullName",
+  }
 }
 
 function ModuleDependenceGraph() {
-  const [graphData, setGraphData] = useState();
+  const [graphData, setGraphData] = useState<NodesEdges>();
   const [moduleCoupling] = useModuleCoupling();
   const [selectedNode] = useSelectedNode();
 
   function showAllModuleDependence() {
-    queryAllModuleDependence().then((res) => {
+    queryAllModuleDependence().then((res: any) => {
       setGraphData(transformData(res));
     });
   }

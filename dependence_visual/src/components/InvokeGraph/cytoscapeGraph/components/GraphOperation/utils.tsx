@@ -1,20 +1,34 @@
 import { every, find, findIndex, forEach, remove, reduce, some } from "lodash";
-type Node = {
+export interface NodeProperies {
+  module: string;
+  color?: string;
+  parent?: Node;
+  parents?: Node[];
+  length: number;
+}
+
+export type Node = {
   id: string;
   title: string;
   fullName: string;
-  properties: { module: string };
+  properties: NodeProperies;
   children?: Node[];
   parents?: Node[];
   visible?: boolean;
-  isImplement?: boolean;
+  hidden?: boolean;
 };
-type Edge = {
+export type Edge = {
   a: string;
   b: string;
+  num?: number;
+  label?: string;
   labels?: string[];
-  num?: string;
+  hidden?: boolean;
 };
+export class NodesEdges {
+  nodes: Node[] = [];
+  edges: Edge[] = [];
+}
 
 function dfs(
   node: string,
@@ -64,12 +78,12 @@ function findNodes(edges: Array<{ a: string; b: string }>) {
 }
 
 function transformEdges(
-  edges: Array<{ [key: string]: string }>,
+  edges: Edge[],
   sourceKey: string,
   targetKey: string,
 ) {
-  return edges.map((item) => {
-    const edge = { ...item };
+  return edges.map((item: any) => {
+    const edge: any = { ...item };
     edge[sourceKey] = item[sourceKey] + "";
     edge[targetKey] = item[targetKey] + "";
     return edge;
@@ -77,7 +91,7 @@ function transformEdges(
 }
 
 export function findLoopPaths(
-  edges: Array<{ [key: string]: string }>,
+  edges: Edge[],
   sourceKey = "a",
   targetKey = "b",
 ) {
@@ -97,9 +111,7 @@ export function findLoopPaths(
   return paths;
 }
 
-export function buildDependenceTree(
-  { nodes = [], edges = [] }: { nodes: Node[]; edges: Edge[] } = { nodes: [], edges: [] },
-) {
+export function buildDependenceTree({ nodes = [], edges = [] }: NodesEdges) {
   const visitNodeMap: { [key: string]: boolean } = {};
   const tree: { [key: string]: any } = {};
   const nodeMap = reduce(
@@ -156,7 +168,7 @@ export function buildDependenceTree(
 export function getVisibleTreeNodeByDeep(
   tree: { [key: string]: Node },
   deep: number,
-): { nodes: Node[]; edges: Edge[] } {
+): NodesEdges {
   const visibleNodes: Node[] = [];
   const visibleEdges: Edge[] = [];
   let deepLevel = deep && deep > 0 ? deep : 100;
@@ -181,11 +193,7 @@ export function getVisibleTreeNodeByDeep(
         const edgeExist =
           findIndex(visibleEdges, (edge) => edge.a === node.id && edge.b === childNode.id) === -1;
         if (edgeExist) {
-          visibleEdges.push({
-            a: node.id,
-            b: childNode.id,
-            labels: childNode.isImplement ? ["implement"] : undefined,
-          });
+          visibleEdges.push({ a: node.id, b: childNode.id });
         }
         travelNode(childNode, nextDeep, path);
       }
@@ -205,15 +213,15 @@ export function getVisibleTreeNodeByDeep(
 
 export function expandNode(
   node: Node,
-  { nodes, edges }: { nodes: Node[]; edges: Edge[] },
-): { nodes: Node[]; edges: Edge[] } {
+  { nodes, edges }: NodesEdges,
+): NodesEdges {
   const newNodes = nodes.slice();
   const newEdges = edges.slice();
   const { id, children } = node;
   forEach(children, (item) => {
     item.visible = true;
     newNodes.push(item);
-    newEdges.push({ a: id, b: item.id, labels: item.isImplement ? ["implement"] : undefined });
+    newEdges.push({ a: id, b: item.id });
   });
   return {
     nodes: newNodes,
@@ -223,8 +231,8 @@ export function expandNode(
 
 export function collapseNode(
   node: Node,
-  { nodes, edges }: { nodes: Node[]; edges: Edge[] },
-): { nodes: Node[]; edges: Edge[] } {
+  { nodes, edges }: NodesEdges,
+): NodesEdges {
   const newNodes = nodes.slice();
   const newEdges = edges.slice();
 

@@ -10,7 +10,7 @@ const focusColor = "#c23531";
 
 const hiddenColor = "#E8E8E8";
 
-function getNodeStyle(color, z = "auto") {
+function getNodeStyle(color: string, z = "auto") {
   return {
     "background-color": color,
     color: color,
@@ -18,7 +18,7 @@ function getNodeStyle(color, z = "auto") {
   };
 }
 
-function getEdgeStyle(color, z = "auto") {
+function getEdgeStyle(color: string, z = "auto") {
   return {
     "line-color": color,
     color: lightenDarkenColor(color, -50),

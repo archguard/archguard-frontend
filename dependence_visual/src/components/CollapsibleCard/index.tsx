@@ -3,11 +3,11 @@ import { Card, Button } from "antd";
 import { CaretRightOutlined, CaretDownOutlined } from "@ant-design/icons";
 
 interface CollapsibleCardProps {
-  collapsed: boolean;
-  title: string;
-  size: "default" | "small" | undefined;
-  extra: ReactNode;
-  children: ReactChildren;
+  collapsed?: boolean;
+  title?: string;
+  size?: "default" | "small" | undefined;
+  extra?: ReactNode;
+  children?: any;
 }
 
 const CollapsibleCard = (props: CollapsibleCardProps) => {

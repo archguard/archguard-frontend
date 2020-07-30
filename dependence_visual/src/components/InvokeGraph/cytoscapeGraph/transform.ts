@@ -1,8 +1,8 @@
-export function transform(data) {
+export function transform(data: any) {
   if (!data) return;
   let nodes = data.nodes || [];
   let edges = data.edges || [];
-  nodes = [...new Set(nodes)].map((item) => {
+  nodes = [...new Set(nodes)].map((item: any) => {
     return {
       data: {
         id: item.id,
@@ -13,7 +13,7 @@ export function transform(data) {
       },
     };
   });
-  edges = edges.map((item) => ({
+  edges = edges.map((item: any) => ({
     data: {
       source: item.a,
       target: item.b,

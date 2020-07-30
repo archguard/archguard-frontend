@@ -1,4 +1,4 @@
-import cytoscape from "cytoscape";
+import cytoscape, { Core, LayoutOptions, CollectionReturnValue, NodeCollection, NodeSingular, EdgeSingular } from "cytoscape";
 import elk from "cytoscape-elk";
 import copy from "copy-to-clipboard";
 import {
@@ -11,10 +11,11 @@ import {
   focusNodeStyle,
   focusEdgeStyle,
 } from "./config";
+import { MessageType } from 'antd/lib/message';
 
 cytoscape.use(elk);
 
-export function initCytoscape(id = "cy", onEvent = {}) {
+export function initCytoscape(id = "cy", onEvent: { cxttap: () => MessageType }) {
   const cy = cytoscape({
     container: document.getElementById(id),
     style: [
@@ -25,7 +26,6 @@ export function initCytoscape(id = "cy", onEvent = {}) {
           label: "data(label)",
         },
       },
-
       {
         selector: "edge",
         style: {
@@ -53,8 +53,8 @@ export function initCytoscape(id = "cy", onEvent = {}) {
   return cy;
 }
 
-export function drawByData(cy, data, layout, title) {
-  if (!cy) return;
+export function drawByData(cy: Core | undefined, data: any | undefined, layout: LayoutOptions, title: string) {
+  if (!cy || !data) return;
   cy.remove(cy.elements());
   cy.add(data);
 
@@ -65,7 +65,7 @@ export function drawByData(cy, data, layout, title) {
 }
 
 export function drawByLayout(
-  cy,
+  cy: Core,
   layout = {
     name: "elk",
   },
@@ -73,21 +73,21 @@ export function drawByLayout(
   cy.layout(layout).run();
 }
 
-export function resetDefaultStyle(cy) {
+export function resetDefaultStyle(cy: Core) {
   setStyle(cy.elements(), defaultNodeStyle, defaultEdgeStyle);
   showNodeColorByConfig(cy.nodes());
 }
 
-function setStyle(elements, nodeStyle, edgeStyle) {
+function setStyle(elements: CollectionReturnValue, nodeStyle: object, edgeStyle: object) {
   elements.nodes().style(nodeStyle);
   elements.edges().style(edgeStyle);
 }
 
-function setHiddenStyle(cy) {
+function setHiddenStyle(cy: Core) {
   setStyle(cy.elements(), hiddenNodeStyle, hiddenEdgeStyle);
 }
 
-function showDifferentMainNode(cy, title) {
+function showDifferentMainNode(cy: Core, title: string) {
   cy.nodes().forEach((e) => {
     if (e.data().fullName === title) {
       e.style({
@@ -97,7 +97,7 @@ function showDifferentMainNode(cy, title) {
   });
 }
 
-function showDifferentParent(cy) {
+function showDifferentParent(cy: Core) {
   cy.edges().forEach((e) => {
     if (e.data().label.indexOf("parent") >= 0) {
       e.style({
@@ -107,7 +107,7 @@ function showDifferentParent(cy) {
   });
 }
 
-export function showLoop(cy, path) {
+export function showLoop(cy: Core, path: string[]) {
   path.push(path[0]);
   const elements = cy.elements();
   setStyle(elements, hiddenNodeStyle, hiddenEdgeStyle);
@@ -122,7 +122,7 @@ export function showLoop(cy, path) {
   });
 }
 
-function showNodeColorByConfig(nodes) {
+function showNodeColorByConfig(nodes: NodeCollection) {
   nodes.forEach((e) => {
     const color = e.data("properties").color;
     if (color) {
@@ -134,7 +134,7 @@ function showNodeColorByConfig(nodes) {
   });
 }
 
-export function showHighlightBrachNode(cy, node) {
+export function showHighlightBrachNode(cy: Core, node: NodeSingular) {
   setHiddenStyle(cy);
   if (!node) return;
   setStyle(node.successors(), highlightBrachNodeStyle, highlightBrachEdgeStyle);
@@ -142,7 +142,7 @@ export function showHighlightBrachNode(cy, node) {
   node.style(focusNodeStyle);
 }
 
-function showHighlightBrachEdge(cy, edge) {
+function showHighlightBrachEdge(cy: Core, edge: EdgeSingular) {
   setHiddenStyle(cy);
   if (!edge) return;
   edge.target().style(highlightBrachNodeStyle);
@@ -152,7 +152,7 @@ function showHighlightBrachEdge(cy, edge) {
   edge.style(focusEdgeStyle);
 }
 
-export function resetNodeSize(cy, nodesSize, key = "id") {
+export function resetNodeSize(cy: Core, nodesSize: any, key = "id") {
   cy.nodes().forEach((e) => {
     e.style({
       padding: nodesSize[e.data(key)],
@@ -160,7 +160,7 @@ export function resetNodeSize(cy, nodesSize, key = "id") {
   });
 }
 
-export function resetNodeLabel(cy, setLabel) {
+export function resetNodeLabel(cy: Core, setLabel: Function) {
   cy.nodes().forEach((e) => {
     e.data("label", setLabel(e.data("fullName")));
   });

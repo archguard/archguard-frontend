@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { scrollToAnchor } from "@/utils/anchor";
 import { useMount } from "ahooks";
 import { message } from "antd";
-import FullscreenContainer from "../../fullscreen-container";
+import FullscreenContainer from "../../fullscreen-container/index";
 import { filterDataWithConfig } from "../utils";
 import GraphOperation from "./components/GraphOperation";
 import { drawByData, initCytoscape, showHighlightBrachNode } from "./drawGraph";
@@ -13,21 +13,41 @@ import {
   expandNode,
   collapseNode,
   isExpand,
+  NodesEdges,
 } from "./components/GraphOperation/utils";
+import { Measurements } from '@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph';
+import { Core, LayoutOptions } from 'cytoscape';
+import { Coupling } from '@/pages/analysis/dependence/ModuleDependence/config';
 
-export default function Graph(props) {
-  const { id, data, title, configs, measurements, selectedNode, nodeLabel, deep } = props;
+export interface NodeLabel {
+  placeholder: string;
+  options: Coupling[];
+  setLabel: Function;
+}
 
-  const [cy, setCy] = useState();
-  const [graphLayout, setGraphLayout] = useState({
+interface GraphProps {
+  id: string;
+  data: NodesEdges;
+  title?: string;
+  configs?: any;
+  measurements?: Measurements;
+  selectedNode?: any;
+  nodeLabel?: NodeLabel;
+  deep?: number;
+}
+
+export default function Graph(props: GraphProps) {
+  const { id, data, title = '', configs, measurements, selectedNode, nodeLabel, deep } = props;
+  const [cy, setCy] = useState<Core>();
+  const [graphLayout, setGraphLayout] = useState<LayoutOptions>({
     name: "elk",
     nodeDimensionsIncludeLabels: true,
     fit: true,
   });
-  const [visibleNodeEdges, setNodeEdges] = useState({ nodes: [], edges: [] });
+  const [visibleNodeEdges, setNodeEdges] = useState(new NodesEdges());
 
   const dependenceTree = useMemo(() => {
-    return buildDependenceTree(data);
+    return buildDependenceTree(data || {});
   }, [data]);
 
   const onNodeClick = useCallback(
@@ -51,17 +71,19 @@ export default function Graph(props) {
   useMount(() => {
     console.log("init cy");
     setCy(initCytoscape(id, onEvent));
-  }, []);
+  });
 
   useEffect(() => {
-    cy && cy.on("tap", "node", onNodeClick);
-    return () => {
-      cy && cy.off("tap", "node", onNodeClick);
-    };
+    if (cy) {
+      cy.on("tap", "node", onNodeClick);
+      return () => {
+        cy.off("tap", "node", onNodeClick);
+      };
+    }
   }, [visibleNodeEdges]);
 
   useEffect(() => {
-    const visibleNodeEdges = getVisibleTreeNodeByDeep(dependenceTree, deep);
+    const visibleNodeEdges = getVisibleTreeNodeByDeep(dependenceTree, deep || 0);
     drawByData(cy, transform(filterDataWithConfig(visibleNodeEdges, configs)), graphLayout, title);
     setNodeEdges(visibleNodeEdges);
   }, [dependenceTree, title, graphLayout, configs, deep]);
@@ -70,7 +92,7 @@ export default function Graph(props) {
     if (!selectedNode) return;
     const data = selectedNode.data;
     const key = selectedNode.key || "id";
-    if (!data) return;
+    if (!data || !cy) return;
     const selectedElement = cy.filter((e) => e.data(key) === data)[0];
     if (!selectedElement) return;
     showHighlightBrachNode(cy, selectedElement);
@@ -89,7 +111,7 @@ export default function Graph(props) {
         cy={cy}
         graphData={visibleNodeEdges}
         graphLayout={graphLayout}
-        graphLayoutCallBack={(graphLayout) => setGraphLayout(graphLayout)}
+        graphLayoutCallBack={(graphLayout: LayoutOptions) => setGraphLayout(graphLayout)}
         measurements={measurements}
         nodeLabel={nodeLabel}
       />
