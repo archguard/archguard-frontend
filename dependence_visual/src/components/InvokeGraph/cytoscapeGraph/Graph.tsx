@@ -15,19 +15,23 @@ import {
   isExpand,
   NodesEdges,
 } from "./components/GraphOperation/utils";
-import { Measurements } from '@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph';
-import { Core, LayoutOptions } from 'cytoscape';
-import { Coupling } from '@/pages/analysis/dependence/ModuleDependence/config';
+import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph";
+import { Core, LayoutOptions } from "cytoscape";
+import { GraphData } from "../../../models/graph";
 
+type Option = {
+  label: string;
+  value: string;
+};
 export interface NodeLabel {
   placeholder: string;
-  options: Coupling[];
+  options: Option[];
   setLabel: Function;
 }
 
 interface GraphProps {
   id: string;
-  data: NodesEdges;
+  data: GraphData;
   title?: string;
   configs?: any;
   measurements?: Measurements;
@@ -37,7 +41,7 @@ interface GraphProps {
 }
 
 export default function Graph(props: GraphProps) {
-  const { id, data, title = '', configs, measurements, selectedNode, nodeLabel, deep } = props;
+  const { id, data, title = "", configs, measurements, selectedNode, nodeLabel, deep } = props;
   const [cy, setCy] = useState<Core>();
   const [graphLayout, setGraphLayout] = useState<LayoutOptions>({
     name: "elk",

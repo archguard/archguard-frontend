@@ -1,70 +1,6 @@
 import { every, filter, findIndex, forEach } from "lodash";
-enum ClassType {
-  INTERFACE,
-  CLASS,
-  NOT_DEFINED,
-}
-
-interface JavaItem {
-  id: string;
-  name: string;
-  module: string;
-}
-
-interface ClassCall {
-  clazz: JClass;
-}
-
-export interface JClass extends JavaItem {
-  callees: ClassCall[];
-  callers: ClassCall[];
-  classType: ClassType.NOT_DEFINED;
-  dependencees: JClass[];
-  dependencers: JClass[];
-  fullName: string[];
-  id: string;
-  implements: JClass[];
-  interface: boolean;
-  methods: JMethod[];
-  module: string;
-  name: string;
-  parents: JClass[];
-}
-
-interface TreeNode<T> {
-  id: string;
-  name: string;
-  module: string;
-  parents: TreeNode<T>[];
-  children: TreeNode<T>[];
-  isImplement?: boolean;
-}
-
-export interface JMethod extends JavaItem {
-  id: string;
-  module: string;
-  clazz: string;
-  name: string;
-  argumentTypes: string[];
-  returnType: string;
-  callees: JMethod[];
-  callers: JMethod[];
-  parents: JMethod[];
-  implements: JMethod[];
-}
-
-export type Node = {
-  id: string;
-  title: string;
-  properties: { [key: string]: string };
-  isImplement?: boolean;
-};
-export type Edge = {
-  a: string;
-  b: string;
-  labels?: string;
-  num?: number;
-};
+import { JMethod, JClass, JavaItem } from "../../../models/java";
+import { TreeNode, Node, Edge, GraphData } from "../../../models/graph";
 
 const createJMethodNode = (jMethod: JMethod): TreeNode<JMethod> => {
   const { id, name, module, clazz } = jMethod;
@@ -218,11 +154,11 @@ export const buildClassInvokesTree = (jClass: JClass): TreeNode<JClass>[] => {
   return rootNodes;
 };
 
-export const buildClassMethodInvokesTree = (jClass: JClass): TreeNode<JClass>[] => {
+export const buildClassMethodInvokesTree = (jClass: JClass): TreeNode<JMethod>[] => {
   const parentsKey = "callers";
   const childrenKey = "callees";
   const jMethods: JMethod[] = jClass["methods"];
-  const treeNodeMap: { [key: string]: TreeNode<JClass> } = {};
+  const treeNodeMap: { [key: string]: TreeNode<JMethod> } = {};
 
   const travelJMethod = (jMethod: JMethod): void => {
     const treeNode = createTreeNode<JMethod>(jMethod, treeNodeMap, createJMethodNode);
@@ -246,13 +182,11 @@ export const buildClassMethodInvokesTree = (jClass: JClass): TreeNode<JClass>[] 
 
   forEach(jMethods, travelJMethod);
 
-  const rootNodes: TreeNode<JClass>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
+  const rootNodes: TreeNode<JMethod>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
   return rootNodes;
 };
 
-export const generateNodeEdges = <T>(
-  rootNodes: TreeNode<T>[],
-): { nodes: Node[]; edges: Edge[] } => {
+export const generateNodeEdges = <T>(rootNodes: TreeNode<T>[]): GraphData => {
   const nodes: Node[] = [];
   const edges: Edge[] = [];
 

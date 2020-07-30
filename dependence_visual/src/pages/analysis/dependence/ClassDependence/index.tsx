@@ -9,54 +9,45 @@ import {
   buildClassInvokesTree,
   buildClassMethodInvokesTree,
   generateNodeEdges,
-  JClass,
 } from "../utils";
+import { GraphData } from "../../../../models/graph";
+import { JClass } from "../../../../models/java";
+import { ButtonConfig, Validator } from "../../../../models/form";
 
-enum DependenceType {
+enum ClassDependenceType {
   dependencies = "dependencies",
   invokes = "invokes",
   methods_callees = "methods_callees",
 }
 
-const calculateNodeEdges = (dependenceType: DependenceType, jclass: JClass) => {
-  const buildTreeFunctions: { [key in DependenceType]: Function } = {
-    [DependenceType.dependencies]: buildClassDependenceTree,
-    [DependenceType.invokes]: buildClassInvokesTree,
-    [DependenceType.methods_callees]: buildClassMethodInvokesTree,
+const calculateNodeEdges = (dependenceType: ClassDependenceType, jclass: JClass): GraphData => {
+  const buildTreeFunctions: { [key in ClassDependenceType]: Function } = {
+    [ClassDependenceType.dependencies]: buildClassDependenceTree,
+    [ClassDependenceType.invokes]: buildClassInvokesTree,
+    [ClassDependenceType.methods_callees]: buildClassMethodInvokesTree,
   };
   const rootNodes = buildTreeFunctions[dependenceType](jclass);
   const nodeEdges = generateNodeEdges(rootNodes);
   return nodeEdges;
 };
 
-type ButtonConfig = {
-  text: string;
-  id: string;
-  type: string;
-  span: number;
-};
-
-type Validator = {
-  isValidate: boolean;
-};
-
 type ClassFormData = {
   deep: number;
-  dependenceType: DependenceType;
+  dependenceType: ClassDependenceType;
   className: string;
 };
 
 function ClassDependence() {
   const query = useUrlQuery();
 
-  const [graphData, setGraphData] = useState({});
+  const [graphData, setGraphData] = useState<GraphData>({ edges: [], nodes: [] });
   const [className, setClassName] = useState("");
   const [defaultFormData, setDefaultFormData] = useState({});
 
   useEffect(() => {
     if (query.className) {
       setDefaultFormData({ deep: 3, dependenceType: "dependencies", ...query });
-      setGraphData({});
+      setGraphData({ edges: [], nodes: [] });
     }
   }, [query]);
 

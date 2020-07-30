@@ -20,6 +20,17 @@ export class FormItemModel {
   span?: number;
 
   constructor() {
-    this.id = ''
+    this.id = "";
   }
 }
+
+export type ButtonConfig = {
+  text: string;
+  id: string;
+  type: string;
+  span: number;
+};
+
+export type Validator = {
+  isValidate: boolean;
+};

@@ -5,11 +5,25 @@ import React, { useEffect, useState } from "react";
 import useUrlQuery from "../../../../utils/hooks/use-url-query";
 import { buttons, formItems } from "./config";
 import { buildMethodTree, generateNodeEdges } from "../utils";
+import { ButtonConfig, Validator } from "../../../../models/form";
+import { GraphData } from "../../../../models/graph";
 
+enum MethodDependenceType {
+  invokes = "invokes",
+  callees = "callees",
+  callers = "callers",
+}
+
+type MethodFormData = {
+  deep: number;
+  dependenceType: MethodDependenceType;
+  className: string;
+  methodName: string;
+};
 function MethodDependence() {
   const query = useUrlQuery();
 
-  const [graphData, setGraphData] = useState({});
+  const [graphData, setGraphData] = useState<GraphData>({ nodes: [], edges: [] });
   const [className, setClassName] = useState("");
   const [methodName, setMethodName] = useState("");
   const [defaultFormData, setDefaultFormData] = useState({});
@@ -17,18 +31,19 @@ function MethodDependence() {
   useEffect(() => {
     if (query.className && query.methodName) {
       setDefaultFormData({ deep: 3, dependenceType: "invokes", ...query });
-      setGraphData({});
+      setGraphData({ nodes: [], edges: [] });
     }
   }, [query]);
 
-  function buttonsMap(button) {
+  function buttonsMap(button: ButtonConfig) {
     return {
       ...button,
-      onClick: (formData, validate) => onShowClick({ ...formData }, validate),
+      onClick: (formData: MethodFormData, validate: Validator) =>
+        onShowClick({ ...formData }, validate),
     };
   }
 
-  function onShowClick(args, validate) {
+  function onShowClick(args: MethodFormData, validate: Validator) {
     if (!validate.isValidate) return;
     return queryMethodDependence(args.className, args.methodName, args.dependenceType, {
       deep: args.deep || null,
@@ -68,7 +83,7 @@ function MethodDependence() {
               { label: "类名.方法名", value: "class.method" },
               { label: "包名.类名.方法名", value: "package.class.method" },
             ],
-            setLabel: (fullName, type) => {
+            setLabel: (fullName: string, type: string) => {
               if (type === "method") {
                 if (fullName.endsWith(".")) return "";
                 return fullName.substring(fullName.lastIndexOf(".") + 1);

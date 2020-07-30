@@ -1,49 +1,54 @@
-export const formItems = [{
+import { ButtonConfig, FormItemModel } from "../../../../models/form";
+export const formItems: FormItemModel[] = [
+  {
     id: "className",
     label: "类名",
     required: true,
-    span: 12
+    span: 12,
   },
   {
     id: "dependenceType",
     label: "依赖方式",
     required: true,
     type: "select",
-    options: [{
+    options: [
+      {
         label: "类的依赖",
-        value: "dependencies"
+        value: "dependencies",
       },
       {
         label: "类的类调用依赖",
-        value: "invokes"
+        value: "invokes",
       },
       {
         label: "类所有方法对外调用依赖",
-        value: "methods_callees"
-      }
+        value: "methods_callees",
+      },
     ],
-    span: 4
+    span: 4,
   },
   {
     id: "deep",
     label: "调用深度",
     type: "number",
     min: 0,
-    validate: value => {
+    validate: (value: number) => {
       if (value < 1) {
         return {
           isValidate: false,
-          message: "调用深度需大于1"
+          message: "调用深度需大于1",
         };
       }
     },
-    span: 2
-  }
+    span: 2,
+  },
 ];
 
-export const buttons = [{
-  text: "查询",
-  id: "show",
-  type: "primary",
-  span: 2
-}];
+export const buttons: ButtonConfig[] = [
+  {
+    text: "查询",
+    id: "show",
+    type: "primary",
+    span: 2,
+  },
+];
