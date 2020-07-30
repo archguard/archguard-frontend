@@ -4,7 +4,7 @@ import { Button, Col, Row, Select } from "antd";
 import React, { useMemo, useRef, useState } from "react";
 import { useAsync } from "react-use";
 import "./PackageDependence.css";
-import PackageGraph from "./packageGraph";
+import PackageGraph from "./components/PackageGraph";
 
 export default function PackageDependence(props) {
   const { value: allDependence = [] } = useAsync(queryPackageDependencies);
