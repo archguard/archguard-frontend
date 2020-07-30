@@ -6,7 +6,7 @@ import { scanDependence } from "@/api/scanner/dependenceScanner";
 
 export default function DependenceScanner() {
   const scan = () => {
-    scanDependence().then((res) => {
+    scanDependence().then(() => {
       notification.success({
         message: "扫描成功！",
       });
