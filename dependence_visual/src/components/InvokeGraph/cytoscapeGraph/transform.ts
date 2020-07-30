@@ -6,17 +6,16 @@ export function transform(data: any) {
     return {
       data: {
         id: item.id,
-        label: item.title,
-        fullName: item.title,
-        properties: item.properties,
-        children: item.children
+        label: item.name,
+        fullName: item.name,
+        properties: item.properties || {},
       },
     };
   });
   edges = edges.map((item: any) => ({
     data: {
-      source: item.a,
-      target: item.b,
+      source: item.source,
+      target: item.target,
       label: item.num || item.labels || "",
     },
   }));
@@ -24,6 +23,6 @@ export function transform(data: any) {
   console.log(nodes);
   return {
     nodes,
-    edges
+    edges,
   };
 }

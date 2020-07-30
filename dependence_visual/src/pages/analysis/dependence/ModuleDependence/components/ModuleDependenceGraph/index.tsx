@@ -6,7 +6,9 @@ import { couplings, Coupling } from "../../config";
 import { queryAllModuleDependence } from "@/api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
-import { NodesEdges } from '@/components/InvokeGraph/cytoscapeGraph/components/GraphOperation/utils';
+import { buildModuleDependenceTree, generateNodeEdges } from "../../../utils";
+import { GraphData } from "../../../../../../models/graph";
+import { JavaItem } from "../../../../../../models/java";
 
 export interface Measurements {
   label: string;
@@ -16,7 +18,7 @@ export interface Measurements {
   nodeKey: string;
 }
 
-function transformData(data: any): NodesEdges {
+function transformData(data: any): GraphData<JavaItem> {
   data.nodes = data.nodes.map((item: any) => ({
     id: item.id,
     title: item.name,
@@ -38,17 +40,19 @@ function getMeasurements(moduleCoupling?: any): Measurements | undefined {
     data: moduleCoupling,
     dataKey: "moduleName",
     nodeKey: "fullName",
-  }
+  };
 }
 
 function ModuleDependenceGraph() {
-  const [graphData, setGraphData] = useState<NodesEdges>();
+  const [graphData, setGraphData] = useState<GraphData<JavaItem>>();
   const [moduleCoupling] = useModuleCoupling();
   const [selectedNode] = useSelectedNode();
 
   function showAllModuleDependence() {
     queryAllModuleDependence().then((res: any) => {
-      setGraphData(transformData(res));
+      const tree = buildModuleDependenceTree(res);
+      const nodeEdges = generateNodeEdges(tree);
+      setGraphData(nodeEdges);
     });
   }
 

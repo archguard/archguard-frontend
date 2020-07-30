@@ -1,6 +1,6 @@
-import { every, filter, findIndex, forEach } from "lodash";
-import { JMethod, JClass, JavaItem } from "../../../models/java";
-import { TreeNode, Node, Edge, GraphData } from "../../../models/graph";
+import { every, filter, findIndex, forEach, reduce } from "lodash";
+import { JModule, JMethod, JClass, JavaItem } from "../../../models/java";
+import { TreeNode, Node, Edge, GraphData, GraphTree } from "../../../models/graph";
 
 const createJMethodNode = (jMethod: JMethod): TreeNode<JMethod> => {
   const { id, name, module, clazz } = jMethod;
@@ -19,6 +19,16 @@ const createJClassNode = (jItem: JClass): TreeNode<JClass> => {
     id,
     name,
     module,
+    parents: [],
+    children: [],
+  };
+};
+
+const createJModuleNode = (jItem: JModule): TreeNode<JModule> => {
+  const { id, name } = jItem;
+  return {
+    id,
+    name,
     parents: [],
     children: [],
   };
@@ -186,35 +196,120 @@ export const buildClassMethodInvokesTree = (jClass: JClass): TreeNode<JMethod>[]
   return rootNodes;
 };
 
-export const generateNodeEdges = <T>(rootNodes: TreeNode<T>[]): GraphData => {
-  const nodes: Node[] = [];
+export const generateNodeEdges = <T>(
+  rootNodes: TreeNode<T>[] | GraphTree<T>,
+  deep: number = Number.MAX_VALUE,
+): GraphData<T> => {
+  const nodes: Node<T>[] = [];
   const edges: Edge[] = [];
 
-  const travelNode = (node: TreeNode<T>, path: string[]) => {
+  const travelNode = (node: TreeNode<T>, nodeDeep: number, path: string[]) => {
+    const nextDeep = nodeDeep + 1;
+    node.visible = true;
     path.push(node.id);
 
-    nodes.push({ id: node.id, title: node.name, properties: {}, isImplement: node.isImplement });
+    if (nodes.indexOf(node) === -1) {
+      nodes.push(node);
+    }
+
+    if (nextDeep > deep) {
+      path.pop();
+      return;
+    }
 
     const { children } = node;
     forEach(children, (childNode) => {
       const isNotLoop = path.indexOf(childNode.id) === -1;
       if (isNotLoop) {
         const edgeExist =
-          findIndex(edges, (edge) => edge.a === node.id && edge.b === childNode.id) === -1;
+          findIndex(edges, (edge) => edge.source === node.id && edge.target === childNode.id) ===
+          -1;
         if (edgeExist) {
-          edges.push({ a: node.id, b: childNode.id });
+          edges.push({ source: node.id, target: childNode.id });
         }
-        travelNode(childNode, path);
+        travelNode(childNode, nextDeep, path);
       }
     });
     path.pop();
   };
 
   forEach(rootNodes, (node) => {
-    travelNode(node, []);
+    travelNode(node, 1, []);
   });
   return {
     nodes,
     edges,
   };
 };
+
+type JEdge = {
+  a: string;
+  b: string;
+  num?: number;
+  labels: string[];
+};
+type JNode = {
+  id: string;
+  name: string;
+};
+
+export function buildModuleDependenceTree({
+  nodes = [],
+  edges = [],
+}: {
+  nodes: JNode[];
+  edges: JEdge[];
+}): GraphTree<JModule> {
+  const visitNodeMap: { [key: string]: boolean } = {};
+  const tree: GraphTree<JModule> = {};
+
+  const nodeMap = reduce(
+    nodes,
+    (accumulator: { [key: string]: TreeNode<JModule> }, node) => {
+      accumulator[node.id] = createJModuleNode(node);
+      return accumulator;
+    },
+    {},
+  );
+  const getNodeById = (nodeId: string): TreeNode<JModule> => {
+    const node = nodeMap[nodeId];
+    if (!node.children) {
+      node.children = [];
+    }
+    return node;
+  };
+  forEach(edges, (edge: { a: string; b: string }) => {
+    const { a: startNodeId, b: endNodeId } = edge;
+    const startNode = getNodeById(startNodeId);
+    const endNode = getNodeById(endNodeId);
+    const startNodeNotInTree: boolean = !visitNodeMap[startNodeId];
+    const endNodeInTree: boolean = !!tree[endNodeId];
+
+    if (startNodeNotInTree) {
+      //开始节点在树中还不存在
+      tree[startNodeId] = startNode;
+    }
+    if (startNode.children!.indexOf(endNode) === -1) {
+      startNode.children!.push(endNode);
+    }
+
+    if (!endNode.parents) {
+      endNode.parents = [];
+    }
+    if (endNode.parents.indexOf(startNode) === -1) {
+      endNode.parents.push(startNode);
+    }
+
+    /**
+     * {a: 1, b: 2} => { 1: [2] }
+     * {a: 3, b: 1} => { 3: [{1: [2]}]}
+     * 需要删除被引用的顶级节点
+     */
+    if (endNodeInTree) {
+      delete tree[endNodeId];
+    }
+    visitNodeMap[startNodeId] = true;
+    visitNodeMap[endNodeId] = true;
+  });
+  return tree;
+}

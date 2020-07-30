@@ -10,15 +10,17 @@ import {
   resetNodeSize,
   resetNodeLabel,
 } from "../../drawGraph";
-import { findLoopPaths, NodesEdges } from "./utils";
-import { LayoutOptions, Core } from 'cytoscape';
-import { Measurements } from '@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph';
-import { NodeLabel } from '../../Graph';
-import { SelectValue } from 'antd/lib/select';
+import { findLoopPaths } from "./utils";
+import { LayoutOptions, Core } from "cytoscape";
+import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph";
+import { NodeLabel } from "../../Graph";
+import { SelectValue } from "antd/lib/select";
+import { GraphData } from "@/models/graph";
+import { JavaItem } from "@/models/java";
 
 interface GraphOperationProps {
-  cy: Core;
-  graphData?: NodesEdges;
+  cy?: Core;
+  graphData?: GraphData<JavaItem>;
   graphLayout: any;
   graphLayoutCallBack?: Function;
   measurements?: Measurements;
@@ -36,7 +38,7 @@ export default function GraphOperation(props: GraphOperationProps) {
   }, [graphLayout]);
 
   useEffect(() => {
-    const edges = graphData?.edges || []
+    const edges = graphData?.edges || [];
     const paths = findLoopPaths(edges);
     setLoopPaths(paths);
   }, [graphData]);
@@ -56,13 +58,13 @@ export default function GraphOperation(props: GraphOperationProps) {
   function onGraphLayoutChange(graphLayout: any) {
     const newGraphLayout = { ...ownGraphLayout, ...graphLayout };
     setOwnGraphLayout(newGraphLayout);
-    drawByLayout(cy, newGraphLayout);
+    drawByLayout(cy!, newGraphLayout);
     graphLayoutCallBack && graphLayoutCallBack(newGraphLayout);
   }
 
   function onShowLoop(index: number) {
     const path = loopPaths[index];
-    showLoop(cy, path);
+    showLoop(cy!, path);
   }
 
   function onMeasurementsChange(measurement: string) {
@@ -72,19 +74,19 @@ export default function GraphOperation(props: GraphOperationProps) {
     const dataKey = measurements.dataKey || "id";
     const nodeKey = measurements.nodeKey || dataKey;
     measurements.data.map((item: any) => {
-      return nodesSize[item[dataKey]] = item[measurement] * 1000 + "%";
+      return (nodesSize[item[dataKey]] = item[measurement] * 1000 + "%");
     });
-    resetNodeSize(cy, nodesSize, nodeKey);
+    resetNodeSize(cy!, nodesSize, nodeKey);
   }
 
   function onResetStyle() {
-    resetDefaultStyle(cy);
+    resetDefaultStyle(cy!);
   }
 
   function onNodeLabelChange(type: SelectValue) {
-    if (!nodeLabel) return
-    resetNodeLabel(cy, (fullName: string) => nodeLabel.setLabel(fullName, type));
-    drawByLayout(cy, graphLayout);
+    if (!nodeLabel) return;
+    resetNodeLabel(cy!, (fullName: string) => nodeLabel.setLabel(fullName, type));
+    drawByLayout(cy!, graphLayout);
   }
 
   return (

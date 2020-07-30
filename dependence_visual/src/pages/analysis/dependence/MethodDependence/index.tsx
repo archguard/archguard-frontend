@@ -6,6 +6,7 @@ import useUrlQuery from "../../../../utils/hooks/use-url-query";
 import { buttons, formItems } from "./config";
 import { buildMethodTree, generateNodeEdges } from "../utils";
 import { ButtonConfig, Validator } from "../../../../models/form";
+import { JMethod } from "../../../../models/java";
 import { GraphData } from "../../../../models/graph";
 
 enum MethodDependenceType {
@@ -23,7 +24,7 @@ type MethodFormData = {
 function MethodDependence() {
   const query = useUrlQuery();
 
-  const [graphData, setGraphData] = useState<GraphData>({ nodes: [], edges: [] });
+  const [graphData, setGraphData] = useState<GraphData<JMethod>>({ nodes: [], edges: [] });
   const [className, setClassName] = useState("");
   const [methodName, setMethodName] = useState("");
   const [defaultFormData, setDefaultFormData] = useState({});
@@ -49,8 +50,7 @@ function MethodDependence() {
       deep: args.deep || null,
     }).then((res) => {
       const tree = buildMethodTree(res);
-      console.log(tree);
-      const nodeEdges = generateNodeEdges(tree);
+      const nodeEdges = generateNodeEdges(tree, 3);
       setGraphData(nodeEdges);
       setClassName(args.className);
       setMethodName(args.methodName);
@@ -75,7 +75,6 @@ function MethodDependence() {
           id="methodDependenceGraph"
           data={graphData}
           title={className + "." + methodName}
-          deep={3}
           nodeLabel={{
             placeholder: "方法名显示",
             options: [

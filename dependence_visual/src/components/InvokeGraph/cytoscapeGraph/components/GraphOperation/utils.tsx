@@ -1,35 +1,6 @@
-import { every, find, findIndex, forEach, remove, reduce, some } from "lodash";
-export interface NodeProperies {
-  module: string;
-  color?: string;
-  parent?: Node;
-  parents?: Node[];
-  length: number;
-}
-
-export type Node = {
-  id: string;
-  title: string;
-  fullName: string;
-  properties: NodeProperies;
-  isImplement?: boolean;
-  children?: Node[];
-  parents?: Node[];
-  visible?: boolean;
-  hidden?: boolean;
-};
-export type Edge = {
-  a: string;
-  b: string;
-  num?: number;
-  label?: string;
-  labels?: string[];
-  hidden?: boolean;
-};
-export class NodesEdges {
-  nodes: Node[] = [];
-  edges: Edge[] = [];
-}
+import { forEach, remove, some } from "lodash";
+import { TreeNode, Edge, GraphData } from "../../../../../models/graph";
+import { JavaItem } from "@/models/java";
 
 function dfs(
   node: string,
@@ -68,38 +39,20 @@ function groupBy(list: any, key: string, setValue = (value: string) => value) {
   return result;
 }
 
-function findNodes(edges: Array<{ a: string; b: string }>) {
+function findNodes(edges: Edge[]) {
   const nodes: { [key: string]: boolean } = {};
   for (const edge of edges) {
-    nodes[edge.a] = false;
-    nodes[edge.b] = false;
+    nodes[edge.source] = false;
+    nodes[edge.target] = false;
   }
 
   return nodes;
 }
 
-function transformEdges(
-  edges: Edge[],
-  sourceKey: string,
-  targetKey: string,
-) {
-  return edges.map((item: any) => {
-    const edge: any = { ...item };
-    edge[sourceKey] = item[sourceKey] + "";
-    edge[targetKey] = item[targetKey] + "";
-    return edge;
-  });
-}
-
-export function findLoopPaths(
-  edges: Edge[],
-  sourceKey = "a",
-  targetKey = "b",
-) {
+export function findLoopPaths(edges: Edge[], sourceKey = "source", targetKey = "target") {
   if (!edges) return [];
-  const transformedEdges = transformEdges(edges, sourceKey, targetKey);
-  const graph = groupBy(transformedEdges, sourceKey, (value: any) => value[targetKey]);
-  const visited = findNodes(transformedEdges as Array<{ a: string; b: string }>);
+  const graph = groupBy(edges, sourceKey, (value: any) => value[targetKey]);
+  const visited = findNodes(edges);
   const stack: string[] = [];
   const paths: string[][] = [];
 
@@ -112,117 +65,17 @@ export function findLoopPaths(
   return paths;
 }
 
-export function buildDependenceTree({ nodes = [], edges = [] }: NodesEdges) {
-  const visitNodeMap: { [key: string]: boolean } = {};
-  const tree: { [key: string]: any } = {};
-  const nodeMap = reduce(
-    nodes,
-    (accumulator: { [key: string]: Node }, node) => {
-      accumulator[node.id] = node;
-      return accumulator;
-    },
-    {},
-  );
-  const getNodeById = (nodeId: string): Node => {
-    const node = nodeMap[nodeId];
-    if (!node.children) {
-      node.children = [];
-    }
-    return node;
-  };
-  forEach(edges, (edge) => {
-    const { a: startNodeId, b: endNodeId } = edge;
-    const startNode = getNodeById(startNodeId);
-    const endNode = getNodeById(endNodeId);
-    const startNodeNotInTree: boolean = !visitNodeMap[startNodeId];
-    const endNodeInTree: boolean = !!tree[endNodeId];
-
-    if (startNodeNotInTree) {
-      //开始节点在树中还不存在
-      tree[startNodeId] = startNode;
-    }
-    if (startNode.children!.indexOf(endNode) === -1) {
-      startNode.children!.push(endNode);
-    }
-
-    if (!endNode.parents) {
-      endNode.parents = [];
-    }
-    if (endNode.parents.indexOf(startNode) === -1) {
-      endNode.parents.push(startNode);
-    }
-
-    /**
-     * {a: 1, b: 2} => { 1: [2] }
-     * {a: 3, b: 1} => { 3: [{1: [2]}]}
-     * 需要删除被引用的顶级节点
-     */
-    if (endNodeInTree) {
-      delete tree[endNodeId];
-    }
-    visitNodeMap[startNodeId] = true;
-    visitNodeMap[endNodeId] = true;
-  });
-  return tree;
-}
-
-export function getVisibleTreeNodeByDeep(
-  tree: { [key: string]: Node },
-  deep: number,
-): NodesEdges {
-  const visibleNodes: Node[] = [];
-  const visibleEdges: Edge[] = [];
-  let deepLevel = deep && deep > 0 ? deep : 100;
-
-  const travelNode = (node: Node, nodeDeep: number, path: string[]) => {
-    const nextDeep = nodeDeep + 1;
-    node.visible = true;
-    path.push(node.id);
-    if (visibleNodes.indexOf(node) === -1) {
-      visibleNodes.push(node);
-    }
-
-    if (nextDeep > deepLevel) {
-      path.pop();
-      return;
-    }
-
-    const { children } = node;
-    forEach(children, (childNode) => {
-      const isNotLoop = path.indexOf(childNode.id) === -1;
-      if (isNotLoop) {
-        const edgeExist =
-          findIndex(visibleEdges, (edge) => edge.a === node.id && edge.b === childNode.id) === -1;
-        if (edgeExist) {
-          visibleEdges.push({ a: node.id, b: childNode.id, labels: childNode.isImplement ? ["implement"] : undefined, });
-        }
-        travelNode(childNode, nextDeep, path);
-      }
-    });
-    path.pop();
-  };
-
-  forEach(tree, (node) => {
-    travelNode(node, 1, []);
-  });
-
-  return {
-    nodes: visibleNodes,
-    edges: visibleEdges,
-  };
-}
-
 export function expandNode(
-  node: Node,
-  { nodes, edges }: NodesEdges,
-): NodesEdges {
+  node: TreeNode<JavaItem>,
+  { nodes, edges }: GraphData<JavaItem>,
+): GraphData<JavaItem> {
   const newNodes = nodes.slice();
   const newEdges = edges.slice();
   const { id, children } = node;
   forEach(children, (item) => {
     item.visible = true;
     newNodes.push(item);
-    newEdges.push({ a: id, b: item.id, labels: item.isImplement ? ["implement"] : undefined, });
+    newEdges.push({ source: id, target: item.id });
   });
   return {
     nodes: newNodes,
@@ -231,13 +84,13 @@ export function expandNode(
 }
 
 export function collapseNode(
-  node: Node,
-  { nodes, edges }: NodesEdges,
-): NodesEdges {
+  node: TreeNode<JavaItem>,
+  { nodes, edges }: GraphData<JavaItem>,
+): GraphData<JavaItem> {
   const newNodes = nodes.slice();
   const newEdges = edges.slice();
 
-  const hideChildNode = (parentId: string, node: Node) => {
+  const hideChildNode = (parentId: string, node: TreeNode<JavaItem>) => {
     const { id, parents, children } = node;
     const hasParentVisble = some(parents, (parent) => {
       return parent.id !== parentId && parent.visible;
@@ -251,7 +104,7 @@ export function collapseNode(
         }
       });
     }
-    remove(newEdges, (edge) => edge.a === parentId && edge.b === id);
+    remove(newEdges, (edge) => edge.source === parentId && edge.target === id);
   };
 
   forEach(node.children, (child) => {
@@ -264,6 +117,6 @@ export function collapseNode(
   };
 }
 
-export function isExpand(node: Node, edges: Edge[]) {
-  return some(edges, (edge) => edge.a === node.id);
+export function isExpand(node: TreeNode<JavaItem>, edges: Edge[]) {
+  return some(edges, (edge) => edge.source === node.id);
 }

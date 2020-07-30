@@ -2,22 +2,18 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { scrollToAnchor } from "@/utils/anchor";
 import { useMount } from "ahooks";
 import { message } from "antd";
+import { find } from "lodash";
 import FullscreenContainer from "../../fullscreen-container/index";
 import { filterDataWithConfig } from "../utils";
 import GraphOperation from "./components/GraphOperation";
 import { drawByData, initCytoscape, showHighlightBrachNode } from "./drawGraph";
 import { transform } from "./transform";
-import {
-  buildDependenceTree,
-  getVisibleTreeNodeByDeep,
-  expandNode,
-  collapseNode,
-  isExpand,
-  NodesEdges,
-} from "./components/GraphOperation/utils";
+import { expandNode, collapseNode, isExpand } from "./components/GraphOperation/utils";
 import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph";
 import { Core, LayoutOptions } from "cytoscape";
 import { GraphData } from "../../../models/graph";
+import { JavaItem } from "@/models/java";
+import { generateNodeEdges } from "../../../pages/analysis/dependence/utils";
 
 type Option = {
   label: string;
@@ -31,7 +27,7 @@ export interface NodeLabel {
 
 interface GraphProps {
   id: string;
-  data: GraphData;
+  data: GraphData<JavaItem>;
   title?: string;
   configs?: any;
   measurements?: Measurements;
@@ -48,22 +44,20 @@ export default function Graph(props: GraphProps) {
     nodeDimensionsIncludeLabels: true,
     fit: true,
   });
-  const [visibleNodeEdges, setNodeEdges] = useState(new NodesEdges());
-
-  const dependenceTree = useMemo(() => {
-    return buildDependenceTree(data || {});
-  }, [data]);
+  const [visibleNodeEdges, setNodeEdges] = useState<GraphData<JavaItem>>({ nodes: [], edges: [] });
 
   const onNodeClick = useCallback(
     (event) => {
       const node = event.target.data();
-      const { children } = node;
-      const hasChild = children && children.length > 0;
+      const { id } = node;
+      const { nodes, edges } = visibleNodeEdges;
+      const treeNode = find(nodes, (item) => item.id === id);
+      const hasChild = treeNode!.children && treeNode!.children.length > 0;
       if (hasChild) {
-        const isNodeExpand = isExpand(node, visibleNodeEdges.edges);
+        const isNodeExpand = isExpand(node, edges);
         const newNodeEdges = isNodeExpand
-          ? collapseNode(node, visibleNodeEdges)
-          : expandNode(node, visibleNodeEdges);
+          ? collapseNode(treeNode!, visibleNodeEdges)
+          : expandNode(treeNode!, visibleNodeEdges);
         setNodeEdges(newNodeEdges);
         drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title);
       }
@@ -87,17 +81,18 @@ export default function Graph(props: GraphProps) {
   }, [visibleNodeEdges]);
 
   useEffect(() => {
-    const visibleNodeEdges = getVisibleTreeNodeByDeep(dependenceTree, deep || 0);
-    drawByData(cy, transform(filterDataWithConfig(visibleNodeEdges, configs)), graphLayout, title);
-    setNodeEdges(visibleNodeEdges);
-  }, [dependenceTree, title, graphLayout, configs, deep]);
+    setNodeEdges(data);
+    drawByData(cy, transform(filterDataWithConfig(data, configs)), graphLayout, title);
+  }, [data, title, graphLayout, configs, deep]);
 
   useEffect(() => {
     if (!selectedNode) return;
     const data = selectedNode.data;
     const key = selectedNode.key || "id";
     if (!data || !cy) return;
-    const selectedElement = cy.filter((e) => e.data(key) === data)[0];
+    const selectedElement = cy.filter(
+      (e: { data: (key: string) => string }) => e.data(key) === data,
+    )[0];
     if (!selectedElement) return;
     showHighlightBrachNode(cy, selectedElement);
     scrollToAnchor(id);

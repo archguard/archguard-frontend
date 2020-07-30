@@ -7,7 +7,7 @@ export enum ClassType {
 export interface JavaItem {
   id: string;
   name: string;
-  module: string;
+  module?: string;
 }
 
 export interface ClassCall {
@@ -41,4 +41,19 @@ export interface JMethod extends JavaItem {
   callers: JMethod[];
   parents: JMethod[];
   implements: JMethod[];
+}
+
+export interface JModule extends JavaItem {}
+export interface JNode {
+  id: string;
+  fullName: string;
+  title: string;
+  properties: { [key: string]: string | number };
+}
+
+export interface JEdge {
+  a: string;
+  b: string;
+  lables?: string[];
+  num?: number;
 }

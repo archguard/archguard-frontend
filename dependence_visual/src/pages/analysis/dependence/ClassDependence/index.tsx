@@ -11,7 +11,7 @@ import {
   generateNodeEdges,
 } from "../utils";
 import { GraphData } from "../../../../models/graph";
-import { JClass } from "../../../../models/java";
+import { JClass, JMethod } from "../../../../models/java";
 import { ButtonConfig, Validator } from "../../../../models/form";
 
 enum ClassDependenceType {
@@ -20,15 +20,21 @@ enum ClassDependenceType {
   methods_callees = "methods_callees",
 }
 
-const calculateNodeEdges = (dependenceType: ClassDependenceType, jclass: JClass): GraphData => {
+type JItem = JClass | JMethod;
+
+const calculateNodeEdges = (
+  dependenceType: ClassDependenceType,
+  jclass: JClass,
+  deep: number = 3,
+): GraphData<JItem> => {
   const buildTreeFunctions: { [key in ClassDependenceType]: Function } = {
     [ClassDependenceType.dependencies]: buildClassDependenceTree,
     [ClassDependenceType.invokes]: buildClassInvokesTree,
     [ClassDependenceType.methods_callees]: buildClassMethodInvokesTree,
   };
   const rootNodes = buildTreeFunctions[dependenceType](jclass);
-  const nodeEdges = generateNodeEdges(rootNodes);
-  return nodeEdges;
+  const nodeEdges = generateNodeEdges(rootNodes, deep);
+  return nodeEdges as GraphData<JItem>;
 };
 
 type ClassFormData = {
@@ -40,7 +46,7 @@ type ClassFormData = {
 function ClassDependence() {
   const query = useUrlQuery();
 
-  const [graphData, setGraphData] = useState<GraphData>({ edges: [], nodes: [] });
+  const [graphData, setGraphData] = useState<GraphData<JItem>>({ edges: [], nodes: [] });
   const [className, setClassName] = useState("");
   const [defaultFormData, setDefaultFormData] = useState({});
 
@@ -86,7 +92,6 @@ function ClassDependence() {
         id="classDependenceGraph"
         data={graphData}
         title={className}
-        deep={3}
         nodeLabel={{
           placeholder: "类名显示",
           options: [
