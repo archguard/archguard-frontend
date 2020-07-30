@@ -20,8 +20,8 @@ export const configType: ConfigType[] = [
       {
         id: "value", label: "配置值", type: "select",
         options: [
-          { label: "Dubbo分析", value: "DubboPlugin" },
-          { label: "FeignClient分析", value: "FeignClientPlugin" },
+          { label: "Dubbo分析", value: "DUBBO" },
+          { label: "FeignClient分析", value: "FEIGN_CLIENT" },
         ],
       },
       { id: "order", label: "应用顺序", type: "number", defaultValue: 1, }
