@@ -1,3 +1,5 @@
+import { NodeConfig, EdgeConfig } from '@antv/g6/lib/types';
+
 const COLORS = [
   "#4d64b5",
   "#63b7af",
@@ -13,18 +15,44 @@ const COLORS = [
   "#65587f",
 ];
 
+export interface PackageGraphNode {
+  id: string;
+  children: PackageGraphNode[];
+  label: string;
+  parent: string;
+  nodeMap: Map<any, any>;
+  collapse: boolean;
+  info?: any;
+  color?: string;
+  deep?: number;
+  x?: number;
+  y?: number;
+  edgeCount?: number;
+}
+
+interface PackageGraphEdge {
+  source: string;
+  target: string;
+  nodeMap: Map<any, any>;
+  count: number;
+  label: number;
+  index: number;
+  sourceAnchor: number;
+  targetAnchor: number;
+}
+
 export default class PackageGraphData {
   nodeMap = new Map();
   nodeEdgeMap = new Map();
-  nodes = [];
-  edges = [];
-  rootNodes = [];
+  nodes: PackageGraphNode[] = [];
+  edges: PackageGraphEdge[] = [];
+  rootNodes: PackageGraphNode[] = [];
 
-  visibleNodes = [];
+  visibleNodes: PackageGraphNode[] = [];
   visibleNodeIds = new Map();
-  visibleEdges = [];
+  visibleEdges: PackageGraphEdge[] = [];
 
-  load(data, collapseDeep = 4) {
+  load(data: any, collapseDeep = 4) {
     this.nodeMap.clear();
     this.nodeEdgeMap.clear();
     this.nodes = [];
@@ -32,8 +60,8 @@ export default class PackageGraphData {
     if (!data) return;
 
     // 转换节点结构
-    data.nodes.forEach((node) => {
-      const newNode = {
+    data.nodes.forEach((node: any) => {
+      const newNode: PackageGraphNode = {
         id: `${node.id}`,
         children: [],
         label: node.name,
@@ -49,7 +77,7 @@ export default class PackageGraphData {
     this.rootNodes = this.nodes.filter((n) => n.parent === "0");
 
     // 转换边结构
-    this.edges = data.edges.map((edge) => {
+    this.edges = data.edges.map((edge: any) => {
       const newEdge = {
         source: `${edge.a}`,
         target: `${edge.b}`,
@@ -94,7 +122,7 @@ export default class PackageGraphData {
       }
     });
 
-    const deepInto = (parent, node, deep) => {
+    const deepInto = (parent: PackageGraphNode, node: PackageGraphNode, deep: number) => {
       node.deep = deep;
       node.collapse = deep >= collapseDeep;
       node.info = parent.info || node.info;
@@ -102,16 +130,16 @@ export default class PackageGraphData {
     };
 
     this.rootNodes.forEach((node) => deepInto(node, node, 0));
-    this.nodes = this.nodes.sort((a, b) => a.deep - b.deep);
+    this.nodes = this.nodes.sort((a, b) => (a.deep as number) - (b.deep as number));
   }
 
   layoutNodes() {
     let y = 0;
-    const layoutInto = (node) => {
+    const layoutInto = (node: PackageGraphNode) => {
       node.x = 0;
       node.y = y;
 
-      const edgeCount = node.edgeCount || 0;
+      const edgeCount = (node.edgeCount as number) || 0;
       const height = 30 + Math.max(0, edgeCount - 1) * 10;
 
       y += height + 2;
@@ -136,23 +164,23 @@ export default class PackageGraphData {
 
       edge.sourceAnchor = nodeAnchorIndex.get(edge.source) || 0;
       edge.targetAnchor = nodeAnchorIndex.get(edge.target) || 0;
-      nodeAnchorIndex.set(edge.source, edge.sourceAnchor + 1);
-      nodeAnchorIndex.set(edge.target, edge.targetAnchor + 1);
+      nodeAnchorIndex.set(edge.source, edge.sourceAnchor as number + 1);
+      nodeAnchorIndex.set(edge.target, edge.targetAnchor as number + 1);
 
       edgeIndex++;
     });
   }
 
-  render() {
+  render(): { nodes: NodeConfig[], edges: EdgeConfig[] } {
     this.visibleNodeIds.clear();
-    const nodes = [];
+    const nodes: PackageGraphNode[] = [];
 
-    const visibleNodeWalk = (node) => {
+    const visibleNodeWalk = (node: PackageGraphNode) => {
       nodes.push(node);
       node.edgeCount = 0;
       this.visibleNodeIds.set(node.id, true);
       if (!node.collapse) {
-        node.children.forEach(visibleNodeWalk);
+        node.children && node.children.forEach(visibleNodeWalk);
       }
     };
 
@@ -178,6 +206,9 @@ export default class PackageGraphData {
 
     this.layoutNodes();
     this.layoutEdges();
-    return { nodes, edges };
+    return {
+      nodes: (nodes as unknown) as NodeConfig[],
+      edges: (edges as unknown) as EdgeConfig[]
+    };
   }
 }

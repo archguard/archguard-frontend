@@ -3,13 +3,13 @@ import FullscreenContainer from "@/components/fullscreen-container";
 import { Button, Col, Row, Select } from "antd";
 import React, { useMemo, useRef, useState } from "react";
 import { useAsync } from "react-use";
-import "./PackageDependence.css";
-import PackageGraph from "./components/PackageGraph";
+import "./index.css";
+import PackageGraph from "./components/packageGraph";
 
-export default function PackageDependence(props) {
+export default function PackageDependence() {
   const { value: allDependence = [] } = useAsync(queryPackageDependencies);
   const [currentModule, setCurrentModule] = useState(0);
-  const graph = useRef();
+  const graph = useRef<any>(null);
 
   const currentGraphData = useMemo(() => {
     if (allDependence[currentModule]) {
@@ -45,8 +45,8 @@ export default function PackageDependence(props) {
             showSearch={true}
           >
             {allDependence
-              .map((it) => it.module)
-              .map((module, index) => {
+              .map((it: any) => it.module)
+              .map((module: any, index: number) => {
                 return (
                   <Select.Option value={index} key={module}>
                     {module}

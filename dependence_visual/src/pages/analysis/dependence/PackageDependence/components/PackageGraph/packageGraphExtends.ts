@@ -5,7 +5,8 @@ const NODE_INDENT = 20;
 const NODE_WIDTH = 400;
 
 G6.registerNode("pkg-node", {
-  getAnchorPoints(cfg) {
+  getAnchorPoints(cfg: any) {
+    if (!cfg) return
     const edgeCount = cfg.edgeCount || 0;
     const step = 1 / (edgeCount + 1);
     const anchors = [];
@@ -15,7 +16,7 @@ G6.registerNode("pkg-node", {
     return anchors;
   },
 
-  draw: function drawShape(cfg, group) {
+  draw: function drawShape(cfg: any, group: any) {
     const r = 8;
     const color = cfg.info.color;
     const width = NODE_WIDTH;
@@ -107,8 +108,8 @@ G6.registerEdge(
         },
       },
     },
-    getShapeStyle(cfg) {
-      const { style: defaultStyle } = this.options;
+    getShapeStyle(cfg: any) {
+      const { style: defaultStyle } = this.options as any;
       const style = mix({}, defaultStyle, cfg.style);
 
       const { startPoint, endPoint, index } = cfg;

@@ -1,7 +1,7 @@
 import G6 from "@antv/g6";
-import PackageGraphData from "./packageGraphData";
+import PackageGraphData, { PackageGraphNode } from "./packageGraphData";
 
-export function getFullPackageName(node) {
+export function getFullPackageName(node: PackageGraphNode | any) {
   const nodeMap = node.nodeMap;
   let name = `${node.label}`;
   while (true) {
@@ -13,7 +13,7 @@ export function getFullPackageName(node) {
   return name;
 }
 
-export function createGraph(container) {
+export function createGraph(container: any) {
   const data = new PackageGraphData();
   const width = 100;
   const height = 100;
@@ -46,7 +46,7 @@ export function createGraph(container) {
         {
           type: "edge-tooltip",
           formatText(model) {
-            const nodeMap = model.nodeMap;
+            const nodeMap = model.nodeMap as Map<any, any>;
             const sourceNode = nodeMap.get(model.source);
             const targetNode = nodeMap.get(model.target);
             const text = `
@@ -64,7 +64,7 @@ export function createGraph(container) {
         stroke: "red",
         strokeOpacity: 1,
         labelCfg: {
-          style: { fill: "#f00" },
+          style: { fill: "#f00" }
         },
       },
     },
@@ -74,7 +74,7 @@ export function createGraph(container) {
   });
 
   const graphUtil = {
-    load(newData) {
+    load(newData: any) {
       data.load(newData);
       this.render();
     },
@@ -90,13 +90,13 @@ export function createGraph(container) {
       data.nodes.forEach((node) => (node.collapse = false));
       this.render();
     },
-    changeSize(width, height) {
+    changeSize(width: number, height: number) {
       graph.changeSize(width, height);
       graph.refresh();
     },
   };
 
-  graph.on("node:click", (ev) => {
+  graph.on("node:click", (ev: any) => {
     const node = ev.item.getModel();
     if (node.children && node.children.length > 0) {
       node.collapse = !node.collapse;

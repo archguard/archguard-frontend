@@ -1,13 +1,17 @@
-import React, { forwardRef, useEffect, useMemo, useRef } from "react";
+import React, { forwardRef, useEffect, useMemo, useRef, RefObject } from "react";
 import ReactDOM from "react-dom";
 import { useMeasure } from "react-use";
-import "./packageGraph.less";
+import "./index.less";
 import "./packageGraphExtends";
 import { createGraph } from "./packageGraphUtil";
 
-const PackageGraph = forwardRef((props, ref) => {
+interface PackageGraphProps {
+  data: any;
+}
+
+const PackageGraph = forwardRef((props: PackageGraphProps, ref: any) => {
   const { data } = props;
-  const graphRef = useRef();
+  const graphRef = useRef<any>();
   const [containerRef, { width, height }] = useMeasure();
 
   const graph = useMemo(() => {
@@ -32,7 +36,7 @@ const PackageGraph = forwardRef((props, ref) => {
   }, [data, graph]);
 
   return (
-    <div ref={containerRef} className="graph-container" style={{ width: "100%", height: "100%" }}>
+    <div ref={(containerRef as unknown) as RefObject<HTMLDivElement>} className="graph-container" style={{ width: "100%", height: "100%" }}>
       <div ref={graphRef} />
     </div>
   );
