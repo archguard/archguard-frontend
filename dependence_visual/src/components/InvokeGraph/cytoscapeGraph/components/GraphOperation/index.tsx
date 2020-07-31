@@ -116,7 +116,7 @@ export default function GraphOperation(props: GraphOperationProps) {
           const firstNode = graphNodeMap[firstNodeId] || {};
           const lastNode = graphNodeMap[lastNodeId] || {};
           return {
-            label: `循环: ${firstNode.title} -> ${lastNode.title}`,
+            label: `循环: ${firstNode.name} -> ${lastNode.name}`,
             value: index,
           };
         })}
