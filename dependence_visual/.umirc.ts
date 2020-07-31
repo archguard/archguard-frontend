@@ -37,7 +37,6 @@ export default defineConfig({
           component: "@/pages/retrofit-tools/plsql2kotlin",
         },
         { path: "/analysis/dependence/:type?", component: "@/pages/analysis/dependence" },
-        { path: "/analysis/plsql", component: "@/pages/analysis/plsql" },
       ],
     },
   ],

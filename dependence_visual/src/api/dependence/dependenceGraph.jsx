@@ -19,12 +19,3 @@ export function queryClassDependence(className, dependenceType, parameter) {
     params: parameter,
   });
 }
-
-export function queryProcedureDependence(packageName, procedureName, dependenceType, parameter) {
-  return axios({
-    baseURL: baseURL,
-    url: "/plsql/" + packageName + "/" + procedureName + "/" + dependenceType,
-    method: "GET",
-    params: parameter,
-  });
-}
