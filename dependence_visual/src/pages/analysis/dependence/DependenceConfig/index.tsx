@@ -5,6 +5,7 @@ import { Card, Drawer, notification } from "antd";
 import ConfigForm from "./ConfigForm/index";
 import { queryConfig, updateConfig } from '@/api/module/dependenceConfig';
 import { ConfigData, configType } from './ConfigForm/config';
+import PluginConfig from './PluginConfig';
 
 interface DependenceConfigProps {
   visible: boolean;
@@ -38,10 +39,11 @@ const DependenceConfig = (props: DependenceConfigProps) => {
 
   return (
     <Drawer title="配置" placement="right" width="50%" visible={visible} onClose={() => hide()}>
+      <PluginConfig data={configData} updateData={updateConfigData}/>
       <div>
         {configType.map((item) => {
           return (
-            <Card key={item.type} title={item.label} style={{ marginBottom: "20px" }}>
+            <Card key={item.type} title={item.label} style={{ marginTop: "20px" }}>
               <ConfigForm
                 formItems={item.formItems}
                 configType={item.type}

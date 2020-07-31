@@ -17,26 +17,6 @@ export interface ConfigData {
 
 export const configType: ConfigType[] = [
   {
-    type: "plugin",
-    label: "插件配置",
-    formItems: [
-      {
-        id: "key", label: "配置属性", type: 'select', defaultValue: 'name',
-        options: [
-          { label: "插件名", value: "name" },
-        ],
-      },
-      {
-        id: "value", label: "配置值", type: "select",
-        options: [
-          { label: "Dubbo分析", value: "DUBBO" },
-          { label: "FeignClient分析", value: "FEIGN_CLIENT" },
-        ],
-      },
-      { id: "order", label: "应用顺序", type: "number", defaultValue: 1, }
-    ]
-  },
-  {
     type: "nodeColor",
     label: "着色配置",
     formItems: [
