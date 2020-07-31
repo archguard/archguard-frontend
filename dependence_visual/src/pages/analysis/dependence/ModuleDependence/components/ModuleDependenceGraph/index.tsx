@@ -67,7 +67,7 @@ function ModuleDependenceGraph() {
       </Button>
       <InvokeGraph
         id="moduleDependenceGraph"
-        data={graphData}
+        data={graphData!}
         selectedNode={selectedNode}
         measurements={getMeasurements(moduleCoupling)}
       />

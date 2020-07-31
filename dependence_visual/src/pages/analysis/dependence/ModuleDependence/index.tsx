@@ -5,7 +5,7 @@ import ModuleDependenceGraph from "./components/ModuleDependenceGraph";
 import ModuleDependenceTable from "./components/ModuleDependenceTable";
 import "./index.less";
 
-export default function ModuleDependence({ location }) {
+export default function ModuleDependence({ location }: any) {
   return (
     <div className="module-dependence">
       <ModuleConfig />
