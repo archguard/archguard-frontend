@@ -25,12 +25,9 @@
     "react-codemirror2": "^7.2.1",
     "react-dom": "^16.13.1",
     "react-markdown": "^4.3.1",
-    "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.1",
     "react-use": "^15.3.2",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
     "xlsx": "^0.16.3"
   },
   "scripts": {
