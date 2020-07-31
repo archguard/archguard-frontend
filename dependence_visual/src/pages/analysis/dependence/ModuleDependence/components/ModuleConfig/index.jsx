@@ -1,6 +1,5 @@
 import {
   autoDefineModule,
-  autoDefineModuleWithInterface,
   deleteModule,
   hideAllModules,
   queryModuleOptions,
@@ -121,13 +120,6 @@ export default function ModuleConfig(props) {
     });
   };
 
-  const onAutoDefineWithInterface = () => {
-    autoDefineModuleWithInterface().then((res) => {
-      notification.success({ message: "自动定义(含接口)成功！" });
-      load();
-    });
-  };
-
   return (
     <CollapsibleCard
       className="module-config"
@@ -140,9 +132,6 @@ export default function ModuleConfig(props) {
           <Button onClick={onRefreshModules}>刷新(重排序)</Button>
           <Tooltip title="从依赖扫描结果中自动定义逻辑模块">
             <Button onClick={onAutoDefine}>自动定义</Button>
-          </Tooltip>
-          <Tooltip title="从依赖扫描结果中自动定义逻辑模块，包含接口">
-            <Button onClick={onAutoDefineWithInterface}>自动定义(含接口)</Button>
           </Tooltip>
         </div>
       }

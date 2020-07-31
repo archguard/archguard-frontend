@@ -54,14 +54,6 @@ export function autoDefineModule() {
   });
 }
 
-export function autoDefineModuleWithInterface() {
-  return axios({
-    baseURL: baseURL,
-    url: subUrl + "/auto-define-with-interface",
-    method: "POST",
-  });
-}
-
 export function queryModuleDependencies(parameter: {}) {
   return axios({
     baseURL: baseURL,
