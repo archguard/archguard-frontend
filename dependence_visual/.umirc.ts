@@ -29,7 +29,6 @@ export default defineConfig({
         { path: "/", component: "@/pages/index" },
         { path: "/home", component: "@/pages/home" },
         { path: "/help/:name?", component: "@/pages/help" },
-        { path: "/project-scan", component: "@/pages/project-scan" },
         { path: "/system-evaluation", component: "@/pages/system-evaluation" },
         { path: "/system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
         {
