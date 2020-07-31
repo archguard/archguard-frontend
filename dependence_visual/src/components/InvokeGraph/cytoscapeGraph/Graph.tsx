@@ -107,7 +107,7 @@ export default function Graph(props: GraphProps) {
       }}
     >
       <GraphOperation
-        cy={cy}
+        cy={cy!}
         graphData={visibleNodeEdges}
         graphLayout={graphLayout}
         graphLayoutCallBack={(graphLayout: LayoutOptions) => setGraphLayout(graphLayout)}

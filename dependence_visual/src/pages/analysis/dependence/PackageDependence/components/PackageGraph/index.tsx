@@ -36,7 +36,7 @@ const PackageGraph = forwardRef((props: PackageGraphProps, ref: any) => {
   }, [data, graph]);
 
   return (
-    <div ref={(containerRef as unknown) as RefObject<HTMLDivElement>} className="graph-container" style={{ width: "100%", height: "100%" }}>
+    <div ref={containerRef as any} className="graph-container" style={{ width: "100%", height: "100%" }}>
       <div ref={graphRef} />
     </div>
   );
