@@ -1,4 +1,4 @@
-interface FormItemOption {
+export interface FormItemOption {
   value: string;
   label: string;
 }
@@ -33,4 +33,5 @@ export type ButtonConfig = {
 
 export type Validator = {
   isValidate: boolean;
+  message?: string;
 };

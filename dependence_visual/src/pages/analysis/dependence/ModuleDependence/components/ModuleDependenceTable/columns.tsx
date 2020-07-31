@@ -2,15 +2,26 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Tooltip } from "antd";
 
-type methodDependency = {
+export type methodDependency = {
   caller: method;
   callee: method;
 };
 
+type Clazz = {
+  classType: string;
+  fullName: string;
+  interface: boolean;
+  module: string;
+  name: string;
+  type: string;
+};
+
 type method = {
   name: string;
-  clazz: { module: string; name: string };
+  fullname: string;
+  clazz: Clazz;
   argumentTypes: string[];
+  returnType: string;
 };
 
 const classColumn = (dataIndex: String) => {

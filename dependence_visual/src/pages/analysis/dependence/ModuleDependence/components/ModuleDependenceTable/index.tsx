@@ -1,30 +1,34 @@
 import { queryModuleDependencies } from "@/api/module/module";
-import ArgsArea from "@/components/ArgsArea";
+import ArgsArea, { ArgsAreaButton } from "@/components/ArgsArea";
 import CollapsibleCard from "@/components/CollapsibleCard";
 import { Table } from "antd";
 import React, { useMemo, useState } from "react";
 import useModules from "../../../states/useModules";
-import columns from "./columns";
+import columns, { methodDependency } from "./columns";
 import { buildFormItems } from "./config";
 
-function filterData(data, dataIndex, value, matchType) {
+function filterData(data: methodDependency[], dataIndex: string, value: string, matchType: string) {
   if (!value) return data;
   if (!matchType) matchType = "fuzz";
 
   if (matchType === "fuzz") {
-    return data.filter((item) => {
+    return data.filter((item: any) => {
       return item[dataIndex].indexOf(value) !== -1;
     });
   }
+
   if (matchType === "exact") {
-    return data.filter((item) => {
+    return data.filter((item: any) => {
       return item[dataIndex] === value;
     });
   }
+
+  return data;
 }
 
-function getRowKey(item) {
+function getRowKey(item: any) {
   const { caller, callee } = item;
+  console.log(item, caller, callee, 'callercallee');
   return `${caller.fullName}-${callee.fullName}`;
 }
 
@@ -33,11 +37,12 @@ const defaultFormData = {
   dependenceType: "callerClass",
 };
 
-export default function ModuleDependence(props) {
-  const [tableData, setTableData] = useState([]);
-  const [{ value: modules }] = useModules();
+export default function ModuleDependence(props: any) {
+  const [tableData, setTableData] = useState<methodDependency[]>([]);
+  const [modulesValue] = useModules();
+  const modules = modulesValue?.value
 
-  const buttons = useMemo(() => {
+  const buttons = useMemo((): ArgsAreaButton[] => {
     return [
       {
         text: "查询",
@@ -52,6 +57,7 @@ export default function ModuleDependence(props) {
             caller: args.moduleAName,
             callee: args.moduleBName,
           }).then((res) => {
+            console.log(res, 'queryModuleDependencies')
             setTableData(filterData(res, args.dependenceType, args.className, args.matchType));
           });
         },
@@ -60,7 +66,7 @@ export default function ModuleDependence(props) {
   }, [setTableData]);
 
   const formItems = useMemo(() => {
-    return buildFormItems(modules);
+    return buildFormItems(modules!);
   }, [modules]);
 
   return (

@@ -1,11 +1,20 @@
 import axios from "../axios";
 import _ from "lodash";
 import { baseURL } from "./config";
+import { methodDependency } from '@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceTable/columns';
+import { ReportMapper } from '@/pages/analysis/dependence/ModuleDependence/components/ModuleCouplingTree/report';
 
 const subUrl = "/logic-modules";
 
+export interface Module {
+  id?: string;
+  name: string;
+  members: string[];
+  status?: string;
+}
+
 export function queryModule() {
-  return axios({
+  return axios<Module[]>({
     baseURL: baseURL,
     url: subUrl,
     method: "GET",
@@ -20,7 +29,7 @@ export function deleteModule(parameter: { id: string }) {
   });
 }
 
-export function updateModule(parameter: { id: string }) {
+export function updateModule(parameter: Module) {
   return axios({
     baseURL: baseURL,
     url: subUrl + "/" + parameter.id,
@@ -39,7 +48,7 @@ export function createModule(parameter: {}) {
 }
 
 export function queryModuleOptions() {
-  return axios({
+  return axios<string[]>({
     baseURL: baseURL,
     url: "/base-modules",
     method: "GET",
@@ -55,7 +64,7 @@ export function autoDefineModule() {
 }
 
 export function queryModuleDependencies(parameter: {}) {
-  return axios({
+  return axios<methodDependency[]>({
     baseURL: baseURL,
     url: subUrl + "/dependencies",
     method: "GET",
@@ -64,7 +73,7 @@ export function queryModuleDependencies(parameter: {}) {
 }
 
 export function queryModuleCoupling() {
-  return axios({
+  return axios<ReportMapper[]>({
     baseURL: baseURL,
     url: "/logic-modules/metrics",
     method: "GET",

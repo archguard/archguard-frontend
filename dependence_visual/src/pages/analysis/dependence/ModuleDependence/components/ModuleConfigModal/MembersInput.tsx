@@ -4,11 +4,17 @@ import { PlusOutlined } from "@ant-design/icons";
 import EditableTag from "@/components/editable-tag";
 import { useList } from "react-use";
 import "./index.less";
+import { FormItemOption } from '@/models/form';
 
-export default function MembersInput(props) {
+interface MembersInputProps {
+  value?: string[];
+  options: FormItemOption[];
+  onChange?(v?: string[]): void;
+}
+export default function MembersInput(props: MembersInputProps) {
   const { value, onChange, options } = props;
 
-  const [ownValue, { set: setOwnValue, push: addValue, updateAt: editValueAt, removeAt }] = useList(
+  const [ownValue, { set: setOwnValue, push: addValue, updateAt: editValueAt, removeAt }] = useList<string>(
     value ?? [],
   );
 
@@ -18,16 +24,16 @@ export default function MembersInput(props) {
     setOwnValue(value ?? []);
   }, [value, setOwnValue]);
 
-  function onAdd(val) {
+  function onAdd(val: string) {
     addValue(val);
     setShowAddInput(false);
   }
 
-  function onRemove(index) {
+  function onRemove(index: number) {
     removeAt(index);
   }
 
-  function onEdit(value, index) {
+  function onEdit(value: string, index: number) {
     editValueAt(index, value);
   }
 

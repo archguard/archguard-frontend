@@ -6,6 +6,7 @@ import {
   reverseAllModules,
   showAllModules,
   updateModule,
+  Module,
 } from "@/api/module/module";
 import CollapsibleCard from "@/components/CollapsibleCard";
 import {
@@ -21,9 +22,11 @@ import useModules from "../../../states/useModules";
 import ModuleConfigModal from "../ModuleConfigModal";
 import "./index.less";
 
-export default function ModuleConfig(props) {
-  const [{ loading, value = [] }, load] = useModules();
-  const [editingModule, setEditingModule] = useState();
+export default function ModuleConfig() {
+  const [modules, load] = useModules();
+  const loading = modules?.loading
+  const value = modules?.value || []
+  const [editingModule, setEditingModule] = useState<Module>();
 
   const removeModule = useCallback(
     (module) => {
@@ -50,7 +53,7 @@ export default function ModuleConfig(props) {
       { title: "逻辑模块名", dataIndex: "name", width: 300 },
       {
         title: "Members",
-        render({ members }) {
+        render({ members }: Module) {
           return (
             <div>
               {members.map((member, index) => (
@@ -63,7 +66,7 @@ export default function ModuleConfig(props) {
       {
         title: "操作",
         width: 250,
-        render: (item) => {
+        render: (item: Module) => {
           return (
             <Button.Group>
               <Button onClick={() => setEditingModule(item)} icon={<FormOutlined />}>
@@ -160,7 +163,7 @@ export default function ModuleConfig(props) {
           load();
           setEditingModule(undefined);
         }}
-        module={editingModule}
+        module={editingModule!}
         onClose={() => setEditingModule(undefined)}
         visible={!!editingModule}
       />

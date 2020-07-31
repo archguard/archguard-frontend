@@ -2,7 +2,7 @@ import { ModuleMetric } from "@/models/analysis";
 import React, { useMemo } from "react";
 import CouplingList from "./coupling-list";
 
-interface ReportMapper {
+export interface ReportMapper {
   [key: string]: { name: string; desc: string };
 }
 

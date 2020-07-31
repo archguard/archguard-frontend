@@ -1,6 +1,9 @@
-export function buildFormItems(modules) {
-  const moduleOptions = modules.map(module => {
-    return {label: module.name, value: module.name}
+import { FormItemModel, FormItemOption } from '@/models/form';
+import { Module } from '@/api/module/module';
+
+export function buildFormItems(modules: Module[]): FormItemModel[] {
+  const moduleOptions: FormItemOption[] = modules.map(module => {
+    return { label: module.name, value: module.name }
   });
   return [
     {

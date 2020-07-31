@@ -5,14 +5,15 @@ import { Button } from "antd";
 import React, { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
-import Report from "./report";
+import Report, { ReportMapper } from "./report";
+import { ModuleMetric } from '@/models/analysis';
 
-function ModuleCouplingTable(props) {
+function ModuleCouplingTable() {
   const [moduleCoupling, setModuleCoupling] = useModuleCoupling();
   // const [, setSelectedNode] = useSelectedNode();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [pagedModuleCoupling, setPagedModuleCoupling] = useState([]);
+  const [pagedModuleCoupling, setPagedModuleCoupling] = useState<ReportMapper[]>([]);
 
   function onPageChange(page = 1, size = 10) {
     setPage(page);
@@ -33,8 +34,8 @@ function ModuleCouplingTable(props) {
   useEffect(() => {
     const start = (page - 1) * pageSize;
     const end = start + pageSize;
-    const list = moduleCoupling.slice(start, end);
-    setPagedModuleCoupling(list);
+    const list = moduleCoupling?.slice(start, end);
+    setPagedModuleCoupling(list!);
   }, [moduleCoupling, page, pageSize, setPagedModuleCoupling]);
 
   return (
@@ -62,7 +63,7 @@ function ModuleCouplingTable(props) {
         >
           查询
         </Button>
-        {moduleCoupling.length > 0 && <Report data={pagedModuleCoupling} />}
+        {moduleCoupling!.length > 0 && <Report data={pagedModuleCoupling as any} />}
       </div>
     </CollapsibleCard>
   );

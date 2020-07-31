@@ -2,11 +2,13 @@ import React from "react";
 import { Button, Col, Input, notification, Radio, Row, Select } from "antd";
 import { useControllableValue } from "ahooks";
 import { useEffect } from "react";
-import { FormItemModel } from '@/models/form';
+import { ButtonType } from 'antd/lib/button';
+import { FloatProperty } from 'csstype';
+import { FormItemModel, Validator } from '@/models/form';
 
 interface ArgsAreaProps {
   formItems: FormItemModel[];
-  buttons: any[];
+  buttons: ArgsAreaButton[];
   defaultFormData: any;
 }
 
@@ -14,6 +16,23 @@ interface FormItemProps {
   item: FormItemModel;
   value: string;
   onChange: Function;
+}
+
+interface argsType {
+  dependenceType: "caller" | "callee";
+  matchType: string;
+  className: string;
+  moduleAName: string;
+  moduleBName: string;
+}
+
+export interface ArgsAreaButton {
+  id: string;
+  span: number;
+  type: ButtonType;
+  float: FloatProperty;
+  text: string;
+  onClick(args: argsType, v: Validator): void;
 }
 
 function FormItem(props: FormItemProps) {
@@ -64,6 +83,7 @@ function FormItem(props: FormItemProps) {
 export default function ArgsArea(props: ArgsAreaProps) {
   const { formItems, buttons, defaultFormData } = props;
   const [value = {}, setValue] = useControllableValue(props, { defaultValue: defaultFormData });
+  console.log(value, 'argsArea')
 
   const onItemValueChange = (id: string, itemVal: string) => {
     setValue({
@@ -76,7 +96,7 @@ export default function ArgsArea(props: ArgsAreaProps) {
     setValue(defaultFormData);
   }, [defaultFormData, setValue]);
 
-  const validateForm = () => {
+  const validateForm = (): Validator => {
     for (const item of formItems) {
       if (item.required && !value[item.id]) {
         const message = item.label + "必填";

@@ -1,13 +1,22 @@
-import { createModule, queryModuleOptions, updateModule } from "@/api/module/module";
+import { createModule, queryModuleOptions, updateModule, Module } from "@/api/module/module";
 import { Form, Input, Modal, notification } from "antd";
 import React, { useEffect, useRef } from "react";
 import { useAsync } from "react-use";
 import "./index.less";
 import MembersInput from "./MembersInput";
+import { Store } from 'antd/lib/form/interface';
 
-function ModuleConfigModal(props) {
+interface ModuleConfigModalProps {
+  visible: boolean;
+  onClose(): void;
+  onSuccess(): void;
+  module: Module;
+}
+
+function ModuleConfigModal(props: ModuleConfigModalProps) {
   const { visible, onClose, onSuccess, module } = props;
-  const formRef = useRef();
+  console.log(module, 'module')
+  const formRef = useRef<any>();
 
   const title = module?.id ? "修改模块" : "添加模块";
   const { value: options = [] } = useAsync(async () => {
@@ -20,7 +29,7 @@ function ModuleConfigModal(props) {
     formRef.current && formRef.current.setFieldsValue(module);
   }, [module]);
 
-  const onFinish = async (values) => {
+  const onFinish = async (values: Store) => {
     if (module.id) {
       await updateModule({ ...module, ...values });
       notification.success({
