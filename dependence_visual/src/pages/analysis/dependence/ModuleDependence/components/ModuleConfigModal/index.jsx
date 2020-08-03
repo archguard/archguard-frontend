@@ -42,23 +42,28 @@ function ModuleConfigModal(props) {
   };
 
   return (
-    visible && (
-      <Modal width={800} title={title} onCancel={onClose} visible={visible} onOk={onOk}>
-        <Form ref={formRef} initialValues={module} onFinish={onFinish} layout="vertical">
-          <Form.Item
-            label="逻辑模块名"
-            name="name"
-            rules={[{ required: true, message: "请输入逻辑模块名!" }]}
-          >
-            <Input />
-          </Form.Item>
+    <Modal
+      width={800}
+      title={title}
+      onCancel={onClose}
+      visible={visible}
+      onOk={onOk}
+      destroyOnClose={true}
+    >
+      <Form ref={formRef} initialValues={module} onFinish={onFinish} layout="vertical">
+        <Form.Item
+          label="逻辑模块名"
+          name="name"
+          rules={[{ required: true, message: "请输入逻辑模块名!" }]}
+        >
+          <Input />
+        </Form.Item>
 
-          <Form.Item label="members" name="members">
-            <MembersInput options={options} />
-          </Form.Item>
-        </Form>
-      </Modal>
-    )
+        <Form.Item label="members" name="members">
+          <MembersInput options={options} />
+        </Form.Item>
+      </Form>
+    </Modal>
   );
 }
 
