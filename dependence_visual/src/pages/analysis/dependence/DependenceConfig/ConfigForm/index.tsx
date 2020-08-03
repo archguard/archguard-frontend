@@ -20,7 +20,7 @@ interface ConfigFormProps {
 
 const ConfigForm = (props: ConfigFormProps) => {
   const { configType, formItems, data, updateConfig } = props
-  const [isDisabled, setIsDisabled] = useState(true)
+
   const getDefaultConfigValue = () =>
     formItems.map((item) => {
       const obj: any = {}
@@ -35,10 +35,8 @@ const ConfigForm = (props: ConfigFormProps) => {
       if (!item.type) item.type = configType
       return item
     })
-    setIsDisabled(true)
     return updateConfig(values)
   }
-  const onFormChange = () => setIsDisabled(false)
 
   const renderHeader = () => {
     return (
@@ -88,7 +86,7 @@ const ConfigForm = (props: ConfigFormProps) => {
   }
 
   return (
-    <Form autoComplete="off" initialValues={data} onFinish={onFinish} onFieldsChange={onFormChange}>
+    <Form autoComplete="off" initialValues={data} onFinish={onFinish}>
       {renderHeader()}
       <Form.List name={configType}>
         {(fields, { add, remove }) => {
@@ -115,7 +113,7 @@ const ConfigForm = (props: ConfigFormProps) => {
         }}
       </Form.List>
       <Form.Item>
-        <Button type="primary" htmlType="submit" disabled={isDisabled}>
+        <Button type="primary" htmlType="submit">
           保存
         </Button>
       </Form.Item>
