@@ -5,7 +5,7 @@ import { SortOrder } from "antd/lib/table/interface";
 import React, { useMemo } from "react";
 import "./list.less";
 
-interface CouplingRecord {
+export interface CouplingRecord {
   key: string;
   label: string;
   name: string;
@@ -22,10 +22,11 @@ interface CouplingRecord {
 interface CouplingListProps {
   data?: CouplingRecord[];
   style?: React.CSSProperties;
+  exportable?: boolean;
 }
 
 export default function CouplingList(props: CouplingListProps) {
-  const { data = [], style } = props;
+  const { data = [], style, exportable = false } = props;
 
   const columns = useMemo(() => {
     const firstItem = data[0];
@@ -82,13 +83,17 @@ export default function CouplingList(props: CouplingListProps) {
     <Table
       className="coupling-list"
       style={style}
-      title={(data) => {
-        return (
-          <div style={{ textAlign: "right" }}>
-            <Button onClick={() => exportExcel(data)}>导出到Excel</Button>
-          </div>
-        );
-      }}
+      title={
+        exportable
+          ? (data) => {
+              return (
+                <div style={{ textAlign: "right" }}>
+                  <Button onClick={() => exportExcel(data)}>导出到Excel</Button>
+                </div>
+              );
+            }
+          : undefined
+      }
       dataSource={data}
       scroll={{ x: true }}
       columns={columns}

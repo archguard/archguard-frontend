@@ -158,5 +158,5 @@ export default function Report(props: ReportProps) {
     });
   }, [data]);
 
-  return <CouplingList data={reportData} />;
+  return <CouplingList data={reportData} exportable />;
 }
