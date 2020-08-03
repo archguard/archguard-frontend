@@ -136,7 +136,7 @@ export default function GraphOperation(props: GraphOperationProps) {
           onChange={(value) => onNodeLabelChange(value)}
         />
       )}
-      <Button onClick={() => onResetStyle()}>恢复</Button>
+      <Button onClick={() => onResetStyle()}>恢复颜色/大小</Button>
     </div>
   );
 }
