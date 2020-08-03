@@ -57,7 +57,7 @@ function ModuleDependenceGraph() {
   }
 
   return (
-    <CollapsibleCard title="模块间依赖">
+    <CollapsibleCard title="模块间依赖" collapsed={true}>
       <Button
         type="primary"
         onClick={() => showAllModuleDependence()}

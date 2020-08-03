@@ -54,6 +54,7 @@ function ModuleCouplingTable() {
           </Link>
         </Fragment>
       }
+      collapsed={true}
     >
       <div>
         <Button

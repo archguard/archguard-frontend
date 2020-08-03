@@ -127,6 +127,7 @@ export default function ModuleConfig() {
     <CollapsibleCard
       className="module-config"
       title="自定义逻辑模块"
+      collapsed={true}
       extra={
         <div>
           <Button onClick={onReverseAll}>全部反转</Button>

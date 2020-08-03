@@ -69,7 +69,7 @@ export default function ModuleDependence() {
   }, [modules]);
 
   return (
-    <CollapsibleCard title="模块间函数调用">
+    <CollapsibleCard title="模块间函数调用" collapsed={true}>
       <div key="module-function-invoke">
         <ArgsArea formItems={formItems} buttons={buttons} defaultFormData={defaultFormData} />
         <Table columns={columns} dataSource={tableData} bordered rowKey={getRowKey} />
