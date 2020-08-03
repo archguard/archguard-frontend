@@ -100,7 +100,7 @@ export default function GraphOperation(props: GraphOperationProps) {
         onChange={(value) => onGraphLayoutChange({ name: value })}
       />
       <Select
-        defaultValue={ownGraphLayout.nodeDimensionsIncludeLabels}
+        defaultValue={ownGraphLayout.nodeDimensionsIncludeLabels ? 1 : 0}
         options={[
           { label: "宽松", value: 1 },
           { label: "紧缩", value: 0 },
