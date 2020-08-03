@@ -36,9 +36,9 @@ export function initCytoscape(id = "cy", onEvent: { cxttap: () => MessageType })
     ],
   });
 
-  cy.on("tap", "node", function (event) {
-    showHighlightBrachNode(cy, event.target);
-  });
+  // cy.on("tap", "node", function (event) {
+  //   showHighlightBrachNode(cy, event.target);
+  // });
 
   cy.on("tap", "edge", function (event) {
     showHighlightBrachEdge(cy, event.target);
