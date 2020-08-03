@@ -40,6 +40,7 @@ export default function MembersInput(props) {
       {ownValue.map((item, index) => {
         return (
           <EditableTag
+            key={item}
             closable
             onRemove={() => onRemove(index)}
             value={item}
