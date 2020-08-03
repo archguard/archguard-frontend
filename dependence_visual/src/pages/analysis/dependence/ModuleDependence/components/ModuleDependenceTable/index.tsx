@@ -1,11 +1,12 @@
 import { queryModuleDependencies } from "@/api/module/module";
-import ArgsArea, { ArgsAreaButton } from "@/components/ArgsArea";
+import ArgsArea, { ArgsAreaButton, argsType } from "@/components/ArgsArea";
 import CollapsibleCard from "@/components/CollapsibleCard";
 import { Table } from "antd";
 import React, { useMemo, useState } from "react";
 import useModules from "../../../states/useModules";
 import columns, { methodDependency } from "./columns";
 import { buildFormItems } from "./config";
+import { Validator } from '@/models/form';
 
 function filterData(data: methodDependency[], dataIndex: string, value: string, matchType: string) {
   if (!value) return data;
@@ -35,9 +36,9 @@ function getRowKey(item: any) {
 const defaultFormData = {
   matchType: "fuzz",
   dependenceType: "callerClass",
-};
+}
 
-export default function ModuleDependence(props: any) {
+export default function ModuleDependence() {
   const [tableData, setTableData] = useState<methodDependency[]>([]);
   const [modulesValue] = useModules();
   const modules = modulesValue?.value
@@ -50,15 +51,13 @@ export default function ModuleDependence(props: any) {
         span: 2,
         float: "right",
         type: "primary",
-        onClick: (args, validate) => {
-          console.log(args, validate);
+        onClick: (args: argsType, validate: Validator) => {
           if (!validate.isValidate) return;
           queryModuleDependencies({
             caller: args.moduleAName,
             callee: args.moduleBName,
           }).then((res) => {
-            console.log(res, 'queryModuleDependencies')
-            setTableData(filterData(res, args.dependenceType, args.className, args.matchType));
+            setTableData(filterData(res, args.dependenceType, args.className!, args.matchType));
           });
         },
       },

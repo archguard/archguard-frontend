@@ -18,21 +18,21 @@ interface FormItemProps {
   onChange: Function;
 }
 
-interface argsType {
-  dependenceType: "caller" | "callee";
+export interface argsType {
+  dependenceType: "caller" | "callee" | "callerClass";
   matchType: string;
-  className: string;
-  moduleAName: string;
-  moduleBName: string;
+  className?: string;
+  moduleAName?: string;
+  moduleBName?: string;
 }
 
 export interface ArgsAreaButton {
   id: string;
   span: number;
   type: ButtonType;
-  float: FloatProperty;
+  float?: FloatProperty;
   text: string;
-  onClick(args: argsType, v: Validator): void;
+  onClick: Function;
 }
 
 function FormItem(props: FormItemProps) {
@@ -80,10 +80,9 @@ function FormItem(props: FormItemProps) {
   }
 }
 
-export default function ArgsArea(props: ArgsAreaProps) {
+function ArgsArea(props: ArgsAreaProps) {
   const { formItems, buttons, defaultFormData } = props;
   const [value = {}, setValue] = useControllableValue(props, { defaultValue: defaultFormData });
-  console.log(value, 'argsArea')
 
   const onItemValueChange = (id: string, itemVal: string) => {
     setValue({
@@ -146,3 +145,5 @@ export default function ArgsArea(props: ArgsAreaProps) {
     </div>
   );
 }
+
+export default React.memo(ArgsArea)
