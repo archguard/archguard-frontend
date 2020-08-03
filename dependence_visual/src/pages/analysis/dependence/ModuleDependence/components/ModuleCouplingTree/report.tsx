@@ -6,7 +6,7 @@ export interface ReportMapper {
   [key: string]: { name: string; desc: string };
 }
 
-const moduleMapping: ReportMapper = {
+export const moduleMapping: ReportMapper = {
   outerInstabilityAvg: {
     name: "OIA",
     desc: "OIA(外部不稳定平均数)",

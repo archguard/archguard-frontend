@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "antd";
 import CollapsibleCard from "@/components/CollapsibleCard";
 import InvokeGraph from "@/components/InvokeGraph";
-import { couplings, Coupling } from "../../config";
+import { moduleMapping } from "../ModuleCouplingTree/report"
 import { queryAllModuleDependence } from "@/api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
@@ -12,7 +12,7 @@ import { JavaItem } from "../../../../../../models/java";
 
 export interface Measurements {
   label: string;
-  options: Coupling[];
+  options: {label: string, value: string}[];
   data: any[];
   dataKey: string;
   nodeKey: string;
@@ -34,9 +34,10 @@ function transformData(data: any): GraphData<JavaItem> {
 
 function getMeasurements(moduleCoupling?: any): Measurements | undefined {
   if (!moduleCoupling || moduleCoupling.length === 0) return;
+  const couplingOptions = Object.keys(moduleMapping).map(item => ({label: moduleMapping[item].name, value: item}))
   return {
     label: "模块耦合度",
-    options: moduleCoupling && couplings,
+    options: couplingOptions,
     data: moduleCoupling,
     dataKey: "moduleName",
     nodeKey: "fullName",
