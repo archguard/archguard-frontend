@@ -1,11 +1,9 @@
-import { FEATURES, getFeature } from "@/config/buildTargets";
 import SettingFilled from "@ant-design/icons/SettingFilled";
 import { Tabs } from "antd";
 import React, { useState } from "react";
 import { useHistory, useParams } from "umi";
 import ClassDependence from "./ClassDependence";
 import DependenceConfig from "./DependenceConfig";
-import DependenceScanner from "./DependenceScanner";
 import "./index.css";
 import MethodDependence from "./MethodDependence";
 import ModuleDependence from "./ModuleDependence";
@@ -23,7 +21,6 @@ export default function Dependence() {
         activeKey={type}
         tabBarExtraContent={
           <div className="dependence-extra-content">
-            {getFeature(FEATURES.CODE_SCANNER) && <DependenceScanner />}
             <SettingFilled onClick={() => setConfigVisible(true)} />
           </div>
         }
