@@ -24,7 +24,6 @@ jobs:
       - name: build
         env:
           NODE_OPTIONS: --max_old_space_size=4096
-          CI: false
           BUILD_TARGET: zh
         run: |
           cd dependence_visual
