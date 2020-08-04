@@ -29,7 +29,7 @@ jobs:
         run: |
           cd dependence_visual
           npm install
-          npm run build-zh
+          npm run build
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
