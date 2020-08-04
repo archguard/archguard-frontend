@@ -111,6 +111,9 @@ export const buildClassDependenceTree = (jClass: JClass): TreeNode<JClass>[] => 
     const childrenJClasses = jClass[childrenKey];
 
     forEach(parentJClasses, (parentJClass) => {
+      if (parentJClass.id === treeNode.id) {
+        return;
+      }
       const parentTreeNode = createTreeNode<JClass>(parentJClass, treeNodeMap, createJClassNode);
       pushNode(treeNode, parentTreeNode.children);
       pushNode(parentTreeNode, treeNode.parents);
