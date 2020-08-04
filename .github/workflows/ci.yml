@@ -27,8 +27,8 @@ jobs:
           BUILD_TARGET: zh
         run: |
           cd dependence_visual
-          npm install
-          npm run build
+          yarn
+          yarn build
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
