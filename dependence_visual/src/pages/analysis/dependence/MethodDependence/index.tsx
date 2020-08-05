@@ -94,6 +94,7 @@ function MethodDependence() {
               return fullName;
             },
           }}
+          showAllSelect={true}
         />
       </div>
     </div>

@@ -25,10 +25,21 @@ interface GraphOperationProps {
   graphLayoutCallBack?: Function;
   measurements?: Measurements;
   nodeLabel?: NodeLabel;
+  showAllSelect?: boolean;
+  graphDataCallBack?: Function;
 }
 
 export default function GraphOperation(props: GraphOperationProps) {
-  const { cy, graphData, graphLayout, graphLayoutCallBack, measurements, nodeLabel } = props;
+  const {
+    cy,
+    graphData,
+    graphLayout,
+    graphLayoutCallBack,
+    measurements,
+    nodeLabel,
+    showAllSelect,
+    graphDataCallBack,
+  } = props;
 
   const [ownGraphLayout, setOwnGraphLayout] = useState(graphLayout);
   const [loopPaths, setLoopPaths] = useState<string[][]>([]);
@@ -89,6 +100,28 @@ export default function GraphOperation(props: GraphOperationProps) {
     drawByLayout(cy!, graphLayout);
   }
 
+  function showAllOnClick() {
+    graphDataCallBack && graphDataCallBack(graphData);
+  }
+
+  function showOnlyHasModuleOnClick() {
+    const newNodes = graphData?.nodes.filter((item) => item.module && item.module != 'null');
+    const newNodeIds = newNodes?.map(item => item.id)
+    const newEdges = graphData?.edges.filter(item => newNodeIds?.includes(item.source) && newNodeIds.includes(item.target))
+
+    graphDataCallBack && graphDataCallBack({ nodes: newNodes, edges: newEdges });
+  }
+
+  function showAllSelectOnChange(value: number) {
+    const showAll = !!value
+    if (showAll) {
+      showAllOnClick()
+    }
+    else {
+      showOnlyHasModuleOnClick()
+    }
+  }
+
   return (
     <div className="graph-operation">
       <Select
@@ -137,6 +170,16 @@ export default function GraphOperation(props: GraphOperationProps) {
         />
       )}
       <Button onClick={() => onResetStyle()}>恢复颜色/大小</Button>
+      {showAllSelect && (
+        <Select
+          options={[
+            { label: "排除第三方库", value: 0 },
+            { label: "展示全部", value: 1 },
+          ]}
+          defaultValue={1}
+          onChange={(value) => showAllSelectOnChange(value)}
+        />
+      )}
     </div>
   );
 }

@@ -106,6 +106,7 @@ function ClassDependence() {
             return fullName;
           },
         }}
+        showAllSelect={true}
       />
     </div>
   );

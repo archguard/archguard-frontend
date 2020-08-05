@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { scrollToAnchor } from "@/utils/anchor";
 import { useMount } from "ahooks";
-import { message } from "antd";
+import { message, Button } from "antd";
 import { find } from "lodash";
 import FullscreenContainer from "../../fullscreen-container/index";
 import { filterDataWithConfig } from "../utils";
@@ -34,10 +34,11 @@ interface GraphProps {
   selectedNode?: any;
   nodeLabel?: NodeLabel;
   deep?: number;
+  showAllSelect?: boolean
 }
 
 export default function Graph(props: GraphProps) {
-  const { id, data, title = "", configs, measurements, selectedNode, nodeLabel, deep } = props;
+  const { id, data, title = "", configs, measurements, selectedNode, nodeLabel, deep, showAllSelect } = props;
   const [cy, setCy] = useState<Core>();
   const [graphLayout, setGraphLayout] = useState<LayoutOptions>({
     name: "elk",
@@ -113,7 +114,9 @@ export default function Graph(props: GraphProps) {
         graphLayoutCallBack={(graphLayout: LayoutOptions) => setGraphLayout(graphLayout)}
         measurements={measurements}
         nodeLabel={nodeLabel}
-      />
+        showAllSelect={showAllSelect}
+        graphDataCallBack={(newNodeEdges: GraphData<JavaItem>) => drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title)}
+        />
       <div
         id={id}
         style={{
