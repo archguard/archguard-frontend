@@ -167,7 +167,7 @@ export default function GraphOperation(props: GraphOperationProps) {
           onChange={(value) => onNodeLabelChange(value)}
         />
       )}
-      <Button onClick={() => onResetStyle()}>恢复颜色/大小</Button>
+      <Button onClick={() => onResetStyle()}>恢复颜色{measurements && "/大小"}</Button>
       {showAllSelect && (
         <Select
           placeholder="是否排除第三方库"
