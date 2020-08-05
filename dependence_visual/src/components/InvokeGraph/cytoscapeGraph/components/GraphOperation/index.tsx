@@ -11,7 +11,7 @@ import {
   resetNodeLabel,
 } from "../../drawGraph";
 import { findLoopPaths } from "./utils";
-import { LayoutOptions, Core } from "cytoscape";
+import { Core } from "cytoscape";
 import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph";
 import { NodeLabel } from "../../Graph";
 import { SelectValue } from "antd/lib/select";
@@ -42,7 +42,9 @@ export default function GraphOperation(props: GraphOperationProps) {
   } = props;
 
   const [ownGraphLayout, setOwnGraphLayout] = useState(graphLayout);
-  const [loopPaths, setLoopPaths] = useState<string[][]>([]);
+  const [loopPaths, setLoopPaths] = useState<string[][]>([])
+  const [nodeLabelFormate, setNodeLabelFormate] = useState<SelectValue>()
+  const [showAllNodes, setShowAllNodes] = useState<SelectValue>()
 
   useEffect(() => {
     setOwnGraphLayout(graphLayout);
@@ -52,6 +54,8 @@ export default function GraphOperation(props: GraphOperationProps) {
     const edges = graphData?.edges || [];
     const paths = findLoopPaths(edges);
     setLoopPaths(paths);
+    setNodeLabelFormate(undefined)
+    setShowAllNodes(undefined)
   }, [graphData]);
 
   const graphNodeMap = useMemo(() => {
@@ -96,6 +100,7 @@ export default function GraphOperation(props: GraphOperationProps) {
 
   function onNodeLabelChange(type: SelectValue) {
     if (!nodeLabel) return;
+    setNodeLabelFormate(type)
     resetNodeLabel(cy!, (fullName: string) => nodeLabel.setLabel(fullName, type));
     drawByLayout(cy!, graphLayout);
   }
@@ -112,12 +117,12 @@ export default function GraphOperation(props: GraphOperationProps) {
     graphDataCallBack && graphDataCallBack({ nodes: newNodes, edges: newEdges });
   }
 
-  function showAllSelectOnChange(value: number) {
-    const showAll = !!value
-    if (showAll) {
+  function showAllSelectOnChange(value: SelectValue) {
+    setShowAllNodes(value)
+    if (value == "all") {
       showAllOnClick()
     }
-    else {
+    if (value == "only") {
       showOnlyHasModuleOnClick()
     }
   }
@@ -131,14 +136,6 @@ export default function GraphOperation(props: GraphOperationProps) {
           value: item,
         }))}
         onChange={(value) => onGraphLayoutChange({ name: value })}
-      />
-      <Select
-        defaultValue={ownGraphLayout.nodeDimensionsIncludeLabels ? 1 : 0}
-        options={[
-          { label: "宽松", value: 1 },
-          { label: "紧缩", value: 0 },
-        ]}
-        onChange={(value) => onGraphLayoutChange({ nodeDimensionsIncludeLabels: value })}
       />
       <Select
         placeholder="显示循环"
@@ -166,17 +163,19 @@ export default function GraphOperation(props: GraphOperationProps) {
         <Select
           placeholder={nodeLabel.placeholder}
           options={nodeLabel.options}
+          value={nodeLabelFormate}
           onChange={(value) => onNodeLabelChange(value)}
         />
       )}
       <Button onClick={() => onResetStyle()}>恢复颜色/大小</Button>
       {showAllSelect && (
         <Select
+          placeholder="是否排除第三方库"
           options={[
-            { label: "排除第三方库", value: 0 },
-            { label: "展示全部", value: 1 },
+            { label: "排除第三方库", value: "only" },
+            { label: "展示全部", value: "all" },
           ]}
-          defaultValue={1}
+          value={showAllNodes}
           onChange={(value) => showAllSelectOnChange(value)}
         />
       )}
