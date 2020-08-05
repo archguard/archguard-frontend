@@ -27,10 +27,8 @@ const ModuleDependenceArgsForm = (props: ModuleDependenceArgsFormProps) => {
           >
             <Select
               placeholder="逻辑模块A"
-              value=""
               style={{ width: "100%" }}
-              showSearch
-              onChange={() => {}}>
+              showSearch>
               {options.map(item => {
                 return (
                   <Select.Option
@@ -53,10 +51,8 @@ const ModuleDependenceArgsForm = (props: ModuleDependenceArgsFormProps) => {
           >
             <Select
               placeholder="逻辑模块B"
-              value=""
               style={{ width: "100%" }}
-              showSearch
-              onChange={() => {}}>
+              showSearch>
               {options.map(item => {
                 return (
                   <Select.Option

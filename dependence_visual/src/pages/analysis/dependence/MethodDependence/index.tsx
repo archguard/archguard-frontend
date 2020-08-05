@@ -1,13 +1,11 @@
-import { queryMethodDependence } from "@/api/dependence/dependenceGraph";
-import ArgsArea from "@/components/ArgsArea";
+import { queryMethodDependence } from "@/api/module/dependenceGraph";
 import InvokeGraph from "@/components/InvokeGraph";
 import React, { useEffect, useState } from "react";
 import useUrlQuery from "../../../../utils/hooks/use-url-query";
-import { buttons, formItems } from "./config";
 import { buildMethodTree, generateNodeEdges } from "../utils";
-import { ButtonConfig, Validator } from "../../../../models/form";
 import { JMethod } from "../../../../models/java";
 import { GraphData } from "../../../../models/graph";
+import MethodDependenceArgsForm from './MethodDependenceArgsForm'
 
 enum MethodDependenceType {
   invokes = "invokes",
@@ -16,7 +14,8 @@ enum MethodDependenceType {
 }
 
 type MethodFormData = {
-  deep: number;
+  module?: string;
+  deep?: number;
   dependenceType: MethodDependenceType;
   className: string;
   methodName: string;
@@ -36,17 +35,9 @@ function MethodDependence() {
     }
   }, [query]);
 
-  function buttonsMap(button: ButtonConfig) {
-    return {
-      ...button,
-      onClick: (formData: MethodFormData, validate: Validator) =>
-        onShowClick({ ...formData }, validate),
-    };
-  }
-
-  function onShowClick(args: MethodFormData, validate: Validator) {
-    if (!validate.isValidate) return;
+  function onShowClick(args: MethodFormData) {
     return queryMethodDependence(args.className, args.methodName, args.dependenceType, {
+      module: args.module || null,
       deep: args.deep || null,
     }).then((res) => {
       const tree = buildMethodTree(res);
@@ -54,23 +45,13 @@ function MethodDependence() {
       setGraphData(nodeEdges);
       setClassName(args.className);
       setMethodName(args.methodName);
-      setDefaultFormData({
-        deep: args.deep,
-        dependenceType: args.dependenceType,
-        methodName: args.methodName,
-        className: args.className,
-      });
     });
   }
 
   return (
     <div>
       <div>
-        <ArgsArea
-          formItems={formItems}
-          buttons={buttons.map((item) => buttonsMap(item))}
-          defaultFormData={defaultFormData}
-        />
+        <MethodDependenceArgsForm onFinish={onShowClick}></MethodDependenceArgsForm>
         <InvokeGraph
           id="methodDependenceGraph"
           data={graphData}

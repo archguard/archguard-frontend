@@ -1,9 +1,7 @@
-import { queryClassDependence } from "@/api/dependence/dependenceGraph";
-import ArgsArea from "@/components/ArgsArea";
+import { queryClassDependence } from "@/api/module/dependenceGraph.ts";
 import InvokeGraph from "@/components/InvokeGraph";
 import React, { useEffect, useState } from "react";
 import useUrlQuery from "../../../../utils/hooks/use-url-query";
-import { buttons, formItems } from "./config";
 import {
   buildClassDependenceTree,
   buildClassInvokesTree,
@@ -12,7 +10,7 @@ import {
 } from "../utils";
 import { GraphData } from "../../../../models/graph";
 import { JClass, JMethod } from "../../../../models/java";
-import { ButtonConfig, Validator } from "../../../../models/form";
+import ClassDependenceArgsForm from './ClassDependenceArgsForm'
 
 enum ClassDependenceType {
   dependencies = "dependencies",
@@ -41,6 +39,7 @@ type ClassFormData = {
   deep: number;
   dependenceType: ClassDependenceType;
   className: string;
+  module: string;
 };
 
 function ClassDependence() {
@@ -48,46 +47,27 @@ function ClassDependence() {
 
   const [graphData, setGraphData] = useState<GraphData<JItem>>({ edges: [], nodes: [] });
   const [className, setClassName] = useState("");
-  const [defaultFormData, setDefaultFormData] = useState({});
 
   useEffect(() => {
     if (query.className) {
-      setDefaultFormData({ deep: 3, dependenceType: "dependencies", ...query });
       setGraphData({ edges: [], nodes: [] });
     }
   }, [query]);
 
-  function buttonsMap(button: ButtonConfig) {
-    return {
-      ...button,
-      onClick: (formData: ClassFormData, validate: Validator) =>
-        onShowClick({ ...formData }, validate),
-    };
-  }
-
-  function onShowClick(args: ClassFormData, validate: Validator) {
-    if (!validate.isValidate) return;
+  function onShowClick(args: ClassFormData) {
     return queryClassDependence(args.className, args.dependenceType, {
       deep: args.deep || null,
+      module: args.module || null,
     }).then((res) => {
       const nodeEdges = calculateNodeEdges(args.dependenceType, res);
       setGraphData(nodeEdges);
       setClassName(args.className);
-      setDefaultFormData({
-        deep: args.deep,
-        className: args.className,
-        dependenceType: args.dependenceType,
-      });
     });
   }
 
   return (
     <div>
-      <ArgsArea
-        formItems={formItems}
-        buttons={buttons.map((item) => buttonsMap(item))}
-        defaultFormData={defaultFormData}
-      />
+      <ClassDependenceArgsForm onFinish={onShowClick}></ClassDependenceArgsForm>
       <InvokeGraph
         id="classDependenceGraph"
         data={graphData}
