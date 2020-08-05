@@ -18,14 +18,6 @@ interface FormItemProps {
   onChange: Function;
 }
 
-export interface argsType {
-  dependenceType: "caller" | "callee" | "callerClass";
-  matchType: string;
-  className?: string;
-  moduleAName?: string;
-  moduleBName?: string;
-}
-
 export interface ArgsAreaButton {
   id: string;
   span: number;
