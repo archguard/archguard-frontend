@@ -69,7 +69,7 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
             <Input placeholder="类名"></Input>
           </Form.Item>
         </Col>
-        <Col span={4} key="class-name">
+        <Col span={4} key="function-name">
           <Form.Item
             name="methodName"
             rules={[{
