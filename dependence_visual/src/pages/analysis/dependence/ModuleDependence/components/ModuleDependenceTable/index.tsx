@@ -9,8 +9,7 @@ import ModuleDependenceArgsForm from './ModuleDependenceArgsForm'
 
 function getRowKey(item: any) {
   const { caller, callee } = item;
-  const randomKey = Math.random().toString(36).substr(2)
-  return `${caller.fullName}-${callee.fullName}-${randomKey}`;
+  return `${caller.fullName}-${callee.fullName}`;
 }
 
 const getModulesOption = (modules?: Module[]): FormItemOption[] => {
@@ -40,7 +39,7 @@ export default function ModuleDependence() {
         <ModuleDependenceArgsForm
           options={modulesOption}
           onFinish={onBtnClick}></ModuleDependenceArgsForm>
-        <Table tableLayout="fixed" columns={columns} dataSource={tableData} bordered rowKey={getRowKey} />
+        <Table columns={columns} dataSource={tableData} bordered rowKey={getRowKey} />
       </div>
     </CollapsibleCard>
   );
