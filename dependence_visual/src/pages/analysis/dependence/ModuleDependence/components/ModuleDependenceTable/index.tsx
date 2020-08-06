@@ -34,7 +34,7 @@ export default function ModuleDependence() {
   }
 
   return (
-    <CollapsibleCard title="模块间函数调用" collapsed={true}>
+    <CollapsibleCard title="模块间函数调用" collapsed={false}>
       <div key="module-function-invoke">
         <ModuleDependenceArgsForm
           options={modulesOption}
