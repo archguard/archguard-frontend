@@ -2,41 +2,19 @@ import { queryModuleCoupling } from "@/api/module/module";
 import CollapsibleCard from "@/components/CollapsibleCard";
 import QuestionCircleOutlined from "@ant-design/icons/lib/icons/QuestionCircleOutlined";
 import { Button } from "antd";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
-import Report, { ReportMapper } from "./report";
-import { ModuleMetric } from '@/models/analysis';
+import Report from "./report";
 
 function ModuleCouplingTable() {
   const [moduleCoupling, setModuleCoupling] = useModuleCoupling();
-  // const [, setSelectedNode] = useSelectedNode();
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [pagedModuleCoupling, setPagedModuleCoupling] = useState<ReportMapper[]>([]);
-
-  function onPageChange(page = 1, size = 10) {
-    setPage(page);
-    setPageSize(size);
-  }
 
   function showAllModuleCoupling() {
     queryModuleCoupling().then((res) => {
       setModuleCoupling(res);
-      onPageChange(1);
     });
   }
-
-  // function onModuleClick() {
-  //   setSelectedNode({ data: record.moduleName, key: "fullName" });
-  // }
-
-  useEffect(() => {
-    const start = (page - 1) * pageSize;
-    const end = start + pageSize;
-    const list = moduleCoupling?.slice(start, end);
-    setPagedModuleCoupling(list!);
-  }, [moduleCoupling, page, pageSize, setPagedModuleCoupling]);
 
   return (
     <CollapsibleCard
@@ -64,7 +42,7 @@ function ModuleCouplingTable() {
         >
           查询
         </Button>
-        {moduleCoupling!.length > 0 && <Report data={pagedModuleCoupling as any} />}
+        {moduleCoupling!.length > 0 && <Report data={moduleCoupling as any} />}
       </div>
     </CollapsibleCard>
   );
