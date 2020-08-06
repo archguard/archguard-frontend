@@ -28,18 +28,26 @@ const classColumn = (dataIndex: String) => {
   const column = {
     title: "class",
     dataIndex: [dataIndex, "clazz", "name"],
-    render: (text: string) => (
-      <Tooltip title={text}>
-        <Link
-          to={{
-            pathname: "/analysis/dependence/class",
-            search: "className=" + text + "&dependenceType=dependencies",
-          }}
-        >
-          {text.split(".").slice(-1)}
-        </Link>
-      </Tooltip>
-    ),
+    render: (text: string, record: methodDependency) => {
+      const method = dataIndex === "caller" ? record.caller : record.callee;
+      return (
+        <Tooltip title={text}>
+          <Link
+            to={{
+              pathname: "/analysis/dependence/class",
+              search:
+                "className=" +
+                text +
+                "&dependenceType=dependencies" +
+                "&module=" +
+                method.clazz.module,
+            }}
+          >
+            {text.split(".").slice(-1)}
+          </Link>
+        </Tooltip>
+      );
+    },
   };
   return column;
 };
@@ -59,7 +67,9 @@ const methodColumn = (dataIndex: String) => {
               method.clazz.name +
               "&methodName=" +
               method.name +
-              "&dependenceType=invokes",
+              "&dependenceType=invokes" +
+              "&module=" +
+              method.clazz.module,
           }}
         >
           {text}
