@@ -68,7 +68,7 @@ export default function CouplingList(props: CouplingListProps) {
     return [];
   }, [data]);
 
-  const exportExcel = (data: CouplingRecord[]) => {
+  const exportExcel = () => {
     exportJsonToExcel(
       data.map((record) => {
         const props: { [key: string]: any } = {};
@@ -85,10 +85,10 @@ export default function CouplingList(props: CouplingListProps) {
       style={style}
       title={
         exportable
-          ? (data) => {
+          ? () => {
               return (
                 <div style={{ textAlign: "right" }}>
-                  <Button onClick={() => exportExcel(data)}>导出到Excel</Button>
+                  <Button onClick={() => exportExcel()}>导出到Excel</Button>
                 </div>
               );
             }
