@@ -38,6 +38,7 @@ const ClassDependenceArgsForm = (props: ClassDependenceArgsFormProps) => {
             <Select
               placeholder="模块"
               style={{ width: "100%" }}
+              allowClear
               showSearch>
               {allDependence.map(({ module }, index) => {
                   return (
