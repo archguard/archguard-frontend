@@ -47,9 +47,11 @@ function ClassDependence() {
 
   const [graphData, setGraphData] = useState<GraphData<JItem>>({ edges: [], nodes: [] });
   const [className, setClassName] = useState("");
+  const [defaultFormData, setDefaultFormData] = useState({});
 
   useEffect(() => {
     if (query.className) {
+      setDefaultFormData({ deep: 3, dependenceType: "dependencies", ...query });
       setGraphData({ edges: [], nodes: [] });
     }
   }, [query]);
@@ -67,7 +69,7 @@ function ClassDependence() {
 
   return (
     <div>
-      <ClassDependenceArgsForm onFinish={onShowClick}></ClassDependenceArgsForm>
+      <ClassDependenceArgsForm onFinish={onShowClick} defaultFormData={defaultFormData}></ClassDependenceArgsForm>
       <InvokeGraph
         id="classDependenceGraph"
         data={graphData}

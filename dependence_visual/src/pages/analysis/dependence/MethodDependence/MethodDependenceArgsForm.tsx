@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, Row, Col, Select, Button, Input } from 'antd'
 import { FormItemOption } from '@/models/form'
 import { useAsync } from 'react-use'
@@ -23,12 +23,17 @@ interface MethodDependenceArgsFormProps {
     dependenceType?: string,
     deep?: number,
   }): void;
+  defaultFormData: {}
 }
 
 const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
   const { value: allDependence = [] } = useAsync(queryPackageDependencies);
-  const { onFinish } = props
+  const { onFinish, defaultFormData } = props
   const [form] = Form.useForm()
+
+  useEffect(() => {
+    form.setFieldsValue(defaultFormData)
+  }, [defaultFormData])
 
   return (
     <Form form={form} onFinish={onFinish}>

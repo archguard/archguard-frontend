@@ -51,7 +51,7 @@ function MethodDependence() {
   return (
     <div>
       <div>
-        <MethodDependenceArgsForm onFinish={onShowClick}></MethodDependenceArgsForm>
+        <MethodDependenceArgsForm onFinish={onShowClick} defaultFormData={defaultFormData}></MethodDependenceArgsForm>
         <InvokeGraph
           id="methodDependenceGraph"
           data={graphData}
