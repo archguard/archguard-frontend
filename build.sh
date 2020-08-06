@@ -3,5 +3,5 @@ cd dependence_visual
 yarn install
 yarn lint
 
-yarn build
+yarn build-zh
 
