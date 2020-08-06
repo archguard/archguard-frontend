@@ -58,7 +58,7 @@ const ClassDependenceArgsForm = (props: ClassDependenceArgsFormProps) => {
             </Select>
           </Form.Item>
         </Col>
-        <Col span={6} key="class-name">
+        <Col span={8} key="class-name">
           <Form.Item
             name="className"
             rules={[{
@@ -92,7 +92,7 @@ const ClassDependenceArgsForm = (props: ClassDependenceArgsFormProps) => {
             </Select>
           </Form.Item>
         </Col>
-        <Col span={4} key="deep">
+        <Col span={2} key="deep">
           <Form.Item
             name="deep"
             rules={[{
@@ -111,7 +111,7 @@ const ClassDependenceArgsForm = (props: ClassDependenceArgsFormProps) => {
             <Input type="number" placeholder="调用深度"></Input>
           </Form.Item>
         </Col>
-        <Col span={4}>
+        <Col span={2}>
           <Button type="primary" htmlType="submit">查询</Button>
         </Col>
       </Row>
