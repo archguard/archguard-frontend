@@ -1,8 +1,8 @@
-import axios from "../axios";
+import { ReportMapper } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleCouplingTree/report";
+import { methodDependency } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceTable/columns";
 import _ from "lodash";
+import axios from "../axios";
 import { baseURL } from "./config";
-import { methodDependency } from '@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceTable/columns';
-import { ReportMapper } from '@/pages/analysis/dependence/ModuleDependence/components/ModuleCouplingTree/report';
 
 const subUrl = "/logic-modules";
 
@@ -105,7 +105,22 @@ export function reverseAllModules() {
 }
 
 export function queryAllModuleDependence() {
-  return axios({
+  return axios<{
+    nodes: {
+      fullName: string;
+      id: string;
+      lgMembers: string[];
+      logicModule: boolean;
+      members: { name: string; fullName: string; type: string }[];
+      mixture: boolean;
+      name: string;
+      nodeId: string;
+      service: boolean;
+      status: string;
+      type: string;
+    }[];
+    edges: { a: string; b: string; num: number }[];
+  }>({
     baseURL: baseURL,
     url: "/logic-modules/dependencies/graph",
     method: "GET",

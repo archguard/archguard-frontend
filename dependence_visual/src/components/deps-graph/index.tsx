@@ -1,15 +1,15 @@
 import { Graph } from "@antv/g6";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import FullscreenContainer from "../../components/fullscreen-container";
 import GraphView from "../../components/graph-view";
 import GraphNavigator from "./navigator";
 import "./node";
 import "./styles.less";
 import GraphToolbar from "./toolbar";
-import type { GraphData, GraphNavigatorPath, GraphNode } from "./types";
+import type { DepsGraphData, DepsGraphNode, GraphNavigatorPath } from "./types";
 import { getNodeSize } from "./util";
 
-const data: GraphData = {
+const data: DepsGraphData = {
   nodes: [
     {
       title: "consumer-sample",
@@ -60,11 +60,6 @@ const data: GraphData = {
   ],
 };
 
-data.nodes.forEach((node) => {
-  node.size = getNodeSize(node.title);
-  node.subNodes?.forEach((child) => (child.parent = node));
-});
-
 const options = {
   layout: {
     type: "force",
@@ -80,16 +75,33 @@ const options = {
   },
 };
 
-export default function DepsGraph() {
+interface DepsGraphProps {
+  data?: DepsGraphData;
+}
+
+export default function DepsGraph(props: DepsGraphProps) {
+  const { data } = props;
   const [graph, setGraph] = useState<Graph>();
   const [navPath, setNavPath] = useState<GraphNavigatorPath[]>([]);
   const [currentPath, setCurrentPath] = useState<GraphNavigatorPath>();
 
+  const sizedData = useMemo(() => {
+    const sizingAndRelationg = (node: DepsGraphNode) => {
+      node.size = getNodeSize(node.title);
+      node.subNodes?.forEach((child) => {
+        child.parent = node;
+        sizingAndRelationg(child);
+      });
+    };
+    data?.nodes.forEach(sizingAndRelationg);
+    return data ?? { edges: [], nodes: [] };
+  }, [data]);
+
   useEffect(() => {
     if (graph) {
-      graph.data(data);
+      graph.data(sizedData);
       graph.render();
-      const rootPath = { title: "root", data };
+      const rootPath = { title: "root", data: sizedData };
       setNavPath([rootPath]);
       setCurrentPath(rootPath);
 
@@ -103,13 +115,13 @@ export default function DepsGraph() {
           graph.data(newData);
           graph.render();
 
-          const paths = getNavPaths(data, model);
+          const paths = getNavPaths(sizedData, model);
           setNavPath(paths);
           setCurrentPath(paths[paths.length - 1]);
         }
       });
     }
-  }, [graph]);
+  }, [graph, sizedData]);
 
   const onNavClick = (path: GraphNavigatorPath) => {
     if (graph) {
@@ -131,7 +143,7 @@ export default function DepsGraph() {
   );
 }
 
-function getNavPaths(data: GraphData, node?: GraphNode): GraphNavigatorPath[] {
+function getNavPaths(data: DepsGraphData, node?: DepsGraphNode): GraphNavigatorPath[] {
   if (!node) {
     return [];
   }
