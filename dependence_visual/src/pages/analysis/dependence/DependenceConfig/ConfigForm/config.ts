@@ -31,37 +31,20 @@ export const configType: ConfigType[] = [
     ]
   },
   {
-    type: "nodeHidden",
-    label: "隐藏配置",
-    formItems: [
-      {
-        id: "key", label: "隐藏类型", type: "select", defaultValue: "Fuzzy",
-        options: [
-          { label: "模糊匹配", value: "Fuzzy" },
-          { label: "全匹配", value: "Full" },
-        ],
-      },
-      {
-        id: "value", label: "类名/方法名", type: 'text', defaultValue: '',
-        rules: [{ required: true, message: "请输入类名/方法名！" }]
-      },
-    ]
-  },
-  {
-    type: "analysisScope",
+    type: "nodeDisplay",
     label: "分析范围配置",
     formItems: [
       {
-        id: "key", label: "分析范围类型", type: "select", defaultValue: "contains",
+        id: "value", label: "分析范围类型", type: "select", defaultValue: "hidden",
         options: [
-          { label: "包含", value: "contains" }
+          { label: "隐藏", value: "hidden" },
+          { label: "仅包含", value: "contain" }
         ],
       },
       {
-        id: "value", label: "类名/方法名", type: 'text', defaultValue: '',
+        id: "key", label: "类名/方法名", type: 'text', defaultValue: '',
         rules: [{ required: true, message: "请输入类名/方法名！" }]
-      },
-      { id: "order", label: "应用顺序", type: "number", defaultValue: 1 }
+      }
     ]
   }
 ];
