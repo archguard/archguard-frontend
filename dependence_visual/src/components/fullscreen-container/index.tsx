@@ -7,13 +7,14 @@ import "./index.less";
 
 type FullscreenContainerProps = PropsWithChildren<{
   style?: React.CSSProperties;
+  className?: string;
 }>;
 
 export default function FullscreenContainer(props: FullscreenContainerProps) {
   const [fullscreen, toggleFullscreen] = useToggle(false);
 
   return (
-    <div className="fullscreen-container" style={props.style}>
+    <div className={`fullscreen-container ${props.className}`} style={props.style}>
       <div className={cls("container", { fullscreen })}>
         {props.children}
         {!fullscreen ? (

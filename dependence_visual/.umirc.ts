@@ -15,8 +15,8 @@ export default defineConfig({
   lessLoader: { javascriptEnabled: true },
   proxy: {
     "/api": {
-      // target: "https://ec2-68-79-38-105.cn-northwest-1.compute.amazonaws.com.cn:10443/",
-      target: "https://localhost:10443/",
+      target: "https://ec2-68-79-38-105.cn-northwest-1.compute.amazonaws.com.cn:10443/",
+      // target: "https://localhost:10443/",
       changeOrigin: true,
       secure: false,
     },
