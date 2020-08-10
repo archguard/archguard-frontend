@@ -1,6 +1,6 @@
 import { createModule, queryModuleOptions, updateModule, Module } from "@/api/module/module";
 import { Form, Input, Modal, notification } from "antd";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useAsync } from "react-use";
 import "./index.less";
 import MembersInput from "./MembersInput";
@@ -15,7 +15,6 @@ interface ModuleConfigModalProps {
 
 function ModuleConfigModal(props: ModuleConfigModalProps) {
   const { visible, onClose, onSuccess, module } = props;
-  console.log(module, 'module')
   const formRef = useRef<any>();
 
   const title = module?.id ? "修改模块" : "添加模块";
@@ -24,10 +23,15 @@ function ModuleConfigModal(props: ModuleConfigModalProps) {
       return res.sort().map((i) => ({ label: i, value: i }));
     });
   });
+  const [moduleNames, setModuleNames] = useState<string[]>([])
 
   useEffect(() => {
     formRef.current && formRef.current.setFieldsValue(module);
   }, [module]);
+
+  useEffect(() => {
+    setModuleNames(options.map(opt => opt.value))
+  }, [options])
 
   const onFinish = async (values: Store) => {
     if (module.id) {
@@ -63,7 +67,17 @@ function ModuleConfigModal(props: ModuleConfigModalProps) {
         <Form.Item
           label="逻辑模块名"
           name="name"
-          rules={[{ required: true, message: "请输入逻辑模块名!" }]}
+          rules={[{
+            required: true,
+            message: "请输入逻辑模块名!"
+          }, () => ({
+            validator(rule, value) {
+              if (!moduleNames.includes(value)) {
+                return Promise.resolve();
+              }
+              return Promise.reject('逻辑模块名重复！');
+            },
+          })]}
         >
           <Input />
         </Form.Item>
