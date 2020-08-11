@@ -208,11 +208,13 @@ export const generateNodeEdges = <T>(
 ): GraphData<T> => {
   const nodes: Node<T>[] = [];
   const edges: Edge[] = [];
+  const visited: { [key: string]: boolean } = {};
 
   const travelNode = (node: TreeNode<T>, nodeDeep: number, path: string[]) => {
     const nextDeep = nodeDeep + 1;
     node.visible = true;
     path.push(node.id);
+    visited[node.id] = true;
 
     if (nodes.indexOf(node) === -1) {
       nodes.push(node);
@@ -226,13 +228,12 @@ export const generateNodeEdges = <T>(
     const { children } = node;
     forEach(children, (childNode) => {
       const isNotLoop = path.indexOf(childNode.id) === -1;
-      if (isNotLoop) {
-        const edgeExist =
-          findIndex(edges, (edge) => edge.source === node.id && edge.target === childNode.id) ===
-          -1;
-        if (edgeExist) {
-          edges.push({ source: node.id, target: childNode.id });
-        }
+      const edgeNotExist =
+        findIndex(edges, (edge) => edge.source === node.id && edge.target === childNode.id) === -1;
+      if (edgeNotExist) {
+        edges.push({ source: node.id, target: childNode.id });
+      }
+      if (!visited[childNode.id] && isNotLoop) {
         travelNode(childNode, nextDeep, path);
       }
     });
