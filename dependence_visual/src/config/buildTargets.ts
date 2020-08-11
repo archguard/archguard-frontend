@@ -1,6 +1,6 @@
-export const FEATURES = {
-  CODE_SCANNER: "CODE_SCANNER",
-  INSIDE_FEATURE: "INSIDE_FEATURE",
+export enum FEATURES {
+  CODE_SCANNER = "CODE_SCANNER",
+  INSIDE_FEATURE = "INSIDE_FEATURE",
 };
 
 export type FeatureType = keyof typeof FEATURES;
