@@ -36,7 +36,7 @@ const ClassDependenceArgsForm = (props: ClassDependenceArgsFormProps) => {
 
 
   return (
-    <Form form={form} onFinish={onFinish}>
+    <Form form={form} onFinish={onFinish} initialValues={{ deep: 3 }}>
       <Row gutter={24} key="dependence-module">
         <Col span={6}>
           <Form.Item
