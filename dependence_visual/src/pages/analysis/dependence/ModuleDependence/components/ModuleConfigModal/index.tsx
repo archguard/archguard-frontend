@@ -16,22 +16,19 @@ interface ModuleConfigModalProps {
 function ModuleConfigModal(props: ModuleConfigModalProps) {
   const { visible, onClose, onSuccess, module } = props;
   const formRef = useRef<any>();
+  const [moduleNames, setModuleNames] = useState<string[]>([]);
 
   const title = module?.id ? "修改模块" : "添加模块";
   const { value: options = [] } = useAsync(async () => {
     return queryModuleOptions().then((res) => {
+      setModuleNames(res)
       return res.sort().map((i) => ({ label: i, value: i }));
     });
   });
-  const [moduleNames, setModuleNames] = useState<string[]>([])
 
   useEffect(() => {
     formRef.current && formRef.current.setFieldsValue(module);
   }, [module]);
-
-  useEffect(() => {
-    setModuleNames(options.map(opt => opt.value))
-  }, [options])
 
   const onFinish = async (values: Store) => {
     if (module.id) {
