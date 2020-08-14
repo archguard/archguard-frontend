@@ -1,6 +1,13 @@
 import { NodeConfig } from "@antv/g6/lib/types";
 
-export type DepsNodeType = "package" | "module" | "class" | "method";
+export type DepsNodeSize = [number, number];
+
+export enum DepsNodeType {
+  PACKAGE = "package",
+  MODULE = "module",
+  CLASS = "class",
+  METHOD = "method",
+}
 
 export interface GraphNavigatorPath {
   title: string;
@@ -13,7 +20,7 @@ export interface DepsGraphNode extends NodeConfig {
   nodeType: DepsNodeType;
   subNodes?: DepsGraphNode[];
   parent?: DepsGraphNode;
-  size?: [number, number];
+  size?: DepsNodeSize;
 }
 
 export interface DepsGraphData {

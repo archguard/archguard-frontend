@@ -1,4 +1,6 @@
-import { Graph } from "@antv/g6";
+import G6, { Graph } from "@antv/g6";
+import { GraphOptions } from "@antv/g6/lib/types";
+import ELK from "elkjs";
 import React, { useEffect, useMemo, useState } from "react";
 import FullscreenContainer from "../../components/fullscreen-container";
 import GraphView from "../../components/graph-view";
@@ -6,65 +8,18 @@ import GraphNavigator from "./navigator";
 import "./node";
 import "./styles.less";
 import GraphToolbar from "./toolbar";
-import type { DepsGraphData, DepsGraphNode, GraphNavigatorPath } from "./types";
+import {
+  DepsGraphData,
+  DepsGraphNode,
+  DepsNodeSize,
+  DepsNodeType,
+  GraphNavigatorPath,
+} from "./types";
 import { getNodeSize } from "./util";
 
-const data: DepsGraphData = {
-  nodes: [
-    {
-      title: "consumer-sample",
-      id: "module1",
-      nodeType: "module",
-      subNodes: [
-        {
-          title: "com.thoughtworks.archgurd.pkg",
-          id: "package1",
-          nodeType: "package",
-          subNodes: [
-            {
-              title: "Model",
-              id: "node5",
-              nodeType: "class",
-            },
-          ],
-        },
-        {
-          title: "com.thoughtworks.archgurd.util",
-          id: "package2",
-          nodeType: "package",
-        },
-      ],
-    },
-    {
-      title: "dubbo-spring-boot-actuator",
-      id: "module2",
-      nodeType: "module",
-    },
-    {
-      title: "dubbo-spring-boot-autoconfigure",
-      id: "module3",
-      nodeType: "module",
-    },
-  ],
-  edges: [
-    {
-      id: "edge1",
-      source: "module2",
-      target: "module1",
-    },
-    {
-      id: "edge2",
-      source: "module3",
-      target: "module1",
-    },
-  ],
-};
+const elk = new ELK();
 
-const options = {
-  layout: {
-    type: "force",
-    preventOverlap: true,
-  },
+const options: Partial<GraphOptions> = {
   groupByTypes: false,
   fitCenter: true,
   modes: {
@@ -72,6 +27,14 @@ const options = {
   },
   defaultNode: {
     type: "deps-node",
+  },
+  defaultEdge: {
+    type: "polygon",
+    style: {
+      endArrow: {
+        path: G6.Arrow.triangle(3, 5),
+      },
+    },
   },
 };
 
@@ -84,6 +47,7 @@ export default function DepsGraph(props: DepsGraphProps) {
   const [graph, setGraph] = useState<Graph>();
   const [navPath, setNavPath] = useState<GraphNavigatorPath[]>([]);
   const [currentPath, setCurrentPath] = useState<GraphNavigatorPath>();
+  const [renderData, setRenderData] = useState<DepsGraphData>({ nodes: [], edges: [] });
 
   const sizedData = useMemo(() => {
     const sizingAndRelationg = (node: DepsGraphNode) => {
@@ -98,10 +62,57 @@ export default function DepsGraph(props: DepsGraphProps) {
   }, [data]);
 
   useEffect(() => {
+    elk
+      .layout({
+        id: "root",
+        layoutOptions: { "elk.algorithm": "layered" },
+        children: sizedData.nodes.map((node) => {
+          const [width, height] = node.size ?? [10, 10];
+          return { width, height, id: node.id, labels: [{ text: node.title, id: "" }] };
+        }),
+        edges: sizedData.edges.map((edge) => {
+          return { id: edge.id, sources: [`${edge.source}`], targets: [`${edge.target}`] };
+        }),
+      })
+      .then(({ children, edges }) => {
+        console.log(edges);
+        const data = {
+          nodes:
+            children?.map(({ id, width = 0, height = 0, x = 0, y = 0, labels }) => {
+              const label = labels![0];
+              return {
+                id,
+                size: [width, height] as DepsNodeSize,
+                x,
+                y,
+                title: label.text,
+                nodeType: DepsNodeType.MODULE,
+              };
+            }) ?? [],
+          edges:
+            edges?.map((e: any) => {
+              const [section] = e.sections;
+              const { bendPoints = [], startPoint, endPoint } = section;
+              return {
+                id: e.id,
+                type: "polyline",
+                source: e.sources[0],
+                target: e.targets[0],
+                startPoint,
+                endPoint,
+                controlPoints: [startPoint, ...bendPoints, endPoint],
+              };
+            }) ?? [],
+        };
+        setRenderData(data);
+      });
+  }, [sizedData]);
+
+  useEffect(() => {
     if (graph) {
-      graph.data(sizedData);
+      graph.data(renderData);
       graph.render();
-      const rootPath = { title: "root", data: sizedData };
+      const rootPath = { title: "root", data: renderData };
       setNavPath([rootPath]);
       setCurrentPath(rootPath);
 
@@ -115,13 +126,13 @@ export default function DepsGraph(props: DepsGraphProps) {
           graph.data(newData);
           graph.render();
 
-          const paths = getNavPaths(sizedData, model);
+          const paths = getNavPaths(renderData, model);
           setNavPath(paths);
           setCurrentPath(paths[paths.length - 1]);
         }
       });
     }
-  }, [graph, sizedData]);
+  }, [graph, renderData]);
 
   const onNavClick = (path: GraphNavigatorPath) => {
     if (graph) {

@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
+    "resolveJsonModule": true,
     "importHelpers": true,
     "allowJs": true,
     "jsx": "react",

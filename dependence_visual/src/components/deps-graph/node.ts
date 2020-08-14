@@ -1,5 +1,5 @@
 import G6 from "@antv/g6";
-import { NodeType } from "./types";
+import { DepsNodeType } from "./types";
 
 const colors = {
   package: "#F4664A",
@@ -23,7 +23,7 @@ G6.registerNode(
     drawShape: function drawShape(cfg, group) {
       const [titleWidth] = G6.Util.getTextSize(`${cfg?.title}`, FONT_SIZE);
       const boxWidth = 30 + titleWidth;
-      const type: NodeType = (cfg?.nodeType as NodeType) || "module";
+      const type: DepsNodeType = (cfg?.nodeType as DepsNodeType) || "module";
       const color = colors[type] || cfg?.color || "#F4664A";
       const radius = 2;
 
