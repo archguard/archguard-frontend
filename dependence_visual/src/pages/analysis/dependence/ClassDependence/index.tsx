@@ -10,7 +10,8 @@ import {
 } from "../utils";
 import { GraphData } from "../../../../models/graph";
 import { JClass, JMethod } from "../../../../models/java";
-import ClassDependenceArgsForm from './ClassDependenceArgsForm'
+import ClassDependenceArgsForm from "./ClassDependenceArgsForm";
+import Graph from "../../../../components/InvokeGraph/g6Graph";
 
 enum ClassDependenceType {
   dependencies = "dependencies",
@@ -69,7 +70,11 @@ function ClassDependence() {
 
   return (
     <div>
-      <ClassDependenceArgsForm onFinish={onShowClick} defaultFormData={defaultFormData}></ClassDependenceArgsForm>
+      <ClassDependenceArgsForm
+        onFinish={onShowClick}
+        defaultFormData={defaultFormData}
+      ></ClassDependenceArgsForm>
+      {/* <Graph graphData={graphData}/> */}
       <InvokeGraph
         id="classDependenceGraph"
         data={graphData}

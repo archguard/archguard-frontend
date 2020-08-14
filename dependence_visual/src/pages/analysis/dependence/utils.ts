@@ -53,6 +53,21 @@ const createTreeNode = <T extends JavaItem, U = TreeNode<T>>(
   return treeNodeMap[id];
 };
 
+const obtainRootNodes = <T>(treeNodeMap: { [key: string]: TreeNode<T> }): TreeNode<T>[] => {
+  let rootNodes: TreeNode<T>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
+  if (rootNodes.length === 0) {
+    rootNodes = reduce(
+      treeNodeMap,
+      (accumulator: TreeNode<T>[], item) => {
+        accumulator.push(item);
+        return accumulator;
+      },
+      [],
+    );
+  }
+  return rootNodes;
+};
+
 export const buildMethodTree = (jMethods: JMethod[]) => {
   const parentsKey = "callers";
   const childrenKey = "callees";
@@ -95,9 +110,7 @@ export const buildMethodTree = (jMethods: JMethod[]) => {
     travelMethods(jMethod);
   });
 
-  const rootNodes: TreeNode<JMethod>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
-
-  return rootNodes;
+  return obtainRootNodes<JMethod>(treeNodeMap);
 };
 
 export const buildClassDependenceTree = (jClass: JClass): TreeNode<JClass>[] => {
@@ -133,8 +146,7 @@ export const buildClassDependenceTree = (jClass: JClass): TreeNode<JClass>[] => 
 
   travelJClasses(jClass);
 
-  const rootNodes: TreeNode<JClass>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
-  return rootNodes;
+  return obtainRootNodes<JClass>(treeNodeMap);
 };
 
 export const buildClassInvokesTree = (jClass: JClass): TreeNode<JClass>[] => {
@@ -166,8 +178,7 @@ export const buildClassInvokesTree = (jClass: JClass): TreeNode<JClass>[] => {
 
   travelJClasses(jClass);
 
-  const rootNodes: TreeNode<JClass>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
-  return rootNodes;
+  return obtainRootNodes<JClass>(treeNodeMap);
 };
 
 export const buildClassMethodInvokesTree = (jClass: JClass): TreeNode<JMethod>[] => {
@@ -198,8 +209,7 @@ export const buildClassMethodInvokesTree = (jClass: JClass): TreeNode<JMethod>[]
 
   forEach(jMethods, travelJMethod);
 
-  const rootNodes: TreeNode<JMethod>[] = filter(treeNodeMap, (node) => node.parents.length === 0);
-  return rootNodes;
+  return obtainRootNodes<JMethod>(treeNodeMap);
 };
 
 export const generateNodeEdges = <T>(
