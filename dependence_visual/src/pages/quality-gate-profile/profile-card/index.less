@@ -1,0 +1,65 @@
+.profile-card {
+  margin-bottom: 24px;
+  height: 230px;
+
+  .ant-card-body {
+    height: calc(100% - 49px);
+    overflow-y: auto;
+  }
+
+  .ant-form-item-explain {
+    font-size: 12px;
+  }
+}
+
+.empty {
+  font-size: 48px;
+  cursor: pointer;
+
+  div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ant-card-body {
+    height: 100%;
+  }
+}
+
+.empty-text {
+  font-size: 12px;
+  text-align: center;
+}
+
+.btn-group {
+  .ant-btn-link {
+    margin-left: 6px;
+    padding: 2px 3px;
+  }
+}
+
+.profile-readonly {
+  .profile-header, .profile-container {
+    padding: 5px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    div {
+      border-right: 1px solid #eeeeee;
+      flex: 1;
+      text-align: center;
+
+      &:last-of-type {
+        border-right: 0;
+      }
+    }
+  }
+
+  .profile-header {
+    border-bottom: 1px solid #eeeeee;
+    font-weight: bold;
+  }
+}

@@ -6,6 +6,17 @@ export interface ReportMapper {
   [key: string]: { name: string; desc: string };
 }
 
+export enum Layer {
+  MODULE = "MODULE",
+  PACKAGE = "PACKAGE",
+  CLASS = "CLASS",
+}
+
+export type LayerKeys = keyof typeof Layer
+export type Quota = {
+  [key in LayerKeys]: string[];
+}
+
 export const moduleMapping: ReportMapper = {
   outerInstabilityAvg: {
     name: "OIA",
@@ -36,12 +47,12 @@ export const moduleMapping: ReportMapper = {
     desc: "IIA(内部不稳定性平均数)",
   },
   innerInstabilityMed: {
-    name: "IIA",
-    desc: "IIA(内部不稳定性中位数)",
+    name: "IIM",
+    desc: "IIM(内部不稳定性中位数)",
   },
 };
 
-const packageMapping: ReportMapper = {
+export const packageMapping: ReportMapper = {
   outerInstabilityAvg: {
     name: "OIA",
     desc: "OIA(外部不稳定平均数)",
@@ -64,19 +75,19 @@ const packageMapping: ReportMapper = {
   },
   innerCouplingMed: {
     name: "ICM",
-    desc: "ICA(内部耦合中位数)",
+    desc: "ICM(内部耦合中位数)",
   },
   innerInstabilityAvg: {
     name: "IIA",
     desc: "IIA(内部不稳定性平均数)",
   },
   innerInstabilityMed: {
-    name: "IIA",
-    desc: "IIA(内部不稳定性中位数)",
+    name: "IIM",
+    desc: "IIM(内部不稳定性中位数)",
   },
 };
 
-const classMapping: ReportMapper = {
+export const classMapping: ReportMapper = {
   innerFanIn: {
     name: "IFI",
     desc: "innerFanIn",
@@ -121,6 +132,18 @@ function mappingProps(item: any, mapping: ReportMapper) {
     return { desc, name, value, key };
   });
   return props;
+}
+
+export const getQuotaListByLayer = (): Quota => {
+  const getQuotaList = (mapping: ReportMapper): string[] => {
+    return Object.values(mapping).map(quota => quota.name)
+  }
+
+  return {
+    MODULE: getQuotaList(moduleMapping),
+    PACKAGE: getQuotaList(packageMapping),
+    CLASS: getQuotaList(classMapping),
+  }
 }
 
 interface ReportProps {
