@@ -39,7 +39,7 @@ const calculateNodeEdges = (
 type ClassFormData = {
   deep: number;
   dependenceType: ClassDependenceType;
-  className: string;
+  className: string[];
   module: string;
 };
 
@@ -52,19 +52,24 @@ function ClassDependence() {
 
   useEffect(() => {
     if (query.className) {
-      setDefaultFormData({ deep: 3, dependenceType: "dependencies", ...query });
+      setDefaultFormData({
+        ...query,
+        deep: 3,
+        dependenceType: "dependencies",
+        className: query.className.split('.')
+      });
       setGraphData({ edges: [], nodes: [] });
     }
   }, [query]);
 
   function onShowClick(args: ClassFormData) {
-    return queryClassDependence(args.className, args.dependenceType, {
+    return queryClassDependence(args.className.join('.'), args.dependenceType, {
       deep: args.deep || null,
       module: args.module || null,
     }).then((res) => {
       const nodeEdges = calculateNodeEdges(args.dependenceType, res);
       setGraphData(nodeEdges);
-      setClassName(args.className);
+      setClassName(args.className.join('.'));
     });
   }
 

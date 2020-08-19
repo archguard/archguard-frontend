@@ -1,6 +1,7 @@
 export interface FormItemOption {
   value: string;
   label: string;
+  children?: FormItemOption[],
 }
 
 export class FormItemModel {
