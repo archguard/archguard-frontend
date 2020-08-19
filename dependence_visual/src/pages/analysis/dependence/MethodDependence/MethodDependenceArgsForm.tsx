@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
-import { Form, Row, Col, Select, Button, Input } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Form, Row, Col, Select, Button, Input, Cascader } from 'antd'
 import { FormItemOption } from '@/models/form'
-import { useAsync } from 'react-use'
-import { queryPackageDependencies } from '@/api/module/package'
+import useCodeTree from '../states/useCodeTree'
+import { SelectValue } from 'antd/lib/select'
+import { transformCodeTreeToModuleOptions, transformCodeTreeToCascaderOptions } from '@/utils/transformCodeTree'
 
 const dependenceTypeOptions: FormItemOption[] = [{
   label: "全部依赖",
@@ -18,20 +19,24 @@ const dependenceTypeOptions: FormItemOption[] = [{
 interface MethodDependenceArgsFormProps {
   onFinish(values: {
     module?: string,
-    className?: string,
+    className?: string[],
     methodName?: string,
     dependenceType?: string,
     deep?: number,
   }): void;
-  defaultFormData: {}
+  defaultFormData: any
 }
 
 const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
-  const { value: allDependence = [] } = useAsync(queryPackageDependencies);
   const { onFinish, defaultFormData } = props
   const [form] = Form.useForm()
+  const [codeTree] = useCodeTree()
+  const [currentModule, setCurrentModule] = useState<SelectValue>()
+  const moduleOptions = transformCodeTreeToModuleOptions(codeTree?.value!)
+  const classCascaderOptions = transformCodeTreeToCascaderOptions(codeTree?.value!, true)
 
   useEffect(() => {
+    setCurrentModule(defaultFormData.module)
     form.setFieldsValue(defaultFormData)
   }, [defaultFormData])
 
@@ -45,13 +50,14 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
               placeholder="模块"
               style={{ width: "100%" }}
               allowClear
-              showSearch>
-              {allDependence.map(({ module }, index) => {
+              showSearch
+              onChange={(value) => setCurrentModule(value)}>
+              {moduleOptions.map(({ value, label }) => {
                   return (
                     <Select.Option
-                      value={index}
-                      key={module}>
-                      {module}
+                      value={value}
+                      key={value}>
+                      {label}
                     </Select.Option>
                   );
                 })}
@@ -66,7 +72,12 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
               message: '类名必填',
             }]}
           >
-            <Input placeholder="类名"></Input>
+            <Cascader
+              displayRender={label => label.join('.')}
+              options={classCascaderOptions[currentModule as string]}
+              placeholder="类名"
+              notFoundContent="请先选择模块！"
+            />
           </Form.Item>
         </Col>
         <Col span={4} key="function-name">

@@ -17,7 +17,7 @@ type MethodFormData = {
   module?: string;
   deep?: number;
   dependenceType: MethodDependenceType;
-  className: string;
+  className: string[];
   methodName: string;
 };
 function MethodDependence() {
@@ -30,20 +30,25 @@ function MethodDependence() {
 
   useEffect(() => {
     if (query.className && query.methodName) {
-      setDefaultFormData({ deep: 3, dependenceType: "invokes", ...query });
+      setDefaultFormData({
+        ...query,
+        deep: 3,
+        dependenceType: "invokes",
+        className: query.className.split('.')
+      });
       setGraphData({ nodes: [], edges: [] });
     }
   }, [query]);
 
   function onShowClick(args: MethodFormData) {
-    return queryMethodDependence(args.className, args.methodName, args.dependenceType, {
+    return queryMethodDependence(args.className.join('.'), args.methodName, args.dependenceType, {
       module: args.module || null,
       deep: args.deep || null,
     }).then((res) => {
       const tree = buildMethodTree(res);
       const nodeEdges = generateNodeEdges(tree, 3);
       setGraphData(nodeEdges);
-      setClassName(args.className);
+      setClassName(args.className.join('.'));
       setMethodName(args.methodName);
     });
   }

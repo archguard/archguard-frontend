@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
-import { Form, Row, Col, Select, Button, Input } from 'antd'
+import React, { useEffect, useState } from 'react'
+import { Form, Row, Col, Select, Button, Input, Cascader } from 'antd'
 import { FormItemOption } from '@/models/form'
-import { useAsync } from 'react-use'
-import { queryPackageDependencies } from '@/api/module/package'
+import useCodeTree from '../states/useCodeTree'
+import { transformCodeTreeToModuleOptions, transformCodeTreeToCascaderOptions } from '@/utils/transformCodeTree'
+import { SelectValue } from 'antd/lib/select'
 
 const dependenceTypeOptions: FormItemOption[] = [{
     label: "类的依赖",
@@ -18,19 +19,23 @@ const dependenceTypeOptions: FormItemOption[] = [{
 interface ClassDependenceArgsFormProps {
   onFinish(values: {
     module?: string,
-    className?: string,
+    className?: string[],
     dependenceType?: string,
     deep?: number,
   }): void;
-  defaultFormData: {}
+  defaultFormData: any
 }
 
 const ClassDependenceArgsForm = (props: ClassDependenceArgsFormProps) => {
-  const { value: allDependence = [] } = useAsync(queryPackageDependencies);
   const { onFinish, defaultFormData } = props
   const [form] = Form.useForm()
+  const [codeTree] = useCodeTree()
+  const [currentModule, setCurrentModule] = useState<SelectValue>()
+  const moduleOptions = transformCodeTreeToModuleOptions(codeTree?.value!)
+  const classCascaderOptions = transformCodeTreeToCascaderOptions(codeTree?.value!, true)
 
   useEffect(() => {
+    setCurrentModule(defaultFormData.module)
     form.setFieldsValue(defaultFormData)
   }, [defaultFormData])
 
@@ -38,27 +43,28 @@ const ClassDependenceArgsForm = (props: ClassDependenceArgsFormProps) => {
   return (
     <Form form={form} onFinish={onFinish} initialValues={{ deep: 3 }}>
       <Row gutter={24} key="dependence-module">
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item
             name="module">
             <Select
               placeholder="模块"
               style={{ width: "100%" }}
               allowClear
-              showSearch>
-              {allDependence.map(({ module }, index) => {
-                  return (
-                    <Select.Option
-                      value={index}
-                      key={module}>
-                      {module}
-                    </Select.Option>
-                  );
-                })}
+              showSearch
+              onChange={(value) => setCurrentModule(value)}>
+              {moduleOptions.map(({ value, label }) => {
+                return (
+                  <Select.Option
+                    value={value}
+                    key={value}>
+                    {label}
+                  </Select.Option>
+                );
+              })}
             </Select>
           </Form.Item>
         </Col>
-        <Col span={8} key="class-name">
+        <Col span={9} key="class-name">
           <Form.Item
             name="className"
             rules={[{
@@ -66,7 +72,12 @@ const ClassDependenceArgsForm = (props: ClassDependenceArgsFormProps) => {
               message: '类名必填',
             }]}
           >
-            <Input placeholder="类名"></Input>
+            <Cascader
+              displayRender={label => label.join('.')}
+              options={classCascaderOptions[currentModule as string]}
+              placeholder="类名"
+              notFoundContent="请先选择模块！"
+            />
           </Form.Item>
         </Col>
         <Col span={4} key="dependence-type">
