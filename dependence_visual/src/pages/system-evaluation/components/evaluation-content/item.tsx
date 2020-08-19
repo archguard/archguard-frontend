@@ -58,7 +58,7 @@ export default function EvaluationItem(props: EvaluationItemProps) {
     >
       <Row align="middle" style={{ height: "100%" }}>
         <Col span={4}>
-          <h2>{item.title}</h2>
+          <h3>{item.title}</h3>
         </Col>
         <Col span={2}>
           <Divider type="vertical" style={{ height: "64px" }}></Divider>
