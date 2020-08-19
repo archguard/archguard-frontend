@@ -34,10 +34,21 @@ export function transformCodeTreeToCascaderOptions(codeTree: CodeTree, toClass: 
     }
   }
 
+  const clearUndefinedChildren = (treeNodes: FormItemOption[]): FormItemOption[] => {
+    return treeNodes.map((node) => {
+      const children = clearUndefinedChildren(node.children!.filter(node => node))
+      return {
+        ...node,
+        children: children.length ? children : undefined,
+      }
+    })
+  }
+
   return Object.assign({},
     ...trees.map((tree) => {
-    return {
-      [tree.node]: tree.children.map((node) => transformNodeToOption(node)!)
-    }
+      const treeNodes = tree.children.map((node) => transformNodeToOption(node)!)
+      return {
+        [tree.node]: toClass ? treeNodes : clearUndefinedChildren(treeNodes!)
+      }
   }))
 }

@@ -51,7 +51,6 @@ function ModuleDependenceGraph() {
 
   function showAllModuleDependence() {
     queryAllModuleDependence().then((res: any) => {
-      debugger
       const tree = buildModuleDependenceTree(res);
       const nodeEdges = generateNodeEdges(tree);
       setGraphData(nodeEdges);

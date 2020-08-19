@@ -16,6 +16,7 @@ export const menuList = configForTargets({
       children: [
         { key: "/analysis/dependence", text: "依赖分析" },
         { key: "/quality-gate-profile", text: '质量阀' },
+        { key: "/metric", text: '指标' },
       ],
     },
     {
