@@ -38,6 +38,7 @@ export default defineConfig({
         },
         { path: "/analysis/dependence/:type?", component: "@/pages/analysis/dependence" },
         { path: "/quality-gate-profile", component: "@/pages/quality-gate-profile" },
+        { path: "/metric", component: "@/pages/metrics/dfms" },
       ],
     },
   ],
