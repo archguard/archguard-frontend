@@ -7,6 +7,13 @@ interface MetricParams {
   className?: string;
 }
 
+export interface DFMSMetric {
+  absRatio: number,
+  innerInstabilityAvg: number,
+  outerInstabilityAvg: number,
+  [key: string]: any
+}
+
 export function queryCodeTree() {
   return axios<CodeTree>({
     baseURL: baseURL,
@@ -19,7 +26,7 @@ export function queryDFMSMetricBy(
   by: "module" | "package" | "class",
   params: MetricParams,
 ) {
-  return axios({
+  return axios<DFMSMetric>({
     baseURL: baseURL,
     url: `/metric/dfms/${by}`,
     method: 'GET',

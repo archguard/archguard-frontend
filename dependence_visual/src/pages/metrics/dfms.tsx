@@ -7,8 +7,13 @@ import { transformCodeTreeToModuleOptions, transformCodeTreeToCascaderOptions } 
 import useCodeTree from '../analysis/dependence/states/useCodeTree';
 import { SelectValue } from 'antd/lib/select';
 import { Store } from 'antd/lib/form/interface';
-import { queryDFMSMetricBy } from '@/api/module/code-tree';
+import { queryDFMSMetricBy, DFMSMetric } from '@/api/module/code-tree';
 import { useForm } from 'antd/lib/form/Form';
+
+interface DFMS {
+  key: 'module'|'package'|'class',
+  stability: 'innerInstabilityAvg' | 'outerInstabilityAvg'
+}
 
 let DFMSCharts: ECharts
 const Metric = () => {
@@ -18,8 +23,10 @@ const Metric = () => {
     package: transformCodeTreeToCascaderOptions(codeTree?.value!, false),
     class: transformCodeTreeToCascaderOptions(codeTree?.value!, true),
   }
-  const [currentKey, setCurrentKey] = useState<'module'|'package'|'class'>('module')
+  const [currentKey, setCurrentKey] = useState<DFMS['key']>('module')
   const [currentModule, setCurrentModule] = useState<SelectValue>()
+  const [currentStability, setCurrentStability] = useState<DFMS['stability']>('innerInstabilityAvg')
+  const [dfmsMetric, setDFMSMetric] = useState<DFMSMetric>()
   const [form] = useForm()
 
   useMount(() => {
@@ -27,14 +34,19 @@ const Metric = () => {
     DFMSCharts.setOption(getChartsOption())
   })
 
+  const onStabilityChange = (value: DFMS['stability']) => {
+    setCurrentStability(value)
+    DFMSCharts.setOption(getChartsOption([dfmsMetric!.absRatio, dfmsMetric![value]]))
+  }
+
   const onFinish = (values: Store) => {
     Object.keys(values).map(key => {
       const current = values[key]
       values[key] = typeof current === 'string' ? current : current.join('.')
     })
-    queryDFMSMetricBy(currentKey, values).then((res: any) => {
-      const { absRatio, innerInstabilityAvg, outerInstabilityAvg } = res
-      DFMSCharts.setOption(getChartsOption([absRatio, innerInstabilityAvg]))
+    queryDFMSMetricBy(currentKey, values).then((res: DFMSMetric) => {
+      setDFMSMetric({...res})
+      DFMSCharts.setOption(getChartsOption([res.absRatio, res[currentStability]]))
     })
   }
 
@@ -124,6 +136,14 @@ const Metric = () => {
           </Col>
         </Row>
       </Form>
+      <div style={{ textAlign: 'center' }}>
+        <Radio.Group
+          value={currentStability}
+          onChange={({ target: { value } }) => onStabilityChange(value)}>
+          <Radio.Button value="innerInstabilityAvg" disabled={!dfmsMetric}>外部不稳定性</Radio.Button>
+          <Radio.Button value="outerInstabilityAvg" disabled={!dfmsMetric}>内部不稳定性</Radio.Button>
+        </Radio.Group>
+      </div>
       <div
         id="container"
         style={{
