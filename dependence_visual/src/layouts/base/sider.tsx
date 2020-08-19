@@ -33,7 +33,7 @@ export default function PageSider(props) {
 
   return (
     <Menu
-      theme="dark"
+      theme="light"
       mode="inline"
       onClick={(e) => props.history.push(e.key)}
       defaultOpenKeys={[props.location.pathname]}

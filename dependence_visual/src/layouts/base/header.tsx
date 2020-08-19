@@ -21,9 +21,10 @@ export default function PageHeader(props) {
         {getFeature(FEATURES.INSIDE_FEATURE) && (
           <Button
             type="link"
+            style={{color: "#ffffff"}}
             icon={<QuestionCircleOutlined />}
             onClick={() => props.history.push("/help")}
-          ></Button>
+          >说明文档</Button>
         )}
       </div>
     </div>

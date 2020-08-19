@@ -11,12 +11,12 @@ const { Header, Sider, Content, Footer } = Layout;
 export default function PageLayout(props) {
   return (
     <Layout style={{ height: "100%" }}>
-      <Header style={{ padding: 0 }}>
+      <Header style={{ padding: 0, backgroundColor: "primary" }}>
         <PageHeader history={props.history} />
       </Header>
 
       <Layout>
-        <Sider collapsible>
+        <Sider collapsible style={{backgroundColor:"#f6f6f6"}}>
           <PageSider history={props.history} location={props.location} />
         </Sider>
 
@@ -35,7 +35,7 @@ export default function PageLayout(props) {
             {props.children}
           </Content>
 
-          <Footer>
+          <Footer style={{height: "28px" }}>
             <PageFooter />
           </Footer>
         </Layout>
