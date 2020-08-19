@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined, LoginOutlined } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/config/buildTargets";
 
 export default function PageHeader(props) {
@@ -17,7 +17,7 @@ export default function PageHeader(props) {
       >
         ArchGuard
       </span>
-      <div style={{ display: "inline-block	", float: "right" }}>
+      <div style={{ display: "inline-block", float: "right" }}>
         {getFeature(FEATURES.INSIDE_FEATURE) && (
           <Button
             type="link"
@@ -25,7 +25,14 @@ export default function PageHeader(props) {
             icon={<QuestionCircleOutlined />}
             onClick={() => props.history.push("/help")}
           >说明文档</Button>
+          
         )}
+        <Button
+            type="link"
+            style={{color: "#ffffff"}}
+            icon={<LoginOutlined />}
+            onClick={() => props.history.push("/login")}
+          >登陆</Button>
       </div>
     </div>
   );

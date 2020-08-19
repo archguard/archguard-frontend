@@ -23,22 +23,29 @@ export default defineConfig({
   },
   routes: [
     {
-      path: "/",
-      component: "@/layouts/base",
+      path: "/",  
       routes: [
-        { path: "/", component: "@/pages/index" },
-        { path: "/test", component: "@/pages/test" },
-        { path: "/home", component: "@/pages/home" },
-        { path: "/help/:name?", component: "@/pages/help" },
-        { path: "/system-evaluation", component: "@/pages/system-evaluation" },
-        { path: "/system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
+        { path: "/login", component: "@/pages/login" },
         {
-          path: "/retrofit-tools/plsql-to-kotlin",
-          component: "@/pages/retrofit-tools/plsql2kotlin",
-        },
-        { path: "/analysis/dependence/:type?", component: "@/pages/analysis/dependence" },
-        { path: "/quality-gate-profile", component: "@/pages/quality-gate-profile" },
+          path: "/", 
+          component: "@/layouts/base",
+          routes: [
+            { path: "/", component: "@/pages/index" },
+            { path: "/test", component: "@/pages/test" },
+            { path: "/home", component: "@/pages/home" },
+            { path: "/help/:name?", component: "@/pages/help" },
+            { path: "/system-evaluation", component: "@/pages/system-evaluation" },
+            { path: "/system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
+            {
+              path: "/retrofit-tools/plsql-to-kotlin",
+              component: "@/pages/retrofit-tools/plsql2kotlin",
+            },
+            { path: "/analysis/dependence/:type?", component: "@/pages/analysis/dependence" },
+            { path: "/quality-gate-profile", component: "@/pages/quality-gate-profile" },
+          ]
+        }
+        
       ],
-    },
+    }
   ],
 });
