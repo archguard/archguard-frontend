@@ -31,8 +31,8 @@ const getMarkLineOpt = (
 
 const getAxisConfig = (name: string, axis: 'x' | 'y'): EChartOption.XAxis | EChartOption.YAxis => {
   const axisLabel = {
-    x: ['Stable', 'Instable'],
-    y: ['Concrete', 'Abstract'],
+    x: ['稳定', '不稳定'],
+    y: ['具体', '抽象'],
   }
 
   return {
@@ -47,7 +47,7 @@ const getAxisConfig = (name: string, axis: 'x' | 'y'): EChartOption.XAxis | ECha
     min: 0, max: 1,
     axisLabel: {
       color: '#000',
-      margin: 20,
+      margin: 15,
       align: 'center',
       rotate: axis === 'y' ? 90 : 0,
       formatter: (value: number) => axisLabel[axis][value],
@@ -61,13 +61,13 @@ const getAxisConfig = (name: string, axis: 'x' | 'y'): EChartOption.XAxis | ECha
 const defaultSeriesMarkLineOpt = [
   {
     type: 'scatter',
-    markLine: getMarkLineOpt('Main Sequence', 'center', 0, 1, false)
+    markLine: getMarkLineOpt('主序列', 'center', 0, 1, false)
   }, {
     type: 'scatter',
-    markLine: getMarkLineOpt('Zone of Pain', 'insideMiddleBottom', 0, 0.3)
+    markLine: getMarkLineOpt('痛苦区', 'insideMiddleBottom', 0, 0.3)
   }, {
     type: 'scatter',
-    markLine: getMarkLineOpt('Zone of Uselessness', 'insideMiddleTop', 1, 0.7)
+    markLine: getMarkLineOpt('无用区', 'insideMiddleTop', 1, 0.7)
 }]
 
 export function getChartsOption(data?: number[]): EChartOption {
@@ -75,7 +75,7 @@ export function getChartsOption(data?: number[]): EChartOption {
     title: {
       top: 15,
       left: 'center',
-      text: 'Distance From Main Sequence: \n zone of pain and zone of uselessness',
+      text: '距主序列的距离: 痛苦区和无用区',
       textStyle: { color: 'red', fontSize: 22 },
     },
     tooltip: { show: true },
@@ -94,8 +94,8 @@ export function getChartsOption(data?: number[]): EChartOption {
         ],
       } as unknown as string,
     },
-    xAxis: getAxisConfig('Instability, I', 'x') as EChartOption.XAxis,
-    yAxis: getAxisConfig('Abstractness, A', 'y') as EChartOption.YAxis,
+    xAxis: getAxisConfig('不稳定性(I)', 'x') as EChartOption.XAxis,
+    yAxis: getAxisConfig('抽象性(A)', 'y') as EChartOption.YAxis,
     series: !data ? defaultSeriesMarkLineOpt :
       [...defaultSeriesMarkLineOpt, {
         data: [data],
@@ -103,7 +103,7 @@ export function getChartsOption(data?: number[]): EChartOption {
         symbolSize: 20,
         tooltip: {
           formatter: ({ value }: any) => {
-            return `Abstractness: ${value[0]} \n Instability: ${value[1]}`
+            return `抽象性: ${value[0]} \n 不稳定性: ${value[1]}`
           }
         },
         itemStyle: {
