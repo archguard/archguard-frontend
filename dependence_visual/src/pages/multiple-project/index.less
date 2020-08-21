@@ -1,0 +1,80 @@
+.multiple-project {
+
+  &-container {
+    width: 100%;
+    height: 100%;
+    background-image:url("../../assets/backgroud.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  &-header {
+    height: 60px;
+    background-color: rgba(0, 0, 0, .2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-logo {
+      margin-left: 30px;
+      height: 100%;
+      display: inline-block;
+
+      & > img {
+        width: auto;
+        height: 100%;
+      }
+    }
+
+    .header-user {
+      margin-right: 16px;
+      display: inline-block;
+      cursor: pointer;
+
+      & > img {
+        width: 40px;
+      }
+
+      .user-name {
+        margin: 0 .5em;
+      }
+
+      .user-icon {
+        font-size: 12px;
+        transition: .3s transform cubic-bezier(0.785, 0.135, 0.15, 0.86);
+      }
+
+      &:hover {
+        .user-icon {
+          transform: rotate(180deg);
+        }
+      }
+    }
+  }
+
+  &-selector {
+    padding: 50px 100px;
+    height: calc(100% - 60px);
+    overflow: auto;
+
+    .ant-tabs-nav:before {
+      display: none;
+    }
+  }
+
+  &-card-content {
+    height: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.add {
+      font-size: 3em;
+    }
+  }
+
+  &-card-title {
+    text-align: center;
+    height: 47px;
+  }
+}

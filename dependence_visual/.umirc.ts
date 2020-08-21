@@ -23,11 +23,12 @@ export default defineConfig({
   },
   routes: [
     {
-      path: "/",  
+      path: "/",
       routes: [
         { path: "/login", component: "@/pages/login" },
+        { path: "/multiple-project", component: "@/pages/multiple-project" },
         {
-          path: "/", 
+          path: "/",
           component: "@/layouts/base",
           routes: [
             { path: "/", component: "@/pages/index" },
@@ -44,8 +45,7 @@ export default defineConfig({
             { path: "/quality-gate-profile", component: "@/pages/quality-gate-profile" },
             { path: "/metric", component: "@/pages/metrics/dfms" },
           ]
-        }
-        
+        },
       ],
     }
   ],
