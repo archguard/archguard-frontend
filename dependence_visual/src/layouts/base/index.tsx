@@ -11,7 +11,7 @@ const { Header, Sider, Content, Footer } = Layout;
 export default function PageLayout(props) {
   return (
     <Layout style={{ height: "100%" }}>
-      <Header style={{ padding: 0, backgroundColor: "primary" }}>
+      <Header style={{ padding: 0, backgroundColor: "#3AAFAE" }}>
         <PageHeader history={props.history} />
       </Header>
 
