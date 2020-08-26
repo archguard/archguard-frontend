@@ -45,7 +45,8 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
       <Row gutter={24} key="dependence-module">
         <Col span={4}>
           <Form.Item
-            name="module">
+            name="module"
+            rules={[{ required: true, message: '请选择模块！' }]}>
             <Select
               placeholder="模块"
               style={{ width: "100%" }}

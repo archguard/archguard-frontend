@@ -42,8 +42,8 @@ function MethodDependence() {
 
   function onShowClick(args: MethodFormData) {
     return queryMethodDependence(args.className.join('.'), args.methodName, args.dependenceType, {
-      module: args.module || null,
-      deep: args.deep || null,
+      module: args.module,
+      deep: args.deep,
     }).then((res) => {
       const tree = buildMethodTree(res);
       const nodeEdges = generateNodeEdges(tree, 3);

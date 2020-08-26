@@ -11,7 +11,6 @@ import {
 import { GraphData } from "../../../../models/graph";
 import { JClass, JMethod } from "../../../../models/java";
 import ClassDependenceArgsForm from "./ClassDependenceArgsForm";
-import Graph from "../../../../components/InvokeGraph/g6Graph";
 
 enum ClassDependenceType {
   dependencies = "dependencies",
@@ -64,8 +63,8 @@ function ClassDependence() {
 
   function onShowClick(args: ClassFormData) {
     return queryClassDependence(args.className.join('.'), args.dependenceType, {
-      deep: args.deep || null,
-      module: args.module || null,
+      deep: args.deep,
+      module: args.module,
     }).then((res) => {
       const nodeEdges = calculateNodeEdges(args.dependenceType, res);
       setGraphData(nodeEdges);
