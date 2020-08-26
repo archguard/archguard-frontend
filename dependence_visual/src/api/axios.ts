@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import { util as loadingUtil } from "../components/Loading";
 
 const instance = axios.create({
-  baseURL: "",
+  baseURL: '/api',
   timeout: 60000, // 请求超时时间
   withCredentials: true, // 允许跨域携带cookie
 });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Form, Row, Col, Select, Button, Input, Cascader } from 'antd'
 import { FormItemOption } from '@/models/form'
-import useCodeTree from '../states/useCodeTree'
+import useCodeTree from '@/store/global-cache-state/useCodeTree'
 import { SelectValue } from 'antd/lib/select'
 import { transformCodeTreeToModuleOptions, transformCodeTreeToCascaderOptions } from '@/utils/transformCodeTree'
 

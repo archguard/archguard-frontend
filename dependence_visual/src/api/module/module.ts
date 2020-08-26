@@ -1,10 +1,8 @@
-import { ReportMapper } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleCouplingTree/report";
-import { methodDependency } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceTable/columns";
 import _ from "lodash";
 import axios from "../axios";
-import { baseURL } from "./config";
-
-const subUrl = "/logic-modules";
+import storage from '@/store/storage/sessionStorage'
+import { ReportMapper } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleCouplingTree/report";
+import { methodDependency } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceTable/columns";
 
 export interface Module {
   id?: string;
@@ -14,97 +12,110 @@ export interface Module {
 }
 
 export function queryModule() {
+  const projectId = storage.getProjectId()
+
   return axios<Module[]>({
-    baseURL: baseURL,
-    url: subUrl,
+    url: `/module/projects/${projectId}/logic-modules`,
     method: "GET",
   }).then((res) => _.orderBy(res, ["status", "name"], ["desc", "asc"]));
 }
 
 export function deleteModule(parameter: { id: string }) {
-  return axios({
-    baseURL: baseURL,
-    url: subUrl + "/" + parameter.id,
+  const projectId = storage.getProjectId()
+
+  return axios<any>({
+    url: `/module/projects/${projectId}/logic-modules/${parameter.id}`,
     method: "DELETE",
   });
 }
 
 export function updateModule(parameter: Module) {
-  return axios({
-    baseURL: baseURL,
-    url: subUrl + "/" + parameter.id,
+  const projectId = storage.getProjectId()
+
+  return axios<any>({
+    url: `/module/projects/${projectId}/logic-modules/${parameter.id}`,
     method: "PUT",
     data: parameter,
   });
 }
 
 export function createModule(parameter: {}) {
-  return axios({
-    baseURL: baseURL,
-    url: subUrl,
+  const projectId = storage.getProjectId()
+
+  return axios<any>({
+    url: `/module/projects/${projectId}/logic-modules`,
     method: "POST",
     data: parameter,
   });
 }
 
 export function queryModuleOptions() {
+  const projectId = storage.getProjectId()
+
   return axios<string[]>({
-    baseURL: baseURL,
-    url: "/base-modules",
+    url: `/module/projects/${projectId}/base-modules`,
     method: "GET",
   });
 }
 
 export function autoDefineModule() {
-  return axios({
-    baseURL: baseURL,
-    url: subUrl + "/auto-define",
+  const projectId = storage.getProjectId()
+
+  return axios<any>({
+    url: `/module/projects/${projectId}/logic-modules/auto-define`,
     method: "POST",
   });
 }
 
 export function queryModuleDependencies(parameter: {}) {
+  const projectId = storage.getProjectId()
+
   return axios<methodDependency[]>({
-    baseURL: baseURL,
-    url: subUrl + "/dependencies",
+    url: `/module/projects/${projectId}/logic-modules/dependencies`,
     method: "GET",
     params: parameter,
   });
 }
 
 export function queryModuleCoupling() {
+  const projectId = storage.getProjectId()
+
   return axios<ReportMapper[]>({
-    baseURL: baseURL,
-    url: "/logic-modules/metrics",
+    url: `/module/projects/${projectId}/logic-modules/metrics`,
     method: "GET",
   });
 }
 
 export function hideAllModules() {
-  return axios({
-    baseURL: baseURL,
-    url: "/logic-modules/hide-all",
+  const projectId = storage.getProjectId()
+
+  return axios<any>({
+    url: `/module/projects/${projectId}/logic-modules/hide-all`,
     method: "POST",
   });
 }
 
 export function showAllModules() {
-  return axios({
-    baseURL: baseURL,
-    url: "/logic-modules/show-all",
+  const projectId = storage.getProjectId()
+
+  return axios<any>({
+    url: `/module/projects/${projectId}/logic-modules/show-all`,
     method: "POST",
   });
 }
 
 export function reverseAllModules() {
-  return axios({
-    baseURL: baseURL,
-    url: "/logic-modules/reverse-all",
+  const projectId = storage.getProjectId()
+
+  return axios<any>({
+    url: `/module/projects/${projectId}/logic-modules/reverse-all`,
     method: "POST",
   });
 }
 
 export function queryAllModuleDependence() {
+  const projectId = storage.getProjectId()
+
   return axios<{
     nodes: {
       fullName: string;
@@ -121,8 +132,7 @@ export function queryAllModuleDependence() {
     }[];
     edges: { a: string; b: string; num: number }[];
   }>({
-    baseURL: baseURL,
-    url: "/logic-modules/dependencies/graph",
+    url: `/module/projects/${projectId}/logic-modules/dependencies/graph`,
     method: "GET",
   });
 }

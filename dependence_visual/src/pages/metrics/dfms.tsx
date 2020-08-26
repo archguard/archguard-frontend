@@ -4,7 +4,7 @@ import { useMount } from 'react-use';
 import Echarts, { ECharts } from 'echarts';
 import { getChartsOption } from './chartsUtils';
 import { transformCodeTreeToModuleOptions, transformCodeTreeToCascaderOptions } from '@/utils/transformCodeTree';
-import useCodeTree from '../analysis/dependence/states/useCodeTree';
+import useCodeTree from '@/store/global-cache-state/useCodeTree';
 import { SelectValue } from 'antd/lib/select';
 import { Store } from 'antd/lib/form/interface';
 import { queryDFMSMetricBy, DFMSMetric } from '@/api/module/code-tree';

@@ -18,7 +18,7 @@ import {
 } from "@ant-design/icons";
 import { Button, notification, Table, Tag, Tooltip } from "antd";
 import React, { useCallback, useMemo, useState } from "react";
-import useModules from "../../../states/useModules";
+import useModules from "@/store/global-cache-state/useModules";
 import ModuleConfigModal from "../ModuleConfigModal";
 import "./index.less";
 

@@ -1,9 +1,10 @@
-import { createProjectInfo, queryProjectInfo, updateProjectInfo } from "@/api/addition/projectInfo";
+import React, { useState } from "react";
+import { Button, Input, notification, Space, Select } from "antd";
 import { useMount } from "ahooks";
-import { Button, Input, notification, Space } from "antd";
-import Select from "antd/es/select";
-import React, { useState, useEffect } from "react";
 import "./index.less";
+import { createProjectInfo, queryProjectInfo, updateProjectInfo } from "@/api/addition/projectInfo";
+import storage from '@/store/storage/sessionStorage'
+import * as _ from 'lodash'
 
 interface ProjectInfoProps {
   isEditing: boolean;
@@ -24,7 +25,10 @@ export default function ProjectInfo(props: ProjectInfoProps) {
   const passwordChanged = oldPassword !== password;
 
   const load = async () => {
-    const { id, repo, repoType, username, password, projectName } = await queryProjectInfo();
+    const projectInfo = await queryProjectInfo();
+    const projectId = storage.getProjectId()
+    const currentProjectInfo = _.find(projectInfo, ['id', Number(projectId)])
+    const { id, repo, repoType, username, password, projectName } = currentProjectInfo!
     setOriginalProjectInfo({ id, repo, repoType, username, password, projectName })
     setId(id);
     setPassword(password);

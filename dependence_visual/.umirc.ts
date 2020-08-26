@@ -8,7 +8,7 @@ export default defineConfig({
   hash: true,
   antd: {},
   dva: false,
-  devServer: { port: 3000 },
+  devServer: { port: 8080 },
   define: {
     "process.env.BUILD_TARGET": process.env.BUILD_TARGET,
   },
@@ -22,32 +22,27 @@ export default defineConfig({
     },
   },
   routes: [
+    { path: '/', redirect: '/multiple-project' },
+    { path: "/login", component: "@/pages/login" },
+    { path: "/multiple-project", component: "@/pages/multiple-project" },
     {
-      path: "/",
+      path: "/:projectId",
+      component: "@/layouts/base",
       routes: [
-        { path: "/login", component: "@/pages/login" },
-        { path: "/multiple-project", component: "@/pages/multiple-project" },
+        { path: "test", component: "@/pages/test" },
+        { path: "home", component: "@/pages/home" },
+        { path: "help/:name?", component: "@/pages/help" },
+        { path: "system-evaluation", component: "@/pages/system-evaluation" },
+        { path: "system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
         {
-          path: "/",
-          component: "@/layouts/base",
-          routes: [
-            { path: "/", component: "@/pages/index" },
-            { path: "/test", component: "@/pages/test" },
-            { path: "/home", component: "@/pages/home" },
-            { path: "/help/:name?", component: "@/pages/help" },
-            { path: "/system-evaluation", component: "@/pages/system-evaluation" },
-            { path: "/system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
-            {
-              path: "/retrofit-tools/plsql-to-kotlin",
-              component: "@/pages/retrofit-tools/plsql2kotlin",
-            },
-            { path: "/analysis/dependence/:type?", component: "@/pages/analysis/dependence" },
-            { path: "/quality-gate-profile", component: "@/pages/quality-gate-profile" },
-            { path: "/metric", component: "@/pages/metrics/dfms" },
-          ]
+          path: "retrofit-tools/plsql-to-kotlin",
+          component: "@/pages/retrofit-tools/plsql2kotlin",
         },
-      ],
-    }
+        { path: "analysis/dependence/:type?", component: "@/pages/analysis/dependence" },
+        { path: "quality-gate-profile", component: "@/pages/quality-gate-profile" },
+        { path: "metric", component: "@/pages/metrics/dfms" },
+      ]
+    },
   ],
   theme: {
     "@primary-color": "#3AAFAE",

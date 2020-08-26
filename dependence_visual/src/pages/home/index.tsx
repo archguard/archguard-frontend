@@ -7,6 +7,7 @@ import { EditOutlined } from '@ant-design/icons';
 
 export default function Home() {
   const [isEditing, setIsEditing] = useState(false)
+
   return (
     <div className="home-page">
       <div>

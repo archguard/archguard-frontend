@@ -1,19 +1,21 @@
 import { ScannerConfigType } from "../../models/scanner";
 import axios from "../axios";
-import { baseURL } from "./config";
+import storage from '@/store/storage/sessionStorage'
 
 export function queryScannerConfig() {
+  const projectId = storage.getProjectId()
+
   return axios<ScannerConfigType>({
-    baseURL: baseURL,
-    url: "/config",
+    url: `/scanner/projects/${projectId}/config`,
     method: "GET",
   });
 }
 
 export function updateScannerConfig(configs: ScannerConfigType[]) {
+  const projectId = storage.getProjectId()
+
   return axios({
-    baseURL: baseURL,
-    url: "/config",
+    url: `/scanner/projects/${projectId}/config`,
     method: "POST",
     data: configs,
   });

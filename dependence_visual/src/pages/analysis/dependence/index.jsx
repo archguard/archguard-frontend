@@ -8,10 +8,12 @@ import "./index.css";
 import MethodDependence from "./MethodDependence";
 import ModuleDependence from "./ModuleDependence";
 import PackageDependence from "./PackageDependence";
+import storage from '@/store/storage/sessionStorage';
 
 export default function Dependence() {
   const history = useHistory();
   const { type } = useParams();
+  const projectId = storage.getProjectId()
 
   const [configVisible, setConfigVisible] = useState(false);
 
@@ -24,7 +26,7 @@ export default function Dependence() {
             <SettingFilled onClick={() => setConfigVisible(true)} />
           </div>
         }
-        onChange={(activeKey) => history.replace("/analysis/dependence/" + activeKey)}
+        onChange={(activeKey) => history.replace(`/${projectId}/analysis/dependence/${activeKey}`)}
       >
         <Tabs.TabPane tab="module" key="module">
           <ModuleDependence />

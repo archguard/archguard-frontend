@@ -1,5 +1,5 @@
 import axios from "../axios";
-import { baseURL } from './config'
+import storage from '@/store/storage/sessionStorage'
 
 interface PackageDependenciesModel {
   module: string;
@@ -7,9 +7,10 @@ interface PackageDependenciesModel {
 }
 
 export function queryPackageDependencies() {
+  const projectId = storage.getProjectId()
+
   return axios<PackageDependenciesModel[]>({
-    baseURL: baseURL,
-    url: "/package/dependencies",
+    url: `/module/projects/${projectId}/package/dependencies`,
     method: "GET"
   });
 }

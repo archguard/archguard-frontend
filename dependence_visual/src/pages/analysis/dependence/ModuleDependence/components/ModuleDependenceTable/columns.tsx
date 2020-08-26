@@ -5,6 +5,7 @@ import { Tooltip, Input, Space, Button } from "antd";
 import { SearchOutlined } from '@ant-design/icons';
 import * as _ from 'lodash'
 import { FilterDropdownProps, Key } from 'antd/lib/table/interface';
+import storage from '@/store/storage/sessionStorage'
 
 export type methodDependency = {
   caller: method;
@@ -36,6 +37,8 @@ const getEndString = (value?: string): string => {
   if (!value) return ''
   return value.split(".").slice(-1).toString()
 }
+
+const projectId = storage.getProjectId()
 
 const getColumnSearchProps = (
   title: string,
@@ -114,7 +117,7 @@ const classColumn = (dataIndex: string) => {
       <Tooltip title={text}>
         <Link
           to={{
-            pathname: "/analysis/dependence/class",
+            pathname: `/${projectId}/analysis/dependence/class`,
             search:
               "className=" +
               text +
@@ -142,7 +145,7 @@ const methodColumn = (dataIndex: string) => {
     return (
       <Link
         to={{
-          pathname: "/analysis/dependence/method",
+          pathname: `/${projectId}/analysis/dependence/method`,
           search:
             "className=" +
             method.clazz.name +
