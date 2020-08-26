@@ -8,10 +8,10 @@ import { configForTargets } from "../../config/buildTargets";
 export const menuList = configForTargets({
   default: [
     { key: "/home", text: "首页", icon: <HomeOutlined /> },
-    { key: "/system-evaluation", text: "系统评估", icon: <FileTextOutlined /> },
+    { key: "/system-evaluation", text: "架构评估", icon: <FileTextOutlined /> },
     {
       key: "analysisTools",
-      text: "分析工具",
+      text: "架构分析",
       icon: <BarChartOutlined />,
       children: [
         { key: "/analysis/dependence", text: "依赖分析" },
@@ -34,7 +34,7 @@ export const menuList = configForTargets({
   zh: [
     {
       key: "analysisTools",
-      text: "分析工具",
+      text: "架构分析",
       icon: <BarChartOutlined />,
       children: [{ key: "/analysis/dependence", text: "依赖分析" }],
     },

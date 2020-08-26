@@ -50,6 +50,6 @@ export default defineConfig({
     }
   ],
   theme: {
-    "@primary-color": "#00C100"
+    "@primary-color": "#3AAFAE",
   },
 });
