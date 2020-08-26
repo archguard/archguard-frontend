@@ -4,7 +4,7 @@ import PageHeader from "./header";
 import PageSider from "./sider";
 import PageFooter from "./footer";
 
-import "antd/dist/antd.css";
+import "antd/dist/antd.less";
 
 const { Header, Sider, Content, Footer } = Layout;
 
