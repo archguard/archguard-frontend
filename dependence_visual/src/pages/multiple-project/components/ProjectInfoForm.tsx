@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle } from 'react'
-import { Form, Radio, Input, Button, Select } from 'antd';
+import { Form, Input, Select } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { Store } from 'antd/lib/form/interface';
 
@@ -44,16 +44,12 @@ const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
         </Form.Item>
         <Form.Item
           name="username"
-          label="仓库用户名"
-          rules={[{ required: true, message: '请输入用户名！' }]}
-          required>
+          label="仓库用户名">
           <Input placeholder="请输入用户名" />
         </Form.Item>
         <Form.Item
           name="password"
-          label="仓库密码"
-          rules={[{ required: true, message: '请输入密码！' }]}
-          required>
+          label="仓库密码">
           <Input.Password placeholder="请输入密码" />
         </Form.Item>
         <Form.Item
