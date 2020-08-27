@@ -1,5 +1,4 @@
 .multiple-project {
-
   &-container {
     width: 100%;
     height: 100%;
@@ -63,6 +62,7 @@
   }
 
   &-card-content {
+    position: relative;
     height: 260px;
     display: flex;
     justify-content: center;
@@ -70,11 +70,63 @@
 
     &.add {
       font-size: 3em;
+
+      &:before {
+        display: none !important;
+      }
+    }
+
+    .card-btn {
+      position: absolute;
+      z-index: 2;
+      display: none;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+    }
+
+    &:hover {
+      &:before {
+        display: block;
+      }
+
+      .card-btn {
+        display: block;
+      }
     }
   }
 
   &-card-title {
-    text-align: center;
-    height: 47px;
+    padding: 10px 20px;
+    text-align: left;
+    height: 100px;
+
+    &.add {
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  &-card {
+    .ant-card-body {
+      padding: 0;
+    }
+
+    .ant-card-meta-description {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
   }
 }

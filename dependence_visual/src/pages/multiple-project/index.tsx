@@ -1,12 +1,13 @@
 import './index.less'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useMount } from 'react-use'
-import { Tabs, Row, Col } from 'antd'
-import { history } from 'umi';
+import { Tabs, Row, Col, Modal, notification } from 'antd'
 import { UpOutlined } from '@ant-design/icons'
-import { queryProjectInfo, ProjectInfo } from '@/api/addition/projectInfo'
+import { queryProjectInfo, ProjectInfo, createProjectInfo } from '@/api/addition/projectInfo'
 import ProjectCard from './components/ProjectCard'
 import storage from '@/store/storage/sessionStorage'
+import ProjectInfoForm from './components/ProjectInfoForm';
+import { Store } from 'antd/lib/form/interface';
 
 interface MultipleProjectProps {}
 interface UserProfile {
@@ -17,16 +18,40 @@ interface UserProfile {
 const MultipleProject = (props: MultipleProjectProps) => {
   const [user, setUser] = useState<UserProfile>()
   const [projectList, setProjectList] = useState<ProjectInfo[]>([])
+  const [modalVisible, setModalVisible] = useState(false)
+  const ref = useRef<any>({})
+
+  const load = () => queryProjectInfo().then(res => setProjectList(res))
 
   const routeToHome = (projectInfo: ProjectInfo) => {
     const { id } = projectInfo
     storage.setProjectId(id)
-    history.push(`/${id}/home`)
+    window.location.href = `/${id}/home`
+  }
+
+  const createProject = (values: Store) => {
+    values.repo = [values.repo]
+    createProjectInfo(values).then(() => {
+      notification.success({
+        type: 'success',
+        message: '项目创建成功！'
+      })
+      onCancel()
+      load()
+    })
+  }
+
+  const onSubmit = () => {
+    ref.current.submit()
+  }
+  const onCancel = () => {
+    setModalVisible(false)
+    ref.current.clear()
   }
 
   useMount(() => {
     setUser({ name: '张扬', account: 'Zhang102' })
-    queryProjectInfo().then(res => setProjectList(res))
+    load()
   })
 
   return (
@@ -48,19 +73,28 @@ const MultipleProject = (props: MultipleProjectProps) => {
           <Tabs.TabPane tab="我的项目" key="my-project">
             <Row gutter={[12, 12]}>
               <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
-                <ProjectCard></ProjectCard>
+                <ProjectCard
+                  onClick={() => setModalVisible(true)}></ProjectCard>
               </Col>
-              <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
-                { projectList.map((projectInfo) => (
+              { projectList.map((projectInfo) => (
+                <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
                   <ProjectCard key={projectInfo.id} projectInfo={projectInfo} onClick={() => routeToHome(projectInfo)}></ProjectCard>
-                ))}
-              </Col>
+                </Col>
+              ))}
             </Row>
           </Tabs.TabPane>
           <Tabs.TabPane tab="其他项目" key="other-project" disabled>
           </Tabs.TabPane>
         </Tabs>
       </div>
+      <Modal
+        centered
+        maskClosable={false}
+        visible={modalVisible}
+        onCancel={onCancel}
+        onOk={onSubmit}>
+        <ProjectInfoForm ref={ref} onFinish={createProject}></ProjectInfoForm>
+      </Modal>
     </div>
   )
 }
