@@ -1,13 +1,14 @@
 import './index.less'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useMount } from 'react-use'
 import { Tabs, Row, Col, Modal, notification } from 'antd'
 import { UpOutlined } from '@ant-design/icons'
-import { queryProjectInfo, ProjectInfo, createProjectInfo } from '@/api/addition/projectInfo'
+import { ProjectInfo, createProjectInfo } from '@/api/addition/projectInfo'
 import ProjectCard from './components/ProjectCard'
-import storage from '@/store/storage/sessionStorage'
+import { storage } from '@/store/storage/sessionStorage'
 import ProjectInfoForm from './components/ProjectInfoForm';
 import { Store } from 'antd/lib/form/interface';
+import useProjectInfo from '@/store/global-cache-state/useProjectInfo'
 
 interface MultipleProjectProps {}
 interface UserProfile {
@@ -20,8 +21,7 @@ const MultipleProject = (props: MultipleProjectProps) => {
   const [projectList, setProjectList] = useState<ProjectInfo[]>([])
   const [modalVisible, setModalVisible] = useState(false)
   const ref = useRef<any>({})
-
-  const load = () => queryProjectInfo().then(res => setProjectList(res))
+  const [projectInfo, load] = useProjectInfo()
 
   const routeToHome = (projectInfo: ProjectInfo) => {
     const { id } = projectInfo
@@ -48,6 +48,10 @@ const MultipleProject = (props: MultipleProjectProps) => {
     setModalVisible(false)
     ref.current.clear()
   }
+
+  useEffect(() => {
+    setProjectList(projectInfo?.value || [])
+  }, [projectInfo])
 
   useMount(() => {
     setUser({ name: '张扬', account: 'Zhang102' })
@@ -77,8 +81,8 @@ const MultipleProject = (props: MultipleProjectProps) => {
                   onClick={() => setModalVisible(true)}></ProjectCard>
               </Col>
               { projectList.map((projectInfo) => (
-                <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
-                  <ProjectCard key={projectInfo.id} projectInfo={projectInfo} onClick={() => routeToHome(projectInfo)}></ProjectCard>
+                <Col xs={24} sm={12} md={8} lg={6} xxl={4} key={projectInfo.id}>
+                  <ProjectCard projectInfo={projectInfo} onClick={() => routeToHome(projectInfo)}></ProjectCard>
                 </Col>
               ))}
             </Row>

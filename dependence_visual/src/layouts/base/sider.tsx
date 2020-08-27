@@ -2,7 +2,7 @@ import React from "react";
 import { Menu } from "antd";
 import { menuList } from "./config";
 import { useMount } from 'ahooks';
-import storage from '@/store/storage/sessionStorage'
+import { storage } from '@/store/storage/sessionStorage'
 
 export default function PageSider(props: any) {
   const projectId = storage.getProjectId()

@@ -8,7 +8,7 @@ import "./index.css";
 import MethodDependence from "./MethodDependence";
 import ModuleDependence from "./ModuleDependence";
 import PackageDependence from "./PackageDependence";
-import storage from '@/store/storage/sessionStorage';
+import { storage } from '@/store/storage/sessionStorage';
 
 export default function Dependence() {
   const history = useHistory();

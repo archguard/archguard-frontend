@@ -5,7 +5,7 @@ import { Tooltip, Input, Space, Button } from "antd";
 import { SearchOutlined } from '@ant-design/icons';
 import * as _ from 'lodash'
 import { FilterDropdownProps, Key } from 'antd/lib/table/interface';
-import storage from '@/store/storage/sessionStorage'
+import { storage } from '@/store/storage/sessionStorage'
 
 export type methodDependency = {
   caller: method;

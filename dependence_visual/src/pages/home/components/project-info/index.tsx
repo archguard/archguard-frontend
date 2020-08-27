@@ -3,7 +3,7 @@ import { Button, Input, notification, Space, Select } from "antd";
 import { useMount } from "ahooks";
 import "./index.less";
 import { createProjectInfo, queryProjectInfo, updateProjectInfo } from "@/api/addition/projectInfo";
-import storage from '@/store/storage/sessionStorage'
+import { storage } from '@/store/storage/sessionStorage'
 import * as _ from 'lodash'
 
 interface ProjectInfoProps {
