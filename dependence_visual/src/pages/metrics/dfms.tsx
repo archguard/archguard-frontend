@@ -7,7 +7,7 @@ import { transformCodeTreeToModuleOptions, transformCodeTreeToCascaderOptions } 
 import useCodeTree from '@/store/global-cache-state/useCodeTree';
 import { SelectValue } from 'antd/lib/select';
 import { Store } from 'antd/lib/form/interface';
-import { queryDFMSMetricBy, DFMSMetric } from '@/api/module/code-tree';
+import { queryDFMSMetricBy, DFMSMetric } from '@/api/module/codeTree';
 import { useForm } from 'antd/lib/form/Form';
 
 interface DFMS {

@@ -1,5 +1,6 @@
 import axios from "../axios";
-const projectInfoApi = "/addition/project-info";
+import { baseURL } from './config';
+const projectInfoApi = "/project-info";
 
 export interface ProjectInfo {
   id: number;
@@ -13,6 +14,7 @@ export interface ProjectInfo {
 
 export function queryProjectInfo() {
   return axios<ProjectInfo[]>({
+    baseURL,
     url: projectInfoApi,
     method: "GET"
   });
@@ -20,6 +22,7 @@ export function queryProjectInfo() {
 
 export function updateProjectInfo(parameter: any) {
   return axios<any>({
+    baseURL,
     url: projectInfoApi,
     method: "PUT",
     data: parameter
@@ -28,6 +31,7 @@ export function updateProjectInfo(parameter: any) {
 
 export function createProjectInfo(parameter: any) {
   return axios<any>({
+    baseURL,
     url: projectInfoApi,
     method: "POST",
     data: parameter

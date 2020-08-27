@@ -1,8 +1,10 @@
+import { baseURL } from './config';
 import axios from "../axios";
 
 export function createEvaluation(type: string) {
   return axios<{ isRunning: boolean }>({
-    url: `/scanner/evaluations`,
+    baseURL,
+    url: '/evaluations',
     method: "POST",
     data: { type },
   });
@@ -10,7 +12,8 @@ export function createEvaluation(type: string) {
 
 export function checkEvaluationState(type: string) {
   return axios<{ isRunning: boolean }>({
-    url: `/scanner/evaluations/status`,
+    baseURL,
+    url: `/evaluations/status`,
     method: "GET",
     params: { type },
   });

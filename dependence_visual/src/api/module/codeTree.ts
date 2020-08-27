@@ -1,5 +1,5 @@
+import { baseURL } from './config';
 import axios from '../axios'
-import storage from '@/store/storage/sessionStorage'
 
 interface MetricParams {
   moduleName?: string;
@@ -15,10 +15,9 @@ export interface DFMSMetric {
 }
 
 export function queryCodeTree() {
-  const projectId = storage.getProjectId()
-
   return axios<CodeTree>({
-    url: `/module/projects/${projectId}/code-tree/`,
+    baseURL,
+    url: '/code-tree/',
     method: "GET"
   });
 }
@@ -27,10 +26,9 @@ export function queryDFMSMetricBy(
   by: "module" | "package" | "class",
   params: MetricParams,
 ) {
-  const projectId = storage.getProjectId()
-
   return axios<DFMSMetric>({
-    url: `/module/projects/${projectId}/metric/dfms/${by}`,
+    baseURL,
+    url: `/metric/dfms/${by}`,
     method: 'GET',
     params,
   })

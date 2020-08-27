@@ -1,8 +1,10 @@
+import { baseURL } from './config';
 import axios from "../axios";
 
 export function scanDependence() {
   return axios({
-    url: `/scanner/dependency-analyses`,
+    baseURL,
+    url: '/dependency-analyses',
     method: "POST",
     timeout: 180000, // 请求超时时间
   });
