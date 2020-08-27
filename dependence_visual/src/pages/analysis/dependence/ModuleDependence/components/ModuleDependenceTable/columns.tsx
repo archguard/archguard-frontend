@@ -173,7 +173,7 @@ const argumentColumn = (dataIndex: String) => {
     title: "argument",
     dataIndex: [dataIndex, "argumentTypes"],
     render: (text: string[]) => {
-      return text.map((arg) => arg.split(".").slice(-1));
+      return text.map((arg) => arg.split(".").slice(-1).join(', '));
     },
   };
   return column;
