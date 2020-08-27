@@ -103,7 +103,7 @@ export function getChartsOption(data?: number[]): EChartOption {
         symbolSize: 20,
         tooltip: {
           formatter: ({ value }: any) => {
-            return `抽象性: ${value[0]} \n 不稳定性: ${value[1]}`
+            return `不稳定性: ${value[0]} \n 抽象性: ${value[1]}`
           }
         },
         itemStyle: {

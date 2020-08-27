@@ -10,6 +10,11 @@ import { Store } from 'antd/lib/form/interface';
 import { queryDFMSMetricBy, DFMSMetric } from '@/api/module/codeTree';
 import { useForm } from 'antd/lib/form/Form';
 
+enum ClassInsibilityKey {
+  innerInstabilityAvg = "innerInstability",
+  outerInstabilityAvg = "outerInstability"
+}
+
 interface DFMS {
   key: 'module'|'package'|'class',
   stability: 'innerInstabilityAvg' | 'outerInstabilityAvg'
@@ -36,7 +41,7 @@ const Metric = () => {
 
   const onStabilityChange = (value: DFMS['stability']) => {
     setCurrentStability(value)
-    DFMSCharts.setOption(getChartsOption([dfmsMetric!.absRatio, dfmsMetric![value]]))
+    DFMSCharts.setOption(getChartsOption([dfmsMetric![value], dfmsMetric!.absRatio]))
   }
 
   const onFinish = (values: Store) => {
@@ -46,7 +51,7 @@ const Metric = () => {
     })
     queryDFMSMetricBy(currentKey, values).then((res: DFMSMetric) => {
       setDFMSMetric({...res})
-      DFMSCharts.setOption(getChartsOption([res.absRatio, res[currentStability]]))
+      DFMSCharts.setOption(getChartsOption([res[ClassInsibilityKey[currentStability]], res.absRatio]))
     })
   }
 
@@ -140,8 +145,8 @@ const Metric = () => {
         <Radio.Group
           value={currentStability}
           onChange={({ target: { value } }) => onStabilityChange(value)}>
-          <Radio.Button value="innerInstabilityAvg" disabled={!dfmsMetric}>外部不稳定性</Radio.Button>
-          <Radio.Button value="outerInstabilityAvg" disabled={!dfmsMetric}>内部不稳定性</Radio.Button>
+          <Radio.Button value="outerInstabilityAvg" disabled={!dfmsMetric}>外部不稳定性</Radio.Button>
+          <Radio.Button value="innerInstabilityAvg" disabled={!dfmsMetric}>内部不稳定性</Radio.Button>
         </Radio.Group>
       </div>
       <div
