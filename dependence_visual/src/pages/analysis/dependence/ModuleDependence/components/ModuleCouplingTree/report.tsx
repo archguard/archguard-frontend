@@ -1,6 +1,6 @@
-import { ModuleMetric } from "@/models/analysis";
+import { ModuleMetric, PackageMetrics, ClassMetrics } from "@/models/analysis";
 import React, { useMemo } from "react";
-import CouplingList from "./coupling-list";
+import CouplingList, { CouplingRecord } from "./coupling-list";
 
 export interface ReportMapper {
   [key: string]: { name: string; desc: string };
@@ -12,10 +12,10 @@ export enum Layer {
   CLASS = "CLASS",
 }
 
-export type LayerKeys = keyof typeof Layer
+export type LayerKeys = keyof typeof Layer;
 export type Quota = {
   [key in LayerKeys]: string[];
-}
+};
 
 export const moduleMapping: ReportMapper = {
   outerInstabilityAvg: {
@@ -122,7 +122,7 @@ export const classMapping: ReportMapper = {
   },
 };
 
-function mappingProps(item: any, mapping: ReportMapper) {
+export const mappingProps = (item: any, mapping: ReportMapper) => {
   const props = Object.keys(mapping).map((key) => {
     const { desc, name } = mapping[key];
     let value = item[key];
@@ -132,19 +132,19 @@ function mappingProps(item: any, mapping: ReportMapper) {
     return { desc, name, value, key };
   });
   return props;
-}
+};
 
 export const getQuotaListByLayer = (): Quota => {
   const getQuotaList = (mapping: ReportMapper): string[] => {
-    return Object.values(mapping).map(quota => quota.name)
-  }
+    return Object.values(mapping).map((quota) => quota.name);
+  };
 
   return {
     MODULE: getQuotaList(moduleMapping),
     PACKAGE: getQuotaList(packageMapping),
     CLASS: getQuotaList(classMapping),
-  }
-}
+  };
+};
 
 interface ReportProps {
   data: ModuleMetric[];
@@ -152,31 +152,53 @@ interface ReportProps {
 
 export default function Report(props: ReportProps) {
   const { data = [] } = props;
+  const mapPackageReportData = (packageMetrics?: PackageMetrics[]): CouplingRecord[] => {
+    return packageMetrics
+      ? packageMetrics.map((pkg, index) => {
+          return {
+            key: `package_${index}`,
+            label: "包名",
+            fullName: pkg.id,
+            moduleId: pkg.moduleId,
+            name: pkg.packageName,
+            shortName: pkg.packageName,
+            props: mappingProps(pkg, packageMapping),
+            classess: mapClassReportData(pkg.moduleId, pkg.classMetrics),
+            packages: mapPackageReportData(pkg.packageMetrics),
+          };
+        })
+      : [];
+  };
+
+  const mapClassReportData = (
+    moduleId: string,
+    classMetrics?: ClassMetrics[],
+  ): CouplingRecord[] => {
+    return classMetrics
+      ? classMetrics.map((cls, index) => {
+          return {
+            key: `class_${index}`,
+            label: "类名",
+            moduleId: moduleId,
+            fullName: cls.id,
+            name: cls.className,
+            shortName: cls.className,
+            props: mappingProps(cls, classMapping),
+          };
+        })
+      : [];
+  };
   const reportData = useMemo(() => {
     return data.map((module, index) => {
       return {
         key: `module_${index}`,
         label: "模块名",
+        fullName: module.id,
+        moduleId: module.id,
         name: module.moduleName,
         props: mappingProps(module, moduleMapping),
-        list: module.packageMetrics.map((pkg, index) => {
-          return {
-            key: `package_${index}`,
-            label: "包名",
-            name: pkg.packageName,
-            shortName: pkg.packageName.replace(`${module.moduleName}.`, ""),
-            props: mappingProps(pkg, packageMapping),
-            list: pkg.classMetrics.map((cls, index) => {
-              return {
-                key: `class_${index}`,
-                label: "类名",
-                name: cls.className,
-                shortName: cls.className.replace(`${pkg.packageName}.`, ""),
-                props: mappingProps(cls, classMapping),
-              };
-            }),
-          };
-        }),
+        packages: mapPackageReportData(module.packageMetrics),
+        classess: mapClassReportData(module.id, module.classMetrics),
       };
     });
   }, [data]);
