@@ -41,7 +41,7 @@ export default function PageHeader(props: any) {
           bordered={false}
           showArrow={false}
           onChange={value => onProjectChange(value)}>
-          <Select.OptGroup label="点击切换项目">
+          <Select.OptGroup label="点击切换系统">
             { projectInfo?.value!.map(project => (
               <Select.Option
                 disabled={project.scanned}
