@@ -30,7 +30,7 @@ const Metric = () => {
   }
   const [currentKey, setCurrentKey] = useState<DFMS['key']>('module')
   const [currentModule, setCurrentModule] = useState<SelectValue>()
-  const [currentStability, setCurrentStability] = useState<DFMS['stability']>('innerInstabilityAvg')
+  const [currentStability, setCurrentStability] = useState<DFMS['stability']>('outerInstabilityAvg')
   const [dfmsMetric, setDFMSMetric] = useState<DFMSMetric>()
   const [form] = useForm()
 
@@ -41,7 +41,8 @@ const Metric = () => {
 
   const onStabilityChange = (value: DFMS['stability']) => {
     setCurrentStability(value)
-    DFMSCharts.setOption(getChartsOption([dfmsMetric![value], dfmsMetric!.absRatio]))
+    const currentInstability = currentKey === 'class' ? dfmsMetric![ClassInsibilityKey[value]] : dfmsMetric![value]
+    DFMSCharts.setOption(getChartsOption([currentInstability, dfmsMetric!.absRatio]))
   }
 
   const onFinish = (values: Store) => {
@@ -51,7 +52,8 @@ const Metric = () => {
     })
     queryDFMSMetricBy(currentKey, values).then((res: DFMSMetric) => {
       setDFMSMetric({...res})
-      DFMSCharts.setOption(getChartsOption([res[ClassInsibilityKey[currentStability]], res.absRatio]))
+      const currentInstability = currentKey === 'class' ? res[ClassInsibilityKey[currentStability]] : res[currentStability]
+      DFMSCharts.setOption(getChartsOption([currentInstability, res.absRatio]))
     })
   }
 
