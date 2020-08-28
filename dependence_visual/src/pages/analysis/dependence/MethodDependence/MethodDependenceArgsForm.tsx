@@ -45,18 +45,23 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
   const moduleOptions = transformCodeTreeToModuleOptions(codeTree?.value!)
   const classCascaderOptions = transformCodeTreeToCascaderOptions(codeTree?.value!, true)
 
-  const onCascaderChange = (values: string[]) => {
-    const module = currentModule as string
-    const className = values.join('.')
+  const getMethodOptions = (module: string, className: string[]) => {
+    if (module && className) {
+      queryMethodBy(module, className!.join('.')).then((res) => {
+        setMethodOptions(buildMethodOptions(res))
+      })
+    }
+  }
 
-    queryMethodBy(module, className).then((res) => {
-      setMethodOptions(buildMethodOptions(res))
-    })
+  const onCascaderChange = (values: string[]) => {
+    form.setFieldsValue({ methodName: '' })
+    getMethodOptions(currentModule as string, values)
   }
 
   useEffect(() => {
     setCurrentModule(defaultFormData.module)
     form.setFieldsValue(defaultFormData)
+    getMethodOptions(defaultFormData.module, defaultFormData.className)
   }, [defaultFormData])
 
   return (
