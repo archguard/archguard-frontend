@@ -49,7 +49,7 @@ const ProjectCard = (props: ProjectCardProps) => {
           <PlusOutlined />
         </div>
         <div className="multiple-project-card-title add">
-          <span>新增项目</span>
+          <span>新增系统</span>
         </div>
       </Card>
     )

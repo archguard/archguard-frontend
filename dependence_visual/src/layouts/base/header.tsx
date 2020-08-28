@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Select } from "antd";
 import { QuestionCircleOutlined, LoginOutlined } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/config/buildTargets";
@@ -7,6 +7,7 @@ import { storage } from '@/store/storage/sessionStorage';
 
 export default function PageHeader(props: any) {
   const [projectInfo] = useProjectInfo()
+  const currentProjectId = Number(storage.getProjectId())
 
   const onProjectChange = (projectId: number) => {
     if (projectId) {
@@ -35,12 +36,12 @@ export default function PageHeader(props: any) {
         </span>
         <span style={{ marginLeft: 15, color: 'white', userSelect: 'none' }}>丨</span>
         <Select
-          defaultValue={Number(storage.getProjectId()!)}
+          defaultValue={currentProjectId!}
           style={{ width: 150, color: '#fff' }}
           bordered={false}
           showArrow={false}
           onChange={value => onProjectChange(value)}>
-          <Select.OptGroup label="点击切换项目">
+          <Select.OptGroup label="点击切换系统">
             { projectInfo?.value!.map(project => (
               <Select.Option
                 disabled={project.scanned}
@@ -61,7 +62,7 @@ export default function PageHeader(props: any) {
             type="link"
             style={{color: "#ffffff"}}
             icon={<QuestionCircleOutlined />}
-            onClick={() => props.history.push("/help")}
+            onClick={() => props.history.push(`/${currentProjectId}/help`)}
           >说明文档</Button>
         )}
         <Button

@@ -142,6 +142,7 @@ export default function CouplingList(props: CouplingListProps) {
           : undefined
       }
       dataSource={records}
+      showSorterTooltip={false}
       scroll={{ x: true }}
       columns={columns}
       bordered

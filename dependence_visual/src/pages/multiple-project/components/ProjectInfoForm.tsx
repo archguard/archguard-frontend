@@ -22,10 +22,10 @@ const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
       <Form form={form} layout="vertical" onFinish={onFinish} initialValues={{ repoType: 'GIT' }}>
         <Form.Item
           name="projectName"
-          label="项目名称"
-          rules={[{ required: true, message: '请输入项目名称！' }]}
+          label="系统名称"
+          rules={[{ required: true, message: '请输入系统名称！' }]}
           required>
-          <Input placeholder="请输入项目名称" />
+          <Input placeholder="请输入系统名称" />
         </Form.Item>
         <Form.Item
           name="repoType"
@@ -55,9 +55,9 @@ const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
         <Form.Item
           name="repo"
           label="仓库地址"
-          rules={[{ required: true, message: '请输入正确的项目地址！' }]}
+          rules={[{ required: true, message: '请输入正确的系统地址！' }]}
           required>
-          <Input placeholder="请输入项目地址" />
+          <Input placeholder="请输入系统地址" />
         </Form.Item>
       </Form>
     </div>

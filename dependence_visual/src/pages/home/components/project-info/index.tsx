@@ -97,7 +97,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
       <div className="project-info">
         <div className="project-info-row">
           <div className="label">
-            <span>项目名称</span>
+            <span>系统名称</span>
           </div>
           <div className="content">
             <span>{projectName}</span>
@@ -128,11 +128,11 @@ export default function ProjectInfo(props: ProjectInfoProps) {
       <div className="project-info">
         <div className="project-info-row">
           <div className="label">
-            <span>项目名称</span>
+            <span>系统名称</span>
           </div>
           <div className="content">
             <Input
-              placeholder="项目名称"
+              placeholder="系统名称"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
             ></Input>

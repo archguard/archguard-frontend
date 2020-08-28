@@ -12,13 +12,13 @@ export default function Home() {
     <div className="home-page">
       <div>
         <h2>
-          <span>项目信息</span>
+          <span>系统信息</span>
           <span className="edit-icon"><EditOutlined onClick={() => setIsEditing(true)}  /></span>
         </h2>
         <ProjectInfo isEditing={isEditing} onEditChange={(isEditing) => setIsEditing(isEditing)} />
       </div>
       <div>
-        <h2>项目扫描</h2>
+        <h2>系统扫描</h2>
         {getFeature(FEATURES.CODE_SCANNER) && <DependenceScanner />}
       </div>
     </div>

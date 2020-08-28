@@ -4,6 +4,8 @@ import { FormItemOption } from '@/models/form'
 import useCodeTree from '@/store/global-cache-state/useCodeTree'
 import { SelectValue } from 'antd/lib/select'
 import { transformCodeTreeToModuleOptions, transformCodeTreeToCascaderOptions } from '@/utils/transformCodeTree'
+import { queryMethodBy } from '@/api/module/methods'
+import { JMethod } from '@/models/java'
 
 const dependenceTypeOptions: FormItemOption[] = [{
   label: "全部依赖",
@@ -27,17 +29,39 @@ interface MethodDependenceArgsFormProps {
   defaultFormData: any
 }
 
+const buildMethodOptions = (methods: JMethod[]) => {
+  const methodSet = new Set(methods.map(m => m.name));
+  return [...methodSet].map(value => {
+    return { value, label: value }
+  })
+}
+
 const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
   const { onFinish, defaultFormData } = props
   const [form] = Form.useForm()
   const [codeTree] = useCodeTree()
   const [currentModule, setCurrentModule] = useState<SelectValue>()
+  const [methodOptions, setMethodOptions] = useState<FormItemOption[]>([])
   const moduleOptions = transformCodeTreeToModuleOptions(codeTree?.value!)
   const classCascaderOptions = transformCodeTreeToCascaderOptions(codeTree?.value!, true)
+
+  const getMethodOptions = (module: string, className: string[]) => {
+    if (module && className) {
+      queryMethodBy(module, className!.join('.')).then((res) => {
+        setMethodOptions(buildMethodOptions(res))
+      })
+    }
+  }
+
+  const onCascaderChange = (values: string[]) => {
+    form.setFieldsValue({ methodName: '' })
+    getMethodOptions(currentModule as string, values)
+  }
 
   useEffect(() => {
     setCurrentModule(defaultFormData.module)
     form.setFieldsValue(defaultFormData)
+    getMethodOptions(defaultFormData.module, defaultFormData.className)
   }, [defaultFormData])
 
   return (
@@ -50,7 +74,6 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
             <Select
               placeholder="模块"
               style={{ width: "100%" }}
-              allowClear
               showSearch
               onChange={(value) => setCurrentModule(value)}>
               {moduleOptions.map(({ value, label }) => {
@@ -78,6 +101,7 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
               options={classCascaderOptions[currentModule as string]}
               placeholder="类名"
               notFoundContent="请先选择模块！"
+              onChange={value => onCascaderChange(value as string[])}
             />
           </Form.Item>
         </Col>
@@ -89,7 +113,19 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
               message: '方法名必填',
             }]}
           >
-            <Input placeholder="方法名"></Input>
+            <Select
+              placeholder="方法"
+              style={{ width: "100%" }}
+              showSearch>
+              {methodOptions.map(({ value, label }, index) => (
+                <Select.Option
+                  value={value}
+                  key={'method_' + index}>
+                  {label}
+                </Select.Option>
+              ))}
+            </Select>
+            {/* <Input placeholder="方法名"></Input> */}
           </Form.Item>
         </Col>
         <Col span={4} key="dependence-type">

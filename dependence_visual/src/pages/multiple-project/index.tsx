@@ -34,7 +34,7 @@ const MultipleProject = (props: MultipleProjectProps) => {
     createProjectInfo(values).then(() => {
       notification.success({
         type: 'success',
-        message: '项目创建成功！'
+        message: '系统创建成功！'
       })
       onCancel()
       load()
@@ -74,7 +74,7 @@ const MultipleProject = (props: MultipleProjectProps) => {
       </div>
       <div className="multiple-project-selector">
         <Tabs defaultActiveKey="my-project">
-          <Tabs.TabPane tab="我的项目" key="my-project">
+          <Tabs.TabPane tab="我的系统" key="my-project">
             <Row gutter={[12, 12]}>
               <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
                 <ProjectCard
@@ -87,7 +87,7 @@ const MultipleProject = (props: MultipleProjectProps) => {
               ))}
             </Row>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="其他项目" key="other-project" disabled>
+          <Tabs.TabPane tab="其他系统" key="other-project" disabled>
           </Tabs.TabPane>
         </Tabs>
       </div>

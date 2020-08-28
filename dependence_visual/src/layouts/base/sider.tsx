@@ -18,7 +18,7 @@ export default function PageSider(props: any) {
     if (!item) return;
     if (!item.children) {
       return (
-        <Menu.Item key={item.key}>
+        <Menu.Item key={`/${projectId}${item.key}`}>
           {item.icon}
           <span className="nav-text">{item.text}</span>
         </Menu.Item>
@@ -46,7 +46,7 @@ export default function PageSider(props: any) {
     <Menu
       theme="light"
       mode="inline"
-      onClick={(e) => props.history.push(`/${projectId}${e.key}`)}
+      onClick={(e) => props.history.push(e.key)}
       defaultOpenKeys={[props.location.pathname]}
       selectedKeys={[props.location.pathname]}
     >
