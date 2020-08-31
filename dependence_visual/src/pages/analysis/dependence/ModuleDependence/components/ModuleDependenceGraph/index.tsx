@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "antd";
 import CollapsibleCard from "@/components/CollapsibleCard";
 import InvokeGraph from "@/components/InvokeGraph";
-import { moduleMapping } from "../ModuleCouplingTree/report"
+import { moduleMapping } from "@/pages/metrics/ModuleCouplingTree/report"
 import { queryAllModuleDependence } from "@/api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
