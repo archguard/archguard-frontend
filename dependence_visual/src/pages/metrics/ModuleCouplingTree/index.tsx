@@ -1,8 +1,5 @@
-import CollapsibleCard from "@/components/CollapsibleCard";
-import QuestionCircleOutlined from "@ant-design/icons/lib/icons/QuestionCircleOutlined";
 import { Button } from "antd";
-import React, { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import Report from "./report";
 import useCodeTree from "@/store/global-cache-state/useCodeTree";
 import { expandCodeTree } from "@/utils/transformCodeTree";
