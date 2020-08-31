@@ -15,8 +15,8 @@ export const menuList = configForTargets({
       icon: <BarChartOutlined />,
       children: [
         { key: "/analysis/dependence", text: "依赖分析" },
+        { key: "/metric", text: '指标分析' },
         { key: "/quality-gate-profile", text: '质量阀' },
-        { key: "/metric", text: '指标' },
       ],
     },
     {
