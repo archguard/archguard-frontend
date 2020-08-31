@@ -21,7 +21,7 @@ interface DFMS {
 }
 
 let DFMSCharts: ECharts
-const Metric = () => {
+const Dfms = () => {
   const [codeTree] = useCodeTree()
   const options = {
     module: transformCodeTreeToModuleOptions(codeTree?.value!),
@@ -162,4 +162,4 @@ const Metric = () => {
   )
 }
 
-export default Metric;
+export default Dfms;

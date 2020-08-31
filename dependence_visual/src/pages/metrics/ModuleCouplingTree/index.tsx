@@ -14,12 +14,6 @@ function ModuleCouplingTable() {
 
   const [moduleMetric, setModuleMetric] = useState<any>([]);
 
-  interface SubModuleOrPackageNode {
-    name: string;
-    packages?: SubModuleOrPackageNode[];
-    classess?: ClassNode[];
-  }
-
   interface ClassNode {
     name: string;
   }
@@ -79,34 +73,16 @@ function ModuleCouplingTable() {
   }
 
   return (
-    <CollapsibleCard
-      title={
-        <Fragment>
-          模块耦合度
-          <Link
-            to={{
-              pathname: "/help/module-coupling",
-            }}
-            target="_blank"
-          >
-            {" "}
-            <QuestionCircleOutlined />
-          </Link>
-        </Fragment>
-      }
-      collapsed={true}
-    >
-      <div>
-        <Button
-          type="primary"
-          onClick={() => showAllModuleCoupling()}
-          style={{ marginBottom: "16px" }}
-        >
-          查询
-        </Button>
-        {moduleMetric!.length > 0 && <Report data={moduleMetric} />}
-      </div>
-    </CollapsibleCard>
+    <div>
+      <Button
+        type="primary"
+        onClick={() => showAllModuleCoupling()}
+        style={{ marginBottom: "16px" }}
+      >
+        查询
+      </Button>
+      {moduleMetric!.length > 0 && <Report data={moduleMetric} />}
+    </div>
   );
 }
 
