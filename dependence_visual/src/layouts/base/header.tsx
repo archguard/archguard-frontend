@@ -44,7 +44,7 @@ export default function PageHeader(props: any) {
           <Select.OptGroup label="点击切换系统">
             { projectInfo?.value!.map(project => (
               <Select.Option
-                disabled={project.scanned}
+                disabled={project.scanned !== "SCANNED"}
                 value={project.id}
                 key={project.projectName}>
                 { project.projectName }
