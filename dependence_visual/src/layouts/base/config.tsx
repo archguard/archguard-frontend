@@ -20,16 +20,21 @@ export const menuList = configForTargets({
       ],
     },
     {
-      key: "transformTools",
-      text: "改造工具",
+      key: "/system-evolving", 
+      text: "架构演进", 
       icon: <CloudSyncOutlined />,
-      children: [
-        {
-          key: "/retrofit-tools/plsql-to-kotlin",
-          text: "PL/SQL转Kotlin",
-        },
-      ],
     },
+    // {
+    //   key: "transformTools",
+    //   text: "改造工具",
+    //   icon: <CloudSyncOutlined />,
+    //   children: [
+    //     {
+    //       key: "/retrofit-tools/plsql-to-kotlin",
+    //       text: "PL/SQL转Kotlin",
+    //     },
+    //   ],
+    // },
   ],
   zh: [
     {
