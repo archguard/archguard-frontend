@@ -10,13 +10,12 @@ import ProjectInfoForm from './components/ProjectInfoForm';
 import { Store } from 'antd/lib/form/interface';
 import useProjectInfo from '@/store/global-cache-state/useProjectInfo'
 
-interface MultipleProjectProps {}
 interface UserProfile {
   name?: string;
   account?: string;
 }
 
-const MultipleProject = (props: MultipleProjectProps) => {
+const MultipleProject = () => {
   const [user, setUser] = useState<UserProfile>()
   const [projectList, setProjectList] = useState<ProjectInfo[]>([])
   const [modalVisible, setModalVisible] = useState(false)
@@ -24,13 +23,13 @@ const MultipleProject = (props: MultipleProjectProps) => {
   const [projectInfo, load] = useProjectInfo()
 
   const routeToHome = (projectInfo: ProjectInfo) => {
+    if (projectInfo.scanned !== "SCANNED") return
     const { id } = projectInfo
     storage.setProjectId(id)
-    window.location.href = `/${id}/home`
+    window.location.href = `/${id}/analysis/dependence`
   }
 
   const createProject = (values: Store) => {
-    values.repo = [values.repo]
     createProjectInfo(values).then(() => {
       notification.success({
         type: 'success',

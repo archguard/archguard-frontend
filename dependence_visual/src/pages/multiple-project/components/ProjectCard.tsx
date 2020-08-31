@@ -13,6 +13,27 @@ interface ProjectCardProps {
 const ProjectCard = (props: ProjectCardProps) => {
   const { projectInfo, onClick } = props
 
+  const renderProjectButton = (projectInfo: ProjectInfo) => {
+    const { scanned } = projectInfo
+    const scanning = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      return scanDependence() && event.stopPropagation()
+    }
+
+    if (scanned === 'NONE') {
+      return (
+        <Button type="primary" onClick={scanning}>扫描</Button>
+      )
+    } else if(scanned === 'SCANNING') {
+      return (
+        <Button type="primary" loading>扫描中</Button>
+      )
+    } else {
+      return (
+        <Button type="primary">进入</Button>
+      )
+    }
+  }
+
   return (
     projectInfo ? (
       <Card
@@ -24,15 +45,7 @@ const ProjectCard = (props: ProjectCardProps) => {
             style={{ margin: '70px 0', width: '180px' }}
             src={require('@/assets/project-example.png')}
             alt="example" />
-        { !projectInfo.scanned ?
-          <Button
-            type="primary"
-            className="card-btn">进入</Button> :
-          <Button
-            type="primary"
-            className="card-btn"
-            onClick={(e) => scanDependence() && e.stopPropagation()}>扫描</Button>
-        }
+          <div className="card-btn">{ renderProjectButton(projectInfo) }</div>
         </div>
         <div className="multiple-project-card-title">
           <Meta

@@ -7,7 +7,7 @@ import { configForTargets } from "../../config/buildTargets";
 
 export const menuList = configForTargets({
   default: [
-    { key: "/home", text: "首页", icon: <HomeOutlined /> },
+    // { key: "/home", text: "首页", icon: <HomeOutlined /> },
     { key: "/system-evaluation", text: "架构评估", icon: <FileTextOutlined /> },
     {
       key: "analysisTools",

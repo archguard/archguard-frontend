@@ -10,7 +10,7 @@ export interface ProjectInfo {
   username: string;
   password: string;
   sql: string;
-  scanned: boolean;
+  scanned: "NONE" | "SCANNING" | "SCANNED";
 }
 
 export function queryProjectInfo() {
