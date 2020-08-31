@@ -1,5 +1,4 @@
-import { Button } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Report from "./report";
 import useCodeTree from "@/store/global-cache-state/useCodeTree";
 import { expandCodeTree } from "@/utils/transformCodeTree";
@@ -69,15 +68,12 @@ function ModuleCouplingTable() {
     });
   }
 
+  useEffect(()=>{
+    showAllModuleCoupling();
+  },[]);
+
   return (
     <div>
-      <Button
-        type="primary"
-        onClick={() => showAllModuleCoupling()}
-        style={{ marginBottom: "16px" }}
-      >
-        查询
-      </Button>
       {moduleMetric!.length > 0 && <Report data={moduleMetric} />}
     </div>
   );
