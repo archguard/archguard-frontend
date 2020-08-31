@@ -1,48 +1,59 @@
 import React from 'react'
-import { Card, Button } from 'antd'
+import { Card, Button, Dropdown, Menu } from 'antd'
 import Meta from 'antd/lib/card/Meta'
-import { PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined, EllipsisOutlined } from '@ant-design/icons'
 import { ProjectInfo } from '@/api/addition/projectInfo'
-import { scanDependence } from '@/api/scanner/dependenceScanner'
+import { useMount } from 'ahooks'
 
 interface ProjectCardProps {
   projectInfo?: ProjectInfo;
   onClick?(): void;
+  onEdit?(): void;
+  onScanning?(): void;
 }
 
 const ProjectCard = (props: ProjectCardProps) => {
-  const { projectInfo, onClick } = props
+  const { projectInfo, onClick, onEdit, onScanning } = props
+
+  const menuClick = (key: string) => {
+    switch (key) {
+      case 'reScanning': onScanning!();
+        break;
+      case 'editProjectInfo': onEdit!();
+        break;
+    }
+  }
+
+  const menu = (
+    <Menu onClick={({ key }) => menuClick(key as string)}>
+      <Menu.Item key="reScanning">重新扫描</Menu.Item>
+      <Menu.Item key="editProjectInfo">修改项目信息</Menu.Item>
+    </Menu>
+  );
 
   const renderProjectButton = (projectInfo: ProjectInfo) => {
     const { scanned } = projectInfo
-    const scanning = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-      return scanDependence() && event.stopPropagation()
+    const onScannedClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+      onScanning!()
+      return event.stopPropagation()
     }
 
-    if (scanned === 'NONE') {
-      return (
-        <Button type="primary" onClick={scanning}>扫描</Button>
-      )
-    } else if(scanned === 'SCANNING') {
-      return (
-        <Button type="primary" loading>扫描中</Button>
-      )
-    } else {
-      return (
-        <Button type="primary">进入</Button>
-      )
-    }
+    return scanned === 'NONE' ? (<Button type="primary" onClick={onScannedClick}>扫描</Button>) :
+           scanned === 'SCANNING' ? (<Button type="primary" loading>扫描中</Button>) :
+          (<Button type="primary" onClick={onClick}>进入</Button>);
   }
 
   return (
     projectInfo ? (
       <Card
         hoverable
-        className="multiple-project-card"
-        onClick={onClick}>
+        className="multiple-project-card">
         <div className="multiple-project-card-content">
+          <Dropdown overlay={menu} placement="bottomLeft" className="more" trigger={['click']}>
+            <Button size="small" shape="circle" icon={<EllipsisOutlined />}></Button>
+          </Dropdown>
           <img
-            style={{ margin: '70px 0', width: '180px' }}
+            style={{ margin: '30px 0', width: '180px' }}
             src={require('@/assets/project-example.png')}
             alt="example" />
           <div className="card-btn">{ renderProjectButton(projectInfo) }</div>
@@ -50,7 +61,7 @@ const ProjectCard = (props: ProjectCardProps) => {
         <div className="multiple-project-card-title">
           <Meta
             title={projectInfo.projectName}
-            description={projectInfo.repo[0]} />
+            description={projectInfo.repo.join(', ')} />
         </div>
       </Card>
     ) : (

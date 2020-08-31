@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Button, Select } from "antd";
 import { QuestionCircleOutlined, LoginOutlined } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/config/buildTargets";
-import useProjectInfo from '@/store/global-cache-state/useProjectInfo';
+import useProjectList from '@/store/global-cache-state/useProjectList';
 import { storage } from '@/store/storage/sessionStorage';
 
 export default function PageHeader(props: any) {
-  const [projectInfo] = useProjectInfo()
+  const [projectInfo] = useProjectList()
   const currentProjectId = Number(storage.getProjectId())
 
   const onProjectChange = (projectId: number) => {

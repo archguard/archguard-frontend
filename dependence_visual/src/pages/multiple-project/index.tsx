@@ -1,14 +1,14 @@
 import './index.less'
 import React, { useState, useRef, useEffect } from 'react'
-import { useMount } from 'react-use'
 import { Tabs, Row, Col, Modal, notification } from 'antd'
+import { useMount } from 'react-use'
 import { UpOutlined } from '@ant-design/icons'
-import { ProjectInfo, createProjectInfo } from '@/api/addition/projectInfo'
-import ProjectCard from './components/ProjectCard'
+import { scanDependence } from '@/api/scanner/dependenceScanner'
+import { ProjectInfo, createProjectInfo, updateProjectInfo } from '@/api/addition/projectInfo'
 import { storage } from '@/store/storage/sessionStorage'
+import useProjectList from '@/store/global-cache-state/useProjectList'
+import ProjectCard from './components/ProjectCard'
 import ProjectInfoForm from './components/ProjectInfoForm';
-import { Store } from 'antd/lib/form/interface';
-import useProjectInfo from '@/store/global-cache-state/useProjectInfo'
 
 interface UserProfile {
   name?: string;
@@ -16,11 +16,22 @@ interface UserProfile {
 }
 
 const MultipleProject = () => {
-  const [user, setUser] = useState<UserProfile>()
-  const [projectList, setProjectList] = useState<ProjectInfo[]>([])
-  const [modalVisible, setModalVisible] = useState(false)
   const ref = useRef<any>({})
-  const [projectInfo, load] = useProjectInfo()
+  const [user, setUser] = useState<UserProfile>()
+  const [projectList, load] = useProjectList()
+  const [projectInfoList, setProjectInfoList] = useState<ProjectInfo[]>([])
+  const [modalVisible, setModalVisible] = useState(false)
+  const [currentProjectInfo, setCurrentProjectInfo] = useState<ProjectInfo>()
+
+  useEffect(() => {
+    setProjectInfoList(projectList?.value || [])
+  }, [projectList])
+
+  useMount(() => {
+    storage.setProjectId(undefined)
+    setUser({ name: '张扬', account: 'Zhang102' })
+    load()
+  })
 
   const routeToHome = (projectInfo: ProjectInfo) => {
     if (projectInfo.scanned !== "SCANNED") return
@@ -29,15 +40,37 @@ const MultipleProject = () => {
     window.location.href = `/${id}/analysis/dependence`
   }
 
-  const createProject = (values: Store) => {
-    createProjectInfo(values).then(() => {
-      notification.success({
-        type: 'success',
-        message: '系统创建成功！'
-      })
-      onCancel()
-      load()
-    })
+  const onSubmitProjectInfo = (projectInfo: ProjectInfo) => {
+    console.log(projectInfo)
+    // if (projectInfo.id) {
+    //   updateProjectInfo(projectInfo).then(() => {
+    //     notification.success({
+    //       type: 'success',
+    //       message: '系统信息修改成功！'
+    //     })
+    //     onCancel()
+    //     load()
+    //   })
+    // } else {
+    //   createProjectInfo(projectInfo).then(() => {
+    //     notification.success({
+    //       type: 'success',
+    //       message: '系统创建成功！'
+    //     })
+    //     onCancel()
+    //     load()
+    //   })
+    // }
+  }
+
+  const onCreateClick = () => {
+    setCurrentProjectInfo(undefined)
+    setModalVisible(true)
+  }
+
+  const onEditClick = (projectInfo: ProjectInfo) => {
+    setCurrentProjectInfo({ ...projectInfo })
+    setModalVisible(true)
   }
 
   const onSubmit = () => {
@@ -47,15 +80,6 @@ const MultipleProject = () => {
     setModalVisible(false)
     ref.current.clear()
   }
-
-  useEffect(() => {
-    setProjectList(projectInfo?.value || [])
-  }, [projectInfo])
-
-  useMount(() => {
-    setUser({ name: '张扬', account: 'Zhang102' })
-    load()
-  })
 
   return (
     <div className="multiple-project-container">
@@ -77,11 +101,15 @@ const MultipleProject = () => {
             <Row gutter={[12, 12]}>
               <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
                 <ProjectCard
-                  onClick={() => setModalVisible(true)}></ProjectCard>
+                  onClick={onCreateClick}></ProjectCard>
               </Col>
-              { projectList.map((projectInfo) => (
+              { projectInfoList.map((projectInfo) => (
                 <Col xs={24} sm={12} md={8} lg={6} xxl={4} key={projectInfo.id}>
-                  <ProjectCard projectInfo={projectInfo} onClick={() => routeToHome(projectInfo)}></ProjectCard>
+                  <ProjectCard
+                    projectInfo={projectInfo}
+                    onClick={() => routeToHome(projectInfo)}
+                    onScanning={() => scanDependence(projectInfo.id)}
+                    onEdit={() => onEditClick(projectInfo)}></ProjectCard>
                 </Col>
               ))}
             </Row>
@@ -96,7 +124,10 @@ const MultipleProject = () => {
         visible={modalVisible}
         onCancel={onCancel}
         onOk={onSubmit}>
-        <ProjectInfoForm ref={ref} onFinish={createProject}></ProjectInfoForm>
+        <ProjectInfoForm
+          ref={ref}
+          data={currentProjectInfo}
+          onSubmit={onSubmitProjectInfo}></ProjectInfoForm>
       </Modal>
     </div>
   )

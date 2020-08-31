@@ -1,15 +1,22 @@
-import React, { forwardRef, useImperativeHandle } from 'react'
+import React, { forwardRef, useImperativeHandle, useEffect, useState } from 'react'
 import { Form, Input, Select, Button, Space } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { Store } from 'antd/lib/form/interface';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { ProjectInfo } from '@/api/addition/projectInfo';
 
 interface ProjectInfoFormProps {
-  onFinish(values: Store): void;
+  data?: ProjectInfo;
+  onSubmit(projetInfo: ProjectInfo): void;
 }
 const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
-  const { onFinish } = props
+  const { data, onSubmit } = props
   const [form] = useForm()
+
+  useEffect(() => {
+    console.log(data)
+    form.setFieldsValue(data as Store)
+  }, [data])
 
   useImperativeHandle(ref, () => ({
     submit: () => form.submit(),
@@ -17,18 +24,22 @@ const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
       ['projectName', 'repoType', 'username', 'password', 'repo'])
   }))
 
+  const onFinish = (values: Store) => {
+    onSubmit(Object.assign({ ...data, ...values }))
+  }
+
   const isValidUrl = (value: string) => {
     return /^(https?:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i.test(value)
   }
 
   return (
     <div className="project-info-form">
-      <h2>创建新系统</h2>
+      <h2>{data ? "编辑系统信息" : "创建新系统"}</h2>
       <Form
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ repoType: 'GIT', repo: [""] }}>
+        initialValues={{ repoType: 'GIT', repo: ["www"] }}>
         <Form.Item
           name="projectName"
           label="系统名称"
@@ -75,31 +86,30 @@ const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
                   <span>仓库地址</span>
                 </div>
                 {fields.map(field => (
-                  <Form.Item
-                    {...field}
-                    name={field.name}
-                    fieldKey={field.fieldKey}
-                    rules={[{
-                      required: true,
-                      message: '请输入正确的仓库地址！',
-                      validator: (_, value) =>
-                        isValidUrl(value) ?
-                        Promise.resolve() :
-                        Promise.reject('请输入正确的仓库地址！'),
-                    }]}
-                    key={field.key}
-                    required>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <Input style={{ width: '100%' }} placeholder="请输入仓库地址" />
-                      { fields.length > 1 ?
-                        <MinusCircleOutlined
-                          className="dynamic-delete-button"
-                          style={{ margin: '0 8px' }}
-                          onClick={() => { remove(field.name) }}
-                        /> : null
-                      }
-                    </div>
-                  </Form.Item>
+                  <div style={{ display: 'flex' }} key={field.key}>
+                    <Form.Item
+                      {...field}
+                      rules={[{
+                        required: true,
+                        message: '请输入正确的仓库地址！',
+                        validator: (_, value) =>
+                          isValidUrl(value) ?
+                          Promise.resolve() :
+                          Promise.reject('请输入正确的仓库地址！'),
+                      }]}
+                      style={{ width: '100%' }}
+                      required>
+                      <Input
+                        style={{ width: '100%' }}
+                        placeholder="请输入仓库地址" />
+                    </Form.Item>
+                    { fields.length > 1 ?
+                      <MinusCircleOutlined
+                        style={{ margin: '0 8px', lineHeight: '32px' }}
+                        onClick={() => { remove(field.name) }}
+                      /> : null
+                    }
+                  </div>
               ))}
               <Form.Item>
                 <Button type="dashed" onClick={() => { add() }}>
