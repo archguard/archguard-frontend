@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import EvaluationContent from "./components/evaluation-content";
 import HistoryReport from "./components/history-report";
 import { SettingFilled } from "@ant-design/icons";
-import ScanToolsConfig from './components/project-scan';
+import ScanToolsConfig from './components/system-scan';
 
 export default function SystemEvaluation() {
   const [configVisible, setConfigVisible] = useState(false);

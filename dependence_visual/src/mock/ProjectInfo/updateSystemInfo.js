@@ -1,6 +1,6 @@
 const response = {
   success: true,
-  message: "update project info success"
+  message: "update system info success"
 };
 
 export default response;

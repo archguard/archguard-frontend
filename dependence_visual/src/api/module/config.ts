@@ -1,4 +1,4 @@
 import { storage } from '@/store/storage/sessionStorage'
 
-const projectId = storage.getProjectId()
-export const baseURL = `/api/module/systems/${projectId}`
+const systemId = storage.getSystemId()
+export const baseURL = `/api/module/systems/${systemId}`

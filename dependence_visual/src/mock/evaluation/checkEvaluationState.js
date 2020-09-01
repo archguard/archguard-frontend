@@ -1,9 +1,9 @@
 import { Random } from "mockjs";
 
-function scanProject() {
+function scanSystem() {
   return {
     isRunning: Random.boolean(),
   };
 }
 
-export default scanProject;
+export default scanSystem;

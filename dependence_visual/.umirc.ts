@@ -22,11 +22,11 @@ export default defineConfig({
     },
   },
   routes: [
-    { path: '/', redirect: '/multiple-project' },
+    { path: '/', redirect: '/multiple-system' },
     { path: "/login", component: "@/pages/login" },
-    { path: "/multiple-project", component: "@/pages/multiple-project" },
+    { path: "/multiple-system", component: "@/pages/multiple-system" },
     {
-      path: "/:projectId",
+      path: "/:systemId",
       component: "@/layouts/base",
       routes: [
         { path: "test", component: "@/pages/test" },

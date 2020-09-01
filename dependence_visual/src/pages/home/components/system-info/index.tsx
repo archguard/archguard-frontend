@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { Button, Input, notification, Space, Select } from "antd";
 import { useMount } from "ahooks";
 import "./index.less";
-import { createProjectInfo, queryProjectInfo, updateProjectInfo } from "@/api/addition/projectInfo";
+import { createSystemInfo, querySystemInfo, updateSystemInfo } from "@/api/addition/systemInfo";
 import { storage } from '@/store/storage/sessionStorage'
 import * as _ from 'lodash'
 
-interface ProjectInfoProps {
+interface SystemInfoProps {
   isEditing: boolean;
   onEditChange(isEditing: boolean): void;
 }
 
-export default function ProjectInfo(props: ProjectInfoProps) {
+export default function SystemInfo(props: SystemInfoProps) {
   const { isEditing, onEditChange } = props;
   const [id, setId] = useState("");
   const [systemName, setSystemName] = useState("");
@@ -20,16 +20,16 @@ export default function ProjectInfo(props: ProjectInfoProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [oldPassword, setOldPassword] = useState("");
-  const [originalProjectInfo, setOriginalProjectInfo] = useState<any>();
+  const [originalSystemInfo, setOriginalSystemInfo] = useState<any>();
 
   const passwordChanged = oldPassword !== password;
 
   const load = async () => {
-    const projectInfo = await queryProjectInfo();
-    const projectId = storage.getProjectId()
-    const currentProjectInfo = _.find(projectInfo, ['id', Number(projectId)])
-    const { id, repo, repoType, username, password, systemName } = currentProjectInfo!
-    setOriginalProjectInfo({ id, repo, repoType, username, password, systemName })
+    const systemInfo = await querySystemInfo();
+    const systemId = storage.getSystemId()
+    const currentSystemInfo = _.find(systemInfo, ['id', Number(systemId)])
+    const { id, repo, repoType, username, password, systemName } = currentSystemInfo!
+    setOriginalSystemInfo({ id, repo, repoType, username, password, systemName })
     setId(id);
     setPassword(password);
     setOldPassword(password);
@@ -51,7 +51,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
       password: passwordChanged ? password : undefined,
     };
     if (id) {
-      await updateProjectInfo(params).then((res) => {
+      await updateSystemInfo(params).then((res) => {
         if (res.success) {
           notification.success({
             message: res.message,
@@ -64,7 +64,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
         }
       });
     } else {
-      await createProjectInfo(params).then((res) => {
+      await createSystemInfo(params).then((res) => {
         if (res.success) {
           notification.success({
             message: res.message,
@@ -82,7 +82,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
 
   const onCancelClick = () => {
     onEditChange(false);
-    const { id, repo, repoType, username, password, systemName } = originalProjectInfo
+    const { id, repo, repoType, username, password, systemName } = originalSystemInfo
     setId(id);
     setPassword(password);
     setOldPassword(password);
@@ -92,10 +92,10 @@ export default function ProjectInfo(props: ProjectInfoProps) {
     setSystemName(systemName);
   };
 
-  const renderReadonlyProjectInfo = () => {
+  const renderReadonlySystemInfo = () => {
     return (
-      <div className="project-info">
-        <div className="project-info-row">
+      <div className="system-info">
+        <div className="system-info-row">
           <div className="label">
             <span>系统名称</span>
           </div>
@@ -103,7 +103,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
             <span>{systemName}</span>
           </div>
         </div>
-        <div className="project-info-row">
+        <div className="system-info-row">
           <div className="label">
             <span>仓库类型</span>
           </div>
@@ -111,7 +111,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
             <span>{repoType}</span>
           </div>
         </div>
-        <div className="project-info-row">
+        <div className="system-info-row">
           <div className="label">
             <span>仓库地址</span>
           </div>
@@ -123,10 +123,10 @@ export default function ProjectInfo(props: ProjectInfoProps) {
     )
   }
 
-  const renderEditableProjectInfo = () => {
+  const renderEditableSystemInfo = () => {
     return (
-      <div className="project-info">
-        <div className="project-info-row">
+      <div className="system-info">
+        <div className="system-info-row">
           <div className="label">
             <span>系统名称</span>
           </div>
@@ -138,7 +138,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
             ></Input>
           </div>
         </div>
-        <div className="project-info-row">
+        <div className="system-info-row">
           <div className="label">
             <span>仓库类型</span>
           </div>
@@ -149,7 +149,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
             </Select>
           </div>
         </div>
-        <div className="project-info-row">
+        <div className="system-info-row">
           <div className="label">
             <span>仓库地址</span>
           </div>
@@ -161,7 +161,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
             ></Input>
           </div>
         </div>
-        <div className="project-info-row">
+        <div className="system-info-row">
           <div className="label">
             <span>用户名</span>
           </div>
@@ -173,7 +173,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
             ></Input>
           </div>
         </div>
-        <div className="project-info-row">
+        <div className="system-info-row">
           <div className="label">
             <span>密码</span>
           </div>
@@ -196,5 +196,5 @@ export default function ProjectInfo(props: ProjectInfoProps) {
     );
   }
 
-  return isEditing ? renderEditableProjectInfo() : renderReadonlyProjectInfo();
+  return isEditing ? renderEditableSystemInfo() : renderReadonlySystemInfo();
 }

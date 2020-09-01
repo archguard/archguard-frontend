@@ -1,8 +1,8 @@
 import axios from "../axios";
 import { baseURL } from './config';
-const projectInfoApi = "/system-info";
+const systemInfoApi = "/system-info";
 
-export interface ProjectInfo {
+export interface SystemInfo {
   id: number;
   systemName: string;
   repo: string[];
@@ -13,27 +13,27 @@ export interface ProjectInfo {
   scanned: "NONE" | "SCANNING" | "SCANNED";
 }
 
-export function queryProjectInfo() {
-  return axios<ProjectInfo[]>({
+export function querySystemInfo() {
+  return axios<SystemInfo[]>({
     baseURL,
-    url: projectInfoApi,
+    url: systemInfoApi,
     method: "GET"
   });
 }
 
-export function updateProjectInfo(parameter: any) {
+export function updateSystemInfo(parameter: any) {
   return axios<any>({
     baseURL,
-    url: projectInfoApi,
+    url: systemInfoApi,
     method: "PUT",
     data: parameter
   });
 }
 
-export function createProjectInfo(parameter: any) {
+export function createSystemInfo(parameter: any) {
   return axios<any>({
     baseURL,
-    url: projectInfoApi,
+    url: systemInfoApi,
     method: "POST",
     data: parameter
   });

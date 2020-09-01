@@ -5,12 +5,12 @@ import { useMount } from 'ahooks';
 import { storage } from '@/store/storage/sessionStorage'
 
 export default function PageSider(props: any) {
-  const projectId = storage.getProjectId()
+  const systemId = storage.getSystemId()
 
   useMount(() => {
-    if (projectId === null) {
+    if (systemId === null) {
       const id = props.location.pathname.split('/')[1]
-      storage.setProjectId(id)
+      storage.setSystemId(id)
     }
   })
 
@@ -18,7 +18,7 @@ export default function PageSider(props: any) {
     if (!item) return;
     if (!item.children) {
       return (
-        <Menu.Item key={`/${projectId}${item.key}`}>
+        <Menu.Item key={`/${systemId}${item.key}`}>
           {item.icon}
           <span className="nav-text">{item.text}</span>
         </Menu.Item>

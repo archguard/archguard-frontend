@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Select } from "antd";
 import { QuestionCircleOutlined, LoginOutlined } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/config/buildTargets";
-import useProjectList from '@/store/global-cache-state/useProjectList';
+import useSystemList from '@/store/global-cache-state/useSystemList';
 import { storage } from '@/store/storage/sessionStorage';
 
 export default function PageHeader(props: any) {
-  const [projectInfo] = useProjectList()
-  const currentProjectId = Number(storage.getProjectId())
+  const [systemInfo] = useSystemList()
+  const currentSystemId = Number(storage.getSystemId())
 
-  const onProjectChange = (projectId: number) => {
-    if (projectId) {
-      storage.setProjectId(projectId)
+  const onSystemChange = (systemId: number) => {
+    if (systemId) {
+      storage.setSystemId(systemId)
       const pathArray = window.location.pathname.split('/')
-      pathArray[1] = projectId.toString()
+      pathArray[1] = systemId.toString()
       window.location.href = pathArray.join('/')
     } else {
-      props.history.push('/multiple-project')
+      props.history.push('/multiple-system')
     }
   }
 
@@ -36,18 +36,18 @@ export default function PageHeader(props: any) {
         </span>
         <span style={{ marginLeft: 15, color: 'white', userSelect: 'none' }}>丨</span>
         <Select
-          defaultValue={currentProjectId!}
+          defaultValue={currentSystemId!}
           style={{ width: 150, color: '#fff' }}
           bordered={false}
           showArrow={false}
-          onChange={value => onProjectChange(value)}>
+          onChange={value => onSystemChange(value)}>
           <Select.OptGroup label="点击切换系统">
-            { projectInfo?.value!.map(project => (
+            { systemInfo?.value!.map(system => (
               <Select.Option
-                disabled={project.scanned !== "SCANNED"}
-                value={project.id}
-                key={project.systemName}>
-                { project.systemName }
+                disabled={system.scanned !== "SCANNED"}
+                value={system.id}
+                key={system.systemName}>
+                { system.systemName }
               </Select.Option>
             )) }
           </Select.OptGroup>
@@ -62,7 +62,7 @@ export default function PageHeader(props: any) {
             type="link"
             style={{color: "#ffffff"}}
             icon={<QuestionCircleOutlined />}
-            onClick={() => props.history.push(`/${currentProjectId}/help`)}
+            onClick={() => props.history.push(`/${currentSystemId}/help`)}
           >说明文档</Button>
         )}
         <Button

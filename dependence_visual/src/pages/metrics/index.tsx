@@ -8,13 +8,13 @@ import ModuleCouplingTree from "./ModuleCouplingTree";
 const Metrics = () => {
   const history = useHistory();
   const { type } = useParams();
-  const projectId = storage.getProjectId();
+  const systemId = storage.getSystemId();
 
   return (
     <div>
       <Tabs
         activeKey={type}
-        onChange={(activeKey) => history.replace(`/${projectId}/metric/${activeKey}`)}
+        onChange={(activeKey) => history.replace(`/${systemId}/metric/${activeKey}`)}
       >
         <Tabs.TabPane tab="模块耦合度分析" key="coupling">
           <ModuleCouplingTree />

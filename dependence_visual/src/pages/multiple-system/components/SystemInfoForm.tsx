@@ -1,15 +1,15 @@
-import React, { forwardRef, useImperativeHandle, useEffect, useState } from 'react'
-import { Form, Input, Select, Button, Space } from 'antd';
+import React, { forwardRef, useImperativeHandle, useEffect } from 'react'
+import { Form, Input, Select, Button } from 'antd';
 import { useForm } from 'antd/lib/form/Form';
 import { Store } from 'antd/lib/form/interface';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { ProjectInfo } from '@/api/addition/projectInfo';
+import { SystemInfo } from '@/api/addition/systemInfo';
 
-interface ProjectInfoFormProps {
-  data?: ProjectInfo;
-  onSubmit(projetInfo: ProjectInfo): void;
+interface SystemInfoFormProps {
+  data?: SystemInfo;
+  onSubmit(systemInfo: SystemInfo): void;
 }
-const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
+const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
   const { data, onSubmit } = props
   const [form] = useForm()
 
@@ -33,7 +33,7 @@ const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
   }
 
   return (
-    <div className="project-info-form">
+    <div className="system-info-form">
       <h2>{data ? "编辑系统信息" : "创建新系统"}</h2>
       <Form
         form={form}
@@ -124,4 +124,4 @@ const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
     </div>
   )
 }
-export default forwardRef(ProjectInfoForm);
+export default forwardRef(SystemInfoForm);

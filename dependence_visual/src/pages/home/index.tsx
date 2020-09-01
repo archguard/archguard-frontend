@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ProjectInfo from "./components/project-info";
+import SystemInfo from "./components/system-info";
 import { FEATURES, getFeature } from "@/config/buildTargets";
 import "./index.less";
 import DependenceScanner from './components/DependenceScanner';
@@ -15,7 +15,7 @@ export default function Home() {
           <span>系统信息</span>
           <span className="edit-icon"><EditOutlined onClick={() => setIsEditing(true)}  /></span>
         </h2>
-        <ProjectInfo isEditing={isEditing} onEditChange={(isEditing) => setIsEditing(isEditing)} />
+        <SystemInfo isEditing={isEditing} onEditChange={(isEditing) => setIsEditing(isEditing)} />
       </div>
       <div>
         <h2>系统扫描</h2>

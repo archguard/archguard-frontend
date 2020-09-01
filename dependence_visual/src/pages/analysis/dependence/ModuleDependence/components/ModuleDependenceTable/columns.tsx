@@ -38,7 +38,7 @@ const getEndString = (value?: string): string => {
   return value.split(".").slice(-1).toString()
 }
 
-const projectId = storage.getProjectId()
+const systemId = storage.getSystemId()
 
 const getColumnSearchProps = (
   title: string,
@@ -117,7 +117,7 @@ const classColumn = (dataIndex: string) => {
       <Tooltip title={text}>
         <Link
           to={{
-            pathname: `/${projectId}/analysis/dependence/class`,
+            pathname: `/${systemId}/analysis/dependence/class`,
             search:
               "className=" +
               text +
@@ -145,7 +145,7 @@ const methodColumn = (dataIndex: string) => {
     return (
       <Link
         to={{
-          pathname: `/${projectId}/analysis/dependence/method`,
+          pathname: `/${systemId}/analysis/dependence/method`,
           search:
             "className=" +
             method.clazz.name +

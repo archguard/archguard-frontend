@@ -1,12 +1,12 @@
 import Mock from 'mockjs'
 
-import queryProjectInfo from './queryProjectInfo'
-import createProjectInfo from './createProjectInfo'
-import updateProjectInfo from './updateProjectInfo'
+import querySystemInfo from './querySystemInfo'
+import createSystemInfo from './createSystemInfo'
+import updateSystemInfo from './updateSystemInfo'
 
-const url = /\/project\/info/
+const url = /\/system\/info/
 
-Mock.mock(url, 'get', queryProjectInfo)
-Mock.mock(url, 'post', createProjectInfo)
-Mock.mock(url, 'put', updateProjectInfo)
+Mock.mock(url, 'get', querySystemInfo)
+Mock.mock(url, 'post', createSystemInfo)
+Mock.mock(url, 'put', updateSystemInfo)
 

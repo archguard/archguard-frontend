@@ -2,24 +2,23 @@ import React from 'react'
 import { Card, Button, Dropdown, Menu } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import { PlusOutlined, EllipsisOutlined } from '@ant-design/icons'
-import { ProjectInfo } from '@/api/addition/projectInfo'
-import { useMount } from 'ahooks'
+import { SystemInfo } from '@/api/addition/systemInfo'
 
-interface ProjectCardProps {
-  projectInfo?: ProjectInfo;
+interface SystemCardProps {
+  systemInfo?: SystemInfo;
   onClick?(): void;
   onEdit?(): void;
   onScanning?(): void;
 }
 
-const ProjectCard = (props: ProjectCardProps) => {
-  const { projectInfo, onClick, onEdit, onScanning } = props
+const SystemCard = (props: SystemCardProps) => {
+  const { systemInfo, onClick, onEdit, onScanning } = props
 
   const menuClick = (key: string) => {
     switch (key) {
       case 'reScanning': onScanning!();
         break;
-      case 'editProjectInfo': onEdit!();
+      case 'editSystemInfo': onEdit!();
         break;
     }
   }
@@ -27,12 +26,12 @@ const ProjectCard = (props: ProjectCardProps) => {
   const menu = (
     <Menu onClick={({ key }) => menuClick(key as string)}>
       <Menu.Item key="reScanning">重新扫描</Menu.Item>
-      <Menu.Item key="editProjectInfo">修改项目信息</Menu.Item>
+      <Menu.Item key="editSystemInfo">修改项目信息</Menu.Item>
     </Menu>
   );
 
-  const renderProjectButton = (projectInfo: ProjectInfo) => {
-    const { scanned } = projectInfo
+  const renderSystemButton = (systemInfo: SystemInfo) => {
+    const { scanned } = systemInfo
     const onScannedClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
       onScanning!()
       return event.stopPropagation()
@@ -44,35 +43,35 @@ const ProjectCard = (props: ProjectCardProps) => {
   }
 
   return (
-    projectInfo ? (
+    systemInfo ? (
       <Card
         hoverable
-        className="multiple-project-card">
-        <div className="multiple-project-card-content">
+        className="multiple-system-card">
+        <div className="multiple-system-card-content">
           <Dropdown overlay={menu} placement="bottomLeft" className="more" trigger={['click']}>
             <Button size="small" shape="circle" icon={<EllipsisOutlined />}></Button>
           </Dropdown>
           <img
             style={{ margin: '30px 0', width: '180px' }}
-            src={require('@/assets/project-example.png')}
+            src={require('@/assets/system-example.png')}
             alt="example" />
-          <div className="card-btn">{ renderProjectButton(projectInfo) }</div>
+          <div className="card-btn">{ renderSystemButton(systemInfo) }</div>
         </div>
-        <div className="multiple-project-card-title">
+        <div className="multiple-system-card-title">
           <Meta
-            title={projectInfo.systemName}
-            description={projectInfo.repo.join(', ')} />
+            title={systemInfo.systemName}
+            description={systemInfo.repo.join(', ')} />
         </div>
       </Card>
     ) : (
       <Card
         hoverable
-        className="multiple-project-card"
+        className="multiple-system-card"
         onClick={onClick}>
-        <div className="multiple-project-card-content add">
+        <div className="multiple-system-card-content add">
           <PlusOutlined />
         </div>
-        <div className="multiple-project-card-title add">
+        <div className="multiple-system-card-title add">
           <span>新增系统</span>
         </div>
       </Card>
@@ -80,4 +79,4 @@ const ProjectCard = (props: ProjectCardProps) => {
   )
 }
 
-export default ProjectCard
+export default SystemCard
