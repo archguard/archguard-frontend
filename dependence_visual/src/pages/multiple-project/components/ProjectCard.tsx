@@ -60,7 +60,7 @@ const ProjectCard = (props: ProjectCardProps) => {
         </div>
         <div className="multiple-project-card-title">
           <Meta
-            title={projectInfo.projectName}
+            title={projectInfo.systemName}
             description={projectInfo.repo.join(', ')} />
         </div>
       </Card>

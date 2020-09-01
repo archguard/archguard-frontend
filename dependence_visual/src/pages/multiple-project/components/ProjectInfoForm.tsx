@@ -21,7 +21,7 @@ const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
   useImperativeHandle(ref, () => ({
     submit: () => form.submit(),
     clear: () => form.resetFields(
-      ['projectName', 'repoType', 'username', 'password', 'repo'])
+      ['systemName', 'repoType', 'username', 'password', 'repo'])
   }))
 
   const onFinish = (values: Store) => {
@@ -41,7 +41,7 @@ const ProjectInfoForm = (props: ProjectInfoFormProps, ref: any) => {
         onFinish={onFinish}
         initialValues={{ repoType: 'GIT', repo: ["www"] }}>
         <Form.Item
-          name="projectName"
+          name="systemName"
           label="系统名称"
           rules={[{ required: true, message: '请输入系统名称！' }]}
           required>

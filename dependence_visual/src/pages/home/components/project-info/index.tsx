@@ -14,7 +14,7 @@ interface ProjectInfoProps {
 export default function ProjectInfo(props: ProjectInfoProps) {
   const { isEditing, onEditChange } = props;
   const [id, setId] = useState("");
-  const [projectName, setProjectName] = useState("");
+  const [systemName, setSystemName] = useState("");
   const [repo, setRepo] = useState("");
   const [repoType, setRepoType] = useState("");
   const [username, setUsername] = useState("");
@@ -28,15 +28,15 @@ export default function ProjectInfo(props: ProjectInfoProps) {
     const projectInfo = await queryProjectInfo();
     const projectId = storage.getProjectId()
     const currentProjectInfo = _.find(projectInfo, ['id', Number(projectId)])
-    const { id, repo, repoType, username, password, projectName } = currentProjectInfo!
-    setOriginalProjectInfo({ id, repo, repoType, username, password, projectName })
+    const { id, repo, repoType, username, password, systemName } = currentProjectInfo!
+    setOriginalProjectInfo({ id, repo, repoType, username, password, systemName })
     setId(id);
     setPassword(password);
     setOldPassword(password);
     setRepo(repo);
     setRepoType(repoType);
     setUsername(username);
-    setProjectName(projectName);
+    setSystemName(systemName);
   };
 
   useMount(load);
@@ -44,7 +44,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
   const onSaveClick = async () => {
     const params = {
       id,
-      projectName,
+      systemName,
       repo: !Array.isArray(repo) ? repo.split(",") : repo,
       repoType,
       username,
@@ -82,14 +82,14 @@ export default function ProjectInfo(props: ProjectInfoProps) {
 
   const onCancelClick = () => {
     onEditChange(false);
-    const { id, repo, repoType, username, password, projectName } = originalProjectInfo
+    const { id, repo, repoType, username, password, systemName } = originalProjectInfo
     setId(id);
     setPassword(password);
     setOldPassword(password);
     setRepo(repo);
     setRepoType(repoType);
     setUsername(username);
-    setProjectName(projectName);
+    setSystemName(systemName);
   };
 
   const renderReadonlyProjectInfo = () => {
@@ -100,7 +100,7 @@ export default function ProjectInfo(props: ProjectInfoProps) {
             <span>系统名称</span>
           </div>
           <div className="content">
-            <span>{projectName}</span>
+            <span>{systemName}</span>
           </div>
         </div>
         <div className="project-info-row">
@@ -133,8 +133,8 @@ export default function ProjectInfo(props: ProjectInfoProps) {
           <div className="content">
             <Input
               placeholder="系统名称"
-              value={projectName}
-              onChange={(e) => setProjectName(e.target.value)}
+              value={systemName}
+              onChange={(e) => setSystemName(e.target.value)}
             ></Input>
           </div>
         </div>

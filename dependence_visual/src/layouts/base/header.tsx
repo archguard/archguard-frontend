@@ -46,8 +46,8 @@ export default function PageHeader(props: any) {
               <Select.Option
                 disabled={project.scanned !== "SCANNED"}
                 value={project.id}
-                key={project.projectName}>
-                { project.projectName }
+                key={project.systemName}>
+                { project.systemName }
               </Select.Option>
             )) }
           </Select.OptGroup>

@@ -1,6 +1,6 @@
 export const formItems = [
   {
-    id: "projectName",
+    id: "systemName",
     label: "系统名称",
     span: 6,
   },

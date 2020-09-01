@@ -1,10 +1,10 @@
 import axios from "../axios";
 import { baseURL } from './config';
-const projectInfoApi = "/project-info";
+const projectInfoApi = "/system-info";
 
 export interface ProjectInfo {
   id: number;
-  projectName: string;
+  systemName: string;
   repo: string[];
   repoType: "GIT" | "SVN";
   username: string;
