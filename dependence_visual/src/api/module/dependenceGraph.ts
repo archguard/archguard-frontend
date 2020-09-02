@@ -2,11 +2,11 @@ import { baseURL } from './config';
 import axios from "../axios";
 import { JMethod } from '@/models/java';
 
-export function queryMethodDependence(className: string, methodName: string, dependenceType: string, parameter: any) {
+export function queryMethodDependence(className: string, dependenceType: string, parameter: any) {
   parameter.clazz = className;
   return axios<JMethod[]>({
     baseURL,
-    url: `/methods/${methodName}/${dependenceType}`,
+    url: `/methods/${dependenceType}`,
     method: "GET",
     params: parameter,
   });

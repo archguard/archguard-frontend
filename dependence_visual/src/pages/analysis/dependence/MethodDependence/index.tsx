@@ -41,7 +41,8 @@ function MethodDependence() {
   }, [query]);
 
   function onShowClick(args: MethodFormData) {
-    return queryMethodDependence(args.className.join('.'), args.methodName, args.dependenceType, {
+    return queryMethodDependence(args.className.join('.'), args.dependenceType, {
+      name: args.methodName,
       module: args.module,
       deep: args.deep,
     }).then((res) => {
