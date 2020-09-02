@@ -26,7 +26,7 @@ const SystemCard = (props: SystemCardProps) => {
   const menu = (
     <Menu onClick={({ key }) => menuClick(key as string)}>
       <Menu.Item key="reScanning">重新扫描</Menu.Item>
-      <Menu.Item key="editSystemInfo">修改项目信息</Menu.Item>
+      <Menu.Item key="editSystemInfo">修改系统信息</Menu.Item>
     </Menu>
   );
 
