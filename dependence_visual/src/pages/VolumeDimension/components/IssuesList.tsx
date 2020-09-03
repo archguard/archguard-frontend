@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { columns } from "./columns";
+import React, { useState } from "react";
+import { columns } from "./columns.config";
 import "./IssuesList.less";
 import { PagerTable } from "@/components/PagerTable/PagerTable";
 import { baseURL } from "@/api/module/config";
