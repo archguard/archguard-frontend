@@ -23,6 +23,7 @@
 
 组件：首字母大写，驼峰命名。（例如：CollapsibleCard/CollapsibleCard.tsx）
 非组件：首字母小写，kebab风格。（例如：api)
+配置文件命名以 .config.ts 结尾。（例如：IssuesAndSuggestion.config.ts）
 
 ### 路由规则
 

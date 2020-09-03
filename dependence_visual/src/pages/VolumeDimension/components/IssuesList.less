@@ -1,0 +1,39 @@
+.issues-list {
+  &-title,
+  &-count {
+    font-size: 24px;
+  }
+
+  &-header {
+    margin-bottom: 10px;
+    line-height: 2;
+    border-bottom: 4px solid;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-title {
+
+  }
+
+  &-count {
+    padding: 0 10px;
+  }
+
+  &-content {
+    .issues-desc,
+    .issues-suggest {
+      font-size: 16px;
+      line-height: 2;
+
+      &>span:first-child {
+        display: inline-block;
+        font-weight: 600;
+      }
+    }
+
+    .issues-table {
+      margin-top: 10px;
+    }
+  }
+}

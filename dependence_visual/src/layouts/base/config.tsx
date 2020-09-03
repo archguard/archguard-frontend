@@ -8,7 +8,15 @@ import { configForTargets } from "../../config/buildTargets";
 export const menuList = configForTargets({
   default: [
     // { key: "/home", text: "首页", icon: <HomeOutlined /> },
-    { key: "/system-evaluation", text: "架构评估", icon: <FileTextOutlined /> },
+    {
+      key: "systemEvaluation",
+      text: "架构评估",
+      icon: <FileTextOutlined />,
+      children: [
+        { key: "/system-evaluation", text: "架构评估", },
+        { key: "/system-evaluation/volume-dimension", text: "体量维度" },
+      ],
+    },
     {
       key: "analysisTools",
       text: "架构分析",
@@ -20,8 +28,8 @@ export const menuList = configForTargets({
       ],
     },
     {
-      key: "/system-evolving", 
-      text: "架构演进", 
+      key: "/system-evolving",
+      text: "架构演进",
       icon: <CloudSyncOutlined />,
     },
     // {
