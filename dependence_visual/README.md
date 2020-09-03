@@ -19,9 +19,10 @@
 - 如果组件为单文件，则直接使用组件名对文件命名，不需要额外的目录。比如 `path/component.tsx` 而不是 `path/component/component.tsx`
 - 如果组件有多个文件，比如包含样式，则将文件放在用组件名命名的目录下。组件文件则使用 `index.tsx`，使得在引入的时候能缩短路径。例如 `path/component/index.less` + `path/component/index.tsx` 引入时 `import Component from "path/component"`
 
-命名规范：
+命名规范
 
-由于存在 `index.tsx`、`help.md`、`config.ts` 等等小写文件，为了命名统一，均使用小写加 `-` 来命名文件。同时避免了采用驼峰时部分有歧义的命名，比如 `qr-code` 优于 `QrCode`、`QRCode`、`qrCode`，避免部分专业名词缩写命名时不规范问题
+组件：首字母大写，驼峰命名。（例如：CollapsibleCard/CollapsibleCard.tsx）
+非组件：首字母小写，kebab风格。（例如：api)
 
 ### 路由规则
 
