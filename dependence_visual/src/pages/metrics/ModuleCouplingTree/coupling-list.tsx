@@ -36,7 +36,6 @@ export default function CouplingList(props: CouplingListProps) {
   const [records, setRecords] = useState(data);
 
   useEffect(() => {
-    console.log('setRecords2222');
     setRecords(data);
   }, [data]);
 

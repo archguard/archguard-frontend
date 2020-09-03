@@ -157,9 +157,6 @@ export const mappingProps = (
     if (typeof value === "number") {
       value = value.toFixed(2);
       const qualityGate = qualityGates?.find((q) => q.quota === name && q.layer === layer);
-      if (layer === "MODULE") {
-        console.log(value, qualityGate);
-      }
       qualified = isGoodQualitiy(value, qualityGate);
     }
     return { desc, name, value, key, qualified };
@@ -273,7 +270,6 @@ export default function Report(props: ReportProps) {
   }, [nodes, metrics]);
 
   useMemo(() => {
-    console.log(qualityGate?.config);
     metrics.forEach((metric) => {
       metric.props.forEach((p) => {
         const gateConfig = qualityGate?.config.find(

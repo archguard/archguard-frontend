@@ -30,7 +30,6 @@ const ConfigForm = (props: ConfigFormProps) => {
 
   const defaultConfigValue = Object.assign({}, ...getDefaultConfigValue())
   const onFinish = (values: ConfigData) => {
-    console.log(values);
     values[configType].map(item => {
       if (!item.type) item.type = configType
       return item
