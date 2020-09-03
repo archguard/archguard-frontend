@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { columns } from "./columns";
 import "./IssuesList.less";
 import { PagerTable } from "@/components/PagerTable/PagerTable";
-import { baseURL } from '@/api/module/config';
+import { baseURL } from "@/api/module/config";
 
 interface IssuesListProps {
   issuesAndSuggestion: {
@@ -14,6 +14,7 @@ interface IssuesListProps {
 
 const IssuesList = (props: IssuesListProps) => {
   const { title, badSmellDescription, suggestion } = props.issuesAndSuggestion;
+  const [count, setCount] = useState(0);
 
   return (
     <div className="issues-list">
@@ -30,8 +31,13 @@ const IssuesList = (props: IssuesListProps) => {
           <span>改进建议：</span>
           <span>{suggestion}</span>
         </div>
-
-        <PagerTable columns={columns} url={baseURL + "/codeline/methods/above-threshold"} />
+        <PagerTable
+          change={(count) => {
+            setCount(count);
+          }}
+          columns={columns}
+          url={baseURL + "/codeline/methods/above-threshold"}
+        />
       </div>
     </div>
   );
