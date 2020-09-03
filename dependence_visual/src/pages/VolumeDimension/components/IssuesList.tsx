@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Table } from 'antd';
 import { columns } from './columns';
 import './IssuesList.less'
-import { getOverviewUsingMethods } from '@/api/module/codeLine';
+import { getOverviewUsingMethods, MethodLine } from '@/api/module/codeLine';
 
 interface IssuesListProps {
   issuesAndSuggestion: {
@@ -12,27 +12,28 @@ interface IssuesListProps {
   },
 }
 
+const DEFAULT_PAGE_SIZE = 5
+
 const IssuesList = (props: IssuesListProps) => {
   const { title, badSmellDescription, suggestion } = props.issuesAndSuggestion
-  const [currentPageNumber, setCurrentPageNumber] = useState(0)
-  const [pageSize, setPageSize] = useState(5)
   const [count, setCount] = useState(0)
-  const [issuesList, setIssuesList] = useState([]);
+  const [issuesList, setIssuesList] = useState<MethodLine[]>([]);
+
+  const loadDataByPageNumber = (current: number) => {
+    getOverviewUsingMethods(current, DEFAULT_PAGE_SIZE).then((res) => {
+      setCount(res.count)
+      setIssuesList(res.methodLines)
+    })
+  }
 
   useEffect(() => {
-    getOverviewUsingMethods(currentPageNumber, pageSize).then((res) => {
-      console.log(res)
-    })
+    loadDataByPageNumber(0)
   }, [])
 
-  // const data = [{
-  //     module: 'module',
-  //     package: 'package',
-  //     class: 'class',
-  //     methodName: 'methodName',
-  //     codeRows: 10000,
-  //   },
-  // ];
+
+  const onChange = (pagination: any) => {
+    loadDataByPageNumber(pagination.current - 1)
+  }
 
   return (
     <div className="issues-list">
@@ -49,7 +50,15 @@ const IssuesList = (props: IssuesListProps) => {
           <span>改进建议：</span>
           <span>{ suggestion }</span>
         </div>
-        <Table className="issues-table" columns={columns} dataSource={issuesList} />
+        <Table
+          className="issues-table"
+          columns={columns}
+          dataSource={issuesList}
+          pagination={{
+            total: count,
+            defaultPageSize: DEFAULT_PAGE_SIZE,
+          }}
+          onChange={onChange} />
       </div>
     </div>
   )
