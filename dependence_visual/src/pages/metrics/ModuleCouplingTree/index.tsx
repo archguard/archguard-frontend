@@ -5,7 +5,6 @@ import { expandCodeTree } from "@/utils/transformCodeTree";
 import { Select } from "antd";
 import useQualityGate from "@/store/global-cache-state/useQualityGate";
 import { Profile } from "@/pages/quality-gate-profile";
-import { useMount } from "react-use";
 
 function ModuleCouplingTable() {
   const [codeTree] = useCodeTree();
