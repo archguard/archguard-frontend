@@ -22,22 +22,27 @@ export function transformCodeTreeToCascaderOptions(
 ): {
   [key: string]: FormItemOption[];
 } {
-  const trees = codeTree.trees || [];
+  const trees = expandCodeTree(codeTree);
 
-  const transformNodeToOption = (node: TreeNode): FormItemOption | undefined => {
-    if (node.type === "FILE") {
-      return toClass
-        ? {
-            label: node.node,
-            value: node.node,
-          }
-        : undefined;
+  const transformPackageToOption = (pkg: PackageNode): FormItemOption | undefined => {
+    let children = pkg.packages?.map((p) => transformPackageToOption(p)!) || [];
+
+    if (toClass) {
+      const classChildren =
+        pkg.classess?.map((c) => {
+          return {
+            label: c.name,
+            value: c.name,
+          };
+        }) || [];
+
+      children = children.concat(classChildren);
     }
 
     return {
-      label: node.node,
-      value: node.node,
-      children: node.children.map((node) => transformNodeToOption(node)!),
+      label: pkg.name,
+      value: pkg.name,
+      children: children,
     };
   };
 
@@ -54,9 +59,20 @@ export function transformCodeTreeToCascaderOptions(
   return Object.assign(
     {},
     ...trees.map((tree) => {
-      const treeNodes = tree.children.map((node) => transformNodeToOption(node)!);
+      let treeNodes = tree.packages?.map((node) => transformPackageToOption(node)!) || [];
+      if (toClass) {
+        const classChildren =
+          tree.classess?.map((c) => {
+            return {
+              label: c.name,
+              value: c.name,
+            };
+          }) || [];
+
+        treeNodes = treeNodes.concat(classChildren);
+      }
       return {
-        [tree.node]: toClass ? treeNodes : clearUndefinedChildren(treeNodes!),
+        [tree.name]: toClass ? treeNodes : clearUndefinedChildren(treeNodes!),
       };
     }),
   );
