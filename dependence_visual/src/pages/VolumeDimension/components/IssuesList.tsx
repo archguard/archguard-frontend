@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Table } from "antd";
-import { TablePaginationConfig } from "antd/lib/table";
 import { columns } from "./columns";
 import "./IssuesList.less";
-import { getOverviewUsingMethods, MethodLines } from "@/api/module/codeLine";
 import { PagerTable } from "@/components/PagerTable/PagerTable";
 import { baseURL } from '@/api/module/config';
 
@@ -15,27 +12,8 @@ interface IssuesListProps {
   };
 }
 
-const DEFAULT_PAGE_SIZE = 5;
-
 const IssuesList = (props: IssuesListProps) => {
   const { title, badSmellDescription, suggestion } = props.issuesAndSuggestion;
-  const [count, setCount] = useState(0);
-  const [issuesList, setIssuesList] = useState<MethodLines[]>([]);
-
-  const loadDataByPageNumber = (current: number) => {
-    getOverviewUsingMethods(current, DEFAULT_PAGE_SIZE).then((res) => {
-      setCount(res.count);
-      setIssuesList(res.data);
-    });
-  };
-
-  useEffect(() => {
-    loadDataByPageNumber(0);
-  }, []);
-
-  const onChange = (pagination: TablePaginationConfig) => {
-    loadDataByPageNumber(pagination.current! - 1);
-  };
 
   return (
     <div className="issues-list">
@@ -52,16 +30,6 @@ const IssuesList = (props: IssuesListProps) => {
           <span>改进建议：</span>
           <span>{suggestion}</span>
         </div>
-        <Table
-          className="issues-table"
-          columns={columns}
-          dataSource={issuesList}
-          pagination={{
-            total: count,
-            defaultPageSize: DEFAULT_PAGE_SIZE,
-          }}
-          onChange={onChange}
-        />
 
         <PagerTable columns={columns} url={baseURL + "/codeline/methods/above-threshold"} />
       </div>
