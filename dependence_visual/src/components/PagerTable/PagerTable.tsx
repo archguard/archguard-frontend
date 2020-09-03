@@ -36,7 +36,11 @@ export const PagerTable = (props: PagerTableProps) => {
       method: "GET",
       params: { currentPageNumber, numberPerPage },
     }).then((res) => {
-      setTableData(res.data);
+      const dataCopy = res.data.map((item, index) => ({
+        index,
+        ...item,
+      }));
+      setTableData(dataCopy);
       setCount(res.count);
       change(res.count);
     });
@@ -50,6 +54,7 @@ export const PagerTable = (props: PagerTableProps) => {
     <div className="pager-table">
       <Table
         columns={columns}
+        rowKey="index"
         pagination={{
           total: count,
           pageSize: numberPerPage,
