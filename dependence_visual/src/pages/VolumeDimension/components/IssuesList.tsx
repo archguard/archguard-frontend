@@ -4,6 +4,8 @@ import { TablePaginationConfig } from "antd/lib/table";
 import { columns } from "./columns";
 import "./IssuesList.less";
 import { getOverviewUsingMethods, MethodLines } from "@/api/module/codeLine";
+import { PagerTable } from "@/components/PagerTable/PagerTable";
+import { baseURL } from '@/api/module/config';
 
 interface IssuesListProps {
   issuesAndSuggestion: {
@@ -60,6 +62,8 @@ const IssuesList = (props: IssuesListProps) => {
           }}
           onChange={onChange}
         />
+
+        <PagerTable columns={columns} url={baseURL + "/codeline/methods/above-threshold"} />
       </div>
     </div>
   );
