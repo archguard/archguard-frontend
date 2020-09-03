@@ -2,23 +2,22 @@ import { exportJsonToExcel } from "@/utils/file-utils";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Button, Table, Tooltip } from "antd";
 import { SortOrder } from "antd/lib/table/interface";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import "./list.less";
-import { queryPackageCoupling, queryClassCoupling } from "@/api/module/metric";
-import { packageMapping, classMapping, mappingProps } from "./report";
+import { Typography } from "antd";
 
 export interface CouplingRecord {
   key: string;
   label: string;
   fullName: string;
   name: string;
-  shortName?: string;
   moduleId: string;
   props: {
     desc: string;
     name: string;
     value: any;
     key: string;
+    qualified: boolean;
   }[];
   packages?: CouplingRecord[];
   classess?: CouplingRecord[];
@@ -28,12 +27,20 @@ interface CouplingListProps {
   data?: CouplingRecord[];
   style?: React.CSSProperties;
   exportable?: boolean;
+  onExpand: (expanded: boolean, record: CouplingRecord) => void;
 }
 
 export default function CouplingList(props: CouplingListProps) {
-  const { data = [], style, exportable = false } = props;
+  const { data = [], style, exportable = false, onExpand } = props;
 
   const [records, setRecords] = useState(data);
+
+  useEffect(() => {
+    console.log('setRecords2222');
+    setRecords(data);
+  }, [data]);
+
+  const { Text } = Typography;
 
   const columns = useMemo(() => {
     const firstItem = records[0];
@@ -53,7 +60,9 @@ export default function CouplingList(props: CouplingListProps) {
           },
           render(_: any, item: CouplingRecord) {
             const value = item.props[index].value;
-            return value;
+            const qualified = item.props[index].qualified;
+
+            return <Text type={qualified ? undefined : "danger"}>{value}</Text>;
           },
         };
       });
@@ -86,46 +95,6 @@ export default function CouplingList(props: CouplingListProps) {
     );
   };
 
-  const lazyLoadPackageMetric = (record: CouplingRecord) => {
-    if (
-      record.packages &&
-      record.packages.length > 0 &&
-      record.packages.every((pkg) => !pkg.props || pkg.props.every((prop) => !prop.value))
-    ) {
-      const packageNames = record.packages!.map((p) => p.fullName);
-      queryPackageCoupling(packageNames).then((res) => {
-        record.packages!.forEach((p) => {
-          const packageName = p.fullName.replace(`${record.moduleId}.`, "");
-          const metric = res.find((x) => x.packageVO.packageName === packageName);
-          if (metric) {
-            p.props = mappingProps(metric, packageMapping);
-          }
-        });
-        setRecords([...records]);
-      });
-    }
-  };
-
-  const lazyLoadClassMetric = (record: CouplingRecord) => {
-    if (
-      record.classess &&
-      record.classess.length > 0 &&
-      record.classess.every((c) => !c.props || c.props.every((prop) => !prop.value))
-    ) {
-      queryClassCoupling(record.moduleId, record.fullName.replace(`${record.moduleId}.`, "")).then(
-        (res) => {
-          record.classess!.forEach((c) => {
-            const metric = res.find((x) => x.jclassVO.fullName === c.fullName);
-            if (metric) {
-              c.props = mappingProps(metric, classMapping);
-            }
-          });
-          setRecords([...records]);
-        },
-      );
-    }
-  };
-
   return (
     <Table
       className="coupling-list"
@@ -153,10 +122,10 @@ export default function CouplingList(props: CouplingListProps) {
         expandedRowRender: (record) => (
           <div className="nested-list">
             {record.packages && record.packages.length > 0 && (
-              <CouplingList style={{ margin: 0 }} data={record.packages} />
+              <CouplingList style={{ margin: 0 }} data={record.packages} onExpand={onExpand} />
             )}
             {record.classess && record.classess.length > 0 && (
-              <CouplingList style={{ margin: 0 }} data={record.classess} />
+              <CouplingList style={{ margin: 0 }} data={record.classess} onExpand={onExpand} />
             )}
           </div>
         ),
@@ -166,13 +135,7 @@ export default function CouplingList(props: CouplingListProps) {
             (record.classess ? record.classess.length > 0 : false)
           );
         },
-        onExpand: (expanded, record) => {
-          if (expanded) {
-            lazyLoadPackageMetric(record);
-
-            lazyLoadClassMetric(record);
-          }
-        },
+        onExpand: onExpand,
       }}
     />
   );

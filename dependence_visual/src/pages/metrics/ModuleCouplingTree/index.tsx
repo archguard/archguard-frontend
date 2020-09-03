@@ -1,80 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Report from "./report";
 import useCodeTree from "@/store/global-cache-state/useCodeTree";
 import { expandCodeTree } from "@/utils/transformCodeTree";
-import { queryAllModuleCoupling } from "@/api/module/metric";
-import { PackageMetrics, ClassMetrics } from "@/models/analysis";
+import { Select } from "antd";
+import useQualityGate from "@/store/global-cache-state/useQualityGate";
+import { Profile } from "@/pages/quality-gate-profile";
+import { useMount } from "react-use";
 
 function ModuleCouplingTable() {
   const [codeTree] = useCodeTree();
 
-  const [moduleMetric, setModuleMetric] = useState<any>([]);
+  const [qualityGateProfile, setQualityGateProfile] = useState<Profile[]>([]);
+  const [currentGateProfile, setCurrentGateProfile] = useState<Profile | undefined>();
+  const [nodeTree, setNodeTree] = useState<SubModuleNode[]>([]);
 
-  interface ClassNode {
-    name: string;
-  }
+  const [qualityGate] = useQualityGate();
 
-  const mergeModuleTreeAndMetric = (tree: SubModuleNode[], metrics: ModuleCoupling[]) => {
-    return tree.map((module) => {
-      const metric = metrics.find((x) => x && x.logicModule.name === module.name);
-      return {
-        id: module.name,
-        moduleName: module.name,
-        packageMetrics: module.packages?.map((p) => {
-          return mapToPackageMetric(module.name, module.name, p);
-        }),
-        classMetrics: module.classess?.map((c) => {
-          return mapToClassMetric(module.name, c);
-        }),
-        ...metric,
-      };
-    });
-  };
-
-  const mapToPackageMetric = (
-    moduleId: string,
-    parentPackage: string,
-    packageNode: PackageNode,
-  ): PackageMetrics => {
-    return {
-      id: `${parentPackage}.${packageNode.name}`,
-      packageName: packageNode.name,
-      moduleId: moduleId,
-      classMetrics: packageNode.classess?.map((c) =>
-        mapToClassMetric(`${parentPackage}.${packageNode.name}`, c),
-      ),
-      packageMetrics: packageNode.packages?.map((p) =>
-        mapToPackageMetric(moduleId, `${parentPackage}.${packageNode.name}`, p),
-      ),
-    };
-  };
-
-  const mapToClassMetric = (packageId: string, classNode: ClassNode): ClassMetrics => {
-    return {
-      id: `${packageId}.${classNode.name}`,
-      packageId: packageId,
-      className: classNode.name,
-    };
-  };
+  const { Option } = Select;
 
   function showAllModuleCoupling() {
     const tree = codeTree?.value!;
 
-    const nodeTree = expandCodeTree(tree);
+    const expandTree = expandCodeTree(tree);
 
-    queryAllModuleCoupling().then((res) => {
-      const moduleMetric = mergeModuleTreeAndMetric(nodeTree, res);
-      setModuleMetric(moduleMetric);
-    });
+    console.log(expandTree)
+
+    setNodeTree(expandTree);
   }
 
-  useEffect(()=>{
+  useMount(() => {
     showAllModuleCoupling();
-  },[]);
+    setQualityGateProfile(qualityGate?.value || []);
+  });
+
+  const qualityGateChange = (value: number) => {
+    if (value) {
+      const profile = qualityGateProfile.find((x) => x.id === value);
+      setCurrentGateProfile(profile);
+    } else {
+      setCurrentGateProfile(undefined);
+    }
+  };
 
   return (
     <div>
-      {moduleMetric!.length > 0 && <Report data={moduleMetric} />}
+      <Select
+        showSearch
+        allowClear
+        style={{ width: 200, marginBottom: 15 }}
+        placeholder="请选择质量域"
+        optionFilterProp="children"
+        onChange={qualityGateChange}
+      >
+        {qualityGateProfile?.map((q) => {
+          return (
+            <Option key={q.id} value={q.id!}>
+              {q.name}
+            </Option>
+          );
+        })}
+      </Select>
+      {nodeTree!.length > 0 && <Report nodes={nodeTree!} qualityGate={currentGateProfile} />}
     </div>
   );
 }
