@@ -1,7 +1,7 @@
 import axios from "../axios";
 import { baseURL } from "./config";
 
-export interface MethodLine {
+export interface MethodLines {
   moduleName: string;
   packageName: string;
   typeName: string;
@@ -13,7 +13,7 @@ export interface MethodLine {
 interface MethodLinesPagedDataResponse {
   count: number,
   currentPageNumber: number,
-  methodLines: MethodLine[],
+  data: MethodLines[],
 }
 
 export function getOverviewUsingMethods(currentPageNumber: number, numberPerPage: number) {

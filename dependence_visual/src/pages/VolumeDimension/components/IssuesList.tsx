@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import { TablePaginationConfig } from 'antd/lib/table';
 import { columns } from './columns';
 import './IssuesList.less'
-import { getOverviewUsingMethods, MethodLine } from '@/api/module/codeLine';
+import { getOverviewUsingMethods, MethodLines } from '@/api/module/codeLine';
 
 interface IssuesListProps {
   issuesAndSuggestion: {
@@ -18,12 +18,12 @@ const DEFAULT_PAGE_SIZE = 5
 const IssuesList = (props: IssuesListProps) => {
   const { title, badSmellDescription, suggestion } = props.issuesAndSuggestion
   const [count, setCount] = useState(0)
-  const [issuesList, setIssuesList] = useState<MethodLine[]>([]);
+  const [issuesList, setIssuesList] = useState<MethodLines[]>([]);
 
   const loadDataByPageNumber = (current: number) => {
     getOverviewUsingMethods(current, DEFAULT_PAGE_SIZE).then((res) => {
       setCount(res.count)
-      setIssuesList(res.methodLines)
+      setIssuesList(res.data)
     })
   }
 
