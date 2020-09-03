@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Report from "./report";
 import useCodeTree from "@/store/global-cache-state/useCodeTree";
 import { expandCodeTree } from "@/utils/transformCodeTree";
@@ -23,15 +23,16 @@ function ModuleCouplingTable() {
 
     const expandTree = expandCodeTree(tree);
 
-    console.log(expandTree)
-
     setNodeTree(expandTree);
   }
 
-  useMount(() => {
+  useEffect(() => {
     showAllModuleCoupling();
+  }, [codeTree]);
+
+  useEffect(() => {
     setQualityGateProfile(qualityGate?.value || []);
-  });
+  }, [qualityGate]);
 
   const qualityGateChange = (value: number) => {
     if (value) {
