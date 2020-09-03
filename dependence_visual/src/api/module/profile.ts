@@ -1,6 +1,6 @@
 import axios from "../axios";
 import { Profile } from '@/pages/quality-gate-profile';
-const baseURL = '/api/module'
+const baseURL = '/api/addition'
 
 export function queryAllQualityGateProfile() {
   return axios<any>({
