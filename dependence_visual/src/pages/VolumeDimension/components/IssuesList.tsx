@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Table } from 'antd';
+import { TablePaginationConfig } from 'antd/lib/table';
 import { columns } from './columns';
 import './IssuesList.less'
 import { getOverviewUsingMethods, MethodLine } from '@/api/module/codeLine';
@@ -31,8 +32,8 @@ const IssuesList = (props: IssuesListProps) => {
   }, [])
 
 
-  const onChange = (pagination: any) => {
-    loadDataByPageNumber(pagination.current - 1)
+  const onChange = (pagination: TablePaginationConfig) => {
+    loadDataByPageNumber(pagination.current! - 1)
   }
 
   return (
