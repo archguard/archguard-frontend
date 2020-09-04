@@ -65,12 +65,12 @@ export default function PageHeader(props: any) {
             onClick={() => props.history.push(`/${currentSystemId}/help`)}
           >说明文档</Button>
         )}
-        <Button
+        {/* <Button
             type="link"
             style={{color: "#ffffff"}}
             icon={<LoginOutlined />}
             onClick={() => props.history.push("/login")}
-          >登陆</Button>
+          >登录</Button> */}
       </div>
     </div>
   );
