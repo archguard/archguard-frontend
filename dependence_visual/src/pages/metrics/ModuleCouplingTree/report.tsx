@@ -165,7 +165,7 @@ export const mappingProps = (
 };
 
 const isGoodQualitiy = (value: number, qualityGateConfig?: ProfileConfig) => {
-  
+
   if (!qualityGateConfig) {
     return true;
   }
@@ -278,7 +278,7 @@ export default function Report(props: ReportProps) {
         p.qualified = isGoodQualitiy(p.value, gateConfig);
       });
     });
-    
+
     setMetrics([...metrics]);
   }, [qualityGate]);
 
@@ -321,7 +321,7 @@ export default function Report(props: ReportProps) {
         });
         setMetrics([...metrics]);
       });
-      
+
     }
   };
 
@@ -335,7 +335,7 @@ export default function Report(props: ReportProps) {
         (res) => {
           record.classess!.forEach((c) => {
             const metric = res.find((x) => x.jclassVO.fullName === c.fullName);
-          
+
             if (metric) {
               const props = mappingProps(metric, classMapping, "CLASS", qualityGate?.config);
               metrics.push({

@@ -1,8 +1,8 @@
 import _ from "lodash";
 import axios from "../axios";
 import { baseURL } from './config';
-import { ReportMapper } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleCouplingTree/report";
 import { methodDependency } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceTable/columns";
+import { ReportMapper } from '@/pages/metrics/ModuleCouplingTree/report';
 
 export interface Module {
   id?: string;
