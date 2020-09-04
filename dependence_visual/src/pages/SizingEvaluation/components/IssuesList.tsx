@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PagerTable } from "@/components/PagerTable/PagerTable";
-import { IssuesConfig } from './IssuesConfig.config';
+import { IssuesConfig } from "./IssuesConfig.config";
 import "./IssuesList.less";
 
 interface IssuesListProps {
@@ -26,19 +26,19 @@ const IssuesList = (props: IssuesListProps) => {
           <span>改进建议：</span>
           <span>{suggestion}</span>
         </div>
-        { tableConfigs.map((tableConfig) => (
-        <div className="issues-table">
-          <div className="issues-table-title">
-            { tableConfig.title }
+        {tableConfigs.map((tableConfig, index) => (
+          <div key={index} className="issues-table">
+            <div className="issues-table-title">{tableConfig.title}</div>
+            <PagerTable
+              change={(count) => {
+                setCount(count);
+              }}
+              columns={tableConfig.columns}
+              url={tableConfig.dataUrl}
+              parameter={tableConfig.parameter}
+            />
           </div>
-          <PagerTable
-            change={(count) => { setCount(count) }}
-            columns={tableConfig.columns}
-            url={tableConfig.dataUrl}
-            parameter={tableConfig.parameter}
-          />
-        </div>
-        )) }
+        ))}
       </div>
     </div>
   );
