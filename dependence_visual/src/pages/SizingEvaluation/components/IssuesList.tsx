@@ -1,19 +1,14 @@
 import React, { useState } from "react";
-import { columns } from "./columns.config";
-import "./IssuesList.less";
 import { PagerTable } from "@/components/PagerTable/PagerTable";
-import { baseURL } from "@/api/module/config";
+import { IssuesConfig } from './IssuesConfig.config';
+import "./IssuesList.less";
 
 interface IssuesListProps {
-  issuesAndSuggestion: {
-    title: string;
-    badSmellDescription: string;
-    suggestion: string;
-  };
+  issuesConfig: IssuesConfig;
 }
 
 const IssuesList = (props: IssuesListProps) => {
-  const { title, badSmellDescription, suggestion } = props.issuesAndSuggestion;
+  const { title, badSmellDescription, suggestion, tableConfigs } = props.issuesConfig;
   const [count, setCount] = useState(0);
 
   return (
@@ -31,13 +26,18 @@ const IssuesList = (props: IssuesListProps) => {
           <span>改进建议：</span>
           <span>{suggestion}</span>
         </div>
-        <PagerTable
-          change={(count) => {
-            setCount(count);
-          }}
-          columns={columns}
-          url={baseURL + "/codeline/methods/above-threshold"}
-        />
+        { tableConfigs.map((tableConfig) => (
+        <div className="issues-table">
+          <div className="issues-table-title">
+            { tableConfig.title }
+          </div>
+          <PagerTable
+            change={(count) => { setCount(count) }}
+            columns={tableConfig.columns}
+            url={tableConfig.dataUrl}
+          />
+        </div>
+        )) }
       </div>
     </div>
   );

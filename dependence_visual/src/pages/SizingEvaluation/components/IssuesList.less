@@ -1,39 +1,44 @@
 .issues-list {
+  padding: 0 20px;
+
   &-title,
   &-count {
-    font-size: 24px;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 32px;
   }
 
   &-header {
     margin-bottom: 10px;
-    line-height: 2;
-    border-bottom: 4px solid;
+    border-bottom: 2px solid;
     display: flex;
     justify-content: space-between;
   }
 
-  &-title {
-
-  }
-
   &-count {
     padding: 0 10px;
+    font-size: 1.5em;
   }
 
   &-content {
     .issues-desc,
     .issues-suggest {
-      font-size: 16px;
       line-height: 2;
 
       &>span:first-child {
+        font-weight: bold;
         display: inline-block;
-        font-weight: 600;
       }
     }
 
     .issues-table {
-      margin-top: 10px;
+      padding: 0 10px;
+
+      &-title {
+        margin: 0 -10px;
+        padding: 5px 0;
+        font-weight: bold;
+      }
     }
   }
 }

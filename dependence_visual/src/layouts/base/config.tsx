@@ -14,7 +14,7 @@ export const menuList = configForTargets({
       icon: <FileTextOutlined />,
       children: [
         { key: "/system-evaluation", text: "架构评估", },
-        { key: "/system-evaluation/volume-dimension", text: "体量维度" },
+        { key: "/system-evaluation/sizing-evaluation", text: "体量维度" },
       ],
     },
     {

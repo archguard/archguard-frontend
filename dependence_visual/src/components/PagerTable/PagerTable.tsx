@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import axios from "@/api/axios";
+import { ColumnsType } from 'antd/lib/table';
 
 const DEFAULt_NUMBER_PER_PAGE = 5;
 

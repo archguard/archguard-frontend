@@ -33,7 +33,7 @@ export default defineConfig({
         // { path: "home", component: "@/pages/home" },
         { path: "help/:name?", component: "@/pages/help" },
         { path: "system-evaluation", component: "@/pages/system-evaluation" },
-        { path: "system-evaluation/volume-dimension", component: "@/pages/VolumeDimension/VolumeDimension" },
+        { path: "system-evaluation/sizing-evaluation", component: "@/pages/SizingEvaluation/SizingEvaluation" },
         { path: "system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
         {
           path: "retrofit-tools/plsql-to-kotlin",
