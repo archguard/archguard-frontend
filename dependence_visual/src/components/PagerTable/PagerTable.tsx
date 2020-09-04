@@ -7,6 +7,7 @@ const DEFAULt_NUMBER_PER_PAGE = 5;
 
 interface PagerTableProps {
   url: string;
+  parameter?: any;
   numberPerPage?: number;
   change: (count: number) => void;
   columns: Array<{
@@ -25,7 +26,7 @@ interface TableData {
 }
 
 export const PagerTable = (props: PagerTableProps) => {
-  const { columns, url, numberPerPage = DEFAULt_NUMBER_PER_PAGE, change } = props;
+  const { columns, url, parameter, numberPerPage = DEFAULt_NUMBER_PER_PAGE, change } = props;
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [count, setCount] = useState(0);
   const [tableData, setTableData] = useState<OptionalArryObj>([]);
@@ -35,7 +36,7 @@ export const PagerTable = (props: PagerTableProps) => {
       baseURL: "",
       url,
       method: "GET",
-      params: { currentPageNumber, numberPerPage },
+      params: { currentPageNumber, numberPerPage, ...parameter },
     }).then((res) => {
       const dataCopy = res.data.map((item, index) => ({
         index,

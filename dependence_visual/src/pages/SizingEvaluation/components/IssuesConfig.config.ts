@@ -1,9 +1,10 @@
-import { methodColumns, classColumnsByMethodCount, classColumnsByLines } from './IssuesColumns.config';
+import { methodColumns, classColumnsByMethodCount, classColumnsByLines, hubColumns } from './IssuesColumns.config';
 import { baseURL } from '@/api/module/config';
 
 export interface IssuesTableConfig {
   title: string;
   dataUrl: string;
+  parameter?: any;
   columns: Array<{
     title: string;
     dataIndex: string;
@@ -21,6 +22,7 @@ export interface IssuesConfig {
 enum IssuesTypes {
   "METHOD" = "METHOD",
   "CLASS" = "CLASS",
+  "HUB" = "HUB",
 }
 
 export const IssuesConfigs: {
@@ -48,6 +50,17 @@ export const IssuesConfigs: {
       title: '问题列表（类中包含的方法 > 20个的类）：',
       dataUrl: baseURL + "/sizing/classes/above-method-count-threshold",
       columns: classColumnsByMethodCount,
+    }],
+  },
+  HUB: {
+    title: '枢纽模块',
+    badSmellDescription: '当某个类与大量其他的类有依赖关系的时候，这种气味就会出现。',
+    suggestion: '拆分当前枢纽类，合并某些外部依赖类',
+    tableConfigs: [{
+      title: '问题列表（代码行数 > 30行的方法）：',
+      dataUrl: baseURL + "/hub/classes/above-threshold",
+      columns: hubColumns,
+      parameter: { orderByFanIn: true },
     }],
   },
 };

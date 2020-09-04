@@ -35,6 +35,7 @@ const IssuesList = (props: IssuesListProps) => {
             change={(count) => { setCount(count) }}
             columns={tableConfig.columns}
             url={tableConfig.dataUrl}
+            parameter={tableConfig.parameter}
           />
         </div>
         )) }

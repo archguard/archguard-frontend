@@ -55,3 +55,25 @@ export const classColumnsByLines = [{
   dataIndex: 'lines',
   key: 'lines',
 }];
+
+export const hubColumns = [{
+  title: '模块',
+  dataIndex: 'moduleName',
+  key: 'moduleName',
+}, {
+  title: '包',
+  dataIndex: 'packageName',
+  key: 'packageName',
+}, {
+  title: '类',
+  dataIndex: 'typeName',
+  key: 'typeName',
+}, {
+  title: 'fanIn',
+  dataIndex: 'fanIn',
+  key: 'fanIn',
+}, {
+  title: 'fanOut',
+  dataIndex: 'fanOut',
+  key: 'fanOut',
+}];

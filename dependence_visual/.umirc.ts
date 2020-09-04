@@ -34,6 +34,7 @@ export default defineConfig({
         { path: "help/:name?", component: "@/pages/help" },
         { path: "system-evaluation", component: "@/pages/system-evaluation" },
         { path: "system-evaluation/sizing-evaluation", component: "@/pages/SizingEvaluation/SizingEvaluation" },
+        { path: "system-evaluation/coupling-evaluation", component: "@/pages/CouplingEvaluation/CouplingEvaluation" },
         { path: "system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
         {
           path: "retrofit-tools/plsql-to-kotlin",

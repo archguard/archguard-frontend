@@ -15,6 +15,7 @@ export const menuList = configForTargets({
       children: [
         { key: "/system-evaluation", text: "架构评估", },
         { key: "/system-evaluation/sizing-evaluation", text: "体量维度" },
+        { key: "/system-evaluation/coupling-evaluation", text: "耦合维度" },
       ],
     },
     {
