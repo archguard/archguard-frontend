@@ -1,5 +1,4 @@
-import axios from "../axios";
-import { baseURL } from "./config";
+import { axiosWithModule } from "./config";
 
 export interface MethodLines {
   moduleName: string;
@@ -17,11 +16,9 @@ interface MethodLinesPagedDataResponse {
 }
 
 export function getOverviewUsingMethods(currentPageNumber: number, numberPerPage: number) {
-  return axios<MethodLinesPagedDataResponse>({
-    baseURL,
+  return axiosWithModule<MethodLinesPagedDataResponse>({
     url: '/codeline/methods/above-threshold',
     method: "GET",
     params: { currentPageNumber, numberPerPage },
   });
 }
-
