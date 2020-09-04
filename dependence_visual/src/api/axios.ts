@@ -35,4 +35,4 @@ export default async function axiosAgent<T>(config: AxiosRequestConfig) {
   return (res as unknown) as T;
 }
 
-export const axiosWithBaseURL = (baseURL: string) => <T>(config: AxiosRequestConfig) => axiosAgent({ ...config, baseURL }) as unknown as T;
+export const axiosWithBaseURL = (baseURL: string) => <T>(config: Omit<AxiosRequestConfig, 'baseURL'>) => axiosAgent({ ...config, baseURL }) as unknown as T;
