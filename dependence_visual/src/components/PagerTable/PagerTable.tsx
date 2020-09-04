@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import axios from "@/api/axios";
-import { ColumnsType } from 'antd/lib/table';
+import { ColumnsType } from "antd/lib/table";
 
 const DEFAULt_NUMBER_PER_PAGE = 5;
 
@@ -37,14 +37,10 @@ export const PagerTable = (props: PagerTableProps) => {
       url,
       method: "GET",
       params: { currentPageNumber, numberPerPage, ...parameter },
-    }).then((res) => {
-      const dataCopy = res.data.map((item, index) => ({
-        index,
-        ...item,
-      }));
-      setTableData(dataCopy);
-      setCount(res.count);
-      change(res.count);
+    }).then(({ count, data }) => {
+      setTableData(data);
+      setCount(count);
+      change(count);
     });
   };
 
@@ -56,7 +52,7 @@ export const PagerTable = (props: PagerTableProps) => {
     <div className="pager-table">
       <Table
         columns={columns}
-        rowKey="index"
+        rowKey="id"
         pagination={{
           total: count,
           pageSize: numberPerPage,
