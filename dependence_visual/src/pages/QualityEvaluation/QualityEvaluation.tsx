@@ -1,6 +1,24 @@
 import React from "react";
 import { Chart, Tooltip, Interval, Coordinate, Interaction } from "bizcharts";
 
+enum Category {
+  体量过大 = "体量过大",
+  设计冗余 = "设计冗余",
+  过高耦合 = "过高耦合",
+  过低内聚 = "过低内聚",
+  过于复杂 = "过于复杂",
+  缺乏分层 = "缺乏分层",
+}
+
+const COLOR_MAP: Record<Category, string> = {
+  体量过大: "#ee8572",
+  设计冗余: "#3aafae",
+  过高耦合: "#4d64b5",
+  过低内聚: "#c06c9f",
+  过于复杂: "#d98e37",
+  缺乏分层: "#546b66",
+};
+
 const data = [
   { badSmell: "体量过大-类较大", category: "体量过大", count: 20 },
   { badSmell: "体量过大-类较大2", category: "体量过大", count: 10 },
@@ -18,17 +36,8 @@ const data = [
   { badSmell: "缺乏分层2", category: "缺乏分层", count: 35.5 },
 ];
 
-function getColor(category: string): string {
-  const colorMap = {
-    体量过大: "#ee8572",
-    设计冗余: "#3aafae",
-    过高耦合: "#4d64b5",
-    过低内聚: "#c06c9f",
-    过于复杂: "#d98e37",
-    缺乏分层: "#546b66",
-  } as any;
-
-  return colorMap[category];
+function getColor(category: Category): string {
+  return COLOR_MAP[category] || "red";
 }
 
 function QualityEvaluation() {
