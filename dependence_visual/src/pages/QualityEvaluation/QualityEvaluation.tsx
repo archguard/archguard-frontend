@@ -1,5 +1,5 @@
 import React from "react";
-import { Chart, Tooltip, Interval, Coordinate, Interaction } from "bizcharts";
+import { Chart, Tooltip, Interval, Coordinate, Interaction, Legend } from "bizcharts";
 
 enum Category {
   体量过大 = "体量过大",
@@ -37,12 +37,13 @@ const data = [
 ];
 
 function getColor(category: Category): string {
-  return COLOR_MAP[category] || "red";
+  return COLOR_MAP[category];
 }
 
 function QualityEvaluation() {
   return (
-    <Chart height={400} padding="auto" data={data} autoFit>
+    <Chart height={261} data={data} autoFit padding="auto">
+      <Legend visible={false} />
       <Interval
         adjust={[
           {
