@@ -8,6 +8,7 @@
     "ahooks": "^2.2.0",
     "antd": "^4.4.2",
     "axios": "^0.19.2",
+    "bizcharts": "^4.0.14",
     "classnames": "^2.2.6",
     "codemirror": "^5.55.0",
     "common-tags": "^1.8.0",
