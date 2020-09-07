@@ -32,6 +32,7 @@ export default defineConfig({
         { path: "test", component: "@/pages/test" },
         // { path: "home", component: "@/pages/home" },
         { path: "help/:name?", component: "@/pages/help" },
+        { path: "system-evaluation/Summary", component: "@/pages/Summary/Summary" },
         { path: "system-evaluation", component: "@/pages/system-evaluation" },
         { path: "system-evaluation/QualityEvaluation", component: "@/pages/QualityEvaluation/QualityEvaluation" },
         { path: "system-evaluation/sizing-evaluation", component: "@/pages/SizingEvaluation/SizingEvaluation" },
