@@ -13,7 +13,8 @@ export const menuList = configForTargets({
       text: "架构评估",
       icon: <FileTextOutlined />,
       children: [
-        { key: "/system-evaluation", text: "架构评估", },
+        // { key: "/system-evaluation", text: "架构评估", },
+        { key: "/system-evaluation/QualityEvaluation", text: "总览", },
         { key: "/system-evaluation/sizing-evaluation", text: "体量维度" },
         { key: "/system-evaluation/coupling-evaluation", text: "耦合维度" },
       ],
