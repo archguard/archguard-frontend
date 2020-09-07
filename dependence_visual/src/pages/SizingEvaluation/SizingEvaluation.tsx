@@ -12,6 +12,12 @@ const SizingEvaluation = () => {
       <Tabs.TabPane tab="过大的类" key="class">
         <IssuesList issuesConfig={IssuesConfigs.CLASS} />
       </Tabs.TabPane>
+      <Tabs.TabPane tab="过大的包" key="package">
+        <IssuesList issuesConfig={IssuesConfigs.PACKAGE} />
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="过大的模块" key="module">
+        <IssuesList issuesConfig={IssuesConfigs.MODULE} />
+      </Tabs.TabPane>
     </Tabs>
   )
 }

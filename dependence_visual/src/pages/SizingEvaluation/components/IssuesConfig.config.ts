@@ -1,4 +1,4 @@
-import { methodColumns, classColumnsByMethodCount, classColumnsByLines, hubColumns } from './IssuesColumns.config';
+import { methodColumns, classColumnsByMethodCount, classColumnsByLines, hubColumns, packageColumns, moduleColumns } from './IssuesColumns.config';
 import { baseURL } from '@/api/module/config';
 
 export interface IssuesTableConfig {
@@ -22,6 +22,8 @@ export interface IssuesConfig {
 enum IssuesTypes {
   "METHOD" = "METHOD",
   "CLASS" = "CLASS",
+  "PACKAGE" = "PACKAGE",
+  "MODULE" = "MODULE",
   "HUB" = "HUB",
 }
 
@@ -50,6 +52,34 @@ export const IssuesConfigs: {
       title: '问题列表（类中包含的方法 > 20个的类）：',
       dataUrl: baseURL + "/sizing/classes/above-method-count-threshold",
       columns: classColumnsByMethodCount,
+    }],
+  },
+  PACKAGE: {
+    title: '过大的包',
+    badSmellDescription: '一个包包含了过多的代码或包含了过多的类。',
+    suggestion: '拆包。把不同指责的类分到不同的包结构中，具体可参考如整洁架构、六边形架构等的规范。',
+    tableConfigs: [{
+      title: '问题列表（代码行数 > 12000行的包）：',
+      dataUrl: baseURL + "/sizing/packages/above-line-threshold",
+      columns: packageColumns,
+    }, {
+      title: '问题列表（包中包含的类 > 20个的包）：',
+      dataUrl: baseURL + "/sizing/packages/above-threshold",
+      columns: packageColumns,
+    }],
+  },
+  MODULE: {
+    title: '过大的模块',
+    badSmellDescription: '一个子模块中包含了过多的代码或包含了过多的包。',
+    suggestion: '拆模块。把不同指责的包拆分到不同的模块中。',
+    tableConfigs: [{
+      title: '问题列表（代码行数 > 240000行的模块）：',
+      dataUrl: baseURL + "/sizing/modules/above-line-threshold",
+      columns: moduleColumns,
+    }, {
+      title: '问题列表（模块中包含的包 > 20个的模块）：',
+      dataUrl: baseURL + "/sizing/modules/above-threshold",
+      columns: moduleColumns,
     }],
   },
   HUB: {

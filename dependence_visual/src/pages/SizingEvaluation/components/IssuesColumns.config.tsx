@@ -58,7 +58,7 @@ export const methodColumns = [{
   key: 'methodName',
   render: methodColumnRender,
 }, {
-  width: 100,
+  minWidth: 100,
   title: '代码行数',
   dataIndex: 'lines',
   key: 'lines',
@@ -78,7 +78,7 @@ export const classColumnsByMethodCount = [{
   key: 'typeName',
   render: classColumnRender,
 }, {
-  width: 100,
+  minWidth: 100,
   title: '方法个数',
   dataIndex: 'methodCount',
   key: 'methodCount',
@@ -98,11 +98,51 @@ export const classColumnsByLines = [{
   key: 'typeName',
   render: classColumnRender,
 }, {
-  width: 100,
+  minWidth: 100,
   title: '代码行数',
   dataIndex: 'lines',
   key: 'lines',
 }];
+
+export const packageColumns = [{
+  title: '模块',
+  dataIndex: 'moduleName',
+  key: 'moduleName',
+}, {
+  title: '包',
+  dataIndex: 'packageName',
+  key: 'packageName',
+}, {
+  minWidth: 100,
+  title: 'class数量',
+  dataIndex: 'classCount',
+  key: 'classCount',
+}, {
+  minWidth: 100,
+  title: '代码行数',
+  dataIndex: 'lines',
+  key: 'lines',
+}]
+
+export const moduleColumns = [{
+  title: '模块',
+  dataIndex: 'moduleName',
+  key: 'moduleName',
+}, {
+  title: 'package数量',
+  dataIndex: 'packageCount',
+  key: 'packageCount',
+}, {
+  minWidth: 100,
+  title: 'class数量',
+  dataIndex: 'classCount',
+  key: 'classCount',
+}, {
+  minWidth: 100,
+  title: '代码行数',
+  dataIndex: 'lines',
+  key: 'lines',
+}]
 
 export const hubColumns = [{
   title: '模块',
@@ -118,12 +158,12 @@ export const hubColumns = [{
   key: 'typeName',
   render: classColumnRender,
 }, {
-  width: 100,
+  minWidth: 100,
   title: '入向依赖',
   dataIndex: 'fanIn',
   key: 'fanIn',
 }, {
-  width: 100,
+  minWidth: 100,
   title: '出向依赖',
   dataIndex: 'fanOut',
   key: 'fanOut',
