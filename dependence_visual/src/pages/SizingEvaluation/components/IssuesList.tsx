@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PagerTable } from "@/components/PagerTable/PagerTable";
+import { BuPagerTable } from "@/components/PagerTable/PagerTable";
 import { IssuesConfig } from "./IssuesConfig.config";
 import "./IssuesList.less";
 
@@ -34,7 +34,7 @@ const IssuesList = (props: IssuesListProps) => {
         {tableConfigs.map((tableConfig, index) => (
           <div key={index} className="issues-table">
             <div className="issues-table-title">{tableConfig.title}</div>
-            <PagerTable
+            <BuPagerTable
               change={(count) => {
                 tableCounts[index] = count
                 setTableCounts([...tableCounts])
