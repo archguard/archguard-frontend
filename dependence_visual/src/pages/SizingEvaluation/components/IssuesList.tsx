@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BuPagerTable } from "@/components/PagerTable/PagerTable";
+import { BuPagerTable } from "@/components/Business/PagerTable/PagerTable";
 import { IssuesConfig } from "./IssuesConfig.config";
 import "./IssuesList.less";
 
@@ -9,12 +9,12 @@ interface IssuesListProps {
 
 const IssuesList = (props: IssuesListProps) => {
   const { title, badSmellDescription, suggestion, tableConfigs } = props.issuesConfig;
-  const [count, setCount] = useState(0)
-  const [tableCounts, setTableCounts] =  useState(tableConfigs.map(() => 0))
+  const [count, setCount] = useState(0);
+  const [tableCounts, setTableCounts] = useState(tableConfigs.map(() => 0));
 
   useEffect(() => {
-    setCount(tableCounts.reduce((sum, current) => sum + current))
-  }, [tableCounts])
+    setCount(tableCounts.reduce((sum, current) => sum + current));
+  }, [tableCounts]);
 
   return (
     <div className="issues-list">
@@ -36,8 +36,8 @@ const IssuesList = (props: IssuesListProps) => {
             <div className="issues-table-title">{tableConfig.title}</div>
             <BuPagerTable
               change={(count) => {
-                tableCounts[index] = count
-                setTableCounts([...tableCounts])
+                tableCounts[index] = count;
+                setTableCounts([...tableCounts]);
               }}
               columns={tableConfig.columns}
               url={tableConfig.dataUrl}
