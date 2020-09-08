@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Button.less";
+import "./Button.less";
 
 interface BaButton {
   children?: any;
@@ -8,5 +8,5 @@ interface BaButton {
 }
 
 export function BaButton(props: BaButton) {
-  return <div className={styles.BaButton}>{props.children}</div>;
+  return <div className="BaButton">{props.children}</div>;
 }
