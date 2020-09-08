@@ -59,7 +59,7 @@ export const IssuesConfigs: {
   PACKAGE: {
     title: '过大的包',
     badSmellDescription: '一个包包含了过多的代码或包含了过多的类。',
-    suggestion: '拆包。把不同指责的类分到不同的包结构中，具体可参考如整洁架构、六边形架构等的规范。',
+    suggestion: '拆包。把不同职责的类分到不同的包结构中，具体可参考如整洁架构、六边形架构等的规范。',
     tableConfigs: [{
       title: '问题列表（代码行数 > 12000行的包）：',
       dataUrl: baseURL + "/sizing/packages/above-line-threshold",
@@ -73,7 +73,7 @@ export const IssuesConfigs: {
   MODULE: {
     title: '过大的模块',
     badSmellDescription: '一个子模块中包含了过多的代码或包含了过多的包。',
-    suggestion: '拆模块。把不同指责的包拆分到不同的模块中。',
+    suggestion: '拆模块。把不同职责的包拆分到不同的模块中。',
     tableConfigs: [{
       title: '问题列表（代码行数 > 240000行的模块）：',
       dataUrl: baseURL + "/sizing/modules/above-line-threshold",
