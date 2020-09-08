@@ -79,14 +79,14 @@ export const IssuesConfigs: {
       dataUrl: baseURL + "/sizing/modules/above-line-threshold",
       columns: moduleColumns,
     }, {
-      title: '问题列表（模块中包含的包 > 20个的模块）：',
+      title: '问题列表（所含Package包 > 20个的模块）：',
       dataUrl: baseURL + "/sizing/modules/above-threshold",
       columns: moduleColumns,
     }],
   },
   HUB: {
     title: '枢纽模块',
-    badSmellDescription: '当某个类与大量其他的类有依赖关系的时候，这种气味就会出现。当依赖过分集中在某个枢纽位置，会导致该位置的功能越来越难变更并慢慢被迫稳定',
+    badSmellDescription: '当某个类与大量其他的类有依赖关系的时候，这种气味就会出现。当依赖过分集中在某个枢纽位置，会导致该位置的功能越来越难变更并慢慢被迫稳定，失去灵活性。',
     suggestion: '考虑拆分当前枢纽类，或合并某些外部依赖类',
     tableConfigs: [{
       title: '问题列表（出向依赖或入向依赖 > 8 的类）：',
