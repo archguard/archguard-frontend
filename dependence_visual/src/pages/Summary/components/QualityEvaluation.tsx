@@ -1,9 +1,11 @@
 import React from "react";
 import { Chart, Tooltip, Interval, Coordinate, Interaction, Legend } from "bizcharts";
 import { Overview } from "@/api/module/overview";
-import { MockData1 } from '@/mock/data';
+import { MockData1 } from "@/mock/data";
+import styles from "./QualityEvaluation.less";
 
 interface QualityEvaluation {
+  name?: string;
   data: Overview[];
 }
 
@@ -31,25 +33,28 @@ function getColor(category: Category): string {
 }
 
 function QualityEvaluation(props: QualityEvaluation) {
-  const { data } = props;
+  const { data, name } = props;
 
   return (
-    <Chart height={261} data={data} autoFit padding="auto">
-      <Legend visible={false} />
-      <Interval
-        adjust={[
-          {
-            type: "dodge",
-            marginRatio: 1,
-          },
-        ]}
-        color={["badSmell*category", (xVal, category) => getColor(category)]}
-        position="category*count"
-      />
-      <Coordinate type="polar" />
-      <Tooltip shared />
-      <Interaction type="active-region" />
-    </Chart>
+    <div className={styles.QualityEvaluation}>
+      <Chart width={300} height={231} data={data} autoFit >
+        <Legend visible={false} />
+        <Interval
+          adjust={[
+            {
+              type: "dodge",
+              marginRatio: 1,
+            },
+          ]}
+          color={["badSmell*category", (xVal, category) => getColor(category)]}
+          position="category*count"
+        />
+        <Coordinate type="polar" />
+        <Tooltip shared />
+        <Interaction type="active-region" />
+      </Chart>
+      <div className={styles.name}>{name}</div>
+    </div>
   );
 }
 
