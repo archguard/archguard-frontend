@@ -31,17 +31,17 @@ function Summary() {
         </div>
         <div className={styles.detail}>
           <div className={styles.overview}>
-            <BaLabel value="12" text="服务数"></BaLabel>
-            <BaLabel value="148" text="API数"></BaLabel>
+            <BaLabel value="12" text="代码仓数"></BaLabel>
+            <BaLabel value="148" text="模块数"></BaLabel>
             <BaLabel value="128,000" text="总代码量"></BaLabel>
-            <BaLabel value="4" text="团队人数"></BaLabel>
+            <BaLabel value="4" text="代码贡献人数"></BaLabel>
             <BuGrade text="架构质量等级" grade="c"></BuGrade>
           </div>
-          <p className="desc">
+          {/* <p className="desc">
             从架构质量方面考虑，系统在代码规范、分层架构及数据库耦合等方面做得不错，但在测试保护、模块耦合方面阻碍较多，变更影响方面也有待提升。
           </p>
           <h3>重点提升点：</h3>
-          <div className="point-list"></div>
+          <div className="point-list"></div> */}
         </div>
       </div>
     </div>
