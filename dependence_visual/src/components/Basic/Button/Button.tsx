@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./Button.less";
 
-interface XButton {
+interface BaButton {
   children?: any;
   type?: "primary" | "blank";
   size?: "small" | "middle" | "big";
 }
 
-export function XButton(props: XButton) {
-  return <div className={styles.XButton}>{props.children}</div>;
+export function BaButton(props: BaButton) {
+  return <div className={styles.BaButton}>{props.children}</div>;
 }
