@@ -174,9 +174,13 @@ export const dataClumpsColumns = [{
   dataIndex: 'moduleName',
   key: 'moduleName',
 }, {
+  title: '包',
+  dataIndex: 'packageName',
+  key: 'packageName',
+}, {  
   title: '类',
-  dataIndex: 'classFullName',
-  key: 'classFullName',
+  dataIndex: 'typeName',
+  key: 'typeName',
   render: classColumnRender,
 }, {
   minWidth: 100,
@@ -191,11 +195,15 @@ export const deepInheritenceColumns = [{
   dataIndex: 'moduleName',
   key: 'moduleName',
 }, {
+  title: '包',
+  dataIndex: 'packageName',
+  key: 'packageName',
+}, {  
   title: '类',
-  dataIndex: 'classFullName',
-  key: 'classFullName',
+  dataIndex: 'typeName',
+  key: 'typeName',
   render: classColumnRender,
-}, {
+},  {
   minWidth: 100,
   title: '继承深度',
   dataIndex: 'dit',
