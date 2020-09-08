@@ -58,14 +58,14 @@ export const IssuesConfigs: {
   },
   PACKAGE: {
     title: '过大的包',
-    badSmellDescription: '一个包包含了过多的代码或包含了过多的类。',
+    badSmellDescription: '一个Package包中，包含了过多的代码或包含了过多的类。',
     suggestion: '拆包。把不同职责的类分到不同的包结构中，具体可参考如整洁架构、六边形架构等的规范。',
     tableConfigs: [{
       title: '问题列表（代码行数 > 12000行的包）：',
       dataUrl: baseURL + "/sizing/packages/above-line-threshold",
       columns: packageColumns,
     }, {
-      title: '问题列表（包中包含的类 > 20个的包）：',
+      title: '问题列表（所含的类 > 20个的包）：',
       dataUrl: baseURL + "/sizing/packages/above-threshold",
       columns: packageColumns,
     }],
