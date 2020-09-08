@@ -168,3 +168,36 @@ export const hubColumns = [{
   dataIndex: 'fanOut',
   key: 'fanOut',
 }];
+
+export const dataClumpsColumns = [{
+  title: '模块',
+  dataIndex: 'moduleName',
+  key: 'moduleName',
+}, {
+  title: '类',
+  dataIndex: 'classFullName',
+  key: 'classFullName',
+  render: classColumnRender,
+}, {
+  minWidth: 100,
+  title: '缺乏内聚度',
+  dataIndex: 'lcom4',
+  key: 'lcom4',
+}];
+
+
+export const deepInheritenceColumns = [{
+  title: '模块',
+  dataIndex: 'moduleName',
+  key: 'moduleName',
+}, {
+  title: '类',
+  dataIndex: 'classFullName',
+  key: 'classFullName',
+  render: classColumnRender,
+}, {
+  minWidth: 100,
+  title: '继承深度',
+  dataIndex: 'dit',
+  key: 'dit',
+}];

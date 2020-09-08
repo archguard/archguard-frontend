@@ -9,6 +9,12 @@ const CouplingEvaluation = () => {
       <Tabs.TabPane tab="枢纽模块" key="hub">
         <IssuesList issuesConfig={IssuesConfigs.HUB} />
       </Tabs.TabPane>
+      <Tabs.TabPane tab="数据泥团" key="data-clumps">
+        <IssuesList issuesConfig={IssuesConfigs.DATA_CLUMPS} />
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="过深继承" key="deep-inheritence">
+        <IssuesList issuesConfig={IssuesConfigs.DEEP_INHERITENCE} />
+      </Tabs.TabPane>
     </Tabs>
   )
 }
