@@ -16,6 +16,7 @@
   - 基础组件（`Basic`） 以 简写`Ba` 开头，例如 `<BaXXX> </BaXXX>`
   - 业务组件（`Business`） 以 简写`Bu` 开头，例如 `<BuXXX> </BuXXX>`
   - 组件文件名不用加对应的前缀
+  - 组件样式使用`BEM`手动加命名空间解决样式冲突问题，不建议使用`css module`,因为`css module`使用者无法覆盖样式
 
 组件拆分
 
