@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Summary.less";
 import QualityEvaluation from "./components/QualityEvaluation";
-import { getOverview, Overview } from "@/api/module/overview";
 import { BaButton } from "@/components/Basic/Button/Button";
 import { BaLabel } from "@/components/Basic/Label/Label";
 import { BuGrade } from "@/components/Business/Grade/Grade";
+import { useOverview } from "@/api/module";
 
 function Summary() {
-  const [summary, setSummary] = useState<Overview[]>([]);
-
-  useEffect(() => {
-    getOverview().then((res) => {
-      setSummary(res.data);
-    });
-  }, []);
+  const { data: overViewData, run } = useOverview();
 
   return (
     <div>
@@ -27,7 +21,7 @@ function Summary() {
 
       <div className={styles.body}>
         <div className="chart">
-          <QualityEvaluation data={summary} name="坏味道分布雷达" />
+          <QualityEvaluation data={overViewData} name="坏味道分布雷达" />
         </div>
         <div className={styles.detail}>
           <div className={styles.overview}>
