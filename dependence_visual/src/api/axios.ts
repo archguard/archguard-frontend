@@ -30,9 +30,8 @@ instance.interceptors.response.use((response) => {
   return response.data;
 }, handleError);
 
-export default async function axiosAgent<T>(config: AxiosRequestConfig) {
-  const res = await instance(config);
-  return (res as unknown) as T;
+export default function axiosAgent<T>(config: AxiosRequestConfig) {
+  return instance(config) as unknown as Promise<T>;
 }
 
 export const axiosWithBaseURL = (baseURL: string) => <T>(config: Omit<AxiosRequestConfig, 'baseURL'>) => axiosAgent({ ...config, baseURL }) as unknown as Promise<T>;
