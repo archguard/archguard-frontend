@@ -23,16 +23,24 @@ export interface IssuesConfig {
 
 interface IssuesListProps {
   issuesConfig: IssuesConfig;
+  parameter?: any;
+  onSortChange?(sorter: any): void;
 }
 
 const IssuesList = (props: IssuesListProps) => {
+  const { onSortChange } = props
   const { title, badSmellDescription, suggestion, tableConfigs } = props.issuesConfig;
   const [count, setCount] = useState(0);
   const [tableCounts, setTableCounts] = useState(tableConfigs.map(() => 0));
+  const [parameter, setParameter] = useState(props.parameter)
 
   const getColor = (count: number) => {
     return count === 0 ? 'green' : 'red'
   }
+
+  useEffect(() => {
+    setParameter(props.parameter)
+  }, [props.parameter])
 
   useEffect(() => {
     setCount(tableCounts.reduce((sum, current) => sum + current));
@@ -60,13 +68,14 @@ const IssuesList = (props: IssuesListProps) => {
               : null }
             </div>
             <BuPagerTable
-              countChange={(count) => {
+              onCountChange={(count) => {
                 tableCounts[index] = count;
                 setTableCounts([...tableCounts]);
               }}
+              onSortChange={onSortChange}
               columns={tableConfig.columns}
               url={tableConfig.dataUrl}
-              parameter={tableConfig.parameter}
+              parameter={parameter}
             />
           </div>
         ))}

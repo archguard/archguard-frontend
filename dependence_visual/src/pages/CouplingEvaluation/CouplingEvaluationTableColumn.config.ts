@@ -18,11 +18,16 @@ export const hubColumns = [{
   title: '入向依赖',
   dataIndex: 'fanIn',
   key: 'fanIn',
+  sorter: true,
+  defaultSortOrder: "descend",
+  sortDirections: ["descend"],
 }, {
   minWidth: 100,
   title: '出向依赖',
   dataIndex: 'fanOut',
   key: 'fanOut',
+  sorter: true,
+  sortDirections: ["descend"],
 }];
 
 export const dataClumpsColumns = [{

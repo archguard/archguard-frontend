@@ -23,7 +23,6 @@ export const CouplingEvaluationIssuesConfigs: {
       title: '问题列表（出向依赖或入向依赖 > 8 的类）：',
       dataUrl: baseURL + "/hub/classes/above-threshold",
       columns: hubColumns,
-      parameter: { orderByFanIn: true },
     }],
   },
   DATA_CLUMPS: {
