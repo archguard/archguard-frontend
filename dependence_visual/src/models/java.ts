@@ -15,6 +15,7 @@ export interface ClassCall {
 }
 
 export interface JClass extends JavaItem {
+  configuresMap: any;
   callees: ClassCall[];
   callers: ClassCall[];
   classType: ClassType.NOT_DEFINED;

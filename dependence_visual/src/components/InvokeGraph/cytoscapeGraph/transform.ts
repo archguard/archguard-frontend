@@ -20,7 +20,6 @@ export function transform(data: any) {
     },
   }));
 
-  console.log(nodes);
   return {
     nodes,
     edges,

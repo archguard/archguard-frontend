@@ -124,7 +124,7 @@ export function showLoop(cy: Core, path: string[]) {
 
 function showNodeColorByConfig(nodes: NodeCollection) {
   nodes.forEach((e) => {
-    const color = e.data("properties").color;
+    const color = e.data("properties").nodeColor;
     if (color) {
       e.style({
         "background-color": color,

@@ -14,13 +14,14 @@ const createJMethodNode = (jMethod: JMethod): TreeNode<JMethod> => {
 };
 
 const createJClassNode = (jItem: JClass): TreeNode<JClass> => {
-  const { id, name, module } = jItem;
+  const { id, name, module, configuresMap } = jItem;
   return {
     id,
     name,
     module,
     parents: [],
     children: [],
+    properties: configuresMap,
   };
 };
 
