@@ -15,7 +15,7 @@ enum SizingEvaluationIssuesTypes {
   "MODULE" = "MODULE",
 }
 
-export const IssuesConfigs: {
+export const SizingEvaluationIssuesConfigs: {
   [key in SizingEvaluationIssuesTypes]: IssuesConfig;
 } = {
   METHOD: {

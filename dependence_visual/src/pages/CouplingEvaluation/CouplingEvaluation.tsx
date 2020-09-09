@@ -1,19 +1,19 @@
 import React from 'react'
-import IssuesList from '../SizingEvaluation/components/IssuesList'
-import { IssuesConfigs } from '../SizingEvaluation/components/IssuesConfig.config'
 import { Tabs } from 'antd'
+import IssuesList from '@/components/Business/IssuesList/IssuesList'
+import { CouplingEvaluationIssuesConfigs } from './CouplingEvaluationIssuesList.config'
 
 const CouplingEvaluation = () => {
   return (
     <Tabs onChange={() => {}} type="card">
       <Tabs.TabPane tab="枢纽模块" key="hub">
-        <IssuesList issuesConfig={IssuesConfigs.HUB} />
+        <IssuesList issuesConfig={CouplingEvaluationIssuesConfigs.HUB} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="数据泥团" key="data-clumps">
-        <IssuesList issuesConfig={IssuesConfigs.DATA_CLUMPS} />
+        <IssuesList issuesConfig={CouplingEvaluationIssuesConfigs.DATA_CLUMPS} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="过深继承" key="deep-inheritence">
-        <IssuesList issuesConfig={IssuesConfigs.DEEP_INHERITENCE} />
+        <IssuesList issuesConfig={CouplingEvaluationIssuesConfigs.DEEP_INHERITENCE} />
       </Tabs.TabPane>
     </Tabs>
   )

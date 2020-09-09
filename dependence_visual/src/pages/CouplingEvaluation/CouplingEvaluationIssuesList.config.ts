@@ -12,7 +12,7 @@ enum CouplingEvaluationIssuesTypes {
   "DEEP_INHERITENCE" = "DEEP_INHERITENCE",
 }
 
-export const IssuesConfigs: {
+export const CouplingEvaluationIssuesConfigs: {
   [key in CouplingEvaluationIssuesTypes]: IssuesConfig;
 } = {
   HUB: {
