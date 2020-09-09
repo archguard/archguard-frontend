@@ -1,8 +1,9 @@
 import { notification } from "antd";
 import axios, { AxiosRequestConfig } from "axios";
 import { util as loadingUtil } from "../components/Loading";
+import { useState, useEffect } from 'react';
 
-const instance = axios.create({
+const axiosInstance = axios.create({
   baseURL: '',
   timeout: 60000, // 请求超时时间
   withCredentials: true, // 允许跨域携带cookie
@@ -19,19 +20,33 @@ const handleError = (error: any) => {
 };
 
 // request 拦截器
-instance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   loadingUtil.increase();
   return config;
 }, handleError);
 
 // response 拦截器
-instance.interceptors.response.use((response) => {
+axiosInstance.interceptors.response.use((response) => {
   loadingUtil.reduce();
   return response.data;
 }, handleError);
 
 export default function axiosAgent<T>(config: AxiosRequestConfig) {
-  return instance(config) as unknown as Promise<T>;
+  return axiosInstance(config) as unknown as Promise<T>;
 }
 
 export const axiosWithBaseURL = (baseURL: string) => <T>(config: Omit<AxiosRequestConfig, 'baseURL'>) => axiosAgent({ ...config, baseURL }) as unknown as Promise<T>;
+
+export function useGet<T>(url: string) {
+  const [data, setData] = useState<T>();
+  const run = () => {
+    axiosInstance.get<string, T>(url).then(res => setData(res));
+  };
+
+  useEffect(run, []);
+
+  return {
+    data,
+    run
+  };
+}
