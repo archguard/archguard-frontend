@@ -1,8 +1,25 @@
+import "./IssuesList.less";
 import React, { useState, useEffect } from "react";
 import { BuPagerTable } from "@/components/Business/PagerTable/PagerTable";
-import { IssuesConfig } from "./IssuesConfig.config";
-import "./IssuesList.less";
 import { BaLabelDescription } from '@/components/Basic/LabelDescription/LabelDescription';
+
+export interface IssuesTableConfig {
+  title: string;
+  dataUrl: string;
+  parameter?: any;
+  columns: Array<{
+    title: string;
+    dataIndex: string;
+    key: string;
+  }>;
+}
+
+export interface IssuesConfig {
+  title: string;
+  badSmellDescription: string;
+  suggestion: string;
+  tableConfigs: IssuesTableConfig[];
+}
 
 interface IssuesListProps {
   issuesConfig: IssuesConfig;

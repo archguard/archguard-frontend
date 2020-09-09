@@ -8,7 +8,7 @@ interface PagerTableProps {
   url: string;
   parameter?: any;
   numberPerPage?: number;
-  change: (count: number) => void;
+  countChange: (count: number) => void;
   columns: Array<{
     title: string;
     dataIndex: string;
@@ -25,7 +25,7 @@ interface TableData {
 }
 
 export const BuPagerTable = (props: PagerTableProps) => {
-  const { columns, url, parameter, numberPerPage = DEFAULt_NUMBER_PER_PAGE, change } = props;
+  const { columns, url, parameter, numberPerPage = DEFAULt_NUMBER_PER_PAGE, countChange } = props;
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [count, setCount] = useState(0);
   const [tableData, setTableData] = useState<OptionalArryObj>([]);
@@ -39,7 +39,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
     }).then(({ count, data }) => {
       setTableData(data);
       setCount(count);
-      change(count);
+      countChange(count);
     });
   };
 
@@ -60,6 +60,9 @@ export const BuPagerTable = (props: PagerTableProps) => {
           },
         }}
         dataSource={tableData}
+        onChange={ (pagination, filters, sorter) => {
+          console.log(pagination, filters, sorter)
+        } }
       />
     </div>
   );
