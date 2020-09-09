@@ -177,7 +177,7 @@ export const dataClumpsColumns = [{
   title: '包',
   dataIndex: 'packageName',
   key: 'packageName',
-}, {  
+}, {
   title: '类',
   dataIndex: 'typeName',
   key: 'typeName',
@@ -198,7 +198,7 @@ export const deepInheritenceColumns = [{
   title: '包',
   dataIndex: 'packageName',
   key: 'packageName',
-}, {  
+}, {
   title: '类',
   dataIndex: 'typeName',
   key: 'typeName',
