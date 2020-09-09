@@ -45,7 +45,7 @@ export default function PackageDependence() {
             showSearch={true}
           >
             {allDependence
-              .map((it: any) => it.module)
+              .map((it: any) => it.module).sort()
               .map((module: any, index: number) => {
                 return (
                   <Select.Option value={index} key={module}>

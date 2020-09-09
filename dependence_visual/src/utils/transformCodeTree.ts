@@ -13,7 +13,8 @@ export function transformCodeTreeToModuleOptions(codeTree: CodeTree): FormItemOp
       }
       return { label: "", value: "" };
     })
-    .filter((option) => option.label);
+    .filter((option) => option.label)
+    .sort((optionA, optionB) => optionA.label.localeCompare(optionB.label))
 }
 
 export function transformCodeTreeToCascaderOptions(
