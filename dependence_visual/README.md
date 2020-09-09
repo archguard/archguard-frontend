@@ -3,6 +3,14 @@
 语言：TypeScript
 框架：React + Umijs + AntDesign
 
+## 文件夹和文件命名规范
+- 文件夹命名规范
+  - `该文件夹内是否包含组件` ？`首字母大写+驼峰命名` **:** `驼峰命名`
+- 文件命名规范
+  - `该文件是否是组件` ？`首字母大写+驼峰命名`  **:** `驼峰命名`
+> 配置文件命名以 .config.ts 结尾。（例如：IssuesAndSuggestion.config.ts）
+
+
 ## 编码规范
 
 `pages` 存放所有了所有页面，页面层次结构需要尽量对其业务和导航菜单。例如，依赖分析在导航菜单中处于“分析工具”之下，因此文件结构应该是`pages/analysis/dependence`
@@ -30,11 +38,6 @@
 - 如果组件为单文件，则直接使用组件名对文件命名，不需要额外的目录。比如 `path/component.tsx` 而不是 `path/component/component.tsx`
 - 如果组件有多个文件，比如包含样式，则将文件放在用组件名命名的目录下。组件文件则使用 `index.tsx`，使得在引入的时候能缩短路径。例如 `path/component/index.less` + `path/component/index.tsx` 引入时 `import Component from "path/component"`
 
-命名规范
-
-组件：首字母大写，驼峰命名。（例如：CollapsibleCard/CollapsibleCard.tsx）
-非组件：首字母小写，kebab风格。（例如：api)
-配置文件命名以 .config.ts 结尾。（例如：IssuesAndSuggestion.config.ts）
 
 ### 路由规则
 
