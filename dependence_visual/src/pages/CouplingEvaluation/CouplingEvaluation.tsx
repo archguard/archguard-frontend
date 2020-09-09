@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Tabs } from 'antd'
-import IssuesList from '@/components/Business/IssuesList/IssuesList'
+import IssuesList from '@/components/IssuesList/IssuesList'
 import { CouplingEvaluationIssuesConfigs } from './CouplingEvaluationIssuesList.config'
 
 const CouplingEvaluation = () => {

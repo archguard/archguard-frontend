@@ -1,7 +1,7 @@
 import {
   classColumnRenderAsLink,
   methodColumnRenderAsLink
-} from '@/components/Business/IssuesList/ColumnRenderUtils';
+} from '@/components/IssuesList/ColumnRenderUtils';
 
 export const methodColumns = [{
   title: '模块',
