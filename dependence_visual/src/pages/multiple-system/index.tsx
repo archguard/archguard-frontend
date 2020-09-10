@@ -80,6 +80,12 @@ const MultipleSystem = () => {
     ref.current.clear()
   }
 
+  const onScanning = (id: number) => {
+    scanDependence(id).then(() => {
+      load()
+    })
+  }
+
   return (
     <div className="multiple-system-container">
       <div className="multiple-system-header">
@@ -107,7 +113,7 @@ const MultipleSystem = () => {
                   <SystemCard
                     systemInfo={systemInfo}
                     onClick={() => routeToHome(systemInfo)}
-                    onScanning={() => scanDependence(systemInfo.id)}
+                    onScanning={() => onScanning(systemInfo.id)}
                     onEdit={() => onEditClick(systemInfo)}></SystemCard>
                 </Col>
               ))}

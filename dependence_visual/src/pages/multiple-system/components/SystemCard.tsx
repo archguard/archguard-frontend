@@ -48,7 +48,12 @@ const SystemCard = (props: SystemCardProps) => {
         hoverable
         className="multiple-system-card">
         <div className="multiple-system-card-content">
-          <Dropdown overlay={menu} placement="bottomLeft" className="more" trigger={['click']}>
+          <Dropdown
+            overlay={menu}
+            placement="bottomLeft"
+            className="more"
+            trigger={['click']}
+            disabled={systemInfo.scanned === "SCANNING"}>
             <Button size="small" shape="circle" icon={<EllipsisOutlined />}></Button>
           </Dropdown>
           <img
