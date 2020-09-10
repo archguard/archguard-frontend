@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
-import { TablePaginationConfig } from 'antd/lib/table/interface';
+import { TablePaginationConfig } from "antd/lib/table/interface";
 import axios from "@/api/axios";
 
 const DEFAULt_NUMBER_PER_PAGE = 5;
@@ -29,8 +29,15 @@ interface TableData {
 }
 
 export const BuPagerTable = (props: PagerTableProps) => {
-  const { columns, url, numberPerPage = DEFAULt_NUMBER_PER_PAGE,
-    onCountChange, onSortChange, onFilterChange , onPaginationChange } = props;
+  const {
+    columns,
+    url,
+    numberPerPage = DEFAULt_NUMBER_PER_PAGE,
+    onCountChange,
+    onSortChange,
+    onFilterChange,
+    onPaginationChange,
+  } = props;
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [count, setCount] = useState(0);
   const [tableData, setTableData] = useState<OptionalArryObj>([]);
@@ -69,14 +76,14 @@ export const BuPagerTable = (props: PagerTableProps) => {
           },
         }}
         dataSource={tableData}
-        onChange={ (pagination, filters, sorter, { action }) => {
+        onChange={(pagination, filters, sorter, { action }) => {
           switch (action) {
-            case 'paginate':
-              return onPaginationChange && onPaginationChange(pagination)
-            case 'filter':
-              return onFilterChange && onFilterChange(filters)
-            case 'sort':
-              return onSortChange && onSortChange(sorter)
+            case "paginate":
+              return onPaginationChange && onPaginationChange(pagination);
+            case "filter":
+              return onFilterChange && onFilterChange(filters);
+            case "sort":
+              return onSortChange && onSortChange(sorter);
           }
         }}
       />
