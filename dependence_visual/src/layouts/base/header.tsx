@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Select } from "antd";
 import { QuestionCircleOutlined, LoginOutlined } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/config/buildTargets";
@@ -42,11 +42,11 @@ export default function PageHeader(props: any) {
           showArrow={false}
           onChange={value => onSystemChange(value)}>
           <Select.OptGroup label="点击切换系统">
-            { systemInfo?.value!.map(system => (
+            { systemInfo?.value!.map((system, index) => (
               <Select.Option
                 disabled={system.scanned !== "SCANNED"}
                 value={system.id}
-                key={system.systemName}>
+                key={`${system.systemName}_${index}`}>
                 { system.systemName }
               </Select.Option>
             )) }
