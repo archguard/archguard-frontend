@@ -110,6 +110,7 @@ const Dfms = () => {
                   message: '请选择包名',
                 }]}>
                 <Cascader
+                  changeOnSelect
                   style={{ width: '100%' }}
                   displayRender={ label => label.join('.') }
                   options={options["package"][currentModule as string]}
