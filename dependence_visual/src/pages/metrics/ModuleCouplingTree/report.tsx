@@ -17,6 +17,7 @@ export enum Layer {
   MODULE = "MODULE",
   PACKAGE = "PACKAGE",
   CLASS = "CLASS",
+  COUPLINGS = "COUPLINGS",
 }
 
 export type LayerKeys = keyof typeof Layer;
@@ -190,6 +191,7 @@ export const getQuotaListByLayer = (): Quota => {
     MODULE: getQuotaList(moduleMapping),
     PACKAGE: getQuotaList(packageMapping),
     CLASS: getQuotaList(classMapping),
+    COUPLINGS: ["coupling", "instability", "fanIn", "fanOut"],
   };
 };
 
