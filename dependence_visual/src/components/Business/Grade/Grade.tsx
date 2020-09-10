@@ -2,7 +2,7 @@ import "./Grade.less";
 import React from "react";
 import { BaLabel, IBaLabel } from "@/components/Basic/Label/Label";
 
-enum Color {
+export enum Color {
   a = "",
   b = "",
   c = "#de8c72",

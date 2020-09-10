@@ -1,5 +1,6 @@
 import { storage } from '@/store/storage/sessionStorage';
 import { useGet } from './axios';
+import { BuGrade, Color } from '@/components/Business/Grade/Grade';
 
 const systemId = storage.getSystemId();
 export const baseURL = `/api/module/systems/${systemId}`;
@@ -20,3 +21,12 @@ export function useOverview() {
     run
   };
 }
+
+interface UseOverviewCount {
+  repoCount: number;
+  moduleCount: number;
+  lineCount: number;
+  contributorCount: number;
+  qualityLevel: keyof typeof Color;
+}
+export const useOverviewCount = () => useGet<UseOverviewCount>(`${baseURL}/overview/system`);
