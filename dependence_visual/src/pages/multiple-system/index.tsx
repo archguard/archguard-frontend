@@ -1,7 +1,7 @@
 import './index.less'
 import React, { useState, useRef, useEffect } from 'react'
 import { Tabs, Row, Col, Modal, notification } from 'antd'
-import { useMount } from 'react-use'
+import { useMount, useInterval } from 'react-use'
 import { UpOutlined } from '@ant-design/icons'
 import { scanDependence } from '@/api/scanner/dependenceScanner'
 import { SystemInfo, createSystemInfo, updateSystemInfo } from '@/api/addition/systemInfo'
@@ -30,8 +30,9 @@ const MultipleSystem = () => {
   useMount(() => {
     storage.setSystemId(undefined)
     setUser({ name: '张扬', account: 'Zhang102' })
-    load()
   })
+
+  useInterval(() => { load() }, 1000 * 60 * 5)
 
   const routeToHome = (systemInfo: SystemInfo) => {
     if (systemInfo.scanned !== "SCANNED") return
