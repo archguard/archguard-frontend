@@ -8,11 +8,11 @@ export enum Color {
   c = "#de8c72",
 }
 
-interface BuGrade extends Omit<IBaLabel, "value"> {
+interface BuGradeProps extends Omit<IBaLabel, "value"> {
   grade: keyof typeof Color;
 }
 
-export function BuGrade(props: BuGrade) {
+export function BuGrade(props: BuGradeProps) {
   return (
     <div className="BuGrade">
       <BaLabel text={props.text}>
@@ -21,3 +21,8 @@ export function BuGrade(props: BuGrade) {
     </div>
   );
 }
+
+BuGrade.defaultProps = {
+  text: "",
+  grade: "c",
+};

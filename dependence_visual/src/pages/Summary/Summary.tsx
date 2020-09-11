@@ -30,7 +30,7 @@ function Summary() {
             <BaLabel value={overviewCount?.moduleCount} text="模块数"></BaLabel>
             <BaLabel value={overviewCount?.lineCount} text="总代码量"></BaLabel>
             <BaLabel value={overviewCount?.contributorCount} text="代码贡献人数"></BaLabel>
-            <BuGrade text="架构质量等级" grade={overviewCount?.qualityLevel || "c"}></BuGrade>
+            <BuGrade text="架构质量等级" grade={overviewCount?.qualityLevel}></BuGrade>
           </div>
         </div>
       </div>
