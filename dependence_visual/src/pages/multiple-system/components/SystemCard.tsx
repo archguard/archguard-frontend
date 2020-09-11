@@ -39,6 +39,7 @@ const SystemCard = (props: SystemCardProps) => {
 
     return scanned === 'SCANNED' ? (<Button type="primary" onClick={onClick}>进入</Button>) :
            scanned === 'SCANNING' ? (<Button type="primary" loading>扫描中</Button>) :
+           scanned === "FAILED" ? (<Button danger type="primary" onClick={onScannedClick}>扫描失败，重新扫描</Button>) :
            (<Button type="primary" onClick={onScannedClick}>扫描</Button>)
   }
 
