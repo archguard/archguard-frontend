@@ -19,5 +19,6 @@
       "@tmp/*": ["src/pages/.umi/*"]
     },
     "allowSyntheticDefaultImports": true
-  }
+  },
+  "exclude": ["src/mock"]
 }
