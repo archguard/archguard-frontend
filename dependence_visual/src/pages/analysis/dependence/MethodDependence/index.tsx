@@ -18,7 +18,7 @@ type MethodFormData = {
   deep?: number;
   dependenceType: MethodDependenceType;
   className: string[];
-  methodName: string;
+  methodName?: string;
 };
 function MethodDependence() {
   const query = useUrlQuery();
@@ -30,12 +30,14 @@ function MethodDependence() {
 
   useEffect(() => {
     if (query.className && query.methodName) {
-      setDefaultFormData({
+      const defaultData:MethodFormData = {
         ...query,
         deep: 3,
-        dependenceType: "invokes",
+        dependenceType: MethodDependenceType.invokes,
         className: query.className.split('.')
-      });
+      };
+      setDefaultFormData(defaultData);
+      onShowClick(defaultData);
       setGraphData({ nodes: [], edges: [] });
     }
   }, [query]);
@@ -50,7 +52,7 @@ function MethodDependence() {
       const nodeEdges = generateNodeEdges(tree, 3);
       setGraphData(nodeEdges);
       setClassName(args.className.join('.'));
-      setMethodName(args.methodName);
+      setMethodName(args.methodName||'');
     });
   }
 
