@@ -1,8 +1,8 @@
 import React from "react";
 import { Chart, Tooltip, Interval, Coordinate, Interaction, Legend } from "bizcharts";
-import { Overview } from "@/api/module/overview";
 import { MockData1 } from "@/mock/data";
 import styles from "./QualityEvaluation.less";
+import { Overview } from '@/api/module';
 
 interface QualityEvaluation {
   name?: string;

@@ -23,6 +23,5 @@ export function BuGrade(props: BuGradeProps) {
 }
 
 BuGrade.defaultProps = {
-  text: "",
   grade: "c",
 };
