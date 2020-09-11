@@ -61,22 +61,27 @@ const QualityGateProfile = () => {
   };
 
   return (
-    <Row gutter={24}>
-      {profileList.map((profile: Profile, index: number) => (
-        <Col xs={24} lg={12} xxl={8} key={profile.name}>
-          <ProfileCard
-            id={profile.id}
-            data={profile.config}
-            name={profile.name}
-            editProfile={editPropfile}
-            deleteProfile={deleteProfile}
-          ></ProfileCard>
+    <div>
+      <div style={{ marginBottom: 10 }}>
+        质量阈设置：当数据不满足添加的规则时，将其视为不符合质量阈要求的数据
+      </div>
+      <Row gutter={24}>
+        {profileList.map((profile: Profile, index: number) => (
+          <Col xs={24} lg={12} xxl={8} key={profile.name}>
+            <ProfileCard
+              id={profile.id}
+              data={profile.config}
+              name={profile.name}
+              editProfile={editPropfile}
+              deleteProfile={deleteProfile}
+            ></ProfileCard>
+          </Col>
+        ))}
+        <Col xs={24} lg={12} xxl={8} key="empty-profile">
+          <ProfileCard isEmpty addProfile={addProfile}></ProfileCard>
         </Col>
-      ))}
-      <Col xs={24} lg={12} xxl={8} key="empty-profile">
-        <ProfileCard isEmpty addProfile={addProfile}></ProfileCard>
-      </Col>
-    </Row>
+      </Row>
+    </div>
   );
 };
 
