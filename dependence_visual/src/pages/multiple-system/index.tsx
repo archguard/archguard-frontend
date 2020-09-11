@@ -15,6 +15,8 @@ interface UserProfile {
   account?: string;
 }
 
+const DEFAULT_LOAD_DATA_INTERVAL = 1000 * 60 * 5
+
 const MultipleSystem = () => {
   const ref = useRef<any>({})
   const [user, setUser] = useState<UserProfile>()
@@ -32,7 +34,7 @@ const MultipleSystem = () => {
     setUser({ name: '张扬', account: 'Zhang102' })
   })
 
-  useInterval(() => { load() }, 1000 * 60 * 5)
+  useInterval(() => { load() }, DEFAULT_LOAD_DATA_INTERVAL)
 
   const routeToHome = (systemInfo: SystemInfo) => {
     if (systemInfo.scanned !== "SCANNED") return
