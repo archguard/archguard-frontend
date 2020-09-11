@@ -55,20 +55,20 @@ function ClassDependence() {
         ...query,
         deep: 3,
         dependenceType: "dependencies",
-        className: query.className.split('.')
+        className: query.className.split("."),
       });
       setGraphData({ edges: [], nodes: [] });
     }
   }, [query]);
 
   function onShowClick(args: ClassFormData) {
-    return queryClassDependence(args.className.join('.'), args.dependenceType, {
+    return queryClassDependence(args.className.join("."), args.dependenceType, {
       deep: args.deep,
       module: args.module,
     }).then((res) => {
       const nodeEdges = calculateNodeEdges(args.dependenceType, res);
       setGraphData(nodeEdges);
-      setClassName(args.className.join('.'));
+      setClassName(args.className.join("."));
     });
   }
 
