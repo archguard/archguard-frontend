@@ -37,9 +37,9 @@ const SystemCard = (props: SystemCardProps) => {
       return event.stopPropagation()
     }
 
-    return scanned === 'NONE' ? (<Button type="primary" onClick={onScannedClick}>扫描</Button>) :
+    return scanned === 'SCANNED' ? (<Button type="primary" onClick={onClick}>进入</Button>) :
            scanned === 'SCANNING' ? (<Button type="primary" loading>扫描中</Button>) :
-          (<Button type="primary" onClick={onClick}>进入</Button>);
+           (<Button type="primary" onClick={onScannedClick}>扫描</Button>)
   }
 
   return (

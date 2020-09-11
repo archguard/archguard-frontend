@@ -10,7 +10,7 @@ export interface SystemInfo {
   username: string;
   password: string;
   sql: string;
-  scanned: "NONE" | "SCANNING" | "SCANNED";
+  scanned: "NONE" | "SCANNING" | "SCANNED" | "FAILED";
 }
 
 export function querySystemInfo() {
