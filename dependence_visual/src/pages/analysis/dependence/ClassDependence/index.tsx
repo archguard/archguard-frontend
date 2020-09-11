@@ -39,7 +39,7 @@ type ClassFormData = {
   deep: number;
   dependenceType: ClassDependenceType;
   className: string[];
-  module: string;
+  module?: string;
 };
 
 function ClassDependence() {
@@ -51,24 +51,27 @@ function ClassDependence() {
 
   useEffect(() => {
     if (query.className) {
-      setDefaultFormData({
+      const defaultData: ClassFormData = {
         ...query,
         deep: 3,
-        dependenceType: "dependencies",
+        dependenceType: ClassDependenceType.dependencies,
         className: query.className.split("."),
-      });
+      };
+      onShowClick(defaultData);
+      setDefaultFormData(defaultData);
       setGraphData({ edges: [], nodes: [] });
     }
   }, [query]);
 
   function onShowClick(args: ClassFormData) {
-    return queryClassDependence(args.className.join("."), args.dependenceType, {
-      deep: args.deep,
-      module: args.module,
+    const { className, dependenceType, deep, module } = args;
+    queryClassDependence(className.join("."), dependenceType, {
+      deep: deep,
+      module: module,
     }).then((res) => {
-      const nodeEdges = calculateNodeEdges(args.dependenceType, res);
+      const nodeEdges = calculateNodeEdges(dependenceType, res);
       setGraphData(nodeEdges);
-      setClassName(args.className.join("."));
+      setClassName(className.join("."));
     });
   }
 
