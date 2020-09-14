@@ -30,6 +30,7 @@ export default defineConfig({
       component: "@/layouts/base",
       routes: [
         { path: "test", component: "@/pages/test" },
+        { path: "MeasureIndicators", component: "@/pages/MeasureIndicators/MeasureIndicators" },
         // { path: "home", component: "@/pages/home" },
         { path: "help/:name?", component: "@/pages/help" },
         { path: "system-evaluation/Summary", component: "@/pages/Summary/Summary" },
