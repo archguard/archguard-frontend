@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "antd";
-import { TablePaginationConfig } from "antd/lib/table/interface";
+import { TablePaginationConfig, ExpandableConfig } from "antd/lib/table/interface";
 import axios from "@/api/axios";
 
 const DEFAULt_NUMBER_PER_PAGE = 5;
@@ -9,6 +9,7 @@ interface PagerTableProps {
   url: string;
   parameter?: any;
   numberPerPage?: number;
+  expandable?: ExpandableConfig<any>;
   onSortChange?: (sorter: any) => void;
   onFilterChange?: (filter: Record<string, (string | number)[] | null>) => void;
   onPaginationChange?: (pagination: TablePaginationConfig) => void;
@@ -32,6 +33,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
   const {
     columns,
     url,
+    expandable,
     numberPerPage = DEFAULt_NUMBER_PER_PAGE,
     onCountChange,
     onSortChange,
@@ -64,6 +66,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
       <Table
         columns={columns}
         rowKey="id"
+        expandable={expandable}
         pagination={{
           total: count,
           pageSize: numberPerPage,
