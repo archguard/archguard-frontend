@@ -1,4 +1,4 @@
-import { IssuesConfig } from '@/components/IssuesList/IssuesList';
+import { IssuesConfig } from '@/components/Business/IssuesList/IssuesList';
 import { baseURL } from '@/api/module/config';
 import {
   methodColumns,

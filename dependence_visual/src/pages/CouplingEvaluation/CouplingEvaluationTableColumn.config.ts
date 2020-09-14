@@ -1,4 +1,4 @@
-import { classColumnRenderAsLink } from '@/components/IssuesList/ColumnRenderUtils';
+import { classColumnRenderAsLink } from '@/components/Business/IssuesList/ColumnRenderUtils';
 
 export const hubColumns = [{
   title: '模块',

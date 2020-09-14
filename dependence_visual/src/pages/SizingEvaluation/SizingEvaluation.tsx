@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tabs } from 'antd'
-import IssuesList from '@/components/IssuesList/IssuesList'
+import IssuesList from '@/components/Business/IssuesList/IssuesList'
 import { SizingEvaluationIssuesConfigs } from './SizingEvaluationIssuesList.config'
 
 const SizingEvaluation = () => {
