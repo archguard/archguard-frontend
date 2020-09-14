@@ -4,7 +4,7 @@ import { Tabs, Row, Col, Modal, notification } from 'antd'
 import { useMount, useInterval } from 'react-use'
 import { UpOutlined } from '@ant-design/icons'
 import { scanDependence } from '@/api/scanner/dependenceScanner'
-import { SystemInfo, createSystemInfo, updateSystemInfo } from '@/api/addition/systemInfo'
+import { SystemInfo, createSystemInfo, updateSystemInfo, deleteSystem } from '@/api/addition/systemInfo'
 import { storage } from '@/store/storage/sessionStorage'
 import useSystemList from '@/store/global-cache-state/useSystemList'
 import SystemCard from './components/SystemCard'
@@ -75,6 +75,20 @@ const MultipleSystem = () => {
     setModalVisible(true)
   }
 
+  const onRemoveClick = (systemInfo: SystemInfo) => {
+    Modal.confirm({
+      type: 'error',
+      title: "删除",
+      content: `确定要删除 ${systemInfo.systemName} 系统吗？`,
+      centered: true,
+      onOk: () => {
+        deleteSystem(systemInfo.id).then(() => {
+          setSystemInfoList(systemInfoList.filter((item) => item.id !== systemInfo.id))
+        })
+      }
+    });
+  }
+
   const onSubmit = () => {
     ref.current.submit()
   }
@@ -117,7 +131,8 @@ const MultipleSystem = () => {
                     systemInfo={systemInfo}
                     onClick={() => routeToHome(systemInfo)}
                     onScanning={() => onScanning(systemInfo.id)}
-                    onEdit={() => onEditClick(systemInfo)}></SystemCard>
+                    onEdit={() => onEditClick(systemInfo)}
+                    onRemove={() => onRemoveClick(systemInfo)}></SystemCard>
                 </Col>
               ))}
             </Row>

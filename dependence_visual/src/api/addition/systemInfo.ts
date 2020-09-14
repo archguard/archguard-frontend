@@ -38,3 +38,11 @@ export function createSystemInfo(parameter: any) {
     data: parameter
   });
 }
+
+export function deleteSystem(systemId: number) {
+  return axios<any>({
+    baseURL,
+    url: `${systemInfoApi}/${systemId}`,
+    method: "DELETE",
+  });
+}

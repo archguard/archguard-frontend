@@ -8,11 +8,12 @@ interface SystemCardProps {
   systemInfo?: SystemInfo;
   onClick?(): void;
   onEdit?(): void;
+  onRemove?(): void;
   onScanning?(): void;
 }
 
 const SystemCard = (props: SystemCardProps) => {
-  const { systemInfo, onClick, onEdit, onScanning } = props
+  const { systemInfo, onClick, onScanning, onEdit, onRemove } = props
 
   const menuClick = (key: string) => {
     switch (key) {
@@ -20,6 +21,7 @@ const SystemCard = (props: SystemCardProps) => {
         break;
       case 'editSystemInfo': onEdit!();
         break;
+      case 'removeSystem': onRemove!();
     }
   }
 
@@ -27,6 +29,7 @@ const SystemCard = (props: SystemCardProps) => {
     <Menu onClick={({ key }) => menuClick(key as string)}>
       <Menu.Item key="reScanning">重新扫描</Menu.Item>
       <Menu.Item key="editSystemInfo">修改系统信息</Menu.Item>
+      <Menu.Item danger key="removeSystem">删除系统</Menu.Item>
     </Menu>
   );
 
