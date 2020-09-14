@@ -5,7 +5,7 @@ import { BuGrade, Color } from '@/components/Business/Grade/Grade';
 const systemId = storage.getSystemId();
 export const baseURL = `/api/module/systems/${systemId}`;
 
-interface Overview {
+export interface Overview {
   badSmell: string,
   category: string,
   count: number,

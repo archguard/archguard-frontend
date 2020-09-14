@@ -22,3 +22,17 @@ export function getOverviewUsingMethods(currentPageNumber: number, numberPerPage
     params: { currentPageNumber, numberPerPage },
   });
 }
+
+
+export interface GroupDataItem {
+  type: string;
+  graphData: Array<{
+    date: string;
+    value: number;
+  }>;
+}
+export interface MeasureIndicators {// 度量指标
+  groupKey: string;
+  groupData: GroupDataItem[];
+}
+
