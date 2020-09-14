@@ -25,7 +25,7 @@ const DEFAULT_LOAD_DATA_INTERVAL = 1000 * 60 * 5;
 const MultipleSystem = () => {
   const ref = useRef<any>({});
   const [user, setUser] = useState<UserProfile>();
-  const [systemList, load] = useSystemList();
+  const [systemList, loadSystemList] = useSystemList();
   const [systemInfoList, setSystemInfoList] = useState<SystemInfo[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [currentSystemInfo, setCurrentSystemInfo] = useState<SystemInfo>();
@@ -40,7 +40,7 @@ const MultipleSystem = () => {
   });
 
   useInterval(() => {
-    load();
+    loadSystemList();
   }, DEFAULT_LOAD_DATA_INTERVAL);
 
   const routeToHome = (systemInfo: SystemInfo) => {
@@ -58,7 +58,7 @@ const MultipleSystem = () => {
           message: "系统信息修改成功！",
         });
         onCancel();
-        load();
+        loadSystemList();
       });
     } else {
       createSystemInfo(systemInfo).then(() => {
@@ -67,7 +67,7 @@ const MultipleSystem = () => {
           message: "系统创建成功！",
         });
         onCancel();
-        load();
+        loadSystemList();
       });
     }
   };
@@ -90,7 +90,7 @@ const MultipleSystem = () => {
       centered: true,
       onOk: () => {
         deleteSystem(systemInfo.id).then(() => {
-          setSystemInfoList(systemInfoList.filter((item) => item.id !== systemInfo.id));
+          loadSystemList();
         });
       },
     });
@@ -106,7 +106,7 @@ const MultipleSystem = () => {
 
   const onScanning = (id: number) => {
     scanDependence(id).then(() => {
-      load();
+      loadSystemList();
     });
   };
 
