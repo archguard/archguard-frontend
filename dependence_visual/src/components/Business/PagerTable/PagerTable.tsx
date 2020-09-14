@@ -78,11 +78,11 @@ export const BuPagerTable = (props: PagerTableProps) => {
         onChange={(pagination, filters, sorter, { action }) => {
           switch (action) {
             case "paginate":
-              return onPaginationChange && onPaginationChange(pagination);
+              return onPaginationChange?.(pagination);
             case "filter":
-              return onFilterChange && onFilterChange(filters);
+              return onFilterChange?.(filters);
             case "sort":
-              return onSortChange && onSortChange(sorter);
+              return onSortChange?.(sorter);
           }
         }}
       />
