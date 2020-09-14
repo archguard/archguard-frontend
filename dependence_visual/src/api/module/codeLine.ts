@@ -10,14 +10,14 @@ export interface MethodLines {
 }
 
 interface MethodLinesPagedDataResponse {
-  count: number,
-  currentPageNumber: number,
-  data: MethodLines[],
+  count: number;
+  currentPageNumber: number;
+  data: MethodLines[];
 }
 
 export function getOverviewUsingMethods(currentPageNumber: number, numberPerPage: number) {
   return axiosWithModule<MethodLinesPagedDataResponse>({
-    url: '/codeline/methods/above-threshold',
+    url: "/codeline/methods/above-threshold",
     method: "GET",
     params: { currentPageNumber, numberPerPage },
   });
