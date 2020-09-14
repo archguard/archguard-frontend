@@ -57,11 +57,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
 
   useEffect(() => {
     getTableData();
-  }, [currentPageNumber]);
-
-  useEffect(() => {
-    getTableData();
-  }, [props.parameter]);
+  }, [currentPageNumber, props.parameter]);
 
   return (
     <div className="pager-table">
