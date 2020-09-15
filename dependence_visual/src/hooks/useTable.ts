@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "@/api/axios";
 
 type OptionalArryObj = Array<{ [propName: string]: any; }>;
@@ -6,23 +6,27 @@ type OptionalArryObj = Array<{ [propName: string]: any; }>;
 interface UseTableResult {
   tableProps: {
     dataSource: any[];
-    onChange: (val: any) => void;
     pagination: {
       total: number;
       pageSize: number;
       onChange: (page: number) => void;
     };
   };
-  search?: {
-    onChange: () => void;
-  };
+  // search?: {
+  //   onChange: () => void;
+  // };
+}
+
+interface OnTableChangeParams {
+  tableData: any[];
+  total: number;
 }
 
 interface UseTableOptions {
   numberPerPage?: number;
   requestMethods?: 'GET' | 'POST';
   parameter?: {};
-  onChange?: (val: any) => void;
+  onTableDataChange?: (val: OnTableChangeParams) => void;
 }
 
 interface TableData {
@@ -44,13 +48,19 @@ export function useTable(url: string, option?: UseTableOptions): UseTableResult 
   const getTableData = () => {
     axios<TableData>({
       url,
-      method: "GET",
+      method: newOption.requestMethods,
       params: {
         currentPageNumber: newOption.numberPerPage,
         numberPerPage: newOption.numberPerPage,
         ...newOption.parameter
       },
     }).then(({ count, data }) => {
+      if (newOption.onTableDataChange) {
+        newOption.onTableDataChange({
+          tableData: data,
+          total: count
+        });
+      }
       setTableData(data);
       setCount(count);
     });
@@ -63,11 +73,6 @@ export function useTable(url: string, option?: UseTableOptions): UseTableResult 
   return {
     tableProps: {
       dataSource: tableData,
-      onChange(val) {
-        console.log('val: ', val);
-        const { onChange = () => { } } = newOption;
-        onChange(val);
-      },
       pagination: {
         total: count,
         pageSize: newOption.numberPerPage,
