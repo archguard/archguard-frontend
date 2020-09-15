@@ -24,8 +24,8 @@ interface OnTableChangeParams {
 
 interface UseTableOptions {
   numberPerPage?: number;
-  requestMethods?: 'GET' | 'POST';
-  parameter?: {};
+  requestMethod?: 'GET' | 'POST';
+  params?: {};
   onTableDataChange?: (val: OnTableChangeParams) => void;
 }
 
@@ -35,38 +35,38 @@ interface TableData {
   data: OptionalArryObj;
 }
 
+// 使用示例 <Table columns={columns} rowKey="id" {...tableProps} />
+
 export function useTable(url: string, option?: UseTableOptions): UseTableResult {
-  const newOption = option || {};
-  newOption.numberPerPage = newOption.numberPerPage || 5;
-  newOption.requestMethods = newOption.requestMethods || 'GET';
-  newOption.parameter = newOption.parameter || {};
+  option = option ?? {};
+  const { numberPerPage = 5, requestMethod = 'GET', params = {}, ...resetOptions } = option;
 
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [count, setCount] = useState(0);
   const [tableData, setTableData] = useState<OptionalArryObj>([]);
 
-  const getTableData = () => {
-    axios<TableData>({
-      url,
-      method: newOption.requestMethods,
-      params: {
-        currentPageNumber: newOption.numberPerPage,
-        numberPerPage: newOption.numberPerPage,
-        ...newOption.parameter
-      },
-    }).then(({ count, data }) => {
-      if (newOption.onTableDataChange) {
-        newOption.onTableDataChange({
-          tableData: data,
-          total: count
-        });
-      }
-      setTableData(data);
-      setCount(count);
-    });
-  };
-
   useEffect(() => {
+    const getTableData = () => {
+      axios<TableData>({
+        url,
+        method: requestMethod,
+        params: {
+          currentPageNumber,
+          numberPerPage: numberPerPage,
+          ...params
+        },
+      }).then(({ count, data }) => {
+        if (resetOptions.onTableDataChange) {
+          resetOptions.onTableDataChange({
+            tableData: data,
+            total: count
+          });
+        }
+        setTableData(data);
+        setCount(count);
+      });
+    };
+
     getTableData();
   }, [currentPageNumber]);
 
@@ -75,12 +75,11 @@ export function useTable(url: string, option?: UseTableOptions): UseTableResult 
       dataSource: tableData,
       pagination: {
         total: count,
-        pageSize: newOption.numberPerPage,
+        pageSize: numberPerPage,
         onChange(page: number) {
           setCurrentPageNumber(page);
         }
       }
     },
   };
-
 }
