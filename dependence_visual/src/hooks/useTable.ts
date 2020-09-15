@@ -35,11 +35,13 @@ interface TableData {
   data: OptionalArryObj;
 }
 
-// 使用示例 <Table columns={columns} rowKey="id" {...tableProps} />
+// 使用示例
+// const { tableProps } = useTable('url/xxx')
+//  <Table columns = { columns }  {...tableProps } />
 
 export function useTable(url: string, option?: UseTableOptions): UseTableResult {
   option = option ?? {};
-  const { numberPerPage = 5, requestMethod = 'GET', params = {}, ...resetOptions } = option;
+  const { numberPerPage = 5, requestMethod = 'GET', params = {}, ...restOptions } = option;
 
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [count, setCount] = useState(0);
@@ -56,8 +58,8 @@ export function useTable(url: string, option?: UseTableOptions): UseTableResult 
           ...params
         },
       }).then(({ count, data }) => {
-        if (resetOptions.onTableDataChange) {
-          resetOptions.onTableDataChange({
+        if (restOptions.onTableDataChange) {
+          restOptions.onTableDataChange({
             tableData: data,
             total: count
           });
