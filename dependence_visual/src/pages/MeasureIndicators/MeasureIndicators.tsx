@@ -3,11 +3,8 @@ import { Group, IndicatorLevel } from "./Components/Group";
 import { MockData2 } from "@/mock/data";
 import { getDashboard, MeasureIndicatorsData } from "@/api/module/codeLine";
 
-interface MeasureIndicatorsProps {
-  children?: React.ReactChildren;
-}
-
-export function getIndicatorLevel(data: MeasureIndicatorsData): IndicatorLevel {// 取数组内的最低评分 ，评分高低依次为：A > B >C >D
+export function getIndicatorLevel(data: MeasureIndicatorsData): IndicatorLevel {
+  // 取数组内的最低评分 ，评分高低依次为：A > B >C >D
   const { groupData } = data;
   groupData.sort((x, y) => {
     const level1 = x.level.toUpperCase();
@@ -23,7 +20,7 @@ export function getIndicatorLevel(data: MeasureIndicatorsData): IndicatorLevel {
   return groupData[groupData.length - 1].level;
 }
 
-const MeasureIndicators = (props: MeasureIndicatorsProps) => {
+const MeasureIndicators = () => {
   const [groupData, setGroupData] = useState<MeasureIndicatorsData[]>([]);
 
   useEffect(() => {
