@@ -141,8 +141,8 @@ export const ChartCard = (props: ChartCardProps) => {
   function Description() {
     return (
       <div className={styles.description}>
-        上次<span className={styles.count}> {lastValue} </span>次 / 当前
-        <span className={styles.count}> {currentValue} </span>次
+        上次<span className={styles.count}> {lastValue} </span>个 / 当前
+        <span className={styles.count}> {currentValue} </span>个
       </div>
     );
   }
