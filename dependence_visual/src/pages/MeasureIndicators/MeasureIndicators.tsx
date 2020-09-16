@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Group } from "./Components/Group";
+import { Group, IndicatorLevel } from "./Components/Group";
 import { MockData2 } from "@/mock/data";
 import { getDashboard, MeasureIndicatorsData } from "@/api/module/codeLine";
 
@@ -7,21 +7,37 @@ interface MeasureIndicatorsProps {
   children?: React.ReactChildren;
 }
 
+export function getIndicatorLevel(data: MeasureIndicatorsData): IndicatorLevel {// 取数组内的最低评分 ，评分高低依次为：A > B >C >D
+  const { groupData } = data;
+  groupData.sort((x, y) => {
+    const level1 = x.level.toUpperCase();
+    const level2 = y.level.toUpperCase();
+    if (level1 < level2) {
+      return -1;
+    }
+    if (level1 > level2) {
+      return 1;
+    }
+    return 0;
+  });
+  return groupData[groupData.length - 1].level;
+}
+
 const MeasureIndicators = (props: MeasureIndicatorsProps) => {
   const [groupData, setGroupData] = useState<MeasureIndicatorsData[]>([]);
 
   useEffect(() => {
     getDashboard().then((res) => {
-      console.log('res: ', res);
       setGroupData(res);
     });
   }, []);
 
   return (
     <div>
-      {groupData.map((res, i) => (
-        <Group key={i} data={res}></Group>
-      ))}
+      {groupData.map((res, i) => {
+        const indicatorLevel = getIndicatorLevel(res);
+        return <Group indicatorLevel={indicatorLevel} key={i} data={res}></Group>;
+      })}
     </div>
   );
 };
