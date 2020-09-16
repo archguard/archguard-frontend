@@ -1,3 +1,4 @@
+import { Color } from '@/components/Business/Grade/Grade';
 import { BadSmellType, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
 import { IndicatorLevel } from '@/pages/MeasureIndicators/Components/Group';
 import { storage } from '@/store/storage/sessionStorage';
@@ -44,3 +45,29 @@ export interface MeasureIndicatorsData {// 度量指标
 }
 
 export const useDashboard = () => useGet<MeasureIndicatorsData[]>(`${baseURL}/dashboard`);
+
+interface UseOverviewCount {
+  repoCount: number;
+  moduleCount: number;
+  lineCount: number;
+  contributorCount: number;
+  qualityLevel: keyof typeof Color;
+}
+export const useOverviewCount = () => useGet<UseOverviewCount>(`${baseURL}/overview/system`);
+
+export interface Overview {
+  badSmell: string,
+  category: string,
+  count: number,
+}
+interface UseOverview {
+  data: Overview[];
+}
+
+export function useOverview() {
+  const { data, run } = useGet<UseOverview>(`${baseURL}/overview`);
+  return {
+    data: data?.data || [],
+    run
+  };
+}
