@@ -56,13 +56,17 @@ interface ChartCardProps {
 }
 
 export const ChartCard = (props: ChartCardProps) => {
+  const { graphData } = props.data;
+  const lastValue = graphData[0].value;
+  const currentValue = graphData[graphData.length - 1].value;
+
   return (
     <div className={styles.ChartCard}>
       <BaCard>
         <Header></Header>
         <div className={styles.description}>
-          上次<span className={styles.count}>5</span>次/当前<span className={styles.count}>3</span>
-          次
+          上次<span className={styles.count}> {lastValue} </span>次 / 当前
+          <span className={styles.count}> {currentValue} </span>次
         </div>
         <ChartItem graphData={props.data.graphData}></ChartItem>
       </BaCard>
