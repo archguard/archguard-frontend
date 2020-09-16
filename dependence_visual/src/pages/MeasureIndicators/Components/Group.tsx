@@ -4,7 +4,7 @@ import React from "react";
 import { ChartCard, ChartCardProps, DashboardGroup } from "./ChartCard";
 import styles from "./Group.less";
 
-export type IndicatorLevel = "A" | "B" | "C" | "C";
+export type IndicatorLevel = "A" | "B" | "C" | "D";
 interface GroupProps {
   children?: React.ReactChildren;
   data: MeasureIndicatorsData;

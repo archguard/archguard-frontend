@@ -1,4 +1,5 @@
 import { BadSmellType, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
+import { IndicatorLevel } from '@/pages/MeasureIndicators/Components/Group';
 import { axiosWithModule } from "./config";
 
 export interface MethodLines {
@@ -26,6 +27,7 @@ export function getOverviewUsingMethods(currentPageNumber: number, numberPerPage
 
 export interface GroupDataItem {
   type: keyof typeof BadSmellType;
+  level: IndicatorLevel;
   graphData: Array<{
     data: string;
     value: number;

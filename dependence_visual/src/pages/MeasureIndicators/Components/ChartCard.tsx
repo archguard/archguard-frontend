@@ -6,6 +6,7 @@ import { SizingEvaluationIssuesConfigs } from "@/pages/SizingEvaluation/SizingEv
 import { Chart, Area } from "bizcharts";
 import React from "react";
 import styles from "./ChartCard.less";
+import { IndicatorLevel } from "./Group";
 
 const {
   METHOD: SIZINGMETHOD,
@@ -69,9 +70,12 @@ const getBadSmellWording = (
   badSmellType: keyof typeof BadSmellType,
 ): { title: string; badSmellDescription: string } => badSmellWording[badSmellType];
 
-interface ChartItemProps extends Pick<GroupDataItem, "graphData"> {}
+interface ChartItemProps extends Pick<GroupDataItem, "graphData"> {
+  color: string;
+}
 
 function ChartItem(props: ChartItemProps) {
+  const { graphData, color } = props;
   const scale = {
     value: {
       min: 10000,
@@ -85,40 +89,39 @@ function ChartItem(props: ChartItemProps) {
 
   return (
     <div>
-      <Chart scale={scale} height={100} width={200} data={props.graphData} autoFit>
-        <Area
-          color={[
-            "x",
-            (xVal) => {
-              if (xVal === "a") {
-                return "red";
-              }
-              return "blue";
-            },
-          ]}
-          position="data*value"
-          tickCount={0}
-          label="false"
-        />
+      <Chart scale={scale} height={100} width={200} data={graphData} autoFit>
+        <Area color={color} position="data*value" tickCount={0} label="false" />
       </Chart>
     </div>
   );
 }
 
-interface ChartCardProps {
+function getLevelColor(indicatorLevel: IndicatorLevel) {
+  const colorMap: Record<IndicatorLevel, string> = {
+    A: "#61bd4f",
+    B: "#61bd4f",
+    C: "#eb5a46",
+    D: "#eb5a46",
+  };
+  return colorMap[indicatorLevel];
+}
+
+export interface ChartCardProps {
   data: GroupDataItem;
+  indicatorLevel: IndicatorLevel;
 }
 
 export const ChartCard = (props: ChartCardProps) => {
   const { graphData } = props.data;
   const lastValue = graphData[0].value;
   const currentValue = graphData[graphData.length - 1].value;
+  const levelColor = getLevelColor(props.indicatorLevel);
 
   function Header() {
     const { title, badSmellDescription } = getBadSmellWording(props.data.type);
     return (
       <div className={styles.header}>
-        <div className={styles.statusIcon}></div>
+        <div className={styles.statusIcon} style={{ background: levelColor }}></div>
         <div className={styles.text}>{title}</div>
         <BaTipsIcon text={badSmellDescription}></BaTipsIcon>
       </div>
@@ -139,7 +142,7 @@ export const ChartCard = (props: ChartCardProps) => {
       <BaCard>
         <Header></Header>
         <Description></Description>
-        <ChartItem graphData={props.data.graphData}></ChartItem>
+        <ChartItem color={levelColor} graphData={props.data.graphData}></ChartItem>
       </BaCard>
     </div>
   );
