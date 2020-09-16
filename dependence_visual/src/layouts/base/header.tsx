@@ -3,16 +3,19 @@ import { Button, Select } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/config/buildTargets";
 import { storage } from "@/store/storage/sessionStorage";
-import { queryHotFiles } from "@/api/module/hotFile";
+import { queryHotFiles } from "@/api/scanner/hotFile";
 import useSystemList from "@/store/global-cache-state/useSystemList";
+import { useMount } from "ahooks";
 
 export default function PageHeader(props: any) {
   const [systemInfo] = useSystemList();
   const currentSystemId = Number(storage.getSystemId());
 
-  // queryHotFiles().then((res) => {
-  //   storage.setHotFiles(res);
-  // });
+  useMount(() => {
+    queryHotFiles().then((res) => {
+      storage.setHotFiles(res);
+    });
+  });
 
   const onSystemChange = (systemId: number) => {
     if (systemId) {

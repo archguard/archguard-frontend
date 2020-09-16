@@ -1,4 +1,4 @@
-import { hotFile } from "@/api/module/hotFile";
+import { hotFile } from "@/api/scanner/hotFile";
 
 const PREFIX = "ArchGrard_";
 enum StorageKeys {

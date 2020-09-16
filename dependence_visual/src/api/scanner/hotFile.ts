@@ -1,5 +1,8 @@
-import { baseURL } from "./config";
 import axios from "../axios";
+import { storage } from "@/store/storage/sessionStorage";
+
+const systemId = storage.getSystemId();
+const baseURL = `/api/scanner/systems/${systemId}`;
 
 export interface hotFile {
   jclassId: string;
@@ -13,7 +16,7 @@ export interface hotFile {
 export function queryHotFiles() {
   return axios<hotFile[]>({
     baseURL,
-    url: "/hot-file/",
+    url: "/git-hot-files/",
     method: "GET",
   });
 }
