@@ -1,11 +1,11 @@
 import { queryMethodDependence } from "@/api/module/dependenceGraph";
 import InvokeGraph from "@/components/InvokeGraph";
 import React, { useEffect, useState } from "react";
-import useUrlQuery from "../../../../utils/hooks/use-url-query";
 import { buildMethodTree, generateNodeEdges } from "../utils";
 import { JMethod } from "../../../../models/java";
 import { GraphData } from "../../../../models/graph";
 import MethodDependenceArgsForm from './MethodDependenceArgsForm'
+import useUrlQuery from '@/hooks/useUrlQuery';
 
 enum MethodDependenceType {
   invokes = "invokes",

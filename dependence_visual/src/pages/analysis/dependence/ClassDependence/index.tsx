@@ -1,7 +1,6 @@
 import { queryClassDependence } from "@/api/module/dependenceGraph.ts";
 import InvokeGraph from "@/components/InvokeGraph";
 import React, { useEffect, useState } from "react";
-import useUrlQuery from "../../../../utils/hooks/use-url-query";
 import {
   buildClassDependenceTree,
   buildClassInvokesTree,
@@ -11,6 +10,7 @@ import {
 import { GraphData } from "../../../../models/graph";
 import { JClass, JMethod } from "../../../../models/java";
 import ClassDependenceArgsForm from "./ClassDependenceArgsForm";
+import useUrlQuery from '@/hooks/useUrlQuery';
 
 enum ClassDependenceType {
   dependencies = "dependencies",
