@@ -2,11 +2,8 @@ import { GroupDataItem } from "@/api/module/codeLine";
 import { BaCard } from "@/components/Basic/Card/Card";
 import { BaTipsIcon } from "@/components/Basic/TipsIcon/TipsIcon";
 import { Chart, Area } from "bizcharts";
-
 import React from "react";
 import styles from "./ChartCard.less";
-
-export enum IndicatorsType {}
 
 function Header() {
   return (
@@ -26,15 +23,29 @@ function ChartItem(props: ChartItemProps) {
       min: 10000,
       nice: true,
     },
-    date: {
+    data: {
       range: [0, 1],
+      tickCount: 1,
     },
   };
 
   return (
     <div>
-      <Chart scale={scale} height={60} data={props.graphData} autoFit>
-        <Area position="date*value" />
+      <Chart scale={scale} height={100} width={200} data={props.graphData} autoFit>
+        <Area
+          color={[
+            "x",
+            (xVal) => {
+              if (xVal === "a") {
+                return "red";
+              }
+              return "blue";
+            },
+          ]}
+          position="data*value"
+          tickCount={0}
+          label="false"
+        />
       </Chart>
     </div>
   );
@@ -50,7 +61,8 @@ export const ChartCard = (props: ChartCardProps) => {
       <BaCard>
         <Header></Header>
         <div className={styles.description}>
-          上一次一周<span>5</span>次/当前一周<span>3</span>次
+          上次<span className={styles.count}>5</span>次/当前<span className={styles.count}>3</span>
+          次
         </div>
         <ChartItem graphData={props.data.graphData}></ChartItem>
       </BaCard>
