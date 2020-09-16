@@ -4,6 +4,8 @@ import { Link } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import { FlagFilled } from "@ant-design/icons";
 
+const hotFiles = storage.getHotFiles();
+
 const classColumnRenderAsLink = (text: string, record: any) => {
   const module = record.moduleName;
   const className = [record.packageName, record.typeName].join(".");
@@ -19,7 +21,11 @@ const classColumnRenderAsLink = (text: string, record: any) => {
         >
           {text}
         </Link>
-        {record.flag && <FlagFilled style={{ marginLeft: 5 }} />}
+        {hotFiles.includes(record.id) && (
+          <span className="red">
+            <FlagFilled style={{ marginLeft: 5 }} />
+          </span>
+        )}
       </div>
     </Tooltip>
   );

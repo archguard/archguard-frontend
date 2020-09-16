@@ -30,14 +30,12 @@ const MultipleSystem = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [currentSystemInfo, setCurrentSystemInfo] = useState<SystemInfo>();
 
+  storage.clear();
+  setUser({ name: "张扬", account: "Zhang102" });
+
   useEffect(() => {
     setSystemInfoList(systemList?.value || []);
   }, [systemList]);
-
-  useMount(() => {
-    storage.setSystemId(undefined);
-    setUser({ name: "张扬", account: "Zhang102" });
-  });
 
   useInterval(() => {
     loadSystemList();
