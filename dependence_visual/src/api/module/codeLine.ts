@@ -1,8 +1,8 @@
 import { Color } from '@/components/Business/Grade/Grade';
+import { useGet } from '@/hooks/useGet';
 import { BadSmellType, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
 import { IndicatorLevel } from '@/pages/MeasureIndicators/Components/Group';
 import { storage } from '@/store/storage/sessionStorage';
-import { useGet } from '../axios';
 import { axiosWithModule } from "./config";
 
 const systemId = storage.getSystemId();
