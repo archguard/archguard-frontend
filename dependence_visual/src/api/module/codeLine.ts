@@ -1,6 +1,11 @@
 import { BadSmellType, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
 import { IndicatorLevel } from '@/pages/MeasureIndicators/Components/Group';
+import { storage } from '@/store/storage/sessionStorage';
+import { useGet } from '../axios';
 import { axiosWithModule } from "./config";
+
+const systemId = storage.getSystemId();
+export const baseURL = `/api/module/systems/${systemId}`;
 
 export interface MethodLines {
   moduleName: string;
@@ -29,7 +34,7 @@ export interface GroupDataItem {
   type: keyof typeof BadSmellType;
   level: IndicatorLevel;
   graphData: Array<{
-    data: string;
+    date: string;
     value: number;
   }>;
 }
@@ -45,3 +50,4 @@ export function getDashboard() {
   });
 }
 
+export const useDashboard = () => useGet<MeasureIndicatorsData>(`${baseURL}/dashboard`);

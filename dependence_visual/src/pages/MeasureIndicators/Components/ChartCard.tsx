@@ -81,7 +81,7 @@ function ChartItem(props: ChartItemProps) {
       min: 10000,
       nice: true,
     },
-    data: {
+    date: {
       range: [0, 1],
       tickCount: 1,
     },
@@ -90,7 +90,7 @@ function ChartItem(props: ChartItemProps) {
   return (
     <div>
       <Chart scale={scale} height={100} width={200} data={graphData} autoFit>
-        <Area color={color} position="data*value" label="false" />
+        <Area color={color} position="date*value" label="false" />
       </Chart>
     </div>
   );
