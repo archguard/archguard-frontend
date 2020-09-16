@@ -71,7 +71,7 @@ const getBadSmellWording = (
 ): { title: string; badSmellDescription: string } => badSmellWording[badSmellType];
 
 interface ChartItemProps extends Pick<GroupDataItem, "graphData"> {
-  color: string;
+  color: INDICATOR_LEVEL_COLOR.fail | INDICATOR_LEVEL_COLOR.pass;
 }
 
 function ChartItem(props: ChartItemProps) {
@@ -90,18 +90,28 @@ function ChartItem(props: ChartItemProps) {
   return (
     <div>
       <Chart scale={scale} height={100} width={200} data={graphData} autoFit>
-        <Area color={color} position="data*value" tickCount={0} label="false" />
+        <Area color={color} position="data*value" label="false" />
       </Chart>
     </div>
   );
 }
 
-function getLevelColor(indicatorLevel: IndicatorLevel) {
-  const colorMap: Record<IndicatorLevel, string> = {
-    A: "#61bd4f",
-    B: "#61bd4f",
-    C: "#eb5a46",
-    D: "#eb5a46",
+export enum INDICATOR_LEVEL_COLOR {
+  pass = "#61bd4f",
+  fail = "#eb5a46",
+}
+
+function getLevelColor(
+  indicatorLevel: IndicatorLevel,
+): INDICATOR_LEVEL_COLOR.fail | INDICATOR_LEVEL_COLOR.pass {
+  const colorMap: Record<
+    IndicatorLevel,
+    INDICATOR_LEVEL_COLOR.fail | INDICATOR_LEVEL_COLOR.pass
+  > = {
+    A: INDICATOR_LEVEL_COLOR.pass,
+    B: INDICATOR_LEVEL_COLOR.pass,
+    C: INDICATOR_LEVEL_COLOR.fail,
+    D: INDICATOR_LEVEL_COLOR.fail,
   };
   return colorMap[indicatorLevel];
 }
