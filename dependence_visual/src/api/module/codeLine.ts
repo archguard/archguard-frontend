@@ -43,11 +43,4 @@ export interface MeasureIndicatorsData {// 度量指标
   groupData: GroupDataItem[];
 }
 
-export function getDashboard() {
-  return axiosWithModule<MeasureIndicatorsData[]>({
-    url: "/dashboard",
-    method: "GET",
-  });
-}
-
-export const useDashboard = () => useGet<MeasureIndicatorsData>(`${baseURL}/dashboard`);
+export const useDashboard = () => useGet<MeasureIndicatorsData[]>(`${baseURL}/dashboard`);

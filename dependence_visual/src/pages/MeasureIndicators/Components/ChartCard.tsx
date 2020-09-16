@@ -8,6 +8,11 @@ import React from "react";
 import styles from "./ChartCard.less";
 import { IndicatorLevel } from "./Group";
 
+enum ChartField {
+  x = "data",
+  y = "value",
+}
+
 const {
   METHOD: SIZINGMETHOD,
   MODULE: SIZINGMODULES,
@@ -77,11 +82,11 @@ interface ChartItemProps extends Pick<GroupDataItem, "graphData"> {
 function ChartItem(props: ChartItemProps) {
   const { graphData, color } = props;
   const scale = {
-    value: {
+    [ChartField.y]: {
       min: 10000,
       nice: true,
     },
-    date: {
+    [ChartField.x]: {
       range: [0, 1],
       tickCount: 1,
     },
@@ -90,7 +95,7 @@ function ChartItem(props: ChartItemProps) {
   return (
     <div>
       <Chart scale={scale} height={100} width={200} data={graphData} autoFit>
-        <Area color={color} position="date*value" label="false" />
+        <Area color={color} position={`${ChartField.x}*${ChartField.y}`} />
       </Chart>
     </div>
   );
