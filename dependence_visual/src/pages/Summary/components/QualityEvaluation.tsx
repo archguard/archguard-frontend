@@ -1,34 +1,27 @@
 import React from "react";
 import { Chart, Tooltip, Interval, Coordinate, Interaction, Legend } from "bizcharts";
 import styles from "./QualityEvaluation.less";
-import { Overview } from '@/api/module/codeLine';
+import { Overview } from "@/api/module/codeLine";
+import { ValueOf } from "@/utils/type";
 
 interface QualityEvaluation {
   name?: string;
   data: Overview[];
 }
 
-enum Category {
-  体量过大 = "体量过大",
-  设计冗余 = "设计冗余",
-  过高耦合 = "过高耦合",
-  过低内聚 = "过低内聚",
-  过于复杂 = "过于复杂",
-  缺乏分层 = "缺乏分层",
-}
+const CATEGORY_CONFIG = {
+  SIZING: {
+    color: "#ee8572",
+    text: "体量过大",
+  },
+  COUPLING: {
+    color: "#4d64b5",
+    text: "过高耦合",
+  },
+} as const;
 
-const COLOR_MAP: Record<Category, string> = {
-  体量过大: "#ee8572",
-  设计冗余: "#3aafae",
-  过高耦合: "#4d64b5",
-  过低内聚: "#c06c9f",
-  过于复杂: "#d98e37",
-  缺乏分层: "#546b66",
-};
-
-function getColor(category: Category): string {
-  if (!category) return "";
-  return COLOR_MAP[category];
+function getColorAndText(category: keyof typeof CATEGORY_CONFIG): ValueOf<typeof CATEGORY_CONFIG> {
+  return CATEGORY_CONFIG[category];
 }
 
 function QualityEvaluation(props: QualityEvaluation) {
@@ -36,7 +29,7 @@ function QualityEvaluation(props: QualityEvaluation) {
 
   return (
     <div className={styles.QualityEvaluation}>
-      <Chart width={300} height={231} data={data} autoFit >
+      <Chart width={300} height={231} data={data} autoFit>
         <Legend visible={false} />
         <Interval
           adjust={[
@@ -45,7 +38,7 @@ function QualityEvaluation(props: QualityEvaluation) {
               marginRatio: 1,
             },
           ]}
-          color={["badSmell*category", (xVal, category) => getColor(category)]}
+          color={["badSmell*category", (xVal, category) => getColorAndText(category).color]}
           position="category*count"
         />
         <Coordinate type="polar" />
