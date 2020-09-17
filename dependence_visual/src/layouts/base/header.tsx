@@ -3,7 +3,7 @@ import { Button, Select } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/config/buildTargets";
 import { storage } from "@/store/storage/sessionStorage";
-import { queryHotFiles } from "@/api/scanner/hotFile";
+import { queryHotFiles } from "@/api/module/hotFile";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { useMount } from "ahooks";
 

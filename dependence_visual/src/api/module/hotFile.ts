@@ -1,8 +1,5 @@
 import axios from "../axios";
-import { storage } from "@/store/storage/sessionStorage";
-
-const systemId = storage.getSystemId();
-const baseURL = `/api/scanner/systems/${systemId}`;
+import { baseURL } from "./config";
 
 export interface hotFile {
   jclassId: string;
