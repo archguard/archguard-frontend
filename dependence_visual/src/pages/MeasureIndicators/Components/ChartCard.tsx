@@ -9,7 +9,7 @@ import styles from "./ChartCard.less";
 import { IndicatorLevel } from "./Group";
 
 enum ChartField {
-  x = "data",
+  x = "date",
   y = "value",
 }
 
