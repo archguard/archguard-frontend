@@ -3,6 +3,7 @@ import { BaCard } from "@/components/Basic/Card/Card";
 import { BaTipsIcon } from "@/components/Basic/TipsIcon/TipsIcon";
 import { CouplingEvaluationIssuesConfigs } from "@/pages/CouplingEvaluation/CouplingEvaluationIssuesList.config";
 import { SizingEvaluationIssuesConfigs } from "@/pages/SizingEvaluation/SizingEvaluationIssuesList.config";
+import { ValueOf } from "@/utils/type";
 import { Chart, Area } from "bizcharts";
 import React from "react";
 import styles from "./ChartCard.less";
@@ -29,7 +30,7 @@ export enum DashboardGroup {
   SIZING = "体量维度",
 }
 
-const badSmellWording = {
+export const badSmellWording = {
   DATACLUMPS: {
     //数据泥团
     title: DATACLUMPS.title,
@@ -60,20 +61,13 @@ const badSmellWording = {
     title: SIZINGMETHOD.title,
     badSmellDescription: SIZINGMETHOD.badSmellDescription,
   },
-};
+} as const;
 
-export enum BadSmellType {
-  DATACLUMPS = "数据泥团",
-  DEEPINHERITANCE = "过深继承",
-  SIZINGMODULES = "过大的模块",
-  SIZINGPACKAGE = "过大的包",
-  SIZINGCLASS = "过大的类",
-  SIZINGMETHOD = "过大的方法",
-}
+type badSmellWordingValues = ValueOf<typeof badSmellWording>;
+type badSmellWordingKeys = keyof typeof badSmellWording;
 
-const getBadSmellWording = (
-  badSmellType: keyof typeof BadSmellType,
-): { title: string; badSmellDescription: string } => badSmellWording[badSmellType];
+const getBadSmellWording = (badSmellType: badSmellWordingKeys): badSmellWordingValues =>
+  badSmellWording[badSmellType];
 
 interface ChartItemProps extends Pick<GroupDataItem, "graphData"> {
   color: INDICATOR_LEVEL_COLOR.fail | INDICATOR_LEVEL_COLOR.pass;

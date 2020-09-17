@@ -1,6 +1,6 @@
 import { Color } from '@/components/Business/Grade/Grade';
 import { useGet } from '@/hooks/useGet';
-import { BadSmellType, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
+import { badSmellWording, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
 import { IndicatorLevel } from '@/pages/MeasureIndicators/Components/Group';
 import { storage } from '@/store/storage/sessionStorage';
 import { axiosWithModule } from "./config";
@@ -32,7 +32,7 @@ export function getOverviewUsingMethods(currentPageNumber: number, numberPerPage
 }
 
 export interface GroupDataItem {
-  type: keyof typeof BadSmellType;
+  type: keyof typeof badSmellWording;
   level: IndicatorLevel;
   graphData: Array<{
     date: string;
