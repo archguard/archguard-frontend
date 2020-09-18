@@ -14,9 +14,10 @@ export const menuList = configForTargets({
       icon: <FileTextOutlined />,
       children: [
         // { key: "/system-evaluation", text: "架构评估", },
-        { key: "/system-evaluation/Summary", text: "总览", },
+        { key: "/system-evaluation/Summary", text: "总览" },
         { key: "/system-evaluation/sizing-evaluation", text: "体量维度" },
         { key: "/system-evaluation/coupling-evaluation", text: "耦合维度" },
+        { key: "/system-evaluation/cohesion-evaluation", text: "内聚度维度" },
       ],
     },
     {
@@ -25,9 +26,9 @@ export const menuList = configForTargets({
       icon: <BarChartOutlined />,
       children: [
         { key: "/analysis/dependence", text: "依赖分析" },
-        { key: "/metric", text: '指标分析' },
-        { key: "/MeasureIndicators", text: '度量指标' },
-        { key: "/quality-gate-profile", text: '质量阀' },
+        { key: "/metric", text: "指标分析" },
+        { key: "/MeasureIndicators", text: "度量指标" },
+        { key: "/quality-gate-profile", text: "质量阀" },
       ],
     },
     {

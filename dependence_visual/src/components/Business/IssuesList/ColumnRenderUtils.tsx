@@ -3,6 +3,7 @@ import { Tooltip } from "antd";
 import { Link } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import { FlagFilled } from "@ant-design/icons";
+import { ShotgunSurgeryClazz } from "@/pages/CohesionEvaluation/CohesionEvaluationIssuesList.config";
 
 const hotFiles = storage.getHotFiles();
 
@@ -50,4 +51,33 @@ const methodColumnRenderAsLink = (text: string, record: any) => {
   );
 };
 
-export { classColumnRenderAsLink, methodColumnRenderAsLink };
+const classColumnRenderAsLinkByClazzes = (text: ShotgunSurgeryClazz[]) => {
+  const systemId = storage.getSystemId();
+  const getClassName = (clazz: ShotgunSurgeryClazz) => {
+    return [clazz.packageName, clazz.typeName].join(".");
+  };
+
+  return (
+    <div style={{ wordWrap: "break-word", wordBreak: "break-word" }}>
+      {text.map((clazz, index) => (
+        <Tooltip title={`${clazz.moduleName}.${clazz.packageName}.${clazz.typeName}`}>
+          <Link
+            style={{ whiteSpace: "nowrap" }}
+            className={index !== text.length - 1 ? "separate" : ""}
+            to={{
+              pathname: `/${systemId}/analysis/dependence/class`,
+              search: `module=${clazz.moduleName}&className=${getClassName(
+                clazz,
+              )}&dependenceType=dependencies`,
+            }}
+            key={clazz.typeName}
+          >
+            {clazz.typeName}
+          </Link>
+        </Tooltip>
+      ))}
+    </div>
+  );
+};
+
+export { classColumnRenderAsLink, classColumnRenderAsLinkByClazzes, methodColumnRenderAsLink };

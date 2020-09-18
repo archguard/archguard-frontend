@@ -22,7 +22,7 @@ export default defineConfig({
     },
   },
   routes: [
-    { path: '/', redirect: '/multiple-system' },
+    { path: "/", redirect: "/multiple-system" },
     { path: "/login", component: "@/pages/login" },
     { path: "/multiple-system", component: "@/pages/multiple-system" },
     {
@@ -35,8 +35,18 @@ export default defineConfig({
         { path: "help/:name?", component: "@/pages/help" },
         { path: "system-evaluation/Summary", component: "@/pages/Summary/Summary" },
         { path: "system-evaluation", component: "@/pages/system-evaluation" },
-        { path: "system-evaluation/sizing-evaluation", component: "@/pages/SizingEvaluation/SizingEvaluation" },
-        { path: "system-evaluation/coupling-evaluation", component: "@/pages/CouplingEvaluation/CouplingEvaluation" },
+        {
+          path: "system-evaluation/sizing-evaluation",
+          component: "@/pages/SizingEvaluation/SizingEvaluation",
+        },
+        {
+          path: "system-evaluation/coupling-evaluation",
+          component: "@/pages/CouplingEvaluation/CouplingEvaluation",
+        },
+        {
+          path: "system-evaluation/cohesion-evaluation",
+          component: "@/pages/CohesionEvaluation/CohesionEvaluation",
+        },
         { path: "system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
         {
           path: "retrofit-tools/plsql-to-kotlin",
@@ -46,7 +56,7 @@ export default defineConfig({
         { path: "analysis/dependence/:type?", component: "@/pages/analysis/dependence" },
         { path: "quality-gate-profile", component: "@/pages/quality-gate-profile" },
         { path: "metric/:type?", component: "@/pages/metrics" },
-      ]
+      ],
     },
   ],
   theme: {
