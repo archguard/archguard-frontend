@@ -1,7 +1,6 @@
 import { GroupDataItem, MeasureIndicatorsData } from "@/api/module/codeLine";
-import { PickFieldType } from "@/utils/type";
 import React from "react";
-import { ChartCard, ChartCardProps, DashboardGroup } from "./ChartCard";
+import { ChartCard } from "./ChartCard";
 import styles from "./Group.less";
 
 export type IndicatorLevel = "A" | "B" | "C" | "D";
@@ -16,7 +15,7 @@ export const Group = (props: GroupProps) => {
   return (
     <div className={styles.Group}>
       <div className={styles.header}>
-        {DashboardGroup[data.dashboardGroup]} (评分:{indicatorLevel})
+        {data.dashboardGroup} (评分:{indicatorLevel})
       </div>
       <div className={styles.body}>
         {data.groupData.map((res: GroupDataItem, i) => {

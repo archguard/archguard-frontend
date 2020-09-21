@@ -14,16 +14,8 @@ enum ChartField {
   y = "value",
 }
 
-const {
-  METHOD: SIZINGMETHOD,
-  MODULE: SIZINGMODULES,
-  CLASS: SIZINGCLASS,
-  PACKAGE: SIZINGPACKAGE,
-} = SizingEvaluationIssuesConfigs; //体量维度
-const {
-  DATA_CLUMPS: DATACLUMPS,
-  DEEP_INHERITENCE: DEEPINHERITANCE,
-} = CouplingEvaluationIssuesConfigs; // 耦合维度
+const { METHOD, MODULE, CLASS, PACKAGE } = SizingEvaluationIssuesConfigs; //体量维度
+const { DATA_CLUMPS, DEEP_INHERITENCE } = CouplingEvaluationIssuesConfigs; // 耦合维度
 
 export enum DashboardGroup {
   COUPLING = "耦合维度",
@@ -31,43 +23,16 @@ export enum DashboardGroup {
 }
 
 export const badSmellWording = {
-  DATACLUMPS: {
-    //数据泥团
-    title: DATACLUMPS.title,
-    badSmellDescription: DATACLUMPS.badSmellDescription,
-  },
-  DEEPINHERITANCE: {
-    //过深继承
-    title: DEEPINHERITANCE.title,
-    badSmellDescription: DEEPINHERITANCE.badSmellDescription,
-  },
-  SIZINGMODULES: {
-    //过大的模块
-    title: SIZINGMODULES.title,
-    badSmellDescription: SIZINGMODULES.badSmellDescription,
-  },
-  SIZINGPACKAGE: {
-    //过大的包
-    title: SIZINGPACKAGE.title,
-    badSmellDescription: SIZINGPACKAGE.badSmellDescription,
-  },
-  SIZINGCLASS: {
-    //过大的类
-    title: SIZINGCLASS.title,
-    badSmellDescription: SIZINGCLASS.badSmellDescription,
-  },
-  SIZINGMETHOD: {
-    //过大的方法
-    title: SIZINGMETHOD.title,
-    badSmellDescription: SIZINGMETHOD.badSmellDescription,
-  },
+  数据泥团: DATA_CLUMPS.badSmellDescription,
+  过深继承: DEEP_INHERITENCE.badSmellDescription,
+  过大的模块: MODULE.badSmellDescription,
+  过大的包: PACKAGE.badSmellDescription,
+  过大的类: CLASS.badSmellDescription,
+  过大的方法: METHOD.badSmellDescription,
 } as const;
 
 type badSmellWordingValues = ValueOf<typeof badSmellWording>;
-type badSmellWordingKeys = keyof typeof badSmellWording;
-
-const getBadSmellWording = (badSmellType: badSmellWordingKeys): badSmellWordingValues =>
-  badSmellWording[badSmellType];
+export type badSmellWordingKeys = keyof typeof badSmellWording;
 
 interface ChartItemProps extends Pick<GroupDataItem, "graphData"> {
   color: INDICATOR_LEVEL_COLOR.fail | INDICATOR_LEVEL_COLOR.pass;
@@ -127,12 +92,11 @@ export const ChartCard = (props: ChartCardProps) => {
   const levelColor = getLevelColor(props.indicatorLevel);
 
   function Header() {
-    const { title, badSmellDescription } = getBadSmellWording(props.data.type);
     return (
       <div className={styles.header}>
         <div className={styles.statusIcon} style={{ background: levelColor }}></div>
-        <div className={styles.text}>{title}</div>
-        <BaTipsIcon text={badSmellDescription}></BaTipsIcon>
+        <div className={styles.text}>{props.data.type}</div>
+        <BaTipsIcon text={badSmellWording[props.data.type]}></BaTipsIcon>
       </div>
     );
   }

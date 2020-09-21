@@ -1,6 +1,6 @@
 import { Color } from '@/components/Business/Grade/Grade';
 import { useGet } from '@/hooks/useGet';
-import { badSmellWording, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
+import { badSmellWordingKeys, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
 import { IndicatorLevel } from '@/pages/MeasureIndicators/Components/Group';
 import { LEVEL_SCORE } from '@/pages/Summary/components/QualityEvaluation';
 import { storage } from '@/store/storage/sessionStorage';
@@ -33,7 +33,7 @@ export function getOverviewUsingMethods(currentPageNumber: number, numberPerPage
 }
 
 export interface GroupDataItem {
-  type: keyof typeof badSmellWording;
+  type: badSmellWordingKeys;
   level: IndicatorLevel;
   graphData: Array<{
     date: string;
