@@ -8,7 +8,6 @@ import {
   updateModule,
   Module,
 } from "@/api/module/module";
-import CollapsibleCard from "@/components/CollapsibleCard";
 import {
   DeleteOutlined,
   EyeInvisibleOutlined,
@@ -21,6 +20,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import useModules from "@/store/global-cache-state/useModules";
 import ModuleConfigModal from "../ModuleConfigModal";
 import "./index.less";
+import CollapsibleCard from '@/components/Business/CollapsibleCard';
 
 export default function ModuleConfig() {
   const [modules, load] = useModules();

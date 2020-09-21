@@ -1,11 +1,11 @@
 import { queryModuleDependencies, Module } from "@/api/module/module";
-import CollapsibleCard from "@/components/CollapsibleCard";
 import { Table } from "antd";
 import React, { useState } from "react";
 import useModules from "@/store/global-cache-state/useModules";
 import columns, { methodDependency } from "./columns";
 import { FormItemOption } from '@/models/form';
 import ModuleDependenceArgsForm from './ModuleDependenceArgsForm'
+import CollapsibleCard from '@/components/Business/CollapsibleCard';
 
 function getRowKey(item: any) {
   const { caller, callee } = item;

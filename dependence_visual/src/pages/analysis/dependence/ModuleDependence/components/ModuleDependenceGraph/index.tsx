@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button } from "antd";
-import CollapsibleCard from "@/components/CollapsibleCard";
 import InvokeGraph from "@/components/InvokeGraph";
 import { moduleMapping } from "@/pages/metrics/ModuleCouplingTree/report"
 import { queryAllModuleDependence } from "@/api/module/module";
@@ -9,6 +8,7 @@ import useSelectedNode from "../../globalStates/useSelectedNode";
 import { buildModuleDependenceTree, generateNodeEdges } from "../../../utils";
 import { GraphData } from "../../../../../../models/graph";
 import { JavaItem } from "../../../../../../models/java";
+import CollapsibleCard from '@/components/Business/CollapsibleCard';
 
 export interface Measurements {
   label: string;
