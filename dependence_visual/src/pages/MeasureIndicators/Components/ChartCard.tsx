@@ -25,10 +25,10 @@ export enum DashboardGroup {
 export const badSmellWording = {
   数据泥团: DATA_CLUMPS.badSmellDescription,
   过深继承: DEEP_INHERITENCE.badSmellDescription,
-  过大的模块: MODULE.badSmellDescription,
-  过大的包: PACKAGE.badSmellDescription,
-  过大的类: CLASS.badSmellDescription,
-  过大的方法: METHOD.badSmellDescription,
+  子模块过大: MODULE.badSmellDescription,
+  包过大: PACKAGE.badSmellDescription,
+  类过大: CLASS.badSmellDescription,
+  方法过大: METHOD.badSmellDescription,
 } as const;
 
 type badSmellWordingValues = ValueOf<typeof badSmellWording>;
