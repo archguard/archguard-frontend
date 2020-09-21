@@ -9,27 +9,46 @@ interface QualityEvaluation {
   data: Overview[];
 }
 
-const CATEGORY_CONFIG = {
-  SIZING: {
-    color: "#ee8572",
-    text: "体量过大",
-  },
-  COUPLING: {
-    color: "#4d64b5",
-    text: "过高耦合",
-  },
+export const LEVEL_SCORE = {
+  A: 1,
+  B: 2,
+  C: 3,
+  D: 4,
 } as const;
 
-function getColorAndText(category: keyof typeof CATEGORY_CONFIG): ValueOf<typeof CATEGORY_CONFIG> {
+const CATEGORY_CONFIG = {
+  体量过大: "#ee8572",
+  过高耦合: "#4d64b5",
+} as const;
+
+function getColor(category: keyof typeof CATEGORY_CONFIG): ValueOf<typeof CATEGORY_CONFIG> {
   return CATEGORY_CONFIG[category];
 }
 
+function getLevelScore(level: keyof typeof LEVEL_SCORE): ValueOf<typeof LEVEL_SCORE> {
+  return LEVEL_SCORE[level];
+}
+
+function formatData(data: Overview[]): Overview[] {
+  return data.map((res) => ({
+    ...res,
+    count: getLevelScore(res.level),
+  }));
+}
+
+const scale = {
+  count: {
+    ticks: [1, 2, 3, 4], // 如果配置了该项，则轴的刻度即显示数组中指定的刻度。
+  },
+};
+
 function QualityEvaluation(props: QualityEvaluation) {
   const { data, name } = props;
+  const formattedData = formatData(data);
 
   return (
     <div className={styles.QualityEvaluation}>
-      <Chart width={300} height={231} data={data} autoFit>
+      <Chart scale={scale} width={300} height={231} data={formattedData} autoFit>
         <Legend visible={false} />
         <Interval
           adjust={[
@@ -38,7 +57,7 @@ function QualityEvaluation(props: QualityEvaluation) {
               marginRatio: 1,
             },
           ]}
-          color={["badSmell*category", (xVal, category) => getColorAndText(category).color]}
+          color={["badSmell*category", (xVal, category) => getColor(category)]}
           position="category*count"
         />
         <Coordinate type="polar" />

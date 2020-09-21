@@ -2,6 +2,7 @@ import { Color } from '@/components/Business/Grade/Grade';
 import { useGet } from '@/hooks/useGet';
 import { badSmellWording, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
 import { IndicatorLevel } from '@/pages/MeasureIndicators/Components/Group';
+import { LEVEL_SCORE } from '@/pages/Summary/components/QualityEvaluation';
 import { storage } from '@/store/storage/sessionStorage';
 import { axiosWithModule } from "./config";
 
@@ -56,6 +57,7 @@ interface UseOverviewCount {
 export const useOverviewCount = () => useGet<UseOverviewCount>(`${baseURL}/overview/system`);
 
 export interface Overview {
+  level: keyof typeof LEVEL_SCORE,
   badSmell: string,
   category: string,
   count: number,
