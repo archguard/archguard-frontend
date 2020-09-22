@@ -28,14 +28,16 @@ export const menuList = configForTargets({
       children: [
         { key: "/analysis/dependence", text: "依赖分析" },
         { key: "/metric", text: "指标分析" },
-        { key: "/MeasureIndicators", text: "度量指标" },
-        { key: "/quality-gate-profile", text: "质量阀" },
       ],
     },
     {
-      key: "/system-evolving",
+      key: "system-evolving",
       text: "架构演进",
       icon: <CloudSyncOutlined />,
+      children: [
+        { key: "/MeasureIndicators", text: "度量指标" },
+        { key: "/quality-gate-profile", text: "质量阀" },
+      ],
     },
     // {
     //   key: "transformTools",
