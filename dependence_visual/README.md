@@ -27,19 +27,6 @@
   - 组件文件名不用加对应的前缀
   - 组件样式使用`BEM`手动加命名空间解决样式冲突问题，不建议使用`css module`,因为`css module`使用者无法覆盖样式
 
-组件拆分
-
-> 组件主要分为 `逻辑组件(业务组件)` 和 `视觉组件(UI组件)`
-
-- 逻辑组件，包含 API 请求、数据处理、用户流程控制逻辑等等
-- 视觉组件，样式、布局的封装或者分离，不负责业务逻辑处理。通过 TypeScript 的类型定义来约束属性
-
-组件文件组织
-
-- 如果组件为单文件，则直接使用组件名对文件命名，不需要额外的目录。比如 `path/component.tsx` 而不是 `path/component/component.tsx`
-- 如果组件有多个文件，比如包含样式，则将文件放在用组件名命名的目录下。组件文件则使用 `index.tsx`，使得在引入的时候能缩短路径。例如 `path/component/index.less` + `path/component/index.tsx` 引入时 `import Component from "path/component"`
-
-
 ### 路由规则
 
 > 路由应和目录层级结构尽量一致，路由配置在 `umirc.ts` 文件中
