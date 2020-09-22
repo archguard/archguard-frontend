@@ -1,7 +1,7 @@
 import "./IssuesList.less";
 import React, { useState, useEffect } from "react";
 import { BuPagerTable } from "@/components/Business/PagerTable/PagerTable";
-import { BaLabelDescription } from '@/components/Basic/LabelDescription/LabelDescription';
+import { BaLabelDescription } from "@/components/Basic/LabelDescription/LabelDescription";
 
 export interface IssuesTableConfig {
   title: string;
@@ -28,19 +28,19 @@ interface IssuesListProps {
 }
 
 const IssuesList = (props: IssuesListProps) => {
-  const { onSortChange } = props
+  const { onSortChange } = props;
   const { title, badSmellDescription, suggestion, tableConfigs } = props.issuesConfig;
   const [count, setCount] = useState(0);
   const [tableCounts, setTableCounts] = useState(tableConfigs.map(() => 0));
-  const [parameter, setParameter] = useState(props.parameter)
+  const [parameter, setParameter] = useState(props.parameter);
 
   const getColor = (count: number) => {
-    return count === 0 ? 'green' : 'red'
-  }
+    return count === 0 ? "green" : "red";
+  };
 
   useEffect(() => {
-    setParameter(props.parameter)
-  }, [props.parameter])
+    setParameter(props.parameter);
+  }, [props.parameter]);
 
   useEffect(() => {
     setCount(tableCounts.reduce((sum, current) => sum + current));
@@ -53,19 +53,15 @@ const IssuesList = (props: IssuesListProps) => {
         <span className={`issues-list-count ${getColor(count)}`}>{count}</span>
       </div>
       <div className="issues-list-content">
-        <BaLabelDescription
-          label="坏味道描述"
-          description={badSmellDescription} />
-        <BaLabelDescription
-          label="改进建议"
-          description={suggestion} />
+        <BaLabelDescription label="坏味道描述" description={badSmellDescription} />
+        <BaLabelDescription label="改进建议" description={suggestion} />
         {tableConfigs.map((tableConfig, index) => (
           <div key={index} className="issues-table">
             <div className="issues-table-title">
               <strong>{tableConfig.title}</strong>
-              { tableCounts.length > 1 ?
+              {tableCounts.length > 1 ? (
                 <span className={getColor(tableCounts[index])}>{tableCounts[index]}</span>
-              : null }
+              ) : null}
             </div>
             <BuPagerTable
               onCountChange={(count) => {

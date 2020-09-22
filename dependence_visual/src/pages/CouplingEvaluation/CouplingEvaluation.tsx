@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { Tabs } from 'antd'
-import IssuesList from '@/components/Business/IssuesList/IssuesList'
-import { CouplingEvaluationIssuesConfigs } from './CouplingEvaluationIssuesList.config'
+import React, { useState } from "react";
+import { Tabs } from "antd";
+import IssuesList from "@/components/Business/IssuesList/IssuesList";
+import { CouplingEvaluationIssuesConfigs } from "./CouplingEvaluationIssuesList.config";
 
 const CouplingEvaluation = () => {
-  const [hubParameter, setHubParameter] = useState<any>({ orderByFanIn: true })
+  const [hubParameter, setHubParameter] = useState<any>({ orderByFanIn: true });
 
   return (
     <Tabs onChange={() => {}} type="card">
@@ -13,20 +13,24 @@ const CouplingEvaluation = () => {
           issuesConfig={CouplingEvaluationIssuesConfigs.HUB}
           parameter={hubParameter}
           onSortChange={(sorter) => {
-            setHubParameter({ orderByFanIn: sorter.field === 'fanIn' })
+            setHubParameter({ orderByFanIn: sorter.field === "fanIn" });
           }}
         />
       </Tabs.TabPane>
       <Tabs.TabPane tab="数据泥团" key="data-clumps">
         <IssuesList
           issuesConfig={CouplingEvaluationIssuesConfigs.DATA_CLUMPS}
-          parameter={hubParameter} />
+          parameter={hubParameter}
+        />
       </Tabs.TabPane>
       <Tabs.TabPane tab="过深继承" key="deep-inheritence">
         <IssuesList issuesConfig={CouplingEvaluationIssuesConfigs.DEEP_INHERITENCE} />
       </Tabs.TabPane>
+      <Tabs.TabPane tab="循环依赖" key="circular-dependency">
+        <IssuesList issuesConfig={CouplingEvaluationIssuesConfigs.CIRCULAR_DEPENDENCY} />
+      </Tabs.TabPane>
     </Tabs>
-  )
-}
+  );
+};
 
-export default CouplingEvaluation
+export default CouplingEvaluation;
