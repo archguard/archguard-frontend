@@ -1,20 +1,18 @@
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import CloudSyncOutlined from "@ant-design/icons/CloudSyncOutlined";
 import FileTextOutlined from "@ant-design/icons/FileTextOutlined";
-import HomeOutlined from "@ant-design/icons/HomeOutlined";
 import React from "react";
 import { configForTargets } from "../../config/buildTargets";
 
 export const menuList = configForTargets({
   default: [
-    // { key: "/home", text: "首页", icon: <HomeOutlined /> },
+    { key: "/system-evaluation/Summary", text: "总览" },
     {
       key: "systemEvaluation",
       text: "架构评估",
       icon: <FileTextOutlined />,
       children: [
         // { key: "/system-evaluation", text: "架构评估", },
-        { key: "/system-evaluation/Summary", text: "总览" },
         { key: "/system-evaluation/sizing-evaluation", text: "体量维度" },
         { key: "/system-evaluation/coupling-evaluation", text: "耦合维度" },
         { key: "/system-evaluation/cohesion-evaluation", text: "内聚度维度" },
