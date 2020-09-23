@@ -68,7 +68,6 @@ export default function Graph(props: GraphProps) {
 
   const onEvent = { cxttap: () => message.success("复制成功") };
   useMount(() => {
-    console.log("init cy");
     setCy(initCytoscape(id, onEvent));
   });
 
