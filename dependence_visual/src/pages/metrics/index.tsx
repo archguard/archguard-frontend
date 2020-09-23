@@ -1,21 +1,12 @@
 import React from "react";
 import { Tabs } from "antd";
-import { useHistory, useParams } from "umi";
-import { storage } from "@/store/storage/sessionStorage";
 import Dfms from "./dfms";
 import ModuleCouplingTree from "./ModuleCouplingTree";
 
 const Metrics = () => {
-  const history = useHistory();
-  const { type } = useParams();
-  const systemId = storage.getSystemId();
-
   return (
     <div>
-      <Tabs
-        activeKey={type}
-        onChange={(activeKey) => history.replace(`/${systemId}/metric/${activeKey}`)}
-      >
+      <Tabs defaultActiveKey="coupling">
         <Tabs.TabPane tab="模块耦合度分析" key="coupling">
           <ModuleCouplingTree />
         </Tabs.TabPane>
