@@ -92,9 +92,9 @@ const classColumnRenderAsLinkByClazzes = (text: ShotgunSurgeryClazz[]) => {
             style={{ whiteSpace: "nowrap" }}
             className={getSeparateClassName(index, text.length)}
             to={getLinkTo(clazz, "class")}
-            key={clazz.typeName}
+            key={clazz.className}
           >
-            {clazz.typeName}
+            {clazz.className}
           </Link>
         </Tooltip>
       ))}

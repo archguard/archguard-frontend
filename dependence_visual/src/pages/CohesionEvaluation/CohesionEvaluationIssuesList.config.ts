@@ -5,7 +5,7 @@ import { shotgunSurgeryColumns } from "./CohesionEvaluationTableColumn.config";
 export interface ShotgunSurgeryClazz {
   moduleName: string;
   packageName: string;
-  typeName: string;
+  className: string;
 }
 
 export interface ShotgunSurgery {
