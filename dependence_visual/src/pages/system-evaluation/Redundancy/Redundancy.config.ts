@@ -1,6 +1,6 @@
 import { IssuesConfig } from '@/components/Business/IssuesList/IssuesList';
-import { baseURL } from '@/api/module/config';
-import { methodColumns } from '@/pages/SizingEvaluation/SizingEvaluationTableColumn.config';
+import { storage } from '@/store/storage/sessionStorage';
+const systemId = storage.getSystemId();
 
 export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
   element: {
@@ -10,24 +10,46 @@ export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
     tableConfigs: [
       {
         title: '只有一个方法的类的列表',
-        dataUrl: baseURL + "/sizing/methods/above-threshold",
+        dataUrl: `/api/module/systems/${systemId}/redundancy/class/one-method`,
         columns: [
           {
             title: '模块',
             dataIndex: 'moduleName',
             key: 'moduleName',
-          }
+          },
+          {
+            title: '包',
+            dataIndex: 'packageName',
+            key: 'packageName',
+          },
+          {
+            title: '类',
+            dataIndex: 'className',
+            key: 'className',
+          },
+
         ],
       },
       {
         title: '只包含一个属性及get/set的类列表',
-        dataUrl: baseURL + "/sizing/methods/above-threshold",
+        dataUrl: `/api/module/systems/${systemId}/redundancy/class/one-field`,
         columns: [
           {
             title: '模块',
             dataIndex: 'moduleName',
             key: 'moduleName',
-          }
+          },
+          {
+            title: '包',
+            dataIndex: 'packageName',
+            key: 'packageName',
+          },
+          {
+            title: '类',
+            dataIndex: 'className',
+            key: 'className',
+          },
+
         ],
       },
     ]
