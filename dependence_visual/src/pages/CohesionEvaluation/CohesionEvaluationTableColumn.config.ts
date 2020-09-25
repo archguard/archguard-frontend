@@ -12,7 +12,7 @@ export const shotgunSurgeryColumns = [
     dataIndex: "clazzes",
     key: "clazzes",
     width: 150,
-    render: (text: ShotgunSurgeryClazz[]) => text.length,
+    render: (text: ShotgunSurgeryClazz[]) => text.length.toString(),
   },
   {
     title: "该提交内改动的类列表",

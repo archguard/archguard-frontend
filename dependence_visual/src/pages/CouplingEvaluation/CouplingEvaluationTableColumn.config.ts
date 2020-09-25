@@ -116,6 +116,7 @@ export const circularDependency = [
   {
     title: "循环依赖",
     dataIndex: "circularDependency",
+    key: "circularDependency",
     render: circularDependencyColumnRender,
   },
 ];

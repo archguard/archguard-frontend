@@ -66,7 +66,7 @@ const renderHotFiles = (record: IssuesListRowData) => {
 const classColumnRenderAsLink = (text: string, record: IssuesListRowData) => {
   return (
     <Tooltip title={getFullPath(record)}>
-      <div>
+      <div style={{ display: "inline-block" }}>
         <Link to={getLinkTo(record, "class")}>{text}</Link>
         {renderHotFiles(record)}
       </div>
@@ -85,10 +85,9 @@ const methodColumnRenderAsLink = (text: string, record: IssuesListRowData) => {
 const classColumnRenderAsLinkByClazzes = (text: ShotgunSurgeryClazz[]) => {
   return (
     <div style={{ wordWrap: "break-word", wordBreak: "break-word" }}>
-      {text.map((clazz, index) => (
+      {text.splice(0, 10).map((clazz, index) => (
         <Tooltip title={getFullPath(clazz)}>
           <Link
-            style={{ whiteSpace: "nowrap" }}
             className={getSeparateClassName(index, text.length)}
             to={getLinkTo(clazz, "class")}
             key={clazz.className}
@@ -101,29 +100,34 @@ const classColumnRenderAsLinkByClazzes = (text: ShotgunSurgeryClazz[]) => {
   );
 };
 
-const circularDependencyColumnRender = (rowDatas: IssuesListRowData[]) => {
-  return rowDatas.map((data, index) => {
-    const pathNames = getPathArray(data);
-    const separateClass = getSeparateClassName(index, rowDatas.length);
-    const isClass = pathNames.length === 3;
-    const isMethod = pathNames.length === 4;
-    const text = _.last(pathNames)!;
+const circularDependencyColumnRender = (rowDatas: IssuesListRowData[], record: any) => {
+  return (
+    <div style={{ wordWrap: "break-word", wordBreak: "break-word" }}>
+      {rowDatas.map((data, index) => {
+        const pathNames = getPathArray(data);
+        const separateClass = getSeparateClassName(index, rowDatas.length);
+        const isClass = pathNames.length === 3;
+        const isMethod = pathNames.length === 4;
+        const text = _.last(pathNames)!;
 
-    return (
-      <Fragment>
-        {isClass ? (
-          classColumnRenderAsLink(text, data)
-        ) : isMethod ? (
-          methodColumnRenderAsLink(text, data)
-        ) : (
-          <Tooltip title={getFullPath(data)}>
-            <span>{text}</span>
-          </Tooltip>
-        )}
-        <span className={separateClass}></span>
-      </Fragment>
-    );
-  });
+        return (
+          <div style={{ display: "inline-block" }}>
+            {isClass ? (
+              classColumnRenderAsLink(text, data)
+            ) : isMethod ? (
+              methodColumnRenderAsLink(text, data)
+            ) : (
+              <Tooltip title={getFullPath(data)}>
+                <span>{text}</span>
+              </Tooltip>
+            )}
+            <span className={separateClass}></span>
+            &nbsp;
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export {

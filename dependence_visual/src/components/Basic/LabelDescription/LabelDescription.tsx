@@ -13,10 +13,10 @@ export function BaLabelDescription(props: IBaLabelDescription) {
   return (
     <div className="BaLabelDescription">
       <span className="BaLabelDescription-label">
-        <strong>{ label }</strong>
+        <strong>{label}</strong>
       </span>
-      { !hiddenColon && <span className="colon">：</span> }
-      <span className="BaLabelDescription-description">{ description }</span>
+      {!hiddenColon && <span className="BaLabelDescription-colon">：</span>}
+      <span className="BaLabelDescription-description">{description}</span>
     </div>
   );
 }
