@@ -1,7 +1,7 @@
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
 import { baseURL } from "@/api/module/config";
 import {
-  hubColumns,
+  getHubColumns,
   deepInheritenceColumns,
   dataClumpsColumns,
   circularDependency,
@@ -24,9 +24,24 @@ export const CouplingEvaluationIssuesConfigs: {
     suggestion: "考虑拆分当前枢纽类，或合并某些外部依赖类",
     tableConfigs: [
       {
+        title: "问题列表（出向依赖或入向依赖 > 8 的模块）：",
+        dataUrl: baseURL + "/hub/modules/above-threshold",
+        columns: getHubColumns("module"),
+      },
+      {
+        title: "问题列表（出向依赖或入向依赖 > 8 的包）：",
+        dataUrl: baseURL + "/hub/packages/above-threshold",
+        columns: getHubColumns("package"),
+      },
+      {
         title: "问题列表（出向依赖或入向依赖 > 8 的类）：",
         dataUrl: baseURL + "/hub/classes/above-threshold",
-        columns: hubColumns,
+        columns: getHubColumns("class"),
+      },
+      {
+        title: "问题列表（出向依赖或入向依赖 > 8 的方法）：",
+        dataUrl: baseURL + "/hub/methods/above-threshold",
+        columns: getHubColumns("method"),
       },
     ],
   },

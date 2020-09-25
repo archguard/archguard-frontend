@@ -1,25 +1,48 @@
 import {
   classColumnRenderAsLink,
   circularDependencyColumnRender,
+  methodColumnRenderAsLink,
 } from "@/components/Business/IssuesList/ColumnRenderUtils";
 
-export const hubColumns = [
-  {
-    title: "模块",
+enum columnCount {
+  module = 1,
+  package = 2,
+  class = 3,
+  method = 4,
+}
+
+const getClazzColumnsBy = (type: keyof typeof columnCount) => {
+  const moduleColumn = {
+    title: "枢纽模块",
     dataIndex: "moduleName",
     key: "moduleName",
-  },
-  {
-    title: "包",
+  };
+
+  const packageColumn = {
+    title: "枢纽包",
     dataIndex: "packageName",
     key: "packageName",
-  },
-  {
-    title: "类",
+  };
+
+  const classColumn = {
+    title: "枢纽类",
     dataIndex: "typeName",
     key: "typeName",
     render: classColumnRenderAsLink,
-  },
+  };
+
+  const methodColumn = {
+    title: "枢纽方法",
+    dataIndex: "methodName",
+    key: "methodName",
+    render: methodColumnRenderAsLink,
+  };
+
+  return [moduleColumn, packageColumn, classColumn, methodColumn].slice(0, columnCount[type]);
+};
+
+export const getHubColumns = (type: keyof typeof columnCount) => [
+  ...getClazzColumnsBy(type),
   {
     minWidth: 100,
     title: "入向依赖",
