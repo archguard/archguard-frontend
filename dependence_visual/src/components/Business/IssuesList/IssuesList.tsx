@@ -2,6 +2,7 @@ import "./IssuesList.less";
 import React, { useState, useEffect } from "react";
 import { BuPagerTable } from "@/components/Business/PagerTable/PagerTable";
 import { BaLabelDescription } from "@/components/Basic/LabelDescription/LabelDescription";
+import { ExpandableConfig } from "antd/es/table/interface";
 
 export interface IssuesTableConfig {
   title: string;
@@ -20,6 +21,7 @@ export interface IssuesConfig {
   badSmellDescription: string;
   suggestion: string;
   tableConfigs: IssuesTableConfig[];
+  expandable?: ExpandableConfig<any>;
 }
 
 interface IssuesListProps {
@@ -30,7 +32,7 @@ interface IssuesListProps {
 
 const IssuesList = (props: IssuesListProps) => {
   const { onSortChange } = props;
-  const { title, badSmellDescription, suggestion, tableConfigs } = props.issuesConfig;
+  const { title, badSmellDescription, suggestion, tableConfigs, expandable } = props.issuesConfig;
   const [count, setCount] = useState(0);
   const [tableCounts, setTableCounts] = useState(tableConfigs.map(() => 0));
   const [parameter, setParameter] = useState(props.parameter);
@@ -73,6 +75,7 @@ const IssuesList = (props: IssuesListProps) => {
               columns={tableConfig.columns}
               url={tableConfig.dataUrl}
               parameter={parameter}
+              expandable={expandable}
             />
           </div>
         ))}

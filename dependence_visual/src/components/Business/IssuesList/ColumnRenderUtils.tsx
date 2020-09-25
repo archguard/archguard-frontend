@@ -82,13 +82,21 @@ const methodColumnRenderAsLink = (text: string, record: IssuesListRowData) => {
   );
 };
 
-const classColumnRenderAsLinkByClazzes = (text: ShotgunSurgeryClazz[]) => {
+const MAX_COUNT_OF_RENDER_CLASSES = 5;
+const classColumnRenderAsLinkByClazzes = (
+  text: ShotgunSurgeryClazz[],
+  record?: any,
+  showAll?: boolean,
+) => {
+  const renderList = showAll ? text : text.splice(0, MAX_COUNT_OF_RENDER_CLASSES);
+  const showOverflowSymbol = text.length > MAX_COUNT_OF_RENDER_CLASSES;
+
   return (
     <div style={{ wordWrap: "break-word", wordBreak: "break-word" }}>
-      {text.splice(0, 10).map((clazz, index) => (
+      {renderList.map((clazz, index) => (
         <Tooltip title={getFullPath(clazz)}>
           <Link
-            className={getSeparateClassName(index, text.length)}
+            className={getSeparateClassName(index, renderList.length)}
             to={getLinkTo(clazz, "class")}
             key={clazz.className}
           >
@@ -96,6 +104,7 @@ const classColumnRenderAsLinkByClazzes = (text: ShotgunSurgeryClazz[]) => {
           </Link>
         </Tooltip>
       ))}
+      {showOverflowSymbol && <span>...</span>}
     </div>
   );
 };

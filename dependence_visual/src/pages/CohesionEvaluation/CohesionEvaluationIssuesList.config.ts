@@ -1,6 +1,7 @@
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
 import { baseURL } from "@/api/module/config";
 import { shotgunSurgeryColumns } from "./CohesionEvaluationTableColumn.config";
+import { classColumnRenderAsLinkByClazzes } from "@/components/Business/IssuesList/ColumnRenderUtils";
 
 export interface ShotgunSurgeryClazz {
   moduleName: string;
@@ -34,5 +35,12 @@ export const CohesionEvaluationIssuesConfigs: {
         columns: shotgunSurgeryColumns,
       },
     ],
+    expandable: {
+      expandedRowRender: (record) => classColumnRenderAsLinkByClazzes(record.clazzes, record, true),
+      rowExpandable: (record) => {
+        console.log(record, "record");
+        return true;
+      },
+    },
   },
 };
