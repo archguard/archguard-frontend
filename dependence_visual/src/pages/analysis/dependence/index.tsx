@@ -13,7 +13,7 @@ import useUrlQuery from "@/hooks/useUrlQuery";
 
 export default function Dependence() {
   const history = useHistory();
-  const { tab } = useUrlQuery<{ tab: "class" | "method" }>();
+  const { tab } = useUrlQuery<{ tab: "class" | "method" | "package" | "module" }>();
 
   const systemId = storage.getSystemId();
 
