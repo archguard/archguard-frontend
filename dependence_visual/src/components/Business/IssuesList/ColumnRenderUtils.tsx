@@ -35,14 +35,15 @@ const getFullPath = (data: IssuesListRowData) => {
 };
 
 const getLinkTo = (data: IssuesListRowData, type: "class" | "method") => {
-  const pathname = `/${storage.getSystemId()}/analysis/dependence/${type}`;
+  const pathname = `/${storage.getSystemId()}/analysis/dependence`;
   const className = data.typeName || data.className;
+  const tabSearch = `tab=${type}`;
   const moduleSearch = `module=${data.moduleName}`;
   const classSearch = `className=${data.packageName}.${className}`;
   const methodSearch = type === "method" ? `methodName=${data.methodName}` : "";
   const dependenceTypeSearch = "dependenceType=dependencies";
 
-  const search = [moduleSearch, classSearch, methodSearch, dependenceTypeSearch]
+  const search = [tabSearch, moduleSearch, classSearch, methodSearch, dependenceTypeSearch]
     .filter((str) => str)
     .join("&");
 

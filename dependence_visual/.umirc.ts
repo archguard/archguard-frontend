@@ -54,7 +54,7 @@ export default defineConfig({
           component: "@/pages/retrofit-tools/plsql2kotlin",
         },
         { path: "system-evolving", component: "@/pages/system-evolve" },
-        { path: "analysis/dependence/:type?", component: "@/pages/analysis/dependence" },
+        { path: "analysis/dependence", component: "@/pages/analysis/dependence" },
         { path: "quality-gate-profile", component: "@/pages/quality-gate-profile" },
         { path: "metric/:type?", component: "@/pages/metrics" },
       ],

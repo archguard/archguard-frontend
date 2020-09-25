@@ -8,25 +8,29 @@ import "./index.css";
 import MethodDependence from "./MethodDependence";
 import ModuleDependence from "./ModuleDependence";
 import PackageDependence from "./PackageDependence";
-import { storage } from '@/store/storage/sessionStorage';
+import { storage } from "@/store/storage/sessionStorage";
+import useUrlQuery from "@/hooks/useUrlQuery";
 
 export default function Dependence() {
   const history = useHistory();
-  const { type } = useParams();
-  const systemId = storage.getSystemId()
+  const { tab } = useUrlQuery<{ tab: "class" | "method" }>();
+
+  const systemId = storage.getSystemId();
 
   const [configVisible, setConfigVisible] = useState(false);
 
   return (
     <div>
       <Tabs
-        activeKey={type}
+        activeKey={tab}
         tabBarExtraContent={
           <div className="dependence-extra-content">
             <SettingFilled onClick={() => setConfigVisible(true)} />
           </div>
         }
-        onChange={(activeKey) => history.replace(`/${systemId}/analysis/dependence/${activeKey}`)}
+        onChange={(activeKey) =>
+          history.replace(`/${systemId}/analysis/dependence?tab=${activeKey}`)
+        }
       >
         <Tabs.TabPane tab="module" key="module">
           <ModuleDependence />
