@@ -65,11 +65,9 @@ const renderHotFiles = (record: IssuesListRowData) => {
 
 const classColumnRenderAsLink = (text: string, record: IssuesListRowData) => {
   return (
-    <Tooltip title={text}>
-      <div style={{ display: "inline-block" }}>
-        <Link style={{ whiteSpace: "nowrap" }} to={getLinkTo(record, "class")}>
-          {text}
-        </Link>
+    <Tooltip title={getFullPath(record)}>
+      <div>
+        <Link to={getLinkTo(record, "class")}>{text}</Link>
         {renderHotFiles(record)}
       </div>
     </Tooltip>
@@ -78,7 +76,7 @@ const classColumnRenderAsLink = (text: string, record: IssuesListRowData) => {
 
 const methodColumnRenderAsLink = (text: string, record: IssuesListRowData) => {
   return (
-    <Tooltip title={text}>
+    <Tooltip title={getFullPath(record)}>
       <Link to={getLinkTo(record, "method")}>{text}</Link>
     </Tooltip>
   );
