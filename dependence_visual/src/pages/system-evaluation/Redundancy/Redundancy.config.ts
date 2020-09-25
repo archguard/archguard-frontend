@@ -1,3 +1,4 @@
+import { classColumnRenderAsLink } from '@/components/Business/IssuesList/ColumnRenderUtils';
 import { IssuesConfig } from '@/components/Business/IssuesList/IssuesList';
 import { storage } from '@/store/storage/sessionStorage';
 const systemId = storage.getSystemId();
@@ -26,6 +27,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
             title: '类',
             dataIndex: 'className',
             key: 'className',
+            render: classColumnRenderAsLink,
           },
 
         ],
@@ -48,6 +50,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
             title: '类',
             dataIndex: 'className',
             key: 'className',
+            render: classColumnRenderAsLink,
           },
 
         ],

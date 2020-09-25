@@ -11,6 +11,7 @@ export interface IssuesTableConfig {
     title: string;
     dataIndex: string;
     key: string;
+    render?: (text: string, record: any) => JSX.Element;
   }>;
 }
 
