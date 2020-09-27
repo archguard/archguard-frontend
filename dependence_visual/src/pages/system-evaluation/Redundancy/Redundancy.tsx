@@ -13,6 +13,9 @@ export const Redundancy = (props: RedundancyProps) => {
       <Tabs.TabPane tab="冗余元素" key="element">
         <IssuesList issuesConfig={RedundancyConfig.element} />
       </Tabs.TabPane>
+      <Tabs.TabPane tab="过度泛化" key="generalize">
+        <IssuesList issuesConfig={RedundancyConfig.generalize} />
+      </Tabs.TabPane>
     </Tabs>
   );
 };
