@@ -1,7 +1,10 @@
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
 import { baseURL } from "@/api/module/config";
-import { shotgunSurgeryColumns } from "./CohesionEvaluationTableColumn.config";
-import { classColumnRenderAsLinkByClazzes } from "@/components/Business/IssuesList/ColumnRenderUtils";
+import { DataClassColumns, shotgunSurgeryColumns } from "./CohesionEvaluationTableColumn.config";
+import {
+  classColumnRenderAsLinkByClazzes,
+  renderDataClassFields,
+} from "@/components/Business/IssuesList/ColumnRenderUtils";
 
 export interface ShotgunSurgeryClazz {
   moduleName: string;
@@ -15,9 +18,22 @@ export interface ShotgunSurgery {
   clazzes: ShotgunSurgeryClazz[];
 }
 
-enum CohesionEvaluationIssuesTypes {
-  "SHOTGUN_SURGERY" = "SHOTGUN_SURGERY",
+export interface DataClass {
+  moduleName: string;
+  packageName: string;
+  className: string;
+  fields: Array<{
+    name: string;
+    type: string;
+  }>;
 }
+
+enum CohesionEvaluationIssuesTypes {
+  SHOTGUN_SURGERY = "SHOTGUN_SURGERY",
+  DATA_CLASS = "DATA_CLASS",
+}
+
+export const MAX_COUNT_OF_RENDER_CLASSES = 5;
 
 export const CohesionEvaluationIssuesConfigs: {
   [key in CohesionEvaluationIssuesTypes]: IssuesConfig;
@@ -36,10 +52,28 @@ export const CohesionEvaluationIssuesConfigs: {
       },
     ],
     expandable: {
-      expandedRowRender: (record) => classColumnRenderAsLinkByClazzes(record.clazzes, record, true),
+      expandedRowRender: (record: ShotgunSurgery) =>
+        classColumnRenderAsLinkByClazzes(record.clazzes, record, true),
+      rowExpandable: (record: ShotgunSurgery) => {
+        return record.clazzes && record.clazzes.length > MAX_COUNT_OF_RENDER_CLASSES;
+      },
+    },
+  },
+  DATA_CLASS: {
+    title: "数据类",
+    badSmellDescription: "数据类.坏味道描述",
+    suggestion: "数据类.改进建议",
+    tableConfigs: [
+      {
+        title: "问题列表",
+        dataUrl: baseURL + "/cohesion/data-class",
+        columns: DataClassColumns,
+      },
+    ],
+    expandable: {
+      expandedRowRender: (record) => renderDataClassFields(record),
       rowExpandable: (record) => {
-        console.log(record, "record");
-        return true;
+        return record.fields && record.fields.length;
       },
     },
   },

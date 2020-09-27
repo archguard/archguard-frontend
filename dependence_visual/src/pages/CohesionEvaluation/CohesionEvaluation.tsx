@@ -9,6 +9,9 @@ const CohesionEvaluation = () => {
       <Tabs.TabPane tab="散弹式修改" key="shotgun-surgery">
         <IssuesList issuesConfig={CohesionEvaluationIssuesConfigs.SHOTGUN_SURGERY} />
       </Tabs.TabPane>
+      <Tabs.TabPane tab="数据类" key="data-class">
+        <IssuesList issuesConfig={CohesionEvaluationIssuesConfigs.DATA_CLASS} />
+      </Tabs.TabPane>
     </Tabs>
   );
 };

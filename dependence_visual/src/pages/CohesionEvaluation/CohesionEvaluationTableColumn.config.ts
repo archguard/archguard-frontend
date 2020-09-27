@@ -1,4 +1,7 @@
-import { classColumnRenderAsLinkByClazzes } from "@/components/Business/IssuesList/ColumnRenderUtils";
+import {
+  classColumnRenderAsLink,
+  classColumnRenderAsLinkByClazzes,
+} from "@/components/Business/IssuesList/ColumnRenderUtils";
 import { ShotgunSurgeryClazz } from "./CohesionEvaluationIssuesList.config";
 
 export const shotgunSurgeryColumns = [
@@ -10,7 +13,7 @@ export const shotgunSurgeryColumns = [
   {
     title: "涉及改动的文件数",
     dataIndex: "clazzes",
-    key: "clazzes",
+    key: "commitId",
     width: 150,
     render: (text: ShotgunSurgeryClazz[]) => text.length.toString(),
   },
@@ -18,6 +21,26 @@ export const shotgunSurgeryColumns = [
     title: "该提交内改动的类列表",
     dataIndex: "clazzes",
     key: "clazzes",
-    render: classColumnRenderAsLinkByClazzes,
+    render: (text: ShotgunSurgeryClazz[], record: any) =>
+      classColumnRenderAsLinkByClazzes(text, record, false),
+  },
+];
+
+export const DataClassColumns = [
+  {
+    title: "模块",
+    dataIndex: "moduleName",
+    key: "moduleName",
+  },
+  {
+    title: "包",
+    dataIndex: "packageName",
+    key: "packageName",
+  },
+  {
+    title: "类",
+    dataIndex: "className",
+    key: "className",
+    render: (text: string, record: any) => classColumnRenderAsLink(text, record),
   },
 ];

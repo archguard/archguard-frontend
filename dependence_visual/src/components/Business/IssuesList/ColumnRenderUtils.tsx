@@ -1,10 +1,14 @@
 import * as _ from "lodash";
-import React, { Fragment } from "react";
+import React from "react";
 import { Tooltip } from "antd";
 import { Link } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import { FlagFilled } from "@ant-design/icons";
-import { ShotgunSurgeryClazz } from "@/pages/CohesionEvaluation/CohesionEvaluationIssuesList.config";
+import {
+  DataClass,
+  MAX_COUNT_OF_RENDER_CLASSES,
+  ShotgunSurgeryClazz,
+} from "@/pages/CohesionEvaluation/CohesionEvaluationIssuesList.config";
 
 interface IssuesListRowData {
   id?: string;
@@ -82,7 +86,6 @@ const methodColumnRenderAsLink = (text: string, record: IssuesListRowData) => {
   );
 };
 
-const MAX_COUNT_OF_RENDER_CLASSES = 5;
 const classColumnRenderAsLinkByClazzes = (
   text: ShotgunSurgeryClazz[],
   record?: any,
@@ -95,7 +98,7 @@ const classColumnRenderAsLinkByClazzes = (
   return (
     <div style={{ wordWrap: "break-word", wordBreak: "break-word" }}>
       {renderList.map((clazz, index) => (
-        <Tooltip title={getFullPath(clazz)}>
+        <Tooltip title={getFullPath(clazz)} key={clazz.className}>
           <Link
             className={getSeparateClassName(index, renderList.length)}
             to={getLinkTo(clazz, "class")}
@@ -121,7 +124,7 @@ const circularDependencyColumnRender = (rowDatas: IssuesListRowData[], record: a
         const text = _.last(pathNames)!;
 
         return (
-          <div style={{ display: "inline-block" }}>
+          <div style={{ display: "inline-block" }} key={data.className}>
             {isClass ? (
               classColumnRenderAsLink(text, data)
             ) : isMethod ? (
@@ -140,9 +143,25 @@ const circularDependencyColumnRender = (rowDatas: IssuesListRowData[], record: a
   );
 };
 
+const renderDataClassFields = (record: DataClass) => {
+  return (
+    <div>
+      {record.fields.map((field) => {
+        return (
+          <div key={field.name}>
+            <span>字段</span>：<span>{field.name}</span>，<span>类型</span>：
+            <span>{field.type}</span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
 export {
   classColumnRenderAsLink,
   classColumnRenderAsLinkByClazzes,
   methodColumnRenderAsLink,
   circularDependencyColumnRender,
+  renderDataClassFields,
 };

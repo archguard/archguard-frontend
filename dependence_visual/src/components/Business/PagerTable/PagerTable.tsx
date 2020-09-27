@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import { TablePaginationConfig, ExpandableConfig } from "antd/lib/table/interface";
 import axios from "@/api/axios";
+import { genID } from "@/utils";
 
 const DEFAULt_NUMBER_PER_PAGE = 5;
 
@@ -29,6 +30,16 @@ interface TableData {
   data: OptionalArryObj;
 }
 
+const autoAddUniqueKeys = (dataList: OptionalArryObj) => {
+  return dataList.map((data) => {
+    if (!data.id) {
+      data.id = genID();
+    }
+
+    return data;
+  });
+};
+
 export const BuPagerTable = (props: PagerTableProps) => {
   const {
     columns,
@@ -51,7 +62,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
       method: "GET",
       params: { currentPageNumber, numberPerPage, ...props.parameter },
     }).then(({ count, data }) => {
-      setTableData(data);
+      setTableData(autoAddUniqueKeys(data));
       setCount(count);
       onCountChange(count);
     });
