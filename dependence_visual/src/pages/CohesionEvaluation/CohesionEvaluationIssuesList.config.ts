@@ -49,15 +49,15 @@ export const CohesionEvaluationIssuesConfigs: {
         title: "问题列表",
         dataUrl: baseURL + "/cohesion/shotgun-surgery",
         columns: shotgunSurgeryColumns,
+        expandable: {
+          expandedRowRender: (record: ShotgunSurgery) =>
+            classColumnRenderAsLinkByClazzes(record.clazzes, record, true),
+          rowExpandable: (record: ShotgunSurgery) => {
+            return record.clazzes && record.clazzes.length > MAX_COUNT_OF_RENDER_CLASSES;
+          },
+        },
       },
     ],
-    expandable: {
-      expandedRowRender: (record: ShotgunSurgery) =>
-        classColumnRenderAsLinkByClazzes(record.clazzes, record, true),
-      rowExpandable: (record: ShotgunSurgery) => {
-        return record.clazzes && record.clazzes.length > MAX_COUNT_OF_RENDER_CLASSES;
-      },
-    },
   },
   DATA_CLASS: {
     title: "数据类",
@@ -68,13 +68,13 @@ export const CohesionEvaluationIssuesConfigs: {
         title: "问题列表",
         dataUrl: baseURL + "/cohesion/data-class",
         columns: DataClassColumns,
+        expandable: {
+          expandedRowRender: (record) => renderDataClassFields(record),
+          rowExpandable: (record) => {
+            return record.fields && record.fields.length;
+          },
+        },
       },
     ],
-    expandable: {
-      expandedRowRender: (record) => renderDataClassFields(record),
-      rowExpandable: (record) => {
-        return record.fields && record.fields.length;
-      },
-    },
   },
 };

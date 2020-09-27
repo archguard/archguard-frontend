@@ -14,6 +14,7 @@ export interface IssuesTableConfig {
     key: string;
     render?: (text: any, record?: any) => JSX.Element | string;
   }>;
+  expandable?: ExpandableConfig<any>;
 }
 
 export interface IssuesConfig {
@@ -21,7 +22,6 @@ export interface IssuesConfig {
   badSmellDescription: string;
   suggestion: string;
   tableConfigs: IssuesTableConfig[];
-  expandable?: ExpandableConfig<any>;
 }
 
 interface IssuesListProps {
@@ -32,7 +32,7 @@ interface IssuesListProps {
 
 const IssuesList = (props: IssuesListProps) => {
   const { onSortChange } = props;
-  const { title, badSmellDescription, suggestion, tableConfigs, expandable } = props.issuesConfig;
+  const { title, badSmellDescription, suggestion, tableConfigs } = props.issuesConfig;
   const [count, setCount] = useState(0);
   const [tableCounts, setTableCounts] = useState(tableConfigs.map(() => 0));
   const [parameter, setParameter] = useState(props.parameter);
@@ -75,7 +75,7 @@ const IssuesList = (props: IssuesListProps) => {
               columns={tableConfig.columns}
               url={tableConfig.dataUrl}
               parameter={parameter}
-              expandable={expandable}
+              expandable={tableConfig.expandable}
             />
           </div>
         ))}

@@ -1,9 +1,13 @@
-import { classColumnRenderAsLink, methodColumnRenderAsLink } from "@/components/Business/IssuesList/ColumnRenderUtils";
+import {
+  classColumnRenderAsLink,
+  methodColumnRenderAsLink,
+  renderDataClassFields,
+} from "@/components/Business/IssuesList/ColumnRenderUtils";
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
 import { storage } from "@/store/storage/sessionStorage";
 const systemId = storage.getSystemId();
 
-export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
+export const RedundancyConfig: { [key: string]: IssuesConfig } = {
   element: {
     title: "冗余元素",
     badSmellDescription: "有必要存在的抽象层级，如只有一个方法的类，只有1个属性的类的列表。",
@@ -52,12 +56,19 @@ export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
             render: classColumnRenderAsLink,
           },
         ],
+        expandable: {
+          expandedRowRender: (record) => renderDataClassFields(record),
+          rowExpandable: (record) => {
+            return record.fields && record.fields.length;
+          },
+        },
       },
     ],
   },
   generalize: {
     title: "过度泛化",
-    badSmellDescription: "为了保证系统能够提供可复用性和灵活性，系统常常使用接口，抽象类进行抽象。当过多的进行抽象，会导致过度泛化的问题。如出现只有一个继承/实现的接口/抽象类",
+    badSmellDescription:
+      "为了保证系统能够提供可复用性和灵活性，系统常常使用接口，抽象类进行抽象。当过多的进行抽象，会导致过度泛化的问题。如出现只有一个继承/实现的接口/抽象类",
     suggestion: "重新梳理逻辑，减少过度泛化的类",
     tableConfigs: [
       {
