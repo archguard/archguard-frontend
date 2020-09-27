@@ -35,7 +35,7 @@ export default defineConfig({
         { path: "help/:name?", component: "@/pages/help" },
         { path: "system-evaluation/Summary", component: "@/pages/Summary/Summary" },
         { path: "system-evaluation", component: "@/pages/system-evaluation" },
-        { path: "system-evaluation/Redundancy", component: "@/pages/system-evaluation/Redundancy/Redundancy" },
+        { path: "systemEvaluation/Redundancy", component: "@/pages/systemEvaluation/Redundancy/Redundancy" },
         {
           path: "system-evaluation/sizing-evaluation",
           component: "@/pages/SizingEvaluation/SizingEvaluation",
