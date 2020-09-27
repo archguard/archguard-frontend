@@ -13,26 +13,26 @@ enum columnCount {
 
 const getClazzColumnsBy = (type: keyof typeof columnCount) => {
   const moduleColumn = {
-    title: "枢纽模块",
+    title: "模块",
     dataIndex: "moduleName",
     key: "moduleName",
   };
 
   const packageColumn = {
-    title: "枢纽包",
+    title: "包",
     dataIndex: "packageName",
     key: "packageName",
   };
 
   const classColumn = {
-    title: "枢纽类",
+    title: "类",
     dataIndex: "typeName",
     key: "typeName",
     render: classColumnRenderAsLink,
   };
 
   const methodColumn = {
-    title: "枢纽方法",
+    title: "方法",
     dataIndex: "methodName",
     key: "methodName",
     render: methodColumnRenderAsLink,

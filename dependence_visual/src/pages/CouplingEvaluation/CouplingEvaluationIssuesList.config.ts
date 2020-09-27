@@ -8,7 +8,10 @@ import {
 } from "./CouplingEvaluationTableColumn.config";
 
 enum CouplingEvaluationIssuesTypes {
-  HUB = "HUB",
+  HUB_MODULE = "HUB_MODULE",
+  HUB_PACKAGE = "HUB_PACKAGE",
+  HUB_CLASS = "HUB_CLASS",
+  HUB_METHOD = "HUB_METHOD",
   DATA_CLUMPS = "DATA_CLUMPS",
   DEEP_INHERITENCE = "DEEP_INHERITENCE",
   CIRCULAR_DEPENDENCY = "CIRCULAR_DEPENDENCY",
@@ -17,27 +20,51 @@ enum CouplingEvaluationIssuesTypes {
 export const CouplingEvaluationIssuesConfigs: {
   [key in CouplingEvaluationIssuesTypes]: IssuesConfig;
 } = {
-  HUB: {
+  HUB_MODULE: {
     title: "枢纽模块",
     badSmellDescription:
-      "当某个类与大量其他的类有依赖关系的时候，这种气味就会出现。当依赖过分集中在某个枢纽位置，会导致该位置的功能越来越难变更并慢慢被迫稳定，失去灵活性。",
-    suggestion: "考虑拆分当前枢纽类，或合并某些外部依赖类",
+      "当某个模块与大量其他的模块有依赖关系的时候，这种气味就会出现。当依赖过分集中在某个枢纽位置，会导致该位置的功能越来越难变更并慢慢被迫稳定，失去灵活性。",
+    suggestion: "考虑拆分当前枢纽模块，或合并某些外部依赖模块",
     tableConfigs: [
       {
         title: "问题列表（出向依赖或入向依赖 > 8 的模块）",
         dataUrl: baseURL + "/hub/modules/above-threshold",
         columns: getHubColumns("module"),
       },
+    ],
+  },
+  HUB_PACKAGE: {
+    title: "枢纽包",
+    badSmellDescription:
+      "当某个包与大量其他的包有依赖关系的时候，这种气味就会出现。当依赖过分集中在某个枢纽位置，会导致该位置的功能越来越难变更并慢慢被迫稳定，失去灵活性。",
+    suggestion: "考虑拆分当前枢纽包，或合并某些外部依赖包",
+    tableConfigs: [
       {
         title: "问题列表（出向依赖或入向依赖 > 8 的包）",
         dataUrl: baseURL + "/hub/packages/above-threshold",
         columns: getHubColumns("package"),
       },
+    ],
+  },
+  HUB_CLASS: {
+    title: "枢纽类",
+    badSmellDescription:
+      "当某个类与大量其他的类有依赖关系的时候，这种气味就会出现。当依赖过分集中在某个枢纽位置，会导致该位置的功能越来越难变更并慢慢被迫稳定，失去灵活性。",
+    suggestion: "考虑拆分当前枢纽类，或合并某些外部依赖类",
+    tableConfigs: [
       {
         title: "问题列表（出向依赖或入向依赖 > 8 的类）",
         dataUrl: baseURL + "/hub/classes/above-threshold",
         columns: getHubColumns("class"),
       },
+    ],
+  },
+  HUB_METHOD: {
+    title: "枢纽方法",
+    badSmellDescription:
+      "当某个方法与大量其他的方法有依赖关系的时候，这种气味就会出现。当依赖过分集中在某个枢纽位置，会导致该位置的功能越来越难变更并慢慢被迫稳定，失去灵活性。",
+    suggestion: "考虑拆分当前枢纽方法，或合并某些外部依赖方法",
+    tableConfigs: [
       {
         title: "问题列表（出向依赖或入向依赖 > 8 的方法）",
         dataUrl: baseURL + "/hub/methods/above-threshold",
