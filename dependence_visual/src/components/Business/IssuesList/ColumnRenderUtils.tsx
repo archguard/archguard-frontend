@@ -88,7 +88,8 @@ const classColumnRenderAsLinkByClazzes = (
   record?: any,
   showAll?: boolean,
 ) => {
-  const renderList = showAll ? text : text.splice(0, MAX_COUNT_OF_RENDER_CLASSES);
+  const clazzes = [...text];
+  const renderList = showAll ? clazzes : clazzes.splice(0, MAX_COUNT_OF_RENDER_CLASSES);
   const showOverflowSymbol = text.length > MAX_COUNT_OF_RENDER_CLASSES;
 
   return (
