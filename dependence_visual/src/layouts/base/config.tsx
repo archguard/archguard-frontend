@@ -33,7 +33,6 @@ export const menuList = configForTargets({
       text: "架构演进",
       icon: <CloudSyncOutlined />,
       children: [
-        { key: "/MeasureIndicators", text: "度量指标" },
         { key: "/quality-gate-profile", text: "质量阀" },
       ],
     },

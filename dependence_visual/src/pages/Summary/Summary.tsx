@@ -5,6 +5,8 @@ import { BaButton } from "@/components/Basic/Button/Button";
 import { BaLabel } from "@/components/Basic/Label/Label";
 import { BuGrade } from "@/components/Business/Grade/Grade";
 import { useOverview, useOverviewCount } from "@/api/module/codeLine";
+import { history } from "umi";
+import { storage } from "@/store/storage/sessionStorage";
 
 function Summary() {
   const { data: overViewData } = useOverview();
@@ -17,7 +19,9 @@ function Summary() {
           <div className={styles.name}>架构质量评估</div>
           <div className={styles.date}>15Jul2020</div>
         </div>
-        <BaButton>下载详细报告</BaButton>
+        <BaButton onClick={() => history.push(`/${storage.getSystemId()}/MeasureIndicators`)}>
+          查看指标看板
+        </BaButton>
       </div>
 
       <div className={styles.body}>
