@@ -1,6 +1,5 @@
 import {
   classColumnRenderAsLink,
-  methodColumnRenderAsLink,
   renderDataClassFields,
 } from "@/components/Business/IssuesList/ColumnRenderUtils";
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
@@ -31,7 +30,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
             title: "类",
             dataIndex: "className",
             key: "className",
-            render: methodColumnRenderAsLink,
+            render: classColumnRenderAsLink,
           },
         ],
       },
