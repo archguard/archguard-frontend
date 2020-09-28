@@ -132,7 +132,7 @@ const classColumn = (dataIndex: string) => {
             pathname: `/${systemId}/analysis/dependence`,
             search:
               "tab=class" +
-              "className=" +
+              "&className=" +
               text +
               "&dependenceType=dependencies" +
               "&module=" +
@@ -161,7 +161,7 @@ const methodColumn = (dataIndex: string) => {
           pathname: `/${systemId}/analysis/dependence`,
           search:
             "tab=method" +
-            "className=" +
+            "&className=" +
             method.clazz.name +
             "&methodName=" +
             method.name +
