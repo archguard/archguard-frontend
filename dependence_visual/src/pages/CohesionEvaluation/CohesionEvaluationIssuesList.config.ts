@@ -61,8 +61,10 @@ export const CohesionEvaluationIssuesConfigs: {
   },
   DATA_CLASS: {
     title: "数据类",
-    badSmellDescription: "数据类.坏味道描述",
-    suggestion: "数据类.改进建议",
+    badSmellDescription:
+      "数据类指的是只包含字段和用于访问字段的粗糙方法(getter和setter)的类。这些类不包含任何额外的功能，并且不能独立地操作它们所拥有的数据而只能作为被其他类操作的数据容器。",
+    suggestion:
+      "一个新创建的类只包含几个公共字段(和getter /setter)是正常的。但是对象的真正强大之处在于，它们可以包含对其数据的行为类型或操作。你可以考虑检查调用该类的客户端代码。在其中，您可能会发现有些功能更适合于放置于数据类内部，如不依赖于第三方的纯数据内部运算、判断逻辑等。如果是这种情况，可使用Extract方法和Move方法将该功能迁移到数据类内。",
     tableConfigs: [
       {
         title: "问题列表",
