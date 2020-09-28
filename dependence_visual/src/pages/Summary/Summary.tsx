@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Summary.less";
 import QualityEvaluation from "./components/QualityEvaluation";
 import { BaButton } from "@/components/Basic/Button/Button";
@@ -7,17 +7,30 @@ import { BuGrade } from "@/components/Business/Grade/Grade";
 import { useOverview, useOverviewCount } from "@/api/module/codeLine";
 import { history } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
+import useSystemList from "@/store/global-cache-state/useSystemList";
 
 function Summary() {
   const { data: overViewData } = useOverview();
   const { data: overviewCount } = useOverviewCount();
+  const [systemList] = useSystemList();
+  const [systemName, setSystemName] = useState<string>("");
+
+  const getSystemName = (): string => {
+    const list = systemList?.value || [];
+    const id = storage.getSystemId();
+
+    return list.find((system) => system.id == parseInt(id))?.systemName || "";
+  };
+
+  useEffect(() => {
+    setSystemName(getSystemName());
+  }, [systemList]);
 
   return (
     <div>
       <div className={styles.header}>
         <div className={styles.title}>
-          <div className={styles.name}>架构质量评估</div>
-          <div className={styles.date}>15Jul2020</div>
+          <div className={styles.name}>{systemName}</div>
         </div>
         <BaButton onClick={() => history.push(`/${storage.getSystemId()}/MeasureIndicators`)}>
           查看指标看板

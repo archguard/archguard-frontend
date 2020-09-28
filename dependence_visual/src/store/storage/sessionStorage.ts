@@ -7,7 +7,7 @@ enum StorageKeys {
 }
 
 const getSystemId = () => {
-  return sessionStorage.getItem(PREFIX + StorageKeys.SYSTEM_ID);
+  return sessionStorage.getItem(PREFIX + StorageKeys.SYSTEM_ID) || "";
 };
 
 const setSystemId = (value: any) => {
