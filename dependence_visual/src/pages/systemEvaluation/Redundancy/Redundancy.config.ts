@@ -9,7 +9,7 @@ const systemId = storage.getSystemId();
 export const RedundancyConfig: { [key: string]: IssuesConfig } = {
   element: {
     title: "冗余元素",
-    badSmellDescription: "有必要存在的抽象层级，如只有一个方法的类，只有1个属性的类的列表。",
+    badSmellDescription: "不是必须的对象抽象，如只有一个方法的类，只有1个属性的类的列表。",
     suggestion: "重新梳理逻辑，减少冗余类",
     tableConfigs: [
       {
