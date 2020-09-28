@@ -14,8 +14,8 @@ export const menuList = configForTargets({
       children: [
         { key: "/system-evaluation/sizing-evaluation", text: "体量维度" },
         { key: "/system-evaluation/coupling-evaluation", text: "耦合维度" },
-        { key: "/system-evaluation/cohesion-evaluation", text: "内聚度维度" },
-        { key: "/systemEvaluation/Redundancy", text: "冗余度维度" },
+        { key: "/system-evaluation/cohesion-evaluation", text: "内聚维度" },
+        { key: "/systemEvaluation/Redundancy", text: "冗余维度" },
       ],
     },
     {
@@ -31,9 +31,7 @@ export const menuList = configForTargets({
       key: "system-evolving",
       text: "架构演进",
       icon: <CloudSyncOutlined />,
-      children: [
-        { key: "/quality-gate-profile", text: "质量阀" },
-      ],
+      children: [{ key: "/quality-gate-profile", text: "质量阀" }],
     },
     // {
     //   key: "transformTools",
