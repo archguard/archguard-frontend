@@ -71,7 +71,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
     suggestion: "重新梳理逻辑，减少过度泛化的类",
     tableConfigs: [
       {
-        title: "只有一个方法的类的列表",
+        title: "只有一个继承/实现的接口/抽象类",
         dataUrl: `/api/module/systems/${systemId}/over-generalization/class/one-extends`,
         columns: [
           {
