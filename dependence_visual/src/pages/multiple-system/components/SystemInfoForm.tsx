@@ -36,7 +36,9 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
   };
 
   const isDuplicateSystemName = (systemName: string) => {
-    return systemNames?.includes(systemName);
+    const valueChanged = form.getFieldValue("systemName") !== data?.systemName;
+    const isIncluded = systemNames?.includes(systemName);
+    return valueChanged && isIncluded;
   };
 
   return (
