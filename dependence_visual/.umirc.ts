@@ -42,7 +42,7 @@ export default defineConfig({
         },
         {
           path: "systemEvaluation/CouplingEvaluation",
-          component: "@/pages/CouplingEvaluation/CouplingEvaluation",
+          component: "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluation",
         },
         {
           path: "system-evaluation/cohesion-evaluation",

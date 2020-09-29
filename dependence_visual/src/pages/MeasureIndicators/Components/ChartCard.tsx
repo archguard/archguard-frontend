@@ -1,7 +1,7 @@
 import { GroupDataItem } from "@/api/module/codeLine";
 import { BaCard } from "@/components/Basic/Card/Card";
 import { BaTipsIcon } from "@/components/Basic/TipsIcon/TipsIcon";
-import { CouplingEvaluationIssuesConfigs } from "@/pages/CouplingEvaluation/CouplingEvaluationIssuesList.config";
+import { CouplingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluationIssuesList.config";
 import { SizingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluationIssuesList.config";
 import { ValueOf } from "@/utils/type";
 import { Chart, Area } from "bizcharts";
