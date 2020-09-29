@@ -45,8 +45,8 @@ export default defineConfig({
           component: "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluation",
         },
         {
-          path: "system-evaluation/cohesion-evaluation",
-          component: "@/pages/CohesionEvaluation/CohesionEvaluation",
+          path: "systemEvaluation/cohesionEvaluation",
+          component: "@/pages/systemEvaluation/CohesionEvaluation/CohesionEvaluation",
         },
         { path: "system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
         {
