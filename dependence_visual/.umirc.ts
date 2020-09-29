@@ -41,7 +41,7 @@ export default defineConfig({
           component: "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluation",
         },
         {
-          path: "system-evaluation/coupling-evaluation",
+          path: "systemEvaluation/CouplingEvaluation",
           component: "@/pages/CouplingEvaluation/CouplingEvaluation",
         },
         {

@@ -13,7 +13,7 @@ export const menuList = configForTargets({
       icon: <FileTextOutlined />,
       children: [
         { key: "/systemEvaluation/SizingEvaluation", text: "体量维度" },
-        { key: "/system-evaluation/coupling-evaluation", text: "耦合维度" },
+        { key: "/systemEvaluation/CouplingEvaluation", text: "耦合维度" },
         { key: "/system-evaluation/cohesion-evaluation", text: "内聚维度" },
         { key: "/systemEvaluation/Redundancy", text: "冗余维度" },
       ],
