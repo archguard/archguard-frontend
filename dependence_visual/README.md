@@ -30,7 +30,7 @@ npm install arch-guard-cli -g
  
 ## 编码规范
 ## 页面开发规范
-- `pages` 存放所有了所有页面，页面的目录结构需要和`路由路径`保持一致。这样的好处是通过网页的`url`我们就能很快的找到对应的页面文件，例如`http://localhost:8080/systemEvaluation/Redundancy`，我们可以知道该页面存放于 `pages`目录下的`systemEvaluation`的文件夹内
+- `pages` 存放所有了所有页面，`路由和文件路径必须保持统一`（包括首字母大小写的规则）。这样的好处是通过网页的`url`我们就能很快的找到对应的页面文件，例如`http://localhost:8080/systemEvaluation/Redundancy`，我们可以知道该页面存放于 `pages`目录下的`systemEvaluation`的文件夹内
 
 ## 组件开发规范
 - 组件分为 基础组件（`Basic`） 和 业务组件（`Business`），分别对应 `components` 文件夹下的 `Basic` 和 `Business`文件夹
