@@ -6,8 +6,6 @@ import { Button } from "antd";
 import EvaluationReportOverview from "./detail/overview";
 import EvaluationReportDetails from "./detail";
 
-// import "mock/evaluationReport";
-
 export default function EvaluationReport() {
   const [showDetail, { toggle: toggleShowDetail }] = useBoolean(false);
   const { id: reportId } = useParams();

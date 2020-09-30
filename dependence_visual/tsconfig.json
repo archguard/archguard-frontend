@@ -20,5 +20,4 @@
     },
     "allowSyntheticDefaultImports": true
   },
-  "exclude": ["src/mock"]
 }
