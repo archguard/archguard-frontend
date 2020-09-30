@@ -4,7 +4,7 @@ import React, { useMemo, useRef, useState } from "react";
 import { useAsync } from "react-use";
 import "./index.css";
 import PackageGraph from "./components/PackageGraph";
-import FullscreenContainer from '@/components/Business/fullscreen-container';
+import FullscreenContainer from '@/components/Business/FullscreenContainer';
 
 export default function PackageDependence() {
   const { value: allDependence = [] } = useAsync(queryPackageDependencies);

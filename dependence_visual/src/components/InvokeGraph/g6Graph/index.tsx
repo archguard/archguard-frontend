@@ -4,7 +4,7 @@ import GraphView from "../../graph-view";
 import { ELKLayout } from "../../graph-view/layout/elk";
 import { G6GraphData } from "../../../models/graph";
 import { NodeConfig } from "@antv/g6/es/types";
-import FullscreenContainer from '@/components/Business/fullscreen-container';
+import FullscreenContainer from '@/components/Business/FullscreenContainer';
 
 const defaultGraphOptions = {
   modes: {
