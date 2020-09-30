@@ -32,7 +32,9 @@ function Summary() {
         <div className={styles.title}>
           <div className={styles.name}>{systemName}</div>
         </div>
-        <BaButton onClick={() => history.push(`/${storage.getSystemId()}/MeasureIndicators`)}>
+        <BaButton
+          onClick={() => history.push(`/${storage.getSystemId()}/systemSummary/MeasureIndicators`)}
+        >
           查看指标看板
         </BaButton>
       </div>

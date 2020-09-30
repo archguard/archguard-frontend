@@ -1,9 +1,12 @@
-import { Color } from '@/components/Business/Grade/Grade';
-import { useGet } from '@/hooks/useGet';
-import { badSmellWordingKeys, DashboardGroup } from '@/pages/MeasureIndicators/Components/ChartCard';
-import { IndicatorLevel } from '@/pages/MeasureIndicators/Components/Group';
-import { LEVEL_SCORE } from '@/pages/Summary/components/QualityEvaluation';
-import { storage } from '@/store/storage/sessionStorage';
+import { Color } from "@/components/Business/Grade/Grade";
+import { useGet } from "@/hooks/useGet";
+import {
+  badSmellWordingKeys,
+  DashboardGroup,
+} from "@/pages/systemSummary/MeasureIndicators/Components/ChartCard";
+import { IndicatorLevel } from "@/pages/systemSummary/MeasureIndicators/Components/Group";
+import { LEVEL_SCORE } from "@/pages/systemSummary/Summary/components/QualityEvaluation";
+import { storage } from "@/store/storage/sessionStorage";
 import { axiosWithModule } from "./config";
 
 const systemId = storage.getSystemId();
@@ -40,7 +43,8 @@ export interface GroupDataItem {
     value: number;
   }>;
 }
-export interface MeasureIndicatorsData {// 度量指标
+export interface MeasureIndicatorsData {
+  // 度量指标
   dashboardGroup: keyof typeof DashboardGroup;
   groupData: GroupDataItem[];
 }
@@ -57,10 +61,10 @@ interface UseOverviewCount {
 export const useOverviewCount = () => useGet<UseOverviewCount>(`${baseURL}/overview/system`);
 
 export interface Overview {
-  level: keyof typeof LEVEL_SCORE,
-  badSmell: string,
-  category: string,
-  count: number,
+  level: keyof typeof LEVEL_SCORE;
+  badSmell: string;
+  category: string;
+  count: number;
 }
 interface UseOverview {
   data: Overview[];
@@ -70,6 +74,6 @@ export function useOverview() {
   const { data, run } = useGet<UseOverview>(`${baseURL}/overview`);
   return {
     data: data?.data || [],
-    run
+    run,
   };
 }

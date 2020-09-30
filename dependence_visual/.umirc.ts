@@ -30,16 +30,12 @@ export default defineConfig({
       component: "@/layouts/base",
       routes: [
         {
-          path: "Summary",
-          component: "@/pages/Summary/Summary",
+          path: "systemSummary/Summary",
+          component: "@/pages/systemSummary/Summary/Summary",
         },
         {
-          path: "system-evaluation",
-          component: "@/pages/system-evaluation",
-        },
-        {
-          path: "system-evaluation/report/:id",
-          component: "@/pages/system-evaluation/report",
+          path: "systemSummary/MeasureIndicators",
+          component: "@/pages/systemSummary/MeasureIndicators/MeasureIndicators",
         },
         {
           path: "systemEvaluation/Redundancy",
@@ -74,12 +70,16 @@ export default defineConfig({
           component: "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile",
         },
         {
-          path: "MeasureIndicators",
-          component: "@/pages/MeasureIndicators/MeasureIndicators",
-        },
-        {
           path: "help/:name?",
           component: "@/pages/help",
+        },
+        {
+          path: "system-evaluation",
+          component: "@/pages/system-evaluation",
+        },
+        {
+          path: "system-evaluation/report/:id",
+          component: "@/pages/system-evaluation/report",
         },
         {
           path: "retrofit-tools/plsql-to-kotlin",

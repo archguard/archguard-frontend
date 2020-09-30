@@ -6,7 +6,7 @@ import { configForTargets } from "../../config/buildTargets";
 
 export const menuList = configForTargets({
   default: [
-    { key: "/Summary", text: "总览" },
+    { key: "/systemSummary/Summary", text: "总览" },
     {
       key: "systemEvaluation",
       text: "架构评估",
