@@ -22,20 +22,29 @@ export default defineConfig({
     },
   },
   routes: [
-    { path: "/", redirect: "/multiple-system" },
+    { path: "/", redirect: "/multipleSystem" },
     { path: "/login", component: "@/pages/login" },
-    { path: "/multiple-system", component: "@/pages/multiple-system" },
+    { path: "/multipleSystem", component: "@/pages/multipleSystem" },
     {
       path: "/:systemId",
       component: "@/layouts/base",
       routes: [
-        { path: "test", component: "@/pages/test" },
-        { path: "MeasureIndicators", component: "@/pages/MeasureIndicators/MeasureIndicators" },
-        // { path: "home", component: "@/pages/home" },
-        { path: "help/:name?", component: "@/pages/help" },
-        { path: "system-evaluation/Summary", component: "@/pages/Summary/Summary" },
-        { path: "system-evaluation", component: "@/pages/system-evaluation" },
-        { path: "systemEvaluation/Redundancy", component: "@/pages/systemEvaluation/Redundancy/Redundancy" },
+        {
+          path: "Summary",
+          component: "@/pages/Summary/Summary",
+        },
+        {
+          path: "system-evaluation",
+          component: "@/pages/system-evaluation",
+        },
+        {
+          path: "system-evaluation/report/:id",
+          component: "@/pages/system-evaluation/report",
+        },
+        {
+          path: "systemEvaluation/Redundancy",
+          component: "@/pages/systemEvaluation/Redundancy/Redundancy",
+        },
         {
           path: "systemEvaluation/SizingEvaluation",
           component: "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluation",
@@ -48,15 +57,38 @@ export default defineConfig({
           path: "systemEvaluation/cohesionEvaluation",
           component: "@/pages/systemEvaluation/CohesionEvaluation/CohesionEvaluation",
         },
-        { path: "system-evaluation/report/:id", component: "@/pages/system-evaluation/report" },
+        {
+          path: "analysis/metric/:type?",
+          component: "@/pages/analysis/metrics",
+        },
+        {
+          path: "analysis/dependence",
+          component: "@/pages/analysis/dependence",
+        },
+        {
+          path: "systemEvolving",
+          component: "@/pages/systemEvolving/SystemEvolving",
+        },
+        {
+          path: "systemEvolving/QualityGateProfile",
+          component: "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile",
+        },
+        {
+          path: "MeasureIndicators",
+          component: "@/pages/MeasureIndicators/MeasureIndicators",
+        },
+        {
+          path: "help/:name?",
+          component: "@/pages/help",
+        },
         {
           path: "retrofit-tools/plsql-to-kotlin",
           component: "@/pages/retrofit-tools/plsql2kotlin",
         },
-        { path: "system-evolving", component: "@/pages/system-evolve" },
-        { path: "analysis/dependence", component: "@/pages/analysis/dependence" },
-        { path: "quality-gate-profile", component: "@/pages/quality-gate-profile" },
-        { path: "metric/:type?", component: "@/pages/metrics" },
+        {
+          path: "test",
+          component: "@/pages/test",
+        },
       ],
     },
   ],

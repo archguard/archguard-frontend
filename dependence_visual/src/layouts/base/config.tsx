@@ -6,7 +6,7 @@ import { configForTargets } from "../../config/buildTargets";
 
 export const menuList = configForTargets({
   default: [
-    { key: "/system-evaluation/Summary", text: "总览" },
+    { key: "/Summary", text: "总览" },
     {
       key: "systemEvaluation",
       text: "架构评估",
@@ -19,31 +19,20 @@ export const menuList = configForTargets({
       ],
     },
     {
-      key: "analysisTools",
+      key: "analysis",
       text: "架构分析",
       icon: <BarChartOutlined />,
       children: [
         { key: "/analysis/dependence", text: "依赖分析" },
-        { key: "/metric", text: "指标分析" },
+        { key: "/analysis/metric", text: "指标分析" },
       ],
     },
     {
-      key: "system-evolving",
+      key: "systemEvolving",
       text: "架构演进",
       icon: <CloudSyncOutlined />,
-      children: [{ key: "/quality-gate-profile", text: "质量阀" }],
+      children: [{ key: "/systemEvolving/QualityGateProfile", text: "质量阀" }],
     },
-    // {
-    //   key: "transformTools",
-    //   text: "改造工具",
-    //   icon: <CloudSyncOutlined />,
-    //   children: [
-    //     {
-    //       key: "/retrofit-tools/plsql-to-kotlin",
-    //       text: "PL/SQL转Kotlin",
-    //     },
-    //   ],
-    // },
   ],
   zh: [
     {

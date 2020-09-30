@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Button } from "antd";
 import InvokeGraph from "@/components/InvokeGraph";
-import { moduleMapping } from "@/pages/metrics/ModuleCouplingTree/report"
+import { moduleMapping } from "@/pages/analysis/metrics/ModuleCouplingTree/report";
 import { queryAllModuleDependence } from "@/api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
 import { buildModuleDependenceTree, generateNodeEdges } from "../../../utils";
 import { GraphData } from "../../../../../../models/graph";
 import { JavaItem } from "../../../../../../models/java";
-import CollapsibleCard from '@/components/Business/CollapsibleCard';
+import CollapsibleCard from "@/components/Business/CollapsibleCard";
 
 export interface Measurements {
   label: string;
-  options: {label: string, value: string}[];
+  options: { label: string; value: string }[];
   data: any[];
   dataKey: string;
   nodeKey: string;
@@ -34,7 +34,10 @@ function transformData(data: any): GraphData<JavaItem> {
 
 function getMeasurements(moduleCoupling?: any): Measurements | undefined {
   if (!moduleCoupling || moduleCoupling.length === 0) return;
-  const couplingOptions = Object.keys(moduleMapping).map(item => ({label: moduleMapping[item].name, value: item}))
+  const couplingOptions = Object.keys(moduleMapping).map((item) => ({
+    label: moduleMapping[item].name,
+    value: item,
+  }));
   return {
     label: "模块耦合度",
     options: couplingOptions,

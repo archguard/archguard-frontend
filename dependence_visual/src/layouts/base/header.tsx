@@ -24,7 +24,7 @@ export default function PageHeader(props: any) {
       pathArray[1] = systemId.toString();
       window.location.href = pathArray.join("/");
     } else {
-      props.history.push("/multiple-system");
+      props.history.push("/multipleSystem");
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ProfileCard from "./profile-card";
+import ProfileCard from "./components/ProfileCard/ProfileCard";
 import { Row, Col, notification } from "antd";
 import {
   createQualityGateProfile,
@@ -7,7 +7,7 @@ import {
   deleteQualityGateProfile,
 } from "@/api/module/profile";
 import * as _ from "lodash";
-import { LayerKeys } from "../metrics/ModuleCouplingTree/report";
+import { LayerKeys } from "../../analysis/metrics/ModuleCouplingTree/report";
 import useQualityGate from "@/store/global-cache-state/useQualityGate";
 
 export interface ProfileConfig {

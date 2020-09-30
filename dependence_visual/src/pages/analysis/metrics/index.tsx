@@ -14,7 +14,7 @@ const Metrics = () => {
     <div>
       <Tabs
         activeKey={type}
-        onChange={(activeKey) => history.replace(`/${systemId}/metric/${activeKey}`)}
+        onChange={(activeKey) => history.replace(`/${systemId}/analysis/metric/${activeKey}`)}
       >
         <Tabs.TabPane tab="模块耦合度分析" key="coupling">
           <ModuleCouplingTree />

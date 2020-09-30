@@ -4,7 +4,7 @@ import useCodeTree from "@/store/global-cache-state/useCodeTree";
 import { expandCodeTree } from "@/utils/transformCodeTree";
 import { Select } from "antd";
 import useQualityGate from "@/store/global-cache-state/useQualityGate";
-import { Profile } from "@/pages/quality-gate-profile";
+import { Profile } from "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile";
 
 function ModuleCouplingTable() {
   const [codeTree] = useCodeTree();

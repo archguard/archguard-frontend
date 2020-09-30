@@ -1,8 +1,8 @@
 import _ from "lodash";
 import axios from "../axios";
-import { baseURL } from './config';
+import { baseURL } from "./config";
 import { methodDependency } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceTable/columns";
-import { ReportMapper } from '@/pages/metrics/ModuleCouplingTree/report';
+import { ReportMapper } from "@/pages/analysis/metrics/ModuleCouplingTree/report";
 
 export interface Module {
   id?: string;
@@ -14,7 +14,7 @@ export interface Module {
 export function queryModule() {
   return axios<Module[]>({
     baseURL,
-    url: '/logic-modules',
+    url: "/logic-modules",
     method: "GET",
   }).then((res) => _.orderBy(res, ["status", "name"], ["desc", "asc"]));
 }
@@ -39,7 +39,7 @@ export function updateModule(parameter: Module) {
 export function createModule(parameter: {}) {
   return axios<any>({
     baseURL,
-    url: '/logic-modules',
+    url: "/logic-modules",
     method: "POST",
     data: parameter,
   });
@@ -48,7 +48,7 @@ export function createModule(parameter: {}) {
 export function queryModuleOptions() {
   return axios<string[]>({
     baseURL,
-    url: '/base-modules',
+    url: "/base-modules",
     method: "GET",
   });
 }
@@ -56,17 +56,15 @@ export function queryModuleOptions() {
 export function autoDefineModule() {
   return axios<any>({
     baseURL,
-    url: '/logic-modules/auto-define',
+    url: "/logic-modules/auto-define",
     method: "POST",
   });
 }
 
 export function queryModuleDependencies(parameter: {}) {
-
-
   return axios<methodDependency[]>({
     baseURL,
-    url: '/logic-modules/dependencies',
+    url: "/logic-modules/dependencies",
     method: "GET",
     params: parameter,
   });
@@ -75,7 +73,7 @@ export function queryModuleDependencies(parameter: {}) {
 export function queryModuleCoupling() {
   return axios<ReportMapper[]>({
     baseURL,
-    url: '/logic-modules/metrics',
+    url: "/logic-modules/metrics",
     method: "GET",
   });
 }
@@ -83,7 +81,7 @@ export function queryModuleCoupling() {
 export function hideAllModules() {
   return axios<any>({
     baseURL,
-    url: '/logic-modules/hide-all',
+    url: "/logic-modules/hide-all",
     method: "POST",
   });
 }
@@ -91,7 +89,7 @@ export function hideAllModules() {
 export function showAllModules() {
   return axios<any>({
     baseURL,
-    url: '/logic-modules/show-all',
+    url: "/logic-modules/show-all",
     method: "POST",
   });
 }
@@ -99,7 +97,7 @@ export function showAllModules() {
 export function reverseAllModules() {
   return axios<any>({
     baseURL,
-    url: '/logic-modules/reverse-all',
+    url: "/logic-modules/reverse-all",
     method: "POST",
   });
 }
@@ -122,7 +120,7 @@ export function queryAllModuleDependence() {
     edges: { a: string; b: string; num: number }[];
   }>({
     baseURL,
-    url: '/logic-modules/dependencies/graph',
+    url: "/logic-modules/dependencies/graph",
     method: "GET",
   });
 }

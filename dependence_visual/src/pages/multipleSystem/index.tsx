@@ -47,7 +47,7 @@ const MultipleSystem = () => {
     if (systemInfo.scanned !== "SCANNED") return;
     const { id } = systemInfo;
     storage.setSystemId(id);
-    window.location.href = `/${id}/system-evaluation/Summary`;
+    window.location.href = `/${id}/Summary`;
   };
 
   const onSubmitSystemInfo = (systemInfo: SystemInfo) => {

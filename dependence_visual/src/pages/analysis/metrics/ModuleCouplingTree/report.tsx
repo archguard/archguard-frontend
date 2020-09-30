@@ -1,13 +1,16 @@
 import { MetricProps, Metric } from "@/models/analysis";
 import React, { useMemo, useState } from "react";
 import CouplingList, { CouplingRecord } from "./coupling-list";
-import { Profile, ProfileConfig } from "@/pages/quality-gate-profile";
 import {
   queryPackageCoupling,
   queryClassCoupling,
   queryAllModuleCoupling,
 } from "@/api/module/metric";
 import { useMount } from "react-use";
+import {
+  Profile,
+  ProfileConfig,
+} from "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile";
 
 export interface ReportMapper {
   [key: string]: { name: string; desc: string };
@@ -166,7 +169,6 @@ export const mappingProps = (
 };
 
 const isGoodQualitiy = (value: number, qualityGateConfig?: ProfileConfig) => {
-
   if (!qualityGateConfig) {
     return true;
   }
@@ -323,7 +325,6 @@ export default function Report(props: ReportProps) {
         });
         setMetrics([...metrics]);
       });
-
     }
   };
 
