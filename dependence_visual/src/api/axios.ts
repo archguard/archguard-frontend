@@ -1,6 +1,6 @@
 import { notification } from "antd";
 import axios, { AxiosRequestConfig } from "axios";
-import { util as loadingUtil } from "../components/Loading";
+import { util as loadingUtil } from "../components/Business/Loading";
 
 export const axiosInstance = axios.create({
   baseURL: '',
