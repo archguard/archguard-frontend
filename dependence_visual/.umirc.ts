@@ -75,7 +75,7 @@ export default defineConfig({
         },
         {
           path: "system-evaluation/report/:id",
-          component: "@/pages/system-evaluation/report",
+          component: "@/pages/test/system-evaluation/report",
         },
         {
           path: "test/system-evaluation",

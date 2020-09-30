@@ -13,7 +13,7 @@ import { Core, LayoutOptions } from "cytoscape";
 import { GraphData } from "../../../models/graph";
 import { JavaItem } from "@/models/java";
 import { generateNodeEdges } from "../../../pages/analysis/dependence/utils";
-import FullscreenContainer from '@/components/Business/fullscreen-container';
+import FullscreenContainer from '@/components/Business/FullscreenContainer';
 
 type Option = {
   label: string;
