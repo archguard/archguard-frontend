@@ -50,6 +50,7 @@ npm install arch-guard-cli -g
 - pages 页面
 - components 公共组件
 - api 后端请求
+- test 一些 spike 项目，可以视情况删除
 - models 全局ts类型定义
 - hooks 全局逻辑复用
 - umirc.ts 路由配置

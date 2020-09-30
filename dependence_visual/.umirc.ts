@@ -74,12 +74,12 @@ export default defineConfig({
           component: "@/pages/help",
         },
         {
-          path: "system-evaluation",
-          component: "@/pages/system-evaluation",
-        },
-        {
           path: "system-evaluation/report/:id",
           component: "@/pages/system-evaluation/report",
+        },
+        {
+          path: "test/system-evaluation",
+          component: "@/pages/test/system-evaluation",
         },
         {
           path: "test/retrofit-tools/plsql-to-kotlin",
