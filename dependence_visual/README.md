@@ -9,7 +9,7 @@
 > 配置文件命名以 `.config.ts` 结尾。（例如：DemoComponent.config.ts）
 
 ## 脚手架使用
-> 为了保证代码规范和提高开发便捷性，该项目定制了一个脚手架`arch-guard-cli`，请使用脚手架新建`组件`和`页面`
+> 为了保证代码规范和提高开发便捷性，该项目定制了一个脚手架[`arch-guard-cli`](https://github.com/archguard/arch-guard-cli)，请使用脚手架新建`组件`和`页面`
 
 ### 安装
 ```bash
