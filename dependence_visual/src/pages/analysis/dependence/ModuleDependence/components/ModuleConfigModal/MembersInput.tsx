@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import EditableTag from "@/components/editable-tag";
 import { useList } from "react-use";
 import "./index.less";
 import { FormItemOption } from '@/models/form';
+import EditableTag from '@/components/Business/EditableTag';
 
 interface MembersInputProps {
   value?: string[];
