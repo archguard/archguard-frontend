@@ -2,8 +2,8 @@ import G6, { Graph } from "@antv/g6";
 import { GraphOptions } from "@antv/g6/lib/types";
 import ELK from "elkjs";
 import React, { useEffect, useMemo, useState } from "react";
-import FullscreenContainer from "../../components/fullscreen-container";
 import GraphView from "../../components/graph-view";
+import FullscreenContainer from '../Business/fullscreen-container';
 import GraphNavigator from "./navigator";
 import "./node";
 import "./styles.less";
@@ -52,11 +52,13 @@ export default function DepsGraph(props: DepsGraphProps) {
   const sizedData = useMemo(() => {
     const sizingAndRelationg = (node: DepsGraphNode) => {
       node.size = getNodeSize(node.title);
+      // eslint-disable-next-line no-unused-expressions
       node.subNodes?.forEach((child) => {
         child.parent = node;
         sizingAndRelationg(child);
       });
     };
+    // eslint-disable-next-line no-unused-expressions
     data?.nodes.forEach(sizingAndRelationg);
     return data ?? { edges: [], nodes: [] };
   }, [data]);

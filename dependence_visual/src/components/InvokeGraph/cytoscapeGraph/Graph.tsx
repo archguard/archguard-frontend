@@ -3,7 +3,6 @@ import { scrollToAnchor } from "@/utils/anchor";
 import { useMount } from "ahooks";
 import { message, Button } from "antd";
 import { find } from "lodash";
-import FullscreenContainer from "../../fullscreen-container/index";
 import { filterDataWithConfig } from "../utils";
 import GraphOperation from "./components/GraphOperation";
 import { drawByData, initCytoscape, showHighlightBrachNode } from "./drawGraph";
@@ -14,6 +13,7 @@ import { Core, LayoutOptions } from "cytoscape";
 import { GraphData } from "../../../models/graph";
 import { JavaItem } from "@/models/java";
 import { generateNodeEdges } from "../../../pages/analysis/dependence/utils";
+import FullscreenContainer from '@/components/Business/fullscreen-container';
 
 type Option = {
   label: string;
