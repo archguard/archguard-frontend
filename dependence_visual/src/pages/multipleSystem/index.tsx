@@ -114,11 +114,11 @@ const MultipleSystem = () => {
     <div className="multiple-system-container">
       <div className="multiple-system-header">
         <div className="header-logo">
-          <img src={require("@/assets/Logo.png")} alt="logo"></img>
+          <img src={require("@/assets/images/logo.png")} alt="logo"></img>
         </div>
         {user && (
           <div className="header-user">
-            <img src={require("@/assets/user-profile.png")}></img>
+            <img src={require("@/assets/images/userProfile.png")}></img>
             <span className="user-name">
               {user.name} / {user.account}
             </span>

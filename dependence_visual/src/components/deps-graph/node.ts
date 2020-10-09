@@ -9,10 +9,10 @@ const colors = {
 };
 
 const ICONS = {
-  module: require("../../assets/module.svg"),
-  package: require("../../assets/package.svg"),
-  class: require("../../assets/class.svg"),
-  method: require("../../assets/method.svg"),
+  module: require("@/assets/svg/module.svg"),
+  package: require("@/assets/svg/package.svg"),
+  class: require("@/assets/svg/class.svg"),
+  method: require("@/assets/svg/method.svg"),
 };
 
 const FONT_SIZE = 12;
