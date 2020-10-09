@@ -19,6 +19,8 @@ export const LEVEL_SCORE = {
 const CATEGORY_CONFIG = {
   体量过大: "#ee8572",
   过高耦合: "#4d64b5",
+  冗余度高: "#00a8cc",
+  内聚度不足: "#27496d",
 } as const;
 
 function getColor(category: keyof typeof CATEGORY_CONFIG): ValueOf<typeof CATEGORY_CONFIG> {
@@ -48,7 +50,7 @@ function QualityEvaluation(props: QualityEvaluation) {
 
   return (
     <div className={styles.QualityEvaluation}>
-      <Chart scale={scale} width={300} height={231} data={formattedData} autoFit>
+      <Chart scale={scale} width={360} height={261} data={formattedData} autoFit>
         <Legend visible={false} />
         <Interval
           adjust={[
