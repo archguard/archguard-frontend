@@ -16,7 +16,7 @@
 npm install arch-guard-cli -g
 ```
 
-### 常用命令(必须在项目的**src**目录下运行)
+### 脚手架常用命令(必须在项目的**src**目录下运行)
 - 创建页面：`ag g p systemEvaluation/Demo 页面菜单名`
 > 上述命令会在 `pages/systemEvaluation`文件夹下新建`Demo`页面，并且自动配置好`路由`和`菜单`（菜单名设置为最后一个参数：页面菜单名）
 - 创建基础组件：`ag g c 组件名 -ba `
