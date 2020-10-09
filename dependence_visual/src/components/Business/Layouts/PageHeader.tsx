@@ -1,11 +1,41 @@
 import React from "react";
 import { Button, Select } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
-import { FEATURES, getFeature } from "@/config/buildTargets";
 import { storage } from "@/store/storage/sessionStorage";
 import { queryHotFiles } from "@/api/module/hotFile";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { useMount } from "ahooks";
+
+export enum FEATURES {
+  CODE_SCANNER = "CODE_SCANNER",
+  INSIDE_FEATURE = "INSIDE_FEATURE",
+}
+
+export type FeatureType = keyof typeof FEATURES;
+
+const config: {
+  features: {
+    [key in FeatureType]: { [key: string]: boolean };
+  };
+} = {
+  features: {
+    CODE_SCANNER: {
+      zh: false,
+      default: true,
+    },
+    INSIDE_FEATURE: {
+      zh: false,
+    },
+  },
+};
+
+const BUILD_TARGET = process.env.BUILD_TARGET || "default";
+
+function getFeature(name: FeatureType) {
+  const feature = config.features[name];
+  const featureEnabled = feature[BUILD_TARGET];
+  return featureEnabled !== undefined ? featureEnabled : true;
+}
 
 export default function PageHeader(props: any) {
   const [systemInfo] = useSystemList();

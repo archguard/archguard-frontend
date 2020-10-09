@@ -26,8 +26,9 @@ export default defineConfig({
     { path: "/login", component: "@/pages/login" },
     { path: "/multipleSystem", component: "@/pages/multipleSystem" },
     {
+      exact: false,
       path: "/:systemId",
-      component: "@/layouts/base",
+      component: "@/components/Business/Layouts/PageLayout",
       routes: [
         {
           path: "systemSummary/Summary",

@@ -1,14 +1,14 @@
 import React from "react";
 import { Layout } from "antd";
-import PageHeader from "./header";
-import PageSider from "./sider";
-import PageFooter from "./footer";
+import PageHeader from "./PageHeader";
+import PageSider from "./PageSider";
+import PageFooter from "./PageFooter";
 
 import "antd/dist/antd.less";
 
 const { Header, Sider, Content, Footer } = Layout;
 
-export default function PageLayout(props) {
+export default function PageLayout(props: any) {
   return (
     <Layout style={{ height: "100%" }}>
       <Header style={{ padding: 0, backgroundColor: "#3AAFAE" }}>
@@ -16,7 +16,7 @@ export default function PageLayout(props) {
       </Header>
 
       <Layout>
-        <Sider collapsible style={{backgroundColor:"#f6f6f6"}}>
+        <Sider collapsible style={{ backgroundColor: "#f6f6f6" }}>
           <PageSider history={props.history} location={props.location} />
         </Sider>
 
@@ -35,7 +35,7 @@ export default function PageLayout(props) {
             {props.children}
           </Content>
 
-          <Footer style={{height: "28px" }}>
+          <Footer style={{ height: "28px" }}>
             <PageFooter />
           </Footer>
         </Layout>
