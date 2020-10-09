@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Table } from "antd";
 import { TablePaginationConfig, ExpandableConfig } from "antd/lib/table/interface";
 import axios from "@/api/axios";
-import { genID } from "@/utils";
+import { genID } from "@/utils/utils";
 
 const DEFAULt_NUMBER_PER_PAGE = 5;
 

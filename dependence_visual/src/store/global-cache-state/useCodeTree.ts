@@ -1,5 +1,5 @@
-import createCacheState from '@/utils/createCacheState';
-import { queryCodeTree } from '@/api/module/codeTree';
+import createCacheState from "@/utils/utils";
+import { queryCodeTree } from "@/api/module/codeTree";
 
-const useCodeTree = createCacheState(queryCodeTree, {})
+const useCodeTree = createCacheState(queryCodeTree, {});
 export default useCodeTree;

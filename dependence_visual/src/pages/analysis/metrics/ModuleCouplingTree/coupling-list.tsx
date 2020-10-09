@@ -1,4 +1,4 @@
-import { exportJsonToExcel } from "@/utils/file-utils";
+import { exportJsonToExcel } from "@/utils/utils";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { Button, Table, Tooltip } from "antd";
 import { SortOrder } from "antd/lib/table/interface";
@@ -12,6 +12,7 @@ export interface CouplingRecord {
   fullName: string;
   name: string;
   moduleId: string;
+  shortName: string;
   props: {
     desc: string;
     name: string;

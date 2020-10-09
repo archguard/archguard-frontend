@@ -2,7 +2,7 @@ import React from "react";
 import { Chart, Tooltip, Interval, Coordinate, Interaction, Legend } from "bizcharts";
 import styles from "./QualityEvaluation.less";
 import { Overview } from "@/api/module/codeLine";
-import { ValueOf } from "@/utils/type";
+import { ValueOf } from "@/utils/utils";
 
 interface QualityEvaluation {
   name?: string;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { scrollToAnchor } from "@/utils/anchor";
+import { scrollToAnchor } from "@/utils/utils";
 import { useMount } from "ahooks";
 import { message, Button } from "antd";
 import { find } from "lodash";
@@ -13,7 +13,7 @@ import { Core, LayoutOptions } from "cytoscape";
 import { GraphData } from "../../../models/graph";
 import { JavaItem } from "@/models/java";
 import { generateNodeEdges } from "../../../pages/analysis/dependence/utils";
-import FullscreenContainer from '@/components/Business/FullscreenContainer';
+import FullscreenContainer from "@/components/Business/FullscreenContainer";
 
 type Option = {
   label: string;
@@ -34,11 +34,21 @@ interface GraphProps {
   selectedNode?: any;
   nodeLabel?: NodeLabel;
   deep?: number;
-  showAllSelect?: boolean
+  showAllSelect?: boolean;
 }
 
 export default function Graph(props: GraphProps) {
-  const { id, data, title = "", configs, measurements, selectedNode, nodeLabel, deep, showAllSelect } = props;
+  const {
+    id,
+    data,
+    title = "",
+    configs,
+    measurements,
+    selectedNode,
+    nodeLabel,
+    deep,
+    showAllSelect,
+  } = props;
   const [cy, setCy] = useState<Core>();
   const [graphLayout, setGraphLayout] = useState<LayoutOptions>({
     name: "elk",
@@ -114,8 +124,10 @@ export default function Graph(props: GraphProps) {
         measurements={measurements}
         nodeLabel={nodeLabel}
         showAllSelect={showAllSelect}
-        graphDataCallBack={(newNodeEdges: GraphData<JavaItem>) => drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title)}
-        />
+        graphDataCallBack={(newNodeEdges: GraphData<JavaItem>) =>
+          drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title)
+        }
+      />
       <div
         id={id}
         style={{

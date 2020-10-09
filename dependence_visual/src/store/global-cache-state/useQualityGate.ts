@@ -1,4 +1,4 @@
-import createCacheState from "@/utils/createCacheState";
+import createCacheState from "@/utils/utils";
 import { queryAllQualityGateProfile } from "@/api/module/profile";
 
 const useQualityGate = createCacheState(queryAllQualityGateProfile, []);

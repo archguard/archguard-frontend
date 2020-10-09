@@ -5,7 +5,7 @@ import useCodeTree from "@/store/global-cache-state/useCodeTree";
 import {
   transformCodeTreeToModuleOptions,
   transformCodeTreeToCascaderOptions,
-} from "@/utils/transformCodeTree";
+} from "@/utils/utils";
 import { SelectValue } from "antd/lib/select";
 
 const dependenceTypeOptions: FormItemOption[] = [

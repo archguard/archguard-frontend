@@ -3,7 +3,7 @@ import { BaCard } from "@/components/Basic/Card/Card";
 import { BaTipsIcon } from "@/components/Basic/TipsIcon/TipsIcon";
 import { CouplingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluationIssuesList.config";
 import { SizingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluationIssuesList.config";
-import { ValueOf } from "@/utils/type";
+import { ValueOf } from "@/utils/utils";
 import { Chart, Area } from "bizcharts";
 import React from "react";
 import styles from "./ChartCard.less";

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Report from "./report";
 import useCodeTree from "@/store/global-cache-state/useCodeTree";
-import { expandCodeTree } from "@/utils/transformCodeTree";
+import { expandCodeTree } from "@/utils/utils";
 import { Select } from "antd";
 import useQualityGate from "@/store/global-cache-state/useQualityGate";
 import { Profile } from "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile";
