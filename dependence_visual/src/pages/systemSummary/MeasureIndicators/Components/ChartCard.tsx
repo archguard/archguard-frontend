@@ -87,8 +87,8 @@ export interface ChartCardProps {
 
 export const ChartCard = (props: ChartCardProps) => {
   const { graphData } = props.data;
-  const lastValue = graphData[0].value;
-  const currentValue = graphData[graphData.length - 1].value;
+  const lastValue = graphData[0]?.value;
+  const currentValue = graphData[graphData.length - 1]?.value;
   const levelColor = getLevelColor(props.indicatorLevel);
 
   function Header() {
