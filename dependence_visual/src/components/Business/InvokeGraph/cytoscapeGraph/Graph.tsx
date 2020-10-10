@@ -10,9 +10,9 @@ import { transform } from "./transform";
 import { expandNode, collapseNode, isExpand } from "./components/GraphOperation/utils";
 import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph";
 import { Core, LayoutOptions } from "cytoscape";
-import { GraphData } from "../../../models/graph";
+import { GraphData } from "@/models/graph";
 import { JavaItem } from "@/models/java";
-import { generateNodeEdges } from "../../../pages/analysis/dependence/utils";
+import { generateNodeEdges } from "@/pages/analysis/dependence/utils";
 import FullscreenContainer from "@/components/Business/FullscreenContainer";
 
 type Option = {

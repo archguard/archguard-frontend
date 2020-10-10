@@ -1,5 +1,5 @@
 import { queryClassDependence } from "@/api/module/dependenceGraph.ts";
-import InvokeGraph from "@/components/InvokeGraph";
+import InvokeGraph from "@/components/Business/InvokeGraph";
 import React, { useEffect, useState } from "react";
 import {
   buildClassDependenceTree,

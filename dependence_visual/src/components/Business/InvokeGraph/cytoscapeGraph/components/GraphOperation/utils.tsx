@@ -1,5 +1,5 @@
 import { forEach, remove, some } from "lodash";
-import { TreeNode, Edge, GraphData } from "../../../../../models/graph";
+import { TreeNode, Edge, GraphData } from "@/models/graph";
 import { JavaItem } from "@/models/java";
 
 function dfs(

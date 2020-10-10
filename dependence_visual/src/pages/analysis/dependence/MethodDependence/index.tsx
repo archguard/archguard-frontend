@@ -1,5 +1,5 @@
 import { queryMethodDependence } from "@/api/module/dependenceGraph";
-import InvokeGraph from "@/components/InvokeGraph";
+import InvokeGraph from "@/components/Business/InvokeGraph";
 import React, { useEffect, useState } from "react";
 import { buildMethodTree, generateNodeEdges } from "../utils";
 import { JMethod } from "../../../../models/java";
