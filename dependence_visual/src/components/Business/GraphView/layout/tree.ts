@@ -2,7 +2,7 @@ import { reduce, forEach, map } from "lodash";
 import { EdgeConfig, NodeConfig } from "@antv/g6/es/types";
 import Layout from "@antv/g6/es/layout/layout";
 import Hierarchy from "@antv/hierarchy";
-import { GNode, GEdge } from "../../../models/graph";
+import { GNode, GEdge } from "@/models/graph";
 
 type Node = NodeConfig & GNode;
 type Edge = EdgeConfig & GEdge;

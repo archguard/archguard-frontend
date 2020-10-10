@@ -1,4 +1,4 @@
-import GraphView from '@/components/graph-view';
+import GraphView from '@/components/Business/GraphView';
 import G6, { Graph } from "@antv/g6";
 import { GraphOptions } from "@antv/g6/lib/types";
 import ELK from "elkjs";
