@@ -1,9 +1,9 @@
+import GraphView from '@/components/graph-view';
 import G6, { Graph } from "@antv/g6";
 import { GraphOptions } from "@antv/g6/lib/types";
 import ELK from "elkjs";
 import React, { useEffect, useMemo, useState } from "react";
-import GraphView from "../../components/graph-view";
-import FullscreenContainer from '../Business/FullscreenContainer';
+import FullscreenContainer from '../FullscreenContainer';
 import GraphNavigator from "./navigator";
 import "./node";
 import "./styles.less";
