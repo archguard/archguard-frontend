@@ -30,9 +30,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
   };
 
   const isValidUrl = (value: string) => {
-    return /^(https?:\/\/)([0-9a-z.]+)(:[0-9]+)?([/0-9a-z.]+)?(\?[0-9a-z&=]+)?(#[0-9-a-z]+)?/i.test(
-      value,
-    );
+    return true;
   };
 
   const isDuplicateSystemName = (systemName: string) => {
