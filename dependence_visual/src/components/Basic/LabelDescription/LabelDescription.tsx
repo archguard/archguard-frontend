@@ -16,7 +16,7 @@ export function BaLabelDescription(props: IBaLabelDescription) {
         <strong>{label}</strong>
       </span>
       {!hiddenColon && <span className="BaLabelDescription-colon">：</span>}
-      <span className="BaLabelDescription-description">{description}</span>
+      <pre className="BaLabelDescription-description">{description}</pre>
     </div>
   );
 }

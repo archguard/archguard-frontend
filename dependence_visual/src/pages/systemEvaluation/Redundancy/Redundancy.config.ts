@@ -35,7 +35,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
         ],
       },
       {
-        title: "只包含一个属性及get/set的类列表",
+        title: "只包含一个属性及get/set的类列表。",
         dataUrl: `/api/module/systems/${systemId}/redundancy/class/one-field`,
         columns: [
           {
@@ -67,8 +67,8 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
   generalize: {
     title: "过度泛化",
     badSmellDescription:
-      "为了保证系统能够提供可复用性和灵活性，系统常常使用接口，抽象类进行抽象。当过多的进行抽象，会导致过度泛化的问题。如出现只有一个继承/实现的接口/抽象类",
-    suggestion: "重新梳理逻辑，减少过度泛化的类",
+      "为了保证系统能够提供可复用性和灵活性，系统常常使用接口，抽象类进行抽象。当过多的进行抽象，会导致过度泛化的问题。如出现只有一个继承/实现的接口/抽象类。",
+    suggestion: "重新梳理逻辑，减少过度泛化的类。",
     tableConfigs: [
       {
         title: "只有一个继承/实现的接口/抽象类",
