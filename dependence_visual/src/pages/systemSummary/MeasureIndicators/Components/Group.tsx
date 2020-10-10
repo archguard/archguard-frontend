@@ -12,12 +12,14 @@ interface GroupProps {
 }
 
 export const Group = (props: GroupProps) => {
-  const { data, indicatorLevel } = props;
+  const { data } = props;
   return (
     <div className={styles.Group}>
       <div className={styles.header}>
-        {data.dashboardGroup} (评分:{indicatorLevel})
+        <div className={styles.icon}></div>
+        <div className={styles.dashboardGroup}>{data.dashboardGroup}</div>
       </div>
+
       <div className={styles.body}>
         {data.groupData.map((res: GroupDataItem, i) => {
           return (
