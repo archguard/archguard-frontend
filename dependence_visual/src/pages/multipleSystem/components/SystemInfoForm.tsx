@@ -46,7 +46,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ repoType: "GIT", repo: ["www"] }}
+        initialValues={{ repoType: "GIT", repo: [""] }}
       >
         <Form.Item
           name="systemName"
