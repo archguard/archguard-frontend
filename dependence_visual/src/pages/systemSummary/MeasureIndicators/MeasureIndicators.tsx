@@ -3,7 +3,6 @@ import { Group, IndicatorLevel } from "./Components/Group";
 import { MeasureIndicatorsData, useDashboard } from "@/api/module/codeLine";
 import styles from "./MeasureIndicators.less";
 import Select from "antd/lib/select";
-import { BaBadge } from "@/components/Basic/Badge/Badge";
 
 export function getIndicatorLevel(data: MeasureIndicatorsData): IndicatorLevel {
   // 取数组内的最低评分 ，评分高低依次为：A > B >C >D

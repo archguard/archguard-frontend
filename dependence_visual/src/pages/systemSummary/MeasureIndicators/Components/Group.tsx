@@ -24,7 +24,7 @@ export const Group = (props: GroupProps) => {
         {data.groupData.map((res: GroupDataItem, i) => {
           return (
             <div key={i} className={styles.chartItem}>
-              <BaBadge value={res.level}>
+              <BaBadge value={res.level} reposition={true}>
                 {<ChartCard indicatorLevel={res.level} data={res} />}
               </BaBadge>
             </div>

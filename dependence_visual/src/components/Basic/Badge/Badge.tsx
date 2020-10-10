@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import "./Badge.less";
 
 interface BaBadgeProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   value: string | number;
-  update?: () => void; //当附着元素，宽高更新时，需要更新组件的 top 和 right
+  reposition?: boolean; //设置为true时，当附着元素宽高更新时,会自动需要更新该组件的 top 和 right
 }
 
 const POSITION_DEFAULT = {
@@ -20,17 +20,21 @@ const POSITION_HOVER = {
 export const BaBadge = (props: BaBadgeProps) => {
   const [position, setPosition] = useState(POSITION_DEFAULT);
 
-  function onMouseEnter() {
-    setPosition(POSITION_HOVER);
-  }
-
-  const onMouseLeave = () => {
-    setPosition(POSITION_DEFAULT);
-  };
-
   return (
     <div className="BaBadge">
-      <div className="BaBadge-content" onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+      <div
+        className="BaBadge-content"
+        onMouseEnter={() => {
+          if (props.reposition) {
+            setPosition(POSITION_HOVER);
+          }
+        }}
+        onMouseLeave={() => {
+          if (props.reposition) {
+            setPosition(POSITION_DEFAULT);
+          }
+        }}
+      >
         {props.children}
       </div>
       <div
@@ -47,4 +51,6 @@ export const BaBadge = (props: BaBadgeProps) => {
   );
 };
 
-BaBadge.defaultProps = {};
+BaBadge.defaultProps = {
+  reposition: false,
+};
