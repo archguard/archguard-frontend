@@ -26,7 +26,14 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
   }));
 
   const onFinish = (values: Store) => {
-    onSubmit(Object.assign({ ...data, ...values }));
+    const passwordChanged = data?.password !== values.password;
+    const submitData = Object.assign({ ...data, ...values });
+
+    if (!passwordChanged) {
+      delete submitData.password;
+    }
+
+    onSubmit(submitData);
   };
 
   const isValidUrl = (value: string) => {
