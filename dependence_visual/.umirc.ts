@@ -32,8 +32,8 @@ export default defineConfig({
         path: "systemSummary/Summary",
         component: "@/pages/systemSummary/Summary/Summary",
       }, {
-        path: "systemSummary/MeasureIndicators",
-        component: "@/pages/systemSummary/MeasureIndicators/MeasureIndicators",
+        path: "systemEvolving/MeasureIndicators",
+        component: "@/pages/systemEvolving/MeasureIndicators/MeasureIndicators",
       }, {
         path: "systemEvaluation/Redundancy",
         component: "@/pages/systemEvaluation/Redundancy/Redundancy",

@@ -27,8 +27,8 @@ const menuList = configForTargets({
         { key: "/systemEvaluation/Redundancy", text: "冗余维度" },
         {
           key: "/systemEvaluation/TestEvaluation",
-          text: "测试维度"
-        }
+          text: "测试维度",
+        },
       ],
     },
     {
@@ -44,7 +44,16 @@ const menuList = configForTargets({
       key: "systemEvolving",
       text: "架构演进",
       icon: <CloudSyncOutlined />,
-      children: [{ key: "/systemEvolving/QualityGateProfile", text: "质量阀" }],
+      children: [
+        {
+          key: "/systemEvolving/QualityGateProfile",
+          text: "质量阀",
+        },
+        {
+          key: "/systemEvolving/MeasureIndicators",
+          text: "指标看板",
+        },
+      ],
     },
   ],
   zh: [

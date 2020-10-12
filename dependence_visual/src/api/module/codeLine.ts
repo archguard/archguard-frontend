@@ -3,8 +3,8 @@ import { useGet } from "@/hooks/useGet";
 import {
   badSmellWordingKeys,
   DashboardGroup,
-} from "@/pages/systemSummary/MeasureIndicators/Components/ChartCard";
-import { IndicatorLevel } from "@/pages/systemSummary/MeasureIndicators/Components/Group";
+} from "@/pages/systemEvolving/MeasureIndicators/Components/ChartCard";
+import { IndicatorLevel } from "@/pages/systemEvolving/MeasureIndicators/Components/Group";
 import { LEVEL_SCORE } from "@/pages/systemSummary/Summary/components/QualityEvaluation";
 import { storage } from "@/store/storage/sessionStorage";
 import { axiosWithModule } from "./config";
