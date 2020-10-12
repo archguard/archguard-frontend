@@ -1,7 +1,9 @@
 import { GroupDataItem } from "@/api/module/codeLine";
 import { BaCard } from "@/components/Basic/Card/Card";
 import { BaTipsIcon } from "@/components/Basic/TipsIcon/TipsIcon";
+import { CohesionEvaluationIssuesConfigs } from "@/pages/systemEvaluation/CohesionEvaluation/CohesionEvaluationIssuesList.config";
 import { CouplingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluationIssuesList.config";
+import { RedundancyConfig } from "@/pages/systemEvaluation/Redundancy/Redundancy.config";
 import { SizingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluationIssuesList.config";
 import { ValueOf } from "@/utils/utils";
 import { Chart, Area } from "bizcharts";
@@ -15,7 +17,15 @@ enum ChartField {
 }
 
 const { METHOD, MODULE, CLASS, PACKAGE } = SizingEvaluationIssuesConfigs; //体量维度
-const { DATA_CLUMPS, DEEP_INHERITENCE } = CouplingEvaluationIssuesConfigs; // 耦合维度
+const {
+  DATA_CLUMPS,
+  DEEP_INHERITENCE,
+  HUB_PACKAGE,
+  HUB_MODULE,
+  HUB_CLASS,
+  HUB_METHOD,
+  CIRCULAR_DEPENDENCY,
+} = CouplingEvaluationIssuesConfigs; // 耦合维度
 
 export enum DashboardGroup {
   COUPLING = "耦合维度",
@@ -29,6 +39,15 @@ export const badSmellWording = {
   包过大: PACKAGE.badSmellDescription,
   类过大: CLASS.badSmellDescription,
   方法过大: METHOD.badSmellDescription,
+  枢纽包: HUB_PACKAGE.badSmellDescription,
+  枢纽模块: HUB_MODULE.badSmellDescription,
+  枢纽类: HUB_CLASS.badSmellDescription,
+  枢纽方法: HUB_METHOD.badSmellDescription,
+  循环依赖: CIRCULAR_DEPENDENCY.badSmellDescription,
+  冗余元素: RedundancyConfig.element.badSmellDescription,
+  过度泛化: RedundancyConfig.generalize.badSmellDescription,
+  数据类: CohesionEvaluationIssuesConfigs.DATA_CLASS.badSmellDescription,
+  散弹式修改: CohesionEvaluationIssuesConfigs.SHOTGUN_SURGERY.badSmellDescription,
 } as const;
 
 type badSmellWordingValues = ValueOf<typeof badSmellWording>;

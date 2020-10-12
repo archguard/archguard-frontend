@@ -6,7 +6,7 @@ import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
 import { storage } from "@/store/storage/sessionStorage";
 const systemId = storage.getSystemId();
 
-export const RedundancyConfig: { [key: string]: IssuesConfig } = {
+export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
   element: {
     title: "冗余元素",
     badSmellDescription: "不是必须的对象抽象，如只有一个方法的类，只有1个属性的类的列表。",
