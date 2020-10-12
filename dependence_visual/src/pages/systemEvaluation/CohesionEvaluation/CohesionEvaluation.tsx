@@ -6,7 +6,7 @@ import { CohesionEvaluationIssuesConfigs } from "./CohesionEvaluationIssuesList.
 const CohesionEvaluation = () => {
   return (
     <Tabs onChange={() => {}} type="card">
-      <Tabs.TabPane tab="散弹式修改" key="shotgun-surgery">
+      <Tabs.TabPane tab="霰弹式修改" key="shotgun-surgery">
         <IssuesList issuesConfig={CohesionEvaluationIssuesConfigs.SHOTGUN_SURGERY} />
       </Tabs.TabPane>
       <Tabs.TabPane tab="数据类" key="data-class">

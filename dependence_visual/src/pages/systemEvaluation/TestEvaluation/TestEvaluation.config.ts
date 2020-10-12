@@ -4,9 +4,9 @@ import { baseURL } from "@/api/module/config";
 
 const tab = {
   staticMethod: '静态方法',
-  sleepTest: '含Sleep的测试',
-  duplicateAssert: '繁杂判断',
-  redundantPrint: '冗余打印',
+  sleepTest: '包含休眠的测试',
+  duplicateAssert: '包含繁杂判断的测试',
+  redundantPrint: '包含冗余打印的测试',
   ignore: '被忽略的测试',
   empty: '空的测试',
   unAssert: '没有自动校验的测试',
@@ -15,11 +15,11 @@ const tab = {
 export const config: Record<keyof typeof tab, IssuesConfig> = {
   staticMethod: {
     title: tab.staticMethod,
-    badSmellDescription: "静态方法",
-    suggestion: `静态方法`,
+    badSmellDescription: "静态方法本身并没有问题，但当方法被定义为静态之后，尤其当方法内还涉及外部依赖的时候，我们就需要花更多的时间、手段才能为它们构建测试替身从而进行单元测试，从而影响了后续添加测试的效率；那些能支持静态方法替身的测试库往往运行效率也比较低。",
+    suggestion: `避免把涉及外部依赖（如三方服务调用、基础设施调用等）的代码放在静态方法里，如果静态方法里面只是某些固定的算法或转换逻辑，那我们后续添加测试的时候就不一定需要为它们添加测试替身。`,
     tableConfigs: [
       {
-        title: "问题列表",
+        title: "静态方法列表",
         dataUrl: baseURL + '/test-bad-smell/static-methods',
         columns: [
           {
@@ -40,10 +40,6 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
             dataIndex: 'methodName',
             key: 'methodName',
             render: methodColumnRenderAsLink,
-          }, {
-            title: '代码行数',
-            dataIndex: 'lines',
-            key: 'lines',
           }
         ],
       },
@@ -52,12 +48,14 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
   },
   sleepTest: {
     title: tab.sleepTest,
-    badSmellDescription: "sleepTest",
-    suggestion: `sleepTest`,
+    badSmellDescription: "测试用例中包含 Sleep 休眠语句，常见于异步测试场景，或为了规避不同测试用例中某些操作的依赖和冲突。",
+    suggestion: `如 Robert C. Martin 在《代码整洁之道》所说的那样，好的测试应该是快速（Fast）、独立（Indendent）、可重复（Repeatable）、自足验证（Self-Validating）、及时（Timely）的
+  · 测试用例本身编写时，应该注意保持独立性，不同用例之前不要产生互相依赖、等待，尤其是不同用例使用的测试数据应该独立。
+  · 当处理异步测试场景时，建议使用 CompletableFuture 配合 CountDownLatch 的方式进行，从而不用硬编码休眠的时长。`,
     tableConfigs: [
       {
         dataUrl: baseURL + '/test-bad-smell/sleep-test-methods',
-        title: "问题列表",
+        title: "包含Sleep休眠语句的测试用例列表",
         columns: [
           {
             title: '模块',
@@ -77,10 +75,6 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
             dataIndex: 'methodName',
             key: 'methodName',
             render: methodColumnRenderAsLink,
-          }, {
-            title: '代码行数',
-            dataIndex: 'lines',
-            key: 'lines',
           }
         ],
       },
@@ -88,12 +82,12 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
   },
   duplicateAssert: {
     title: tab.duplicateAssert,
-    badSmellDescription: "繁杂判断",
-    suggestion: `繁杂判断`,
+    badSmellDescription: "包含了过多 Assert 语句的测试用例",
+    suggestion: `建议每个测试用例聚焦于一个测试场景和目的，不要企图编写一个各种场景面面俱到的巨无霸测试，这将让后期的维护更加困难`,
     tableConfigs: [
       {
         dataUrl: baseURL + '/test-bad-smell/multi-assert-test-methods',
-        title: "问题列表",
+        title: "包含繁杂Assert判断的测试用例列表",
         columns: [
           {
             title: '模块',
@@ -113,10 +107,6 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
             dataIndex: 'methodName',
             key: 'methodName',
             render: methodColumnRenderAsLink,
-          }, {
-            title: '代码行数',
-            dataIndex: 'lines',
-            key: 'lines',
           }
         ],
       },
@@ -124,12 +114,12 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
   },
   redundantPrint: {
     title: tab.redundantPrint,
-    badSmellDescription: "冗余打印",
-    suggestion: `冗余打印`,
+    badSmellDescription: "包含了过多调试打印信息的测试用例",
+    suggestion: `自动化测试用例中，应该使用自动的 Assert 语句，替代需要人眼观察的 Print`,
     tableConfigs: [
       {
         dataUrl: baseURL + '/test-bad-smell/redundant-print-test-methods',
-        title: "问题列表",
+        title: "包含了过多调用打印信息的测试用例",
         columns: [
           {
             title: '模块',
@@ -149,10 +139,6 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
             dataIndex: 'methodName',
             key: 'methodName',
             render: methodColumnRenderAsLink,
-          }, {
-            title: '代码行数',
-            dataIndex: 'lines',
-            key: 'lines',
           }
         ],
       },
@@ -160,12 +146,12 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
   },
   ignore: {
     title: tab.ignore,
-    badSmellDescription: "被忽略的测试",
-    suggestion: `被忽略的测试`,
+    badSmellDescription: "被忽略（Ignore、Disabled）的测试用例",
+    suggestion: `当需求修改导致测试用例失败、失效了，应该尽快修复或移除而不是忽略。`,
     tableConfigs: [
       {
         dataUrl: baseURL + '/test-bad-smell/ignore-test-methods',
-        title: "问题列表",
+        title: "被忽略的测试用例列表",
         columns: [
           {
             title: '模块',
@@ -185,10 +171,6 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
             dataIndex: 'methodName',
             key: 'methodName',
             render: methodColumnRenderAsLink,
-          }, {
-            title: '代码行数',
-            dataIndex: 'lines',
-            key: 'lines',
           }
         ],
       },
@@ -196,12 +178,12 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
   },
   empty: {
     title: tab.empty,
-    badSmellDescription: "空的测试",
-    suggestion: `空的测试`,
+    badSmellDescription: "没有内容的测试用例",
+    suggestion: `空的测试并无实际意义，建议及时移除或为它添加所需的测试内容。`,
     tableConfigs: [
       {
         dataUrl: baseURL + '/test-bad-smell/empty-test-methods',
-        title: "问题列表",
+        title: "空测试列表",
         columns: [
           {
             title: '模块',
@@ -221,10 +203,6 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
             dataIndex: 'methodName',
             key: 'methodName',
             render: methodColumnRenderAsLink,
-          }, {
-            title: '代码行数',
-            dataIndex: 'lines',
-            key: 'lines',
           }
         ],
       },
@@ -232,8 +210,8 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
   },
   unAssert: {
     title: tab.unAssert,
-    badSmellDescription: "没有自动校验的测试",
-    suggestion: `没有自动校验的测试`,
+    badSmellDescription: "缺乏了自动校验的测试用例，这将无法达到自动验证结果的目的。",
+    suggestion: `为每个测试用例都添加足够的自动校验 Assert 语句`,
     tableConfigs: [
       {
         dataUrl: baseURL + '/test-bad-smell/unassert-test-methods',
@@ -257,10 +235,6 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
             dataIndex: 'methodName',
             key: 'methodName',
             render: methodColumnRenderAsLink,
-          }, {
-            title: '代码行数',
-            dataIndex: 'lines',
-            key: 'lines',
           }
         ],
       },

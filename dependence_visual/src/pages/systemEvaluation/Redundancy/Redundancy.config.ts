@@ -9,8 +9,10 @@ const systemId = storage.getSystemId();
 export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
   element: {
     title: "冗余元素",
-    badSmellDescription: "不是必须的对象抽象，如只有一个方法的类，只有1个属性的类的列表。",
-    suggestion: "重新梳理逻辑，减少冗余类",
+    badSmellDescription: "不是必须的对象抽象，如只有一个方法的类，只有一个属性的类。",
+    suggestion: `
+  · 当只有一个属性的时候，可以考虑先使用基础类型，在发现强关联的属性增加到2～3个后再考虑提炼为对象。
+  · 同理，当只有一个方法的时候也未必需要马上提取在独立的类中。`,
     tableConfigs: [
       {
         title: "只有一个方法的类的列表",
