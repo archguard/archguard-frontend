@@ -59,9 +59,6 @@ export default defineConfig({
         path: "systemEvolving/QualityGateProfile",
         component: "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile",
       }, {
-        path: "help/:name?",
-        component: "@/pages/help",
-      }, {
         path: "system-evaluation/report/:id",
         component: "@/pages/test/system-evaluation/report",
       }, {

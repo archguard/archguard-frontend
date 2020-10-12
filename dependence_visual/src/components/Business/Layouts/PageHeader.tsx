@@ -13,7 +13,7 @@ export enum FEATURES {
 
 export type FeatureType = keyof typeof FEATURES;
 
-const config: {
+export const config: {
   features: {
     [key in FeatureType]: { [key: string]: boolean };
   };
@@ -31,7 +31,7 @@ const config: {
 
 const BUILD_TARGET = process.env.BUILD_TARGET || "default";
 
-function getFeature(name: FeatureType) {
+export function getFeature(name: FeatureType) {
   const feature = config.features[name];
   const featureEnabled = feature[BUILD_TARGET];
   return featureEnabled !== undefined ? featureEnabled : true;
@@ -97,24 +97,6 @@ export default function PageHeader(props: any) {
             </Select.Option>
           </Select.OptGroup>
         </Select>
-      </div>
-      <div style={{ display: "inline-block", float: "right" }}>
-        {getFeature(FEATURES.INSIDE_FEATURE) && (
-          <Button
-            type="link"
-            style={{ color: "#ffffff" }}
-            icon={<QuestionCircleOutlined />}
-            onClick={() => props.history.push(`/${currentSystemId}/help`)}
-          >
-            说明文档
-          </Button>
-        )}
-        {/* <Button
-            type="link"
-            style={{color: "#ffffff"}}
-            icon={<LoginOutlined />}
-            onClick={() => props.history.push("/login")}
-          >登录</Button> */}
       </div>
     </div>
   );

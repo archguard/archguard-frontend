@@ -1,8 +1,8 @@
 import "./index.less";
 import React, { useState, useRef, useEffect } from "react";
-import { Tabs, Row, Col, Modal, notification } from "antd";
+import { Tabs, Row, Col, Modal, notification, Button } from "antd";
 import { useMount, useInterval } from "react-use";
-import { UpOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined, UpOutlined } from "@ant-design/icons";
 import { scanDependence } from "@/api/scanner/dependenceScanner";
 import {
   SystemInfo,
@@ -14,6 +14,8 @@ import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SystemCard from "./components/SystemCard";
 import SystemInfoForm from "./components/SystemInfoForm";
+import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
+import Help from "../help";
 
 interface UserProfile {
   name?: string;
@@ -28,7 +30,9 @@ const MultipleSystem = () => {
   const [systemList, loadSystemList] = useSystemList();
   const [systemInfoList, setSystemInfoList] = useState<SystemInfo[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [helpModalVisible, setHelpModalVisible] = useState(false);
   const [currentSystemInfo, setCurrentSystemInfo] = useState<SystemInfo>();
+  const currentSystemId = Number(storage.getSystemId());
 
   useMount(() => {
     storage.clear();
@@ -118,11 +122,26 @@ const MultipleSystem = () => {
         </div>
         {user && (
           <div className="header-user">
-            <img src={require("@/assets/images/userProfile.png")}></img>
-            <span className="user-name">
-              {user.name} / {user.account}
-            </span>
-            <UpOutlined className="user-icon" />
+            <div>
+              {getFeature(FEATURES.INSIDE_FEATURE) && (
+                <Button
+                  type="link"
+                  style={{ color: "#ffffff" }}
+                  icon={<QuestionCircleOutlined />}
+                  onClick={() => setHelpModalVisible(true)}
+                >
+                  说明文档
+                </Button>
+              )}
+            </div>
+
+            <div className="user-info">
+              <img src={require("@/assets/images/userProfile.png")}></img>
+              <span className="user-name">
+                {user.name} / {user.account}
+              </span>
+              <UpOutlined className="user-icon" />
+            </div>
           </div>
         )}
       </div>
@@ -161,6 +180,17 @@ const MultipleSystem = () => {
           data={currentSystemInfo}
           onSubmit={onSubmitSystemInfo}
         ></SystemInfoForm>
+      </Modal>
+
+      <Modal
+        onCancel={() => setHelpModalVisible(false)}
+        width={1300}
+        footer={null}
+        maskClosable={true}
+        centered
+        visible={helpModalVisible}
+      >
+        <Help />
       </Modal>
     </div>
   );

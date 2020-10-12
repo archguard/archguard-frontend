@@ -9,7 +9,7 @@
 
   &-header {
     height: 60px;
-    background-color: rgba(0, 0, 0, .2);
+    background-color: rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,28 +19,34 @@
       height: 100%;
       display: inline-block;
 
-      &>img {
+      & > img {
         width: auto;
         height: 100%;
       }
     }
 
-    .header-user {
+    .header-user{
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info {
       margin-right: 16px;
-      display: inline-block;
+      display: flex;
+      align-items: center;
       cursor: pointer;
 
-      &>img {
+      & > img {
         width: 40px;
       }
 
       .user-name {
-        margin: 0 .5em;
+        margin: 0 0.5em;
       }
 
       .user-icon {
         font-size: 12px;
-        transition: .3s transform cubic-bezier(0.785, 0.135, 0.15, 0.86);
+        transition: 0.3s transform cubic-bezier(0.785, 0.135, 0.15, 0.86);
       }
 
       &:hover {
