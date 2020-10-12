@@ -4,7 +4,7 @@ import { baseURL } from "@/api/module/config";
 
 const tab = {
   staticMethod: '静态方法',
-  sleepTest: 'sleepTest',
+  sleepTest: '含Sleep的测试',
   duplicateAssert: '繁杂判断',
   redundantPrint: '冗余打印',
   ignore: '被忽略的测试',

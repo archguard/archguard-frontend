@@ -15,7 +15,7 @@ const TestEvaluation = (props: TestEvaluationProps) => {
         <Tabs.TabPane tab="静态方法" key="staticMethod">
           <IssuesList issuesConfig={config.staticMethod} />
         </Tabs.TabPane>
-        <Tabs.TabPane tab="sleepTest" key="sleepTest">
+        <Tabs.TabPane tab="含Sleep的测试" key="sleepTest">
           <IssuesList issuesConfig={config.sleepTest} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="繁杂判断" key="duplicateAssert">
