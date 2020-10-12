@@ -10,7 +10,7 @@ const docs = {
 };
 
 export default function Help() {
-  const { name = "index" } = useParams();
+  const { name = "index" } = useParams<{ name: "index" | "module-coupling" }>();
   const doc = docs[name];
 
   return (
