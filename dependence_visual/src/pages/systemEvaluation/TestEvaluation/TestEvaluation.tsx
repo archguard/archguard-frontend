@@ -18,11 +18,24 @@ const TestEvaluation = (props: TestEvaluationProps) => {
         <Tabs.TabPane tab="sleepTest" key="sleepTest">
           <IssuesList issuesConfig={config.sleepTest} />
         </Tabs.TabPane>
+        <Tabs.TabPane tab="繁杂判断" key="duplicateAssert">
+          <IssuesList issuesConfig={config.duplicateAssert} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="冗余打印" key="redundantPrint">
+          <IssuesList issuesConfig={config.redundantPrint} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="被忽略的测试" key="ignore">
+          <IssuesList issuesConfig={config.ignore} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="空测试" key="empty">
+          <IssuesList issuesConfig={config.empty} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="没有自动校验的测试" key="unAssert">
+          <IssuesList issuesConfig={config.unAssert} />
+        </Tabs.TabPane>
       </Tabs>
     </div>
   );
 };
-
-TestEvaluation.defaultProps = {};
 
 export default TestEvaluation;
