@@ -77,15 +77,25 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
         dataUrl: `/api/module/systems/${systemId}/redundancy/class/over-generalization`,
         columns: [
           {
-            title: "子类名",
-            dataIndex: "childClassName",
-            key: "childClassName",
+            title: "父模块名",
+            dataIndex: "parentModuleName",
+            key: "parentModuleName",
+          },
+          {
+            title: "父包名",
+            dataIndex: "parentPackageName",
+            key: "parentPackageName",
+          },
+          {
+            title: "父类名",
+            dataIndex: "parentClassName",
+            key: "parentClassName",
             render: (text, record) => {
               return classColumnRenderAsLink(text, {
                 ...record,
-                packageName: record.childPackageName,
-                moduleName: record.childModuleName,
-                className: record.childClassName
+                packageName: record.parentPackageName,
+                moduleName: record.parentModuleName,
+                className: record.parentClassName
               });
             },
           },
@@ -100,25 +110,15 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
             key: "childPackageName",
           },
           {
-            title: "父类名",
-            dataIndex: "parentClassName",
-            key: "parentClassName",
-          },
-          {
-            title: "父模块名",
-            dataIndex: "parentModuleName",
-            key: "parentModuleName",
-          },
-          {
-            title: "父包名",
-            dataIndex: "parentPackageName",
-            key: "parentPackageName",
+            title: "子类名",
+            dataIndex: "childClassName",
+            key: "childClassName",
             render: (text, record) => {
               return classColumnRenderAsLink(text, {
                 ...record,
-                packageName: record.parentPackageName,
-                moduleName: record.parentModuleName,
-                className: record.parentClassName
+                packageName: record.childPackageName,
+                moduleName: record.childModuleName,
+                className: record.childClassName
               });
             },
           },
