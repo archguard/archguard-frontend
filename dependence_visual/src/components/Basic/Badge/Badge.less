@@ -1,25 +1,26 @@
 .BaBadge {
-  position: relative;
+  position: absolute;
+  top: 0;
+  right: 0;
   display: inline-block;
+
   &-content {
     display: inline-block;
   }
+
   &-icon {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    border-radius: 36px 0 0;
     width: 36px;
     height: 36px;
+    text-align: center;
+    border-radius: 0 0 0 36px;
+    line-height: 28px;
     background-color: #3aafae;
-    transform: rotate(270deg);
   }
+
   &-value {
+    margin-left: 5px;
     font-size: 16px;
     color: #ffffff;
     font-weight: 600;
-    position: absolute;
-    top: 3px;
-    right: 7px;
   }
 }

@@ -1,4 +1,5 @@
 import { GroupDataItem } from "@/api/module/codeLine";
+import { BaBadge } from "@/components/Basic/Badge/Badge";
 import { BaCard } from "@/components/Basic/Card/Card";
 import { BaTipsIcon } from "@/components/Basic/TipsIcon/TipsIcon";
 import { CohesionEvaluationIssuesConfigs } from "@/pages/systemEvaluation/CohesionEvaluation/CohesionEvaluationIssuesList.config";
@@ -132,6 +133,7 @@ export const ChartCard = (props: ChartCardProps) => {
   return (
     <div className={styles.ChartCard}>
       <BaCard>
+        <BaBadge value={props.indicatorLevel}></BaBadge>
         <Header></Header>
         <Description></Description>
         <ChartItem color={levelColor} graphData={props.data.graphData}></ChartItem>

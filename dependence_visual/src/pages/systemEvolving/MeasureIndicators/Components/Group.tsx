@@ -1,5 +1,4 @@
 import { GroupDataItem, MeasureIndicatorsData } from "@/api/module/codeLine";
-import { BaBadge } from "@/components/Basic/Badge/Badge";
 import React from "react";
 import { ChartCard } from "./ChartCard";
 import styles from "./Group.less";
@@ -24,9 +23,7 @@ export const Group = (props: GroupProps) => {
         {data.groupData.map((res: GroupDataItem, i) => {
           return (
             <div key={i} className={styles.chartItem}>
-              <BaBadge value={res.level} reposition={true}>
-                {<ChartCard indicatorLevel={res.level} data={res} />}
-              </BaBadge>
+              <ChartCard indicatorLevel={res.level} data={res} />
             </div>
           );
         })}
