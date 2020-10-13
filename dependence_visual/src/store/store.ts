@@ -3,6 +3,7 @@ import { IOptions } from "react-vuex-hook/lib/types";
 
 type ThresholdKey =
   | "oversizedMethodByLine"
+  | "oversizedMethodByCount"
   | "oversizedClassByLine"
   | "oversizedClassByCount"
   | "oversizedPackageByLine"
@@ -24,6 +25,7 @@ const store: IOptions<State, string, string, string> = {
   getInitState: () => {
     return {
       oversizedMethodByLine: 30,
+      oversizedMethodByCount: 20,
       oversizedClassByLine: 600,
       oversizedClassByCount: 20,
       oversizedPackageByLine: 12000,

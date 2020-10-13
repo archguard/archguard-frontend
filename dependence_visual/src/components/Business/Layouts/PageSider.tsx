@@ -44,16 +44,19 @@ const menuList = configForTargets({
       key: "systemEvolving",
       text: "架构演进",
       icon: <CloudSyncOutlined />,
-      children: [
-        {
-          key: "/systemEvolving/QualityGateProfile",
-          text: "质量阀",
-        },
-        {
-          key: "/systemEvolving/MeasureIndicators",
-          text: "指标看板",
-        },
-      ],
+      children: [{
+        key: "/systemEvolving/QualityGateProfile",
+        text: "质量阀",
+      }, {
+        key: "/systemEvolving/MeasureIndicators",
+        text: "指标看板",
+      }, {
+        key: "/systemEvolving/BadSmellThreshold",
+        text: "坏味道阈值"
+      }, {
+        key: "/systemEvolving/Components",
+        text: "请指定菜单名"
+      }],
     },
   ],
   zh: [

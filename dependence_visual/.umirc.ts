@@ -73,6 +73,12 @@ export default defineConfig({
       }, {
         path: "systemEvaluation/TestEvaluation",
         component: "@/pages/systemEvaluation/TestEvaluation/TestEvaluation"
+      }, {
+        path: "systemEvolving/BadSmellThreshold",
+        component: "@/pages/systemEvolving/BadSmellThreshold/BadSmellThreshold"
+      }, {
+        path: "systemEvolving/Components",
+        component: "@/pages/systemEvolving/Components/Components"
       }],
     },
   ],
