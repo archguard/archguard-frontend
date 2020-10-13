@@ -21,6 +21,7 @@ npm install arch-guard-cli -g
 > 上述命令会在 `pages/systemEvaluation`文件夹下新建`Demo`页面，并且自动配置好`路由`和`菜单`（菜单名设置为最后一个参数：页面菜单名）
 - 创建基础组件：`ag g c 组件名 -ba `
 - 创建业务组件：`ag g c 组件名 -bu `
+- 直接在当前目录下创建组件：`ag g c 组件名`
 
 ### 命令缩写解释
 - `g =>  generate`
