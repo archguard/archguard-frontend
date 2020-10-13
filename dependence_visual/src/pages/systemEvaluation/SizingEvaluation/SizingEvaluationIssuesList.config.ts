@@ -20,15 +20,14 @@ export const SizingEvaluationIssuesConfigs: {
 } = {
   METHOD: {
     title: "过大的方法",
-    badSmellDescription:
-      "一个方法含有太多行代码。",
+    badSmellDescription: "一个方法含有太多行代码。",
     suggestion: `拆分方法，寻找长方法内部的代码边界，并将其逐一抽取为私有方法。
   · 寻找代码边界的关键：找循环、找判断、找注释、找重复代码。
   · 另，在拆分方法改造时，应注意测试保护，尽可能先为原方法添加相应的单元测试/集成测试案例。
   · 并且，充分使用编辑器内置的重构菜单进行自动重构（如Intellij的Refactor-> Extract Method)，从而避免人手操作导致的失误。`,
     tableConfigs: [
       {
-        title: "问题列表（代码行数 > 30行的方法）",
+        title: (threshold = 30) => `问题列表（代码行数 > ${threshold} 行的方法）`,
         dataUrl: baseURL + "/sizing/methods/above-threshold",
         columns: methodColumns,
       },
@@ -45,12 +44,12 @@ export const SizingEvaluationIssuesConfigs: {
   · 把重复代码抽取到公共方法或公共类中。`,
     tableConfigs: [
       {
-        title: "问题列表（代码行数 > 600行的类）",
+        title: (threshold = 600) => `问题列表（代码行数 > ${threshold} 行的类）`,
         dataUrl: baseURL + "/sizing/classes/above-line-threshold",
         columns: classColumnsByLines,
       },
       {
-        title: "问题列表（类中包含的方法 > 20个的类）",
+        title: (threshold = 20) => `问题列表（类中包含的方法 > ${threshold} 个的类）`,
         dataUrl: baseURL + "/sizing/classes/above-method-count-threshold",
         columns: classColumnsByMethodCount,
       },
@@ -63,12 +62,12 @@ export const SizingEvaluationIssuesConfigs: {
       "拆包。把不同职责的类分到不同的包结构中，具体可参考如整洁架构、六边形架构等的规范。",
     tableConfigs: [
       {
-        title: "问题列表（代码行数 > 12000行的包）",
+        title: (threshold = 12000) => `问题列表（代码行数 > ${threshold} 行的包）`,
         dataUrl: baseURL + "/sizing/packages/above-line-threshold",
         columns: packageColumns,
       },
       {
-        title: "问题列表（所含的类 > 20个的包）",
+        title: (threshold = 20) => `问题列表（所含的类 > ${threshold} 个的包）`,
         dataUrl: baseURL + "/sizing/packages/above-threshold",
         columns: packageColumns,
       },
@@ -80,12 +79,12 @@ export const SizingEvaluationIssuesConfigs: {
     suggestion: "拆模块。把不同职责的包拆分到不同的模块中。",
     tableConfigs: [
       {
-        title: "问题列表（代码行数 > 240000行的模块）",
+        title: (threshold = 240000) => `问题列表（代码行数 > ${threshold} 行的模块）`,
         dataUrl: baseURL + "/sizing/modules/above-line-threshold",
         columns: moduleColumns,
       },
       {
-        title: "问题列表（所含Package包 > 20个的模块）",
+        title: (threshold = 20) => `问题列表（所含Package包 > ${threshold} 个的模块）`,
         dataUrl: baseURL + "/sizing/modules/above-threshold",
         columns: moduleColumns,
       },

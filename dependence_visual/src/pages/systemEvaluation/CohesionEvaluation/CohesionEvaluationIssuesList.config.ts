@@ -48,7 +48,7 @@ export const CohesionEvaluationIssuesConfigs: {
   · 让需求拆分粒度更小，如：把每个需求卡拆分到3天内能完成甚至更小。`,
     tableConfigs: [
       {
-        title: "问题列表",
+        title: () => "问题列表",
         dataUrl: baseURL + "/cohesion/shotgun-surgery",
         columns: shotgunSurgeryColumns,
         expandable: {
@@ -69,7 +69,7 @@ export const CohesionEvaluationIssuesConfigs: {
       "一个新创建的类只包含几个公共字段(和它们的getter、setter)是正常的。但是面向对象的真正强大之处在于，对象本身可以包含对其数据的行为或操作。你可以考虑检查调用该类的客户端代码。在其中，您可能会发现有些功能更适合于放置于数据类内部，如不依赖于第三方的纯数据内部运算、判断逻辑等。如果是这种情况，可使用Extract方法和Move方法将该功能迁移到数据类内。",
     tableConfigs: [
       {
-        title: "问题列表",
+        title: () => "问题列表",
         dataUrl: baseURL + "/cohesion/data-class",
         columns: DataClassColumns,
         expandable: {

@@ -6,7 +6,7 @@ import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
 import { storage } from "@/store/storage/sessionStorage";
 const systemId = storage.getSystemId();
 
-export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
+export const RedundancyConfig: { [key: string]: IssuesConfig } = {
   element: {
     title: "冗余元素",
     badSmellDescription: "不是必须的对象抽象，如只有一个方法的类，只有一个属性的类。",
@@ -15,7 +15,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
   · 同理，当只有一个方法的时候也未必需要马上提取在独立的类中。`,
     tableConfigs: [
       {
-        title: "只有一个方法的类的列表",
+        title: () => "只有一个方法的类的列表",
         dataUrl: `/api/module/systems/${systemId}/redundancy/class/one-method`,
         columns: [
           {
@@ -37,7 +37,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
         ],
       },
       {
-        title: "只包含一个属性及get/set的类列表。",
+        title: () => "只包含一个属性及get/set的类列表。",
         dataUrl: `/api/module/systems/${systemId}/redundancy/class/one-field`,
         columns: [
           {
@@ -73,7 +73,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig; } = {
     suggestion: "重新梳理逻辑，减少过度泛化的类。",
     tableConfigs: [
       {
-        title: "只有一个继承/实现的接口/抽象类",
+        title: () => "只有一个继承/实现的接口/抽象类",
         dataUrl: `/api/module/systems/${systemId}/over-generalization/class/one-extends`,
         columns: [
           {

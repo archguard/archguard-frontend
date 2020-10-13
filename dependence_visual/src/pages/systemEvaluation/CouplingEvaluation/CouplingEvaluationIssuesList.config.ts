@@ -29,7 +29,7 @@ export const CouplingEvaluationIssuesConfigs: {
   · 合并某些外部依赖模块`,
     tableConfigs: [
       {
-        title: "问题列表（出向依赖或入向依赖 > 8 的模块）",
+        title: (threshold) => `问题列表（出向依赖或入向依赖 > ${threshold} 的模块）`,
         dataUrl: baseURL + "/hub/modules/above-threshold",
         columns: getHubColumns("module"),
       },
@@ -44,7 +44,7 @@ export const CouplingEvaluationIssuesConfigs: {
   · 合并某些外部依赖包`,
     tableConfigs: [
       {
-        title: "问题列表（出向依赖或入向依赖 > 8 的包）",
+        title: (threshold) => `问题列表（出向依赖或入向依赖 > ${threshold} 的包）`,
         dataUrl: baseURL + "/hub/packages/above-threshold",
         columns: getHubColumns("package"),
       },
@@ -59,7 +59,7 @@ export const CouplingEvaluationIssuesConfigs: {
   · 合并某些外部依赖类`,
     tableConfigs: [
       {
-        title: "问题列表（出向依赖或入向依赖 > 8 的类）",
+        title: (threshold) => `问题列表（出向依赖或入向依赖 > ${threshold} 的类）`,
         dataUrl: baseURL + "/hub/classes/above-threshold",
         columns: getHubColumns("class"),
       },
@@ -74,7 +74,7 @@ export const CouplingEvaluationIssuesConfigs: {
   · 合并某些外部依赖方法`,
     tableConfigs: [
       {
-        title: "问题列表（出向依赖或入向依赖 > 8 的方法）",
+        title: (threshold) => `问题列表（出向依赖或入向依赖 > ${threshold} 的方法）`,
         dataUrl: baseURL + "/hub/methods/above-threshold",
         columns: getHubColumns("method"),
       },
@@ -86,7 +86,7 @@ export const CouplingEvaluationIssuesConfigs: {
     suggestion: "把弱关联关系的方法和属性拆分到不同的类中。",
     tableConfigs: [
       {
-        title: "问题列表（缺乏内聚指标LCOM4 > 6 的类）",
+        title: (threshold) => `问题列表（缺乏内聚指标LCOM4 > ${threshold} 的类）`,
         dataUrl: baseURL + "/coupling/data-clumps",
         columns: dataClumpsColumns,
       },
@@ -101,7 +101,7 @@ export const CouplingEvaluationIssuesConfigs: {
   · 使用接口`,
     tableConfigs: [
       {
-        title: "问题列表（继承深度 > 6 的类）",
+        title: (threshold) => `问题列表（继承深度 > ${threshold} 的类）`,
         dataUrl: baseURL + "/coupling/deep-inheritance",
         columns: deepInheritenceColumns,
       },
@@ -115,22 +115,22 @@ export const CouplingEvaluationIssuesConfigs: {
   · 考虑更改模块间的其中一些依赖方向从而打破闭环，如在实现回调功能时可能会引入循环依赖关系。这时可以考虑通过应用像observer模式这样的设计模式来避免`,
     tableConfigs: [
       {
-        title: "问题列表（循环依赖的模块）",
+        title: () => "问题列表（循环依赖的模块）",
         dataUrl: baseURL + "/circular-dependency/module",
         columns: circularDependency,
       },
       {
-        title: "问题列表（循环依赖的包）",
+        title: () => "问题列表（循环依赖的包）",
         dataUrl: baseURL + "/circular-dependency/package",
         columns: circularDependency,
       },
       {
-        title: "问题列表（循环依赖的类）",
+        title: () => "问题列表（循环依赖的类）",
         dataUrl: baseURL + "/circular-dependency/class",
         columns: circularDependency,
       },
       {
-        title: "问题列表（循环依赖的方法）",
+        title: () => "问题列表（循环依赖的方法）",
         dataUrl: baseURL + "/circular-dependency/method",
         columns: circularDependency,
       },
