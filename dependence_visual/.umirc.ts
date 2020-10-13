@@ -28,58 +28,72 @@ export default defineConfig({
       exact: false,
       path: "/:systemId",
       component: "@/components/Business/Layouts/PageLayout",
-      routes: [{
-        path: "systemSummary/Summary",
-        component: "@/pages/systemSummary/Summary/Summary",
-      }, {
-        path: "systemEvolving/MeasureIndicators",
-        component: "@/pages/systemEvolving/MeasureIndicators/MeasureIndicators",
-      }, {
-        path: "systemEvaluation/Redundancy",
-        component: "@/pages/systemEvaluation/Redundancy/Redundancy",
-      }, {
-        path: "systemEvaluation/SizingEvaluation",
-        component: "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluation",
-      }, {
-        path: "systemEvaluation/CouplingEvaluation",
-        component: "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluation",
-      }, {
-        path: "systemEvaluation/cohesionEvaluation",
-        component: "@/pages/systemEvaluation/CohesionEvaluation/CohesionEvaluation",
-      }, {
-        path: "analysis/metric/:type?",
-        component: "@/pages/analysis/metrics",
-      }, {
-        path: "analysis/dependence",
-        component: "@/pages/analysis/dependence",
-      }, {
-        path: "systemEvolving",
-        component: "@/pages/systemEvolving/SystemEvolving",
-      }, {
-        path: "systemEvolving/QualityGateProfile",
-        component: "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile",
-      }, {
-        path: "system-evaluation/report/:id",
-        component: "@/pages/test/system-evaluation/report",
-      }, {
-        path: "test/system-evaluation",
-        component: "@/pages/test/system-evaluation",
-      }, {
-        path: "test/retrofit-tools/plsql-to-kotlin",
-        component: "@/pages/test/retrofit-tools/plsql2kotlin",
-      }, {
-        path: "test",
-        component: "@/pages/test",
-      }, {
-        path: "systemEvaluation/TestEvaluation",
-        component: "@/pages/systemEvaluation/TestEvaluation/TestEvaluation"
-      }, {
-        path: "systemEvolving/BadSmellThreshold",
-        component: "@/pages/systemEvolving/BadSmellThreshold/BadSmellThreshold"
-      }, {
-        path: "systemEvolving/Components",
-        component: "@/pages/systemEvolving/Components/Components"
-      }],
+      routes: [
+        {
+          path: "systemSummary/Summary",
+          component: "@/pages/systemSummary/Summary/Summary",
+        },
+        {
+          path: "systemEvolving/MeasureIndicators",
+          component: "@/pages/systemEvolving/MeasureIndicators/MeasureIndicators",
+        },
+        {
+          path: "systemEvaluation/Redundancy",
+          component: "@/pages/systemEvaluation/Redundancy/Redundancy",
+        },
+        {
+          path: "systemEvaluation/SizingEvaluation",
+          component: "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluation",
+        },
+        {
+          path: "systemEvaluation/CouplingEvaluation",
+          component: "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluation",
+        },
+        {
+          path: "systemEvaluation/cohesionEvaluation",
+          component: "@/pages/systemEvaluation/CohesionEvaluation/CohesionEvaluation",
+        },
+        {
+          path: "analysis/metric/:type?",
+          component: "@/pages/analysis/metrics",
+        },
+        {
+          path: "analysis/dependence",
+          component: "@/pages/analysis/dependence",
+        },
+        {
+          path: "systemEvolving",
+          component: "@/pages/systemEvolving/SystemEvolving",
+        },
+        {
+          path: "systemEvolving/QualityGateProfile",
+          component: "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile",
+        },
+        {
+          path: "system-evaluation/report/:id",
+          component: "@/pages/test/system-evaluation/report",
+        },
+        {
+          path: "test/system-evaluation",
+          component: "@/pages/test/system-evaluation",
+        },
+        {
+          path: "test/retrofit-tools/plsql-to-kotlin",
+          component: "@/pages/test/retrofit-tools/plsql2kotlin",
+        },
+        {
+          path: "test",
+          component: "@/pages/test",
+        },
+        {
+          path: "systemEvaluation/TestEvaluation",
+          component: "@/pages/systemEvaluation/TestEvaluation/TestEvaluation",
+        },
+        {
+          path: "systemEvolving/BadSmellThreshold",
+          component: "@/pages/systemEvolving/BadSmellThreshold/BadSmellThreshold",
+        },
+      ],
     },
   ],
   theme: {
