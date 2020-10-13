@@ -74,23 +74,53 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
     tableConfigs: [
       {
         title: () => "只有一个继承/实现的接口/抽象类",
-        dataUrl: `/api/module/systems/${systemId}/over-generalization/class/one-extends`,
+        dataUrl: `/api/module/systems/${systemId}/redundancy/class/over-generalization`,
         columns: [
           {
-            title: "模块",
-            dataIndex: "moduleName",
-            key: "moduleName",
+            title: "子类名",
+            dataIndex: "childClassName",
+            key: "childClassName",
+            render: (text, record) => {
+              return classColumnRenderAsLink(text, {
+                ...record,
+                packageName: record.childPackageName,
+                moduleName: record.childModuleName,
+                className: record.childClassName
+              });
+            },
           },
           {
-            title: "包",
-            dataIndex: "packageName",
-            key: "packageName",
+            title: "子模块名",
+            dataIndex: "childModuleName",
+            key: "childModuleName",
           },
           {
-            title: "类",
-            dataIndex: "className",
-            key: "className",
-            render: classColumnRenderAsLink,
+            title: "子包名",
+            dataIndex: "childPackageName",
+            key: "childPackageName",
+          },
+          {
+            title: "父类名",
+            dataIndex: "parentClassName",
+            key: "parentClassName",
+          },
+          {
+            title: "父模块名",
+            dataIndex: "parentModuleName",
+            key: "parentModuleName",
+          },
+          {
+            title: "父包名",
+            dataIndex: "parentPackageName",
+            key: "parentPackageName",
+            render: (text, record) => {
+              return classColumnRenderAsLink(text, {
+                ...record,
+                packageName: record.parentPackageName,
+                moduleName: record.parentModuleName,
+                className: record.parentClassName
+              });
+            },
           },
         ],
       },
