@@ -4,7 +4,8 @@
 框架：React + Umijs + [AntDesign](https://ant.design/docs/react/introduce-cn)
 
 ## 文件夹和文件命名规范
-- `该文件/文件夹是否为组件` ？`首字母大写+驼峰命名` **:** `首字母小写+驼峰命名`
+- `该文件/文件夹是组件`  => `首字母大写+驼峰命名`
+- `该文件/文件夹不是组件` => `首字母小写+驼峰命名`
 - 若存在子组件，则应该新建`components`文件夹放入
 > 配置文件命名以 `.config.ts` 结尾。（例如：DemoComponent.config.ts）
 
