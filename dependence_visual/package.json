@@ -36,7 +36,7 @@
     "xlsx": "^0.16.3"
   },
   "scripts": {
-    "start": "umi dev --open",
+    "start": "umi dev",
     "start-zh": "cross-env BUILD_TARGET=zh umi dev",
     "build": "umi build",
     "build-zh": "cross-env BUILD_TARGET=zh umi build",
