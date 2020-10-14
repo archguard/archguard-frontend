@@ -1,7 +1,7 @@
 ## 技术选型
 
 语言：TypeScript
-框架：React + Umijs + AntDesign
+框架：React + Umijs + [AntDesign](https://ant.design/docs/react/introduce-cn)
 
 ## 文件夹和文件命名规范
 - `该文件/文件夹是否为组件` ？`首字母大写+驼峰命名` **:** `首字母小写+驼峰命名`
@@ -55,6 +55,7 @@ npm install arch-guard-cli -g
 - models 全局ts类型定义
 - hooks 全局逻辑复用
 - umirc.ts 路由配置
+- src/components/Business/Layouts/PageSider.tsx 菜单配置 
 
 ## 依赖管理工具
 yarn
