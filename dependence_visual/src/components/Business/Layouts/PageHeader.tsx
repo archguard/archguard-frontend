@@ -5,6 +5,7 @@ import { storage } from "@/store/storage/sessionStorage";
 import { queryHotFiles } from "@/api/module/hotFile";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { useMount } from "ahooks";
+import { history } from "umi";
 
 export enum FEATURES {
   CODE_SCANNER = "CODE_SCANNER",
@@ -62,12 +63,17 @@ export default function PageHeader(props: any) {
     <div>
       <div style={{ float: "left" }}>
         <span
+          title="点击返回系统选择页面"
           style={{
             marginLeft: "24px",
             color: "#ffffff",
             fontStyle: "italic",
             fontSize: "20px",
             fontWeight: 800,
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            history.push("/multipleSystem");
           }}
         >
           ArchGuard
