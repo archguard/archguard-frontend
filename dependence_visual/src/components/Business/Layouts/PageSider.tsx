@@ -46,16 +46,16 @@ const menuList = configForTargets({
       icon: <CloudSyncOutlined />,
       children: [
         {
-          key: "/systemEvolving/QualityGateProfile",
-          text: "质量阀",
-        },
-        {
           key: "/systemEvolving/MeasureIndicators",
           text: "指标看板",
         },
         {
           key: "/systemEvolving/BadSmellThreshold",
           text: "坏味道阈值",
+        },
+        {
+          key: "/systemEvolving/QualityGateProfile",
+          text: "质量阀",
         },
       ],
     },
