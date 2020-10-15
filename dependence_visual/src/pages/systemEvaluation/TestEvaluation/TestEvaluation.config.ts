@@ -5,7 +5,7 @@ import {
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
 import { baseURL } from "@/api/module/config";
 
-const tab = {
+export const tab = {
   sleepTest: "包含休眠的测试",
   ignore: "被忽略的测试",
   unAssert: "缺乏校验的测试",
