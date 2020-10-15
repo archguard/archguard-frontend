@@ -78,6 +78,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
         columns={columns}
         rowKey="id"
         expandable={expandable}
+        scroll={{ x: true }}
         pagination={{
           total: count,
           pageSize: numberPerPage,
