@@ -3,6 +3,7 @@ import { Chart, Tooltip, Interval, Coordinate, Interaction, Legend } from "bizch
 import styles from "./QualityEvaluation.less";
 import { Overview } from "@/api/module/codeLine";
 import { ValueOf } from "@/utils/utils";
+import { BaTipsIcon } from '@/components/Basic/TipsIcon/TipsIcon';
 
 interface QualityEvaluation {
   name?: string;
@@ -44,6 +45,19 @@ const scale = {
   },
 };
 
+function StructuredText(title: string, body: string[]) {
+  return (<div>
+    {title}:
+    {body.map(line => { return <div key={line}>・ {line}</div> })}
+  </div>);
+}
+
+const descriptionText = StructuredText('根据您系统所选的‘坏味道阈值’，我们对不同维度的评估结果进行了1-4级的划分',
+  ['1级为优秀，甚少检获坏味道，架构质量棒棒哒',
+    '2级为良好，存在坏味道、但风险、危害都还可控',
+    '3级为警惕，坏味道已累积不少，请及时悬崖勒马',
+    '4级为危险，坏味道数量远超平均水平，如果不希望系统被人道毁灭，需预留足够时间进行重构改造']);
+
 function QualityEvaluation(props: QualityEvaluation) {
   const { data, name } = props;
   const formattedData = formatData(data);
@@ -66,7 +80,10 @@ function QualityEvaluation(props: QualityEvaluation) {
         <Tooltip shared />
         <Interaction type="active-region" />
       </Chart>
-      <div className={styles.name}>{name}</div>
+      <div className={styles.name}>
+        {name}
+        <BaTipsIcon text={descriptionText}>i</BaTipsIcon>
+      </div>
     </div>
   );
 }
