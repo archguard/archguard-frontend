@@ -17,4 +17,4 @@ export interface BadSmellOption {
   thresholds: BadSmellThreshold[];
 }
 
-export const useBadSmellOption = () => useGet<BadSmellOption>(`${baseURL}/badsmell-thresholds`);
+export const useBadSmellOption = () => useGet<BadSmellOption[]>(`${baseURL}/badsmell-thresholds`);

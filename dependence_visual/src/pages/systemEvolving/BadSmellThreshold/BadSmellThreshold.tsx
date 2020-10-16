@@ -21,19 +21,20 @@ const BadSmellThreshold = () => {
     <div className={styles.BadSmellThreshold}>
       <div>请选择合适您系统的指标阈值：</div>
       <Collapse accordion ghost>
-        {[data].map((badSmellOption) => {
-          if (!badSmellOption) return null;
-          return (
-            <Collapse.Panel
-              className={styles.collapseItem}
-              header={badSmellOption.title}
-              extra={renderRadio(badSmellOption)}
-              key={badSmellOption.id}
-            >
-              <BadSmellThresholdTable data={badSmellOption.thresholds}></BadSmellThresholdTable>
-            </Collapse.Panel>
-          );
-        })}
+        {data &&
+          data.map((badSmellOption) => {
+            if (!badSmellOption) return null;
+            return (
+              <Collapse.Panel
+                className={styles.collapseItem}
+                header={badSmellOption.title}
+                extra={renderRadio(badSmellOption)}
+                key={badSmellOption.id}
+              >
+                <BadSmellThresholdTable data={badSmellOption.thresholds}></BadSmellThresholdTable>
+              </Collapse.Panel>
+            );
+          })}
       </Collapse>
     </div>
   );
