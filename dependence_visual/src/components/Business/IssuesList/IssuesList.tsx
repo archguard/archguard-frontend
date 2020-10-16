@@ -1,6 +1,6 @@
 import "./IssuesList.less";
 import React, { useState, useEffect } from "react";
-import { BuPagerTable } from "@/components/Business/PagerTable/PagerTable";
+import { BuPagerTable, PagerTableData } from "@/components/Business/PagerTable/PagerTable";
 import { BaLabelDescription } from "@/components/Basic/LabelDescription/LabelDescription";
 import { ExpandableConfig } from "antd/es/table/interface";
 
@@ -26,7 +26,6 @@ export interface IssuesConfig {
 
 interface IssuesListProps {
   issuesConfig: IssuesConfig;
-  thresholds?: string[] | number[];
   parameter?: any;
   onSortChange?(sorter: any): void;
 }
@@ -37,7 +36,7 @@ const IssuesList = (props: IssuesListProps) => {
   const [count, setCount] = useState(0);
   const [tableCounts, setTableCounts] = useState(tableConfigs.map(() => 0));
   const [parameter, setParameter] = useState(props.parameter);
-  const [threshold, setThreshold] = useState(props.thresholds);
+  const [thresholds, setThresholds] = useState<number[]>([]);
 
   const getColor = (count: number) => {
     return count === 0 ? "green" : "red";
@@ -46,10 +45,6 @@ const IssuesList = (props: IssuesListProps) => {
   useEffect(() => {
     setParameter(props.parameter);
   }, [props.parameter]);
-
-  useEffect(() => {
-    setThreshold(props.thresholds);
-  }, [props.thresholds]);
 
   useEffect(() => {
     setCount(tableCounts.reduce((sum, current) => sum + current));
@@ -67,15 +62,19 @@ const IssuesList = (props: IssuesListProps) => {
         {tableConfigs.map((tableConfig, index) => (
           <div key={index} className="issues-table">
             <div className="issues-table-title">
-              <strong>{tableConfig.title(threshold ? threshold[index] : undefined)}</strong>
+              <strong>
+                {tableConfig.title(thresholds.length ? thresholds[index] : undefined)}
+              </strong>
               {tableCounts.length > 1 ? (
                 <span className={getColor(tableCounts[index])}>{tableCounts[index]}</span>
               ) : null}
             </div>
             <BuPagerTable
-              onCountChange={(count) => {
-                tableCounts[index] = count;
+              onDataChange={(data: PagerTableData) => {
+                thresholds[index] = data.threshold;
+                tableCounts[index] = data.count;
                 setTableCounts([...tableCounts]);
+                setThresholds([...thresholds]);
               }}
               onSortChange={onSortChange}
               columns={tableConfig.columns}

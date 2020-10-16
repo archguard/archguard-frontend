@@ -14,7 +14,7 @@ interface PagerTableProps {
   onSortChange?: (sorter: any) => void;
   onFilterChange?: (filter: Record<string, (string | number)[] | null>) => void;
   onPaginationChange?: (pagination: TablePaginationConfig) => void;
-  onCountChange: (count: number) => void;
+  onDataChange: (data: PagerTableData) => void;
   columns: Array<{
     title: string;
     dataIndex: string;
@@ -24,10 +24,11 @@ interface PagerTableProps {
 
 type OptionalArryObj = Array<{ [propName: string]: any }>;
 
-interface TableData {
+export interface PagerTableData {
   count: number;
   currentPageNumber: number;
   data: OptionalArryObj;
+  [key: string]: any;
 }
 
 const autoAddUniqueKeys = (dataList: OptionalArryObj) => {
@@ -46,7 +47,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
     url,
     expandable,
     numberPerPage = DEFAULt_NUMBER_PER_PAGE,
-    onCountChange,
+    onDataChange,
     onSortChange,
     onFilterChange,
     onPaginationChange,
@@ -56,15 +57,15 @@ export const BuPagerTable = (props: PagerTableProps) => {
   const [tableData, setTableData] = useState<OptionalArryObj>([]);
 
   const getTableData = () => {
-    axios<TableData>({
+    axios<PagerTableData>({
       baseURL: "",
       url,
       method: "GET",
       params: { currentPageNumber, numberPerPage, ...props.parameter },
-    }).then(({ count, data }) => {
-      setTableData(autoAddUniqueKeys(data));
-      setCount(count);
-      onCountChange(count);
+    }).then((res) => {
+      setTableData(autoAddUniqueKeys(res.data));
+      setCount(res.count);
+      onDataChange(res);
     });
   };
 

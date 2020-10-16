@@ -1,50 +1,39 @@
+import { BadSmellOption, useBadSmellOption } from "@/api/module/badSmellThresholds";
 import { Collapse, Radio } from "antd";
-import React, { useState } from "react";
+import React from "react";
 import styles from "./BadSmellThreshold.less";
 import BadSmellThresholdTable from "./components/BadSmellThresholdTable";
 
 const BadSmellThreshold = () => {
-  const [level, setLevel] = useState(1);
-
-  const renderRadio = (val: number | string) => (
+  const renderRadio = (badSmellOption: BadSmellOption) => (
     <Radio
-      value={val}
-      checked={val === level}
-      onChange={(e) => setLevel(e.target.value)}
+      checked={badSmellOption.selected}
       onClick={(e) => e.stopPropagation()}
+      disabled={!badSmellOption.selected}
     >
       选择
     </Radio>
   );
 
+  const { data } = useBadSmellOption();
+
   return (
     <div className={styles.BadSmellThreshold}>
       <div>请选择合适您系统的指标阈值：</div>
-      <Collapse accordion ghost defaultActiveKey={level}>
-        <Collapse.Panel
-          className={styles.collapseItem}
-          header="架构评估一级指标"
-          extra={renderRadio(1)}
-          key={1}
-        >
-          <BadSmellThresholdTable></BadSmellThresholdTable>
-        </Collapse.Panel>
-        <Collapse.Panel
-          className={styles.collapseItem}
-          header="架构评估二级指标"
-          extra={renderRadio(2)}
-          key={2}
-        >
-          <BadSmellThresholdTable></BadSmellThresholdTable>
-        </Collapse.Panel>
-        <Collapse.Panel
-          className={styles.collapseItem}
-          header="架构评估三级指标"
-          extra={renderRadio(3)}
-          key={3}
-        >
-          <BadSmellThresholdTable></BadSmellThresholdTable>
-        </Collapse.Panel>
+      <Collapse accordion ghost>
+        {[data].map((badSmellOption) => {
+          if (!badSmellOption) return null;
+          return (
+            <Collapse.Panel
+              className={styles.collapseItem}
+              header={badSmellOption.title}
+              extra={renderRadio(badSmellOption)}
+              key={badSmellOption.id}
+            >
+              <BadSmellThresholdTable data={badSmellOption.thresholds}></BadSmellThresholdTable>
+            </Collapse.Panel>
+          );
+        })}
       </Collapse>
     </div>
   );

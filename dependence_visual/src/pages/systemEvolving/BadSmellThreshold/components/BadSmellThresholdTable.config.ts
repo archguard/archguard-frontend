@@ -1,8 +1,28 @@
+export interface BadSmellTableData {
+  key?: string;
+  dimension: string;
+  badSmell: string;
+  condition: string;
+  threshold: number;
+  rowspan?: number;
+}
+
 export const BadSmellThresholdTableColumns = [
   {
     title: "评估维度",
     dataIndex: "dimension",
     key: "dimension",
+    render: (text: string, row: BadSmellTableData) => {
+      if (row.rowspan !== undefined) {
+        return {
+          children: text,
+          props: {
+            rowSpan: row.rowspan,
+          },
+        };
+      }
+      return text;
+    },
   },
   {
     title: "坏味道",
@@ -11,8 +31,8 @@ export const BadSmellThresholdTableColumns = [
   },
   {
     title: "判断条件",
-    dataIndex: "description",
-    key: "description",
+    dataIndex: "condition",
+    key: "condition",
   },
   {
     title: "指标阈值",
@@ -23,45 +43,35 @@ export const BadSmellThresholdTableColumns = [
 
 export const BadSmellThresholdTableData = [
   {
-    key: "oversizedMethodByLine",
-    dimension: "体量维度",
-    badSmell: "过大的方法",
-    description: "方法代码行数 > 指标阈值",
-    threshold: 30,
+    name: "体量维度",
+    threshold: [
+      {
+        name: "过大的方法",
+        condition: "方法代码行数 > 指标阈值",
+        value: 30,
+      },
+      {
+        name: "过大的方法",
+        condition: "方法个数 > 指标阈值",
+        value: 20,
+      },
+    ],
   },
   {
-    key: "oversizedMethodByCount",
-    dimension: "体量维度",
-    badSmell: "过大的方法",
-    description: "方法个数 > 指标阈值",
-    threshold: 20,
-  },
-  {
-    key: "oversizedClassByLine",
-    dimension: "体量维度",
-    badSmell: "过大的类",
-    description: "类代码行数 > 指标阈值",
-    threshold: 600,
-  },
-  {
-    key: "oversizedClassByCount",
-    dimension: "体量维度",
-    badSmell: "过大的类",
-    description: "类个数 > 指标阈值",
-    threshold: 20,
-  },
-  {
-    key: "oversizedPackageByLine",
-    dimension: "体量维度",
-    badSmell: "过大的包",
-    description: "包代码行数 > 指标阈值",
-    threshold: 12000,
-  },
-  {
-    key: "oversizedPackageByCount",
-    dimension: "体量维度",
-    badSmell: "过大的包",
-    description: "包的个数 > 指标阈值",
-    threshold: 20,
+    name: "耦合维度",
+    threshold: [
+      {
+        key: "dataMud",
+        name: "数据泥团",
+        condition: "缺乏内聚指标LCOM4 > 指标阈值",
+        value: 6,
+      },
+      {
+        key: "deepInheritance",
+        name: "过深继承",
+        condition: "继承深度 > 指标阈值",
+        value: 6,
+      },
+    ],
   },
 ];
