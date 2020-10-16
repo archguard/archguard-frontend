@@ -27,7 +27,7 @@ export const SizingEvaluationIssuesConfigs: {
   · 并且，充分使用编辑器内置的重构菜单进行自动重构（如Intellij的Refactor-> Extract Method)，从而避免人手操作导致的失误。`,
     tableConfigs: [
       {
-        title: (threshold = 30) => `问题列表（代码行数 > ${threshold} 行的方法）`,
+        title: (threshold) => `问题列表（代码行数 > ${threshold} 行的方法）`,
         dataUrl: baseURL + "/sizing/methods/above-threshold",
         columns: methodColumns,
       },
@@ -44,12 +44,12 @@ export const SizingEvaluationIssuesConfigs: {
   · 把重复代码抽取到公共方法或公共类中。`,
     tableConfigs: [
       {
-        title: (threshold = 600) => `问题列表（代码行数 > ${threshold} 行的类）`,
+        title: (threshold) => `问题列表（代码行数 > ${threshold} 行的类）`,
         dataUrl: baseURL + "/sizing/classes/above-line-threshold",
         columns: classColumnsByLines,
       },
       {
-        title: (threshold = 20) => `问题列表（类中包含的方法 > ${threshold} 个的类）`,
+        title: (threshold) => `问题列表（类中包含的方法 > ${threshold} 个的类）`,
         dataUrl: baseURL + "/sizing/classes/above-method-count-threshold",
         columns: classColumnsByMethodCount,
       },
@@ -62,12 +62,12 @@ export const SizingEvaluationIssuesConfigs: {
       "拆包。把不同职责的类分到不同的包结构中，具体可参考如整洁架构、六边形架构等的规范。",
     tableConfigs: [
       {
-        title: (threshold = 12000) => `问题列表（代码行数 > ${threshold} 行的包）`,
+        title: (threshold) => `问题列表（代码行数 > ${threshold} 行的包）`,
         dataUrl: baseURL + "/sizing/packages/above-line-threshold",
         columns: packageColumns,
       },
       {
-        title: (threshold = 20) => `问题列表（所含的类 > ${threshold} 个的包）`,
+        title: (threshold) => `问题列表（所含的类 > ${threshold} 个的包）`,
         dataUrl: baseURL + "/sizing/packages/above-threshold",
         columns: packageColumns,
       },
@@ -79,12 +79,12 @@ export const SizingEvaluationIssuesConfigs: {
     suggestion: "拆模块。把不同职责的包拆分到不同的模块中。",
     tableConfigs: [
       {
-        title: (threshold = 240000) => `问题列表（代码行数 > ${threshold} 行的模块）`,
+        title: (threshold) => `问题列表（代码行数 > ${threshold} 行的模块）`,
         dataUrl: baseURL + "/sizing/modules/above-line-threshold",
         columns: moduleColumns,
       },
       {
-        title: (threshold = 20) => `问题列表（所含Package包 > ${threshold} 个的模块）`,
+        title: (threshold) => `问题列表（所含Package包 > ${threshold} 个的模块）`,
         dataUrl: baseURL + "/sizing/modules/above-threshold",
         columns: moduleColumns,
       },
