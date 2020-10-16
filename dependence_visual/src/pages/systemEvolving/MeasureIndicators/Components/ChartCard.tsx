@@ -6,6 +6,7 @@ import { CohesionEvaluationIssuesConfigs } from "@/pages/systemEvaluation/Cohesi
 import { CouplingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluationIssuesList.config";
 import { RedundancyConfig } from "@/pages/systemEvaluation/Redundancy/Redundancy.config";
 import { SizingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluationIssuesList.config";
+import { TEST_EVALUATION_CONFIG } from '@/pages/systemEvaluation/TestEvaluation/TestEvaluation.config';
 import { ValueOf } from "@/utils/utils";
 import { Chart, Area } from "bizcharts";
 import React from "react";
@@ -33,6 +34,7 @@ export enum DashboardGroup {
   SIZING = "体量维度",
 }
 
+//TODO:  需要重构，不要直接使用中文做key，因为中文描述可能会改变,需要和后端商量每个坏味道的 枚举值
 export const badSmellWording = {
   数据泥团: DATA_CLUMPS.badSmellDescription,
   过深继承: DEEP_INHERITENCE.badSmellDescription,
@@ -49,6 +51,7 @@ export const badSmellWording = {
   过度泛化: RedundancyConfig.generalize.badSmellDescription,
   数据类: CohesionEvaluationIssuesConfigs.DATA_CLASS.badSmellDescription,
   散弹式修改: CohesionEvaluationIssuesConfigs.SHOTGUN_SURGERY.badSmellDescription,
+
 } as const;
 
 type badSmellWordingValues = ValueOf<typeof badSmellWording>;

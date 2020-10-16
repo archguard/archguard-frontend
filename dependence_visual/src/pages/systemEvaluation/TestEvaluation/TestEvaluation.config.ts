@@ -5,7 +5,7 @@ import {
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
 import { baseURL } from "@/api/module/config";
 
-export const tab = {
+export const TEST_EVALUATION_TAB = {
   sleepTest: "包含休眠的测试",
   ignore: "被忽略的测试",
   unAssert: "缺乏校验的测试",
@@ -14,10 +14,9 @@ export const tab = {
   staticMethod: "静态方法",
 } as const;
 
-export const config: Record<keyof typeof tab, IssuesConfig> = {
-
+export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, IssuesConfig> = {
   sleepTest: {
-    title: tab.sleepTest,
+    title: TEST_EVALUATION_TAB.sleepTest,
     badSmellDescription:
       "测试用例中包含 Sleep 休眠语句，常见于异步测试场景，或为了规避不同测试用例中某些操作的依赖和冲突。",
     suggestion: `如 Robert C. Martin 在《代码整洁之道》所说的那样，好的测试应该是快速（Fast）、独立（Indendent）、可重复（Repeatable）、自足验证（Self-Validating）、及时（Timely）的
@@ -55,7 +54,7 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
     ],
   },
   ignore: {
-    title: tab.ignore,
+    title: TEST_EVALUATION_TAB.ignore,
     badSmellDescription: "被忽略（Ignore、Disabled）的测试用例",
     suggestion: `当需求修改导致测试用例失败、失效了，应该尽快修复或移除而不是忽略。`,
     tableConfigs: [
@@ -90,7 +89,7 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
     ],
   },
   unAssert: {
-    title: tab.unAssert,
+    title: TEST_EVALUATION_TAB.unAssert,
     badSmellDescription: "缺乏了自动校验的测试用例，这将无法达到自动验证结果的目的。",
     suggestion: `为每个测试用例都添加足够的自动校验 Assert 语句`,
     tableConfigs: [
@@ -125,7 +124,7 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
     ],
   },
   duplicateAssert: {
-    title: tab.duplicateAssert,
+    title: TEST_EVALUATION_TAB.duplicateAssert,
     badSmellDescription: "包含了过多 Assert 语句的测试用例",
     suggestion: `建议每个测试用例聚焦于一个测试场景和目的，不要企图编写一个各种场景面面俱到的巨无霸测试，这将让后期的维护更加困难`,
     tableConfigs: [
@@ -160,7 +159,7 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
     ],
   },
   redundantPrint: {
-    title: tab.redundantPrint,
+    title: TEST_EVALUATION_TAB.redundantPrint,
     badSmellDescription: "包含了过多调试打印信息的测试用例",
     suggestion: `自动化测试用例中，应该使用自动的 Assert 语句，替代需要人眼观察的 Print`,
     tableConfigs: [
@@ -195,7 +194,7 @@ export const config: Record<keyof typeof tab, IssuesConfig> = {
     ],
   },
   staticMethod: {
-    title: tab.staticMethod,
+    title: TEST_EVALUATION_TAB.staticMethod,
     badSmellDescription:
       "静态方法本身并没有问题，但当方法被定义为静态之后，尤其当方法里面还涉及外部依赖的时候，我们就需要花更多的时间、手段才能为它们构建测试替身从而进行单元测试，从而影响了后续添加测试的效率；那些能支持静态方法替身的测试库往往运行效率也比较低。",
     suggestion: `避免把涉及外部依赖（如三方服务调用、基础设施调用等）的代码放在静态方法里，如果静态方法里面只是某些固定的算法或转换逻辑，那我们后续添加测试的时候就不一定需要为它们添加测试替身。`,
