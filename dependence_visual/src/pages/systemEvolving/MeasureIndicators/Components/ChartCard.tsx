@@ -6,7 +6,7 @@ import { CohesionEvaluationIssuesConfigs } from "@/pages/systemEvaluation/Cohesi
 import { CouplingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluationIssuesList.config";
 import { RedundancyConfig } from "@/pages/systemEvaluation/Redundancy/Redundancy.config";
 import { SizingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluationIssuesList.config";
-import { TEST_EVALUATION_CONFIG } from '@/pages/systemEvaluation/TestEvaluation/TestEvaluation.config';
+import { TEST_EVALUATION_CONFIG } from "@/pages/systemEvaluation/TestEvaluation/TestEvaluation.config";
 import { ValueOf } from "@/utils/utils";
 import { Chart, Area } from "bizcharts";
 import React from "react";
@@ -51,7 +51,9 @@ export const badSmellWording = {
   过度泛化: RedundancyConfig.generalize.badSmellDescription,
   数据类: CohesionEvaluationIssuesConfigs.DATA_CLASS.badSmellDescription,
   散弹式修改: CohesionEvaluationIssuesConfigs.SHOTGUN_SURGERY.badSmellDescription,
-
+  被忽略的测试: TEST_EVALUATION_CONFIG.ignore.badSmellDescription,
+  含Sleep的测试: TEST_EVALUATION_CONFIG.sleepTest.badSmellDescription,
+  缺乏校验的测试: TEST_EVALUATION_CONFIG.unAssert.badSmellDescription,
 } as const;
 
 type badSmellWordingValues = ValueOf<typeof badSmellWording>;
