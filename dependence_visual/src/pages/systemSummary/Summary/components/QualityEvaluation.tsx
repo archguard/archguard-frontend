@@ -18,11 +18,11 @@ export const LEVEL_SCORE = {
 } as const;
 
 const CATEGORY_CONFIG = {
-  体量过大: "#3AAFAF",
-  耦合过高: "#FFC655",
-  设计冗余: "#4C6EBD",
-  内聚不足: "#FFA255",
-  测试薄弱: "#A841BA",
+  体量过大: "#1E1D20",
+  耦合过高: "#B66636",
+  设计冗余: "#547A56",
+  内聚不足: "#BDAE5B",
+  测试薄弱: "#515A7C",
 } as const;
 
 function getColor(category: keyof typeof CATEGORY_CONFIG): ValueOf<typeof CATEGORY_CONFIG> {
