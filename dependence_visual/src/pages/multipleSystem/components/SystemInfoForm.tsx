@@ -140,7 +140,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
                     ) : null}
                   </div>
                 ))}
-                <Form.Item>
+                {/* <Form.Item>
                   <Button
                     type="dashed"
                     onClick={() => {
@@ -149,7 +149,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
                   >
                     <PlusOutlined /> 添加仓库地址
                   </Button>
-                </Form.Item>
+                </Form.Item> */}
               </div>
             );
           }}
