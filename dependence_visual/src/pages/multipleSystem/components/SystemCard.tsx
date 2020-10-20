@@ -65,10 +65,8 @@ const SystemCard = (props: SystemCardProps) => {
   };
 
   const recentScannedTime = (systemInfo: SystemInfo) => {
-    const updatedTime = new Date(systemInfo.updatedTime);
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
-    const newUpdatedTime = updatedTime.toLocaleTimeString('en-US', options);
-    return newUpdatedTime;
+    const updatedTime = new Date(systemInfo.updatedTime).toLocaleString('en-US', { hour12: false });
+    return updatedTime;
   }
 
   return systemInfo ? (
