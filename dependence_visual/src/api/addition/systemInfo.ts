@@ -11,6 +11,7 @@ export interface SystemInfo {
   password: string;
   sql: string;
   scanned: "NONE" | "SCANNING" | "SCANNED" | "FAILED";
+  updatedTime: number;
 }
 
 export function querySystemInfo() {

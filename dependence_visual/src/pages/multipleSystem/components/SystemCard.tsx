@@ -58,10 +58,10 @@ const SystemCard = (props: SystemCardProps) => {
         扫描失败，重新扫描
       </Button>
     ) : (
-      <Button type="primary" onClick={onScannedClick}>
-        扫描
-      </Button>
-    );
+            <Button type="primary" onClick={onScannedClick}>
+              扫描
+            </Button>
+          );
   };
 
   return systemInfo ? (
@@ -84,19 +84,19 @@ const SystemCard = (props: SystemCardProps) => {
         <div className="card-btn">{renderSystemButton(systemInfo)}</div>
       </div>
       <div className="multiple-system-card-title">
-        <Meta title={systemInfo.systemName} description={systemInfo.repo.join(", ")} />
+        <Meta title={systemInfo.systemName} description={new Date(systemInfo.updatedTime).toLocaleDateString()} />
       </div>
     </Card>
   ) : (
-    <Card hoverable className="multiple-system-card" onClick={onClick}>
-      <div className="multiple-system-card-content add">
-        <PlusOutlined />
-      </div>
-      <div className="multiple-system-card-title add">
-        <span>新增系统</span>
-      </div>
-    </Card>
-  );
+      <Card hoverable className="multiple-system-card" onClick={onClick}>
+        <div className="multiple-system-card-content add">
+          <PlusOutlined />
+        </div>
+        <div className="multiple-system-card-title add">
+          <span>新增系统</span>
+        </div>
+      </Card>
+    );
 };
 
 export default SystemCard;
