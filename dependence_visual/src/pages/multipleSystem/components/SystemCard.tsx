@@ -64,6 +64,13 @@ const SystemCard = (props: SystemCardProps) => {
           );
   };
 
+  const recentScannedTime = (systemInfo: SystemInfo) => {
+    const updatedTime = new Date(systemInfo.updatedTime);
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: false };
+    const newUpdatedTime = updatedTime.toLocaleTimeString('en-US', options);
+    return newUpdatedTime;
+  }
+
   return systemInfo ? (
     <Card hoverable className="multiple-system-card">
       <div className="multiple-system-card-content">
@@ -84,7 +91,7 @@ const SystemCard = (props: SystemCardProps) => {
         <div className="card-btn">{renderSystemButton(systemInfo)}</div>
       </div>
       <div className="multiple-system-card-title">
-        <Meta title={systemInfo.systemName} description={new Date(systemInfo.updatedTime).toLocaleDateString()} />
+        <Meta title={systemInfo.systemName} description={`最近扫描时间: ${recentScannedTime(systemInfo)}`} />
       </div>
     </Card>
   ) : (
