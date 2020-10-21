@@ -72,7 +72,9 @@ function ChartItem(props: ChartItemProps) {
     },
     [ChartField.x]: {
       range: [0, 1],
-      tickCount: 1,
+      tickCount: graphData.length,
+      type: 'time',
+      mask: 'MM-DD',
     },
   };
 
