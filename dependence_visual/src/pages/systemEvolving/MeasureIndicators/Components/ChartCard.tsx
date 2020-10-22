@@ -8,7 +8,7 @@ import { RedundancyConfig } from "@/pages/systemEvaluation/Redundancy/Redundancy
 import { SizingEvaluationIssuesConfigs } from "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluationIssuesList.config";
 import { TEST_EVALUATION_CONFIG } from "@/pages/systemEvaluation/TestEvaluation/TestEvaluation.config";
 import { ValueOf } from "@/utils/utils";
-import { Chart, Area } from "bizcharts";
+import { Chart, Area, Axis } from "bizcharts";
 import React from "react";
 import styles from "./ChartCard.less";
 import { IndicatorLevel } from "./Group";
@@ -80,8 +80,9 @@ function ChartItem(props: ChartItemProps) {
 
   return (
     <div>
-      <Chart scale={scale} height={100} width={200} data={graphData} autoFit>
+      <Chart scale={scale} height={150} width={300} data={graphData} padding={[10, 20, 40, 30]} autoFit>
         <Area color={color} position={`${ChartField.x}*${ChartField.y}`} />
+        <Axis name={`${ChartField.x}`} label={{ offset: 25, rotate: 45 }} />
       </Chart>
     </div>
   );
