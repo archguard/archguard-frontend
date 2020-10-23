@@ -36,7 +36,7 @@ const MultipleSystem = () => {
 
   useMount(() => {
     storage.clear();
-    setUser({ name: "张扬", account: "Zhang102" });
+    setUser({ name: "陈大文", account: "Chen102" });
   });
 
   useEffect(() => {
