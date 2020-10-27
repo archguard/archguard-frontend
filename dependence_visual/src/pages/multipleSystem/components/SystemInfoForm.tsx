@@ -87,12 +87,6 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
             ))}
           </Select>
         </Form.Item>
-        <Form.Item name="username" label="仓库用户名">
-          <Input placeholder="请输入用户名" />
-        </Form.Item>
-        <Form.Item name="password" label="仓库密码">
-          <Input.Password placeholder="请输入密码" />
-        </Form.Item>
         <Form.List name="repo">
           {(fields, { add, remove }) => {
             return (
@@ -154,6 +148,24 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
             );
           }}
         </Form.List>
+        <Form.Item
+          name="branch"
+          label="分支名称"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          required
+        >
+          <Input defaultValue="master" />
+        </Form.Item>
+        <Form.Item name="username" label="仓库用户名">
+          <Input placeholder="请输入用户名" />
+        </Form.Item>
+        <Form.Item name="password" label="仓库密码">
+          <Input.Password placeholder="请输入密码" />
+        </Form.Item>
       </Form>
     </div>
   );
