@@ -1,10 +1,11 @@
 import React, { forwardRef, useImperativeHandle, useEffect } from "react";
-import { Form, Input, Select, Button } from "antd";
+import { Form, Input, Select, Button, Steps, message } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { Store } from "antd/lib/form/interface";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
+import { useState } from 'react';
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
@@ -15,6 +16,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
   const [form] = useForm();
   const [systemList] = useSystemList();
   const systemNames = systemList?.value!.map((item) => item.systemName);
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     form.setFieldsValue(data as Store);
@@ -46,7 +48,17 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     return valueChanged && isIncluded;
   };
 
-  return (
+  const nextButton = () => {
+    setCurrent(current + 1);
+  };
+
+  const prevButton = () => {
+    setCurrent(current - 1);
+  };
+
+  const { Step } = Steps;
+
+  const systemInfoPage = (
     <div className="system-info-form">
       <h2>{data ? "编辑系统信息" : "创建新系统"}</h2>
       <Form
@@ -134,16 +146,6 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
                     ) : null}
                   </div>
                 ))}
-                {/* <Form.Item>
-                  <Button
-                    type="dashed"
-                    onClick={() => {
-                      add();
-                    }}
-                  >
-                    <PlusOutlined /> 添加仓库地址
-                  </Button>
-                </Form.Item> */}
               </div>
             );
           }}
@@ -168,6 +170,45 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         </Form.Item>
       </Form>
     </div>
+  );
+
+  const steps = [
+    {
+      title: 'First',
+      content: systemInfoPage,
+    },
+    {
+      title: 'Second',
+      content: 'Second-content',
+    },
+  ];
+
+  return (
+    <>
+      <Steps current={current}>
+        {steps.map(item => (
+          <Step key={item.title} title={item.title} />
+        ))}
+      </Steps>
+      <div className="steps-content">{steps[current].content}</div>
+      <div className="steps-action">
+        {current < steps.length - 1 && (
+          <Button type="primary" onClick={() => nextButton()}>
+            Next
+          </Button>
+        )}
+        {current === steps.length - 1 && (
+          <Button type="primary" onClick={() => message.success('Processing complete!')}>
+            Done
+          </Button>
+        )}
+        {current > 0 && (
+          <Button style={{ margin: '0 8px' }} onClick={() => prevButton()}>
+            Previous
+          </Button>
+        )}
+      </div>
+    </>
   );
 };
 export default forwardRef(SystemInfoForm);
