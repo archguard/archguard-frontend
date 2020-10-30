@@ -174,6 +174,7 @@ const MultipleSystem = () => {
         visible={modalVisible}
         onCancel={onCancel}
         onOk={onSubmit}
+        footer={null}
       >
         <SystemInfoForm
           ref={ref}

@@ -6,6 +6,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { useState } from 'react';
+import AllBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/AllBadSmellThreshold';
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
@@ -179,7 +180,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     },
     {
       title: 'Second',
-      content: 'Second-content',
+      content: <AllBadSmellThreshold></AllBadSmellThreshold>,
     },
   ];
 
