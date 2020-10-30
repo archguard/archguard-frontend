@@ -9,7 +9,6 @@ const AllBadSmellThreshold = () => {
     <Radio
       checked={allBadSmellOption.isDefault}
       onClick={(e) => e.stopPropagation()}
-      disabled={!allBadSmellOption.isDefault}
     >
       选择
     </Radio>

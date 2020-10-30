@@ -83,6 +83,7 @@ const MultipleSystem = () => {
 
   const onEditClick = (systemInfo: SystemInfo) => {
     setCurrentSystemInfo({ ...systemInfo });
+    storage.setSystemId(systemInfo.id);
     setModalVisible(true);
   };
 

@@ -7,6 +7,7 @@ import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { useState } from 'react';
 import AllBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/AllBadSmellThreshold';
+import BadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/BadSmellThreshold';
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
@@ -180,7 +181,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     },
     {
       title: 'Second',
-      content: <AllBadSmellThreshold></AllBadSmellThreshold>,
+      content: (data ? <BadSmellThreshold></BadSmellThreshold> : <AllBadSmellThreshold></AllBadSmellThreshold>),
     },
   ];
 
