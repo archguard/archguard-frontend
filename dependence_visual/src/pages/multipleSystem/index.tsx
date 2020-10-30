@@ -176,6 +176,7 @@ const MultipleSystem = () => {
         onCancel={onCancel}
         onOk={onSubmit}
         footer={null}
+        destroyOnClose={true}
       >
         <SystemInfoForm
           ref={ref}
