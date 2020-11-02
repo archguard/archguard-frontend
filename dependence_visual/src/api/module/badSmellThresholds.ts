@@ -1,5 +1,7 @@
 import { useGet } from "@/hooks/useGet";
-import { baseURL } from "./config";
+import { storage } from "@/store/storage/sessionStorage";
+
+const systemId = storage.getSystemId();
 
 export interface BadSmellThreshold {
   name: string;
@@ -12,9 +14,10 @@ export interface BadSmellThreshold {
 
 export interface BadSmellOption {
   id: string;
-  title: string;
-  selected: boolean;
+  suiteName: string;
+  isSelected: boolean;
+  isDefault: boolean;
   thresholds: BadSmellThreshold[];
 }
 
-export const useBadSmellOption = () => useGet<BadSmellOption[]>(`${baseURL}/badsmell-thresholds`);
+export const useBadSmellOption = () => useGet<BadSmellOption[]>(`/api/addition/evolution/badsmell-thresholds/system/${systemId}`);

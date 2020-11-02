@@ -7,9 +7,9 @@ import BadSmellThresholdTable from "./components/BadSmellThresholdTable";
 const BadSmellThreshold = () => {
   const renderRadio = (badSmellOption: BadSmellOption) => (
     <Radio
-      checked={badSmellOption.selected}
+      checked={badSmellOption.isSelected}
       onClick={(e) => e.stopPropagation()}
-      disabled={!badSmellOption.selected}
+      disabled={!badSmellOption.isSelected}
     >
       选择
     </Radio>
@@ -27,7 +27,7 @@ const BadSmellThreshold = () => {
             return (
               <Collapse.Panel
                 className={styles.collapseItem}
-                header={badSmellOption.title}
+                header={badSmellOption.suiteName}
                 extra={renderRadio(badSmellOption)}
                 key={badSmellOption.id}
               >
