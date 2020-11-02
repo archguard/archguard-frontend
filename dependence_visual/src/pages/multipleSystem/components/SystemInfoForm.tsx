@@ -22,7 +22,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
 
   useImperativeHandle(ref, () => ({
     submit: () => form.submit(),
-    clear: () => form.resetFields(["systemName", "repoType", "username", "password", "repo"]),
+    clear: () => form.resetFields(["systemName", "repoType", "username", "password", "repo", "branch"]),
   }));
 
   const onFinish = (values: Store) => {
@@ -158,7 +158,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
           ]}
           required
         >
-          <Input defaultValue="master" />
+          <Input defaultValue="master" placeholder="master" />
         </Form.Item>
         <Form.Item name="username" label="仓库用户名">
           <Input placeholder="请输入用户名" />
