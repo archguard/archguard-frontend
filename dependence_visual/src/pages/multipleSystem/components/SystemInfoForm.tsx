@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useEffect } from "react";
-import { Form, Input, Select, Button, Steps, message } from "antd";
+import { Form, Input, Select, Button, Steps, message, Radio, Collapse } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { Store } from "antd/lib/form/interface";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
@@ -8,6 +8,8 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import { useState } from 'react';
 import AllBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/AllBadSmellThreshold';
 import BadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/BadSmellThreshold';
+import { AllBadSmellOption, useAllBadSmellOption } from '@/api/module/allBadSmellThresholds';
+import BadSmellThresholdTable from '@/pages/systemEvolving/BadSmellThreshold/components/BadSmellThresholdTable';
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
@@ -30,6 +32,9 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
   }));
 
   const onFinish = (values: Store) => {
+    console.log(values, 'values');
+    console.log(data, 'data');
+
     const passwordChanged = data?.password !== values.password;
     const submitData = Object.assign({ ...data, ...values });
 
@@ -84,6 +89,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
             },
           ]}
           required
+          style={{ display: current === 0 ? 'initial' : 'none' }}
         >
           <Input placeholder="请输入系统名称" />
         </Form.Item>
@@ -92,6 +98,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
           label="仓库类型"
           rules={[{ required: true, message: "请选择仓库类型！" }]}
           required
+          style={{ display: current === 0 ? 'initial' : 'none' }}
         >
           <Select>
             {["GIT", "SVN"].map((value) => (
@@ -104,7 +111,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         <Form.List name="repo">
           {(fields, { add, remove }) => {
             return (
-              <div>
+              <div style={{ display: current === 0 ? 'initial' : 'none' }}>
                 <div style={{ paddingBottom: 8 }}>
                   <span
                     style={{
@@ -161,15 +168,23 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
             },
           ]}
           required
+          style={{ display: current === 0 ? 'initial' : 'none' }}
         >
           <Input placeholder="master" />
         </Form.Item>
-        <Form.Item name="username" label="仓库用户名">
+        <Form.Item name="username" label="仓库用户名" style={{ display: current === 0 ? 'initial' : 'none' }}>
           <Input placeholder="请输入用户名" />
         </Form.Item>
-        <Form.Item name="password" label="仓库密码">
+        <Form.Item name="password" label="仓库密码" style={{ display: current === 0 ? 'initial' : 'none' }}>
           <Input.Password placeholder="请输入密码" />
         </Form.Item>
+        {/* <Form.Item name="badSmellThresholdSuiteId" label="Radio.Group" style={{ display: current === 0 ? 'none' : 'initial' }}>
+          <Radio.Group>
+            <Radio value="a">item 1</Radio>
+            <Radio value="b">item 2</Radio>
+            <Radio value="c">item 3</Radio>
+          </Radio.Group>
+        </Form.Item> */}
       </Form>
     </div>
   );
@@ -181,7 +196,8 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     },
     {
       title: 'Second',
-      content: (data ? <BadSmellThreshold></BadSmellThreshold> : <AllBadSmellThreshold></AllBadSmellThreshold>),
+      content: systemInfoPage,
+      // content: (data ? <BadSmellThreshold></BadSmellThreshold> : <AllBadSmellThreshold></AllBadSmellThreshold>),
     },
   ];
 
@@ -196,17 +212,17 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       <div className="steps-action">
         {current < steps.length - 1 && (
           <Button type="primary" onClick={() => nextButton()}>
-            Next
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button type="primary" onClick={() => message.success('Processing complete!')}>
-            Done
+            下一页
           </Button>
         )}
         {current > 0 && (
           <Button style={{ margin: '0 8px' }} onClick={() => prevButton()}>
-            Previous
+            上一页
+          </Button>
+        )}
+        {current === steps.length - 1 && (
+          <Button type="primary" onClick={onFinish}>
+            确认
           </Button>
         )}
       </div>

@@ -55,6 +55,7 @@ const MultipleSystem = () => {
   };
 
   const onSubmitSystemInfo = (systemInfo: SystemInfo) => {
+    console.log('tototititata: ', systemInfo);
     if (systemInfo.id) {
       updateSystemInfo(systemInfo).then(() => {
         notification.success({
@@ -66,13 +67,14 @@ const MultipleSystem = () => {
       });
     } else {
       createSystemInfo(systemInfo).then(() => {
+        console.log('titi: ', systemInfo);
         notification.success({
           type: "success",
           message: "系统创建成功！",
         });
-        onCancel();
-        loadSystemList();
-      });
+        // onCancel();
+        // loadSystemList();
+      }).catch(() => { console.log('lalalalala'); });
     }
   };
 
@@ -175,8 +177,8 @@ const MultipleSystem = () => {
         visible={modalVisible}
         onCancel={onCancel}
         onOk={onSubmit}
-        footer={null}
         destroyOnClose={true}
+        footer={null}
       >
         <SystemInfoForm
           ref={ref}
