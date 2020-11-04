@@ -12,6 +12,8 @@ export interface SystemInfo {
   sql: string;
   scanned: "NONE" | "SCANNING" | "SCANNED" | "FAILED";
   updatedTime: number;
+  badSmellThresholdSuiteId: number;
+  branch: string;
 }
 
 export function querySystemInfo() {
