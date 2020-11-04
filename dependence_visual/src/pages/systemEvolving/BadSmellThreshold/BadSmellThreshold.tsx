@@ -5,7 +5,6 @@ import { storage } from '@/store/storage/sessionStorage';
 import { Button, Collapse, Form, notification, Radio } from "antd";
 import { useForm } from 'antd/lib/form/Form';
 import { Store } from 'antd/lib/form/interface';
-import React, { useState } from "react";
 import styles from "./BadSmellThreshold.less";
 import BadSmellThresholdTable from "./components/BadSmellThresholdTable";
 
@@ -24,7 +23,15 @@ const BadSmellThreshold = () => {
   const [systemInfoList] = useSystemList();
   const currentSystemId = Number(storage.getSystemId());
   const currentSystemInfo = systemInfoList?.value!.find(systemInfo => systemInfo.id === currentSystemId);
-  const [badSmellThresholdSuiteId, setBadSmellThresholdSuiteId] = useState(currentSystemInfo?.badSmellThresholdSuiteId);
+  const originBadSmellThresholdSuiteId = currentSystemInfo?.badSmellThresholdSuiteId;
+
+  const onReset = () => {
+    form.resetFields();
+  };
+
+  const onChange = (e: any) => {
+    currentSystemInfo!.badSmellThresholdSuiteId = e.target.value;
+  }
 
   const onFinish = (values: Store) => {
     updateSystemInfo(currentSystemInfo).then(() => {
@@ -35,20 +42,16 @@ const BadSmellThreshold = () => {
     });
   };
 
-  const onReset = () => {
-    form.resetFields();
-  };
-
   return (
     <Form
       form={form}
       onFinish={onFinish}
-      initialValues={{ badSmellThresholdSuiteId: badSmellThresholdSuiteId }}
+      initialValues={{ badSmellThresholdSuiteId: originBadSmellThresholdSuiteId }}
     >
       <div className={styles.BadSmellThreshold}>
         <div>请选择合适您系统的指标阈值：</div>
         <Form.Item name="badSmellThresholdSuiteId">
-          <Radio.Group className={styles.badSmellThresholdSuiteId} onChange={(e) => { setBadSmellThresholdSuiteId(e.target.value); }}>
+          <Radio.Group className={styles.badSmellThresholdSuiteId} onChange={onChange}>
             <Collapse accordion ghost>
               {data &&
                 data.map((badSmellOption) => {
