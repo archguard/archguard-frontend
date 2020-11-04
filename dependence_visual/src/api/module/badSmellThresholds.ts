@@ -15,7 +15,6 @@ export interface BadSmellThreshold {
 export interface BadSmellOption {
   id: string;
   suiteName: string;
-  isSelected: boolean;
   isDefault: boolean;
   thresholds: BadSmellThreshold[];
 }
