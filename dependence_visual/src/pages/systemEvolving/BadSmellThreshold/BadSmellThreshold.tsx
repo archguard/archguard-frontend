@@ -27,14 +27,15 @@ const BadSmellThreshold = () => {
   const originBadSmellThresholdSuiteId = currentSystemInfo?.badSmellThresholdSuiteId;
 
   const onReset = () => {
-    form.resetFields();
+    form.setFieldsValue({ badSmellThresholdSuiteId: currentSystemInfo!.badSmellThresholdSuiteId });
   };
 
   const onChange = (e: any) => {
-    currentSystemInfo!.badSmellThresholdSuiteId = e.target.value;
+    form.setFieldsValue({ badSmellThresholdSuiteId: e.target.value });
   }
 
   const onFinish = (values: Store) => {
+    currentSystemInfo!.badSmellThresholdSuiteId = values.badSmellThresholdSuiteId;
     updateSystemInfo(currentSystemInfo).then(() => {
       notification.success({
         type: "success",
