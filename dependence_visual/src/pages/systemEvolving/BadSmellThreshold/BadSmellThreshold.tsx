@@ -5,6 +5,7 @@ import { storage } from '@/store/storage/sessionStorage';
 import { Button, Collapse, Form, notification, Radio } from "antd";
 import { useForm } from 'antd/lib/form/Form';
 import { Store } from 'antd/lib/form/interface';
+import React from "react";
 import styles from "./BadSmellThreshold.less";
 import BadSmellThresholdTable from "./components/BadSmellThresholdTable";
 
