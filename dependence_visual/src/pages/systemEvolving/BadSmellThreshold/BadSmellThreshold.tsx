@@ -46,7 +46,7 @@ const BadSmellThreshold = () => {
 
   useEffect(() => {
     if (currentSystemInfo) {
-      form.setFieldsValue({ badSmellThresholdSuiteId: currentSystemInfo!.badSmellThresholdSuiteId });
+      form.setFieldsValue({ badSmellThresholdSuiteId: currentSystemInfo.badSmellThresholdSuiteId });
     }
   });
 

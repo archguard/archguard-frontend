@@ -53,7 +53,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ repoType: "GIT", repo: [""] }}
+        initialValues={{ repoType: "GIT", repo: [""], branch: "master" }}
       >
         <Form.Item
           name="systemName"
@@ -158,7 +158,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
           ]}
           required
         >
-          <Input defaultValue="master" placeholder="master" />
+          <Input placeholder="master" />
         </Form.Item>
         <Form.Item name="username" label="仓库用户名">
           <Input placeholder="请输入用户名" />
