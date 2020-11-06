@@ -39,6 +39,8 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       delete submitData.password;
     }
 
+    console.log('submitData: ', submitData);
+
     onSubmit(submitData);
   };
 
@@ -169,13 +171,13 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       <Form.Item name="password" label="仓库密码" style={{ display: current === 0 ? 'initial' : 'none' }}>
         <Input.Password placeholder="请输入密码" />
       </Form.Item>
-      {/* <Form.Item name="badSmellThresholdSuiteId" label="Radio.Group" style={{ display: current === 0 ? 'none' : 'initial' }}>
-          <Radio.Group>
-            <Radio value="a">item 1</Radio>
-            <Radio value="b">item 2</Radio>
-            <Radio value="c">item 3</Radio>
-          </Radio.Group>
-        </Form.Item> */}
+      <Form.Item name="badSmellThresholdSuiteId" style={{ display: current === 0 ? 'none' : 'initial' }}>
+        <Radio.Group>
+          {/* <Radio.Group onChange={onChange}> */}
+
+          <AllBadSmellThreshold></AllBadSmellThreshold>
+        </Radio.Group>
+      </Form.Item>
     </div>
   );
 
@@ -183,6 +185,11 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     {
       title: 'First',
       content: systemInfoPage,
+    },
+    {
+      title: 'Second',
+      content: systemInfoPage,
+      // content: (data ? <BadSmellThreshold></BadSmellThreshold> : <AllBadSmellThreshold></AllBadSmellThreshold>),
     },
   ];
 

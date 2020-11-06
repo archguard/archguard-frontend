@@ -7,6 +7,7 @@ import BadSmellThresholdTable from "./components/BadSmellThresholdTable";
 const AllBadSmellThreshold = () => {
   const renderRadio = (allBadSmellOption: AllBadSmellOption) => (
     <Radio
+      value={allBadSmellOption.id}
       checked={allBadSmellOption.isDefault}
       onClick={(e) => e.stopPropagation()}
     >
