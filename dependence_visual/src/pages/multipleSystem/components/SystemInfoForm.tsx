@@ -32,9 +32,6 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
   }));
 
   const onFinish = (values: Store) => {
-    console.log(values, 'values');
-    console.log(data, 'data');
-
     const passwordChanged = data?.password !== values.password;
     const submitData = Object.assign({ ...data, ...values });
 
@@ -68,124 +65,117 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
   const systemInfoPage = (
     <div className="system-info-form">
       <h2>{data ? "编辑系统信息" : "创建新系统"}</h2>
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={onFinish}
-        initialValues={{ repoType: "GIT", repo: [""], branch: "master" }}
+      <Form.Item
+        name="systemName"
+        label="系统名称"
+        rules={[
+          {
+            required: true,
+            validator: (_, value) => {
+              if (!value) return Promise.reject("请输入系统名称！");
+              return isDuplicateSystemName(value)
+                ? Promise.reject("系统名称不能重复！")
+                : Promise.resolve();
+            },
+          },
+        ]}
+        required
+        style={{ display: current === 0 ? 'initial' : 'none' }}
       >
-        <Form.Item
-          name="systemName"
-          label="系统名称"
-          rules={[
-            {
-              required: true,
-              validator: (_, value) => {
-                if (!value) return Promise.reject("请输入系统名称！");
-                return isDuplicateSystemName(value)
-                  ? Promise.reject("系统名称不能重复！")
-                  : Promise.resolve();
-              },
-            },
-          ]}
-          required
-          style={{ display: current === 0 ? 'initial' : 'none' }}
-        >
-          <Input placeholder="请输入系统名称" />
-        </Form.Item>
-        <Form.Item
-          name="repoType"
-          label="仓库类型"
-          rules={[{ required: true, message: "请选择仓库类型！" }]}
-          required
-          style={{ display: current === 0 ? 'initial' : 'none' }}
-        >
-          <Select>
-            {["GIT", "SVN"].map((value) => (
-              <Select.Option value={value} key={value}>
-                {value}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.List name="repo">
-          {(fields, { add, remove }) => {
-            return (
-              <div style={{ display: current === 0 ? 'initial' : 'none' }}>
-                <div style={{ paddingBottom: 8 }}>
-                  <span
-                    style={{
-                      marginRight: 4,
-                      color: "#ff4d4f",
-                      fontSize: 14,
-                      fontFamily: "SimSun, sans-serif",
-                    }}
-                  >
-                    *
+        <Input placeholder="请输入系统名称" />
+      </Form.Item>
+      <Form.Item
+        name="repoType"
+        label="仓库类型"
+        rules={[{ required: true, message: "请选择仓库类型！" }]}
+        required
+        style={{ display: current === 0 ? 'initial' : 'none' }}
+      >
+        <Select>
+          {["GIT", "SVN"].map((value) => (
+            <Select.Option value={value} key={value}>
+              {value}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
+      <Form.List name="repo">
+        {(fields, { add, remove }) => {
+          return (
+            <div style={{ display: current === 0 ? 'initial' : 'none' }}>
+              <div style={{ paddingBottom: 8 }}>
+                <span
+                  style={{
+                    marginRight: 4,
+                    color: "#ff4d4f",
+                    fontSize: 14,
+                    fontFamily: "SimSun, sans-serif",
+                  }}
+                >
+                  *
                   </span>
-                  <span>仓库地址</span>
-                </div>
-                {fields.map((field) => (
-                  <div style={{ display: "flex" }} key={field.key}>
-                    <Form.Item
-                      {...field}
-                      rules={[
-                        {
-                          required: true,
-                          validator: (_, value) => {
-                            if (!value) return Promise.reject("请输入仓库地址！");
-                            return isValidUrl(value)
-                              ? Promise.resolve()
-                              : Promise.reject("请输入正确的仓库地址！");
-                          },
-                        },
-                      ]}
-                      style={{ width: "100%" }}
-                      required
-                    >
-                      <Input style={{ width: "100%" }} placeholder="请输入仓库地址" />
-                    </Form.Item>
-                    {fields.length > 1 ? (
-                      <MinusCircleOutlined
-                        style={{ margin: "0 8px", lineHeight: "32px" }}
-                        onClick={() => {
-                          remove(field.name);
-                        }}
-                      />
-                    ) : null}
-                  </div>
-                ))}
+                <span>仓库地址</span>
               </div>
-            );
-          }}
-        </Form.List>
-        <Form.Item
-          name="branch"
-          label="分支名称"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          required
-          style={{ display: current === 0 ? 'initial' : 'none' }}
-        >
-          <Input placeholder="master" />
-        </Form.Item>
-        <Form.Item name="username" label="仓库用户名" style={{ display: current === 0 ? 'initial' : 'none' }}>
-          <Input placeholder="请输入用户名" />
-        </Form.Item>
-        <Form.Item name="password" label="仓库密码" style={{ display: current === 0 ? 'initial' : 'none' }}>
-          <Input.Password placeholder="请输入密码" />
-        </Form.Item>
-        {/* <Form.Item name="badSmellThresholdSuiteId" label="Radio.Group" style={{ display: current === 0 ? 'none' : 'initial' }}>
+              {fields.map((field) => (
+                <div style={{ display: "flex" }} key={field.key}>
+                  <Form.Item
+                    {...field}
+                    rules={[
+                      {
+                        required: true,
+                        validator: (_, value) => {
+                          if (!value) return Promise.reject("请输入仓库地址！");
+                          return isValidUrl(value)
+                            ? Promise.resolve()
+                            : Promise.reject("请输入正确的仓库地址！");
+                        },
+                      },
+                    ]}
+                    style={{ width: "100%" }}
+                    required
+                  >
+                    <Input style={{ width: "100%" }} placeholder="请输入仓库地址" />
+                  </Form.Item>
+                  {fields.length > 1 ? (
+                    <MinusCircleOutlined
+                      style={{ margin: "0 8px", lineHeight: "32px" }}
+                      onClick={() => {
+                        remove(field.name);
+                      }}
+                    />
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          );
+        }}
+      </Form.List>
+      <Form.Item
+        name="branch"
+        label="分支名称"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+        required
+        style={{ display: current === 0 ? 'initial' : 'none' }}
+      >
+        <Input placeholder="master" />
+      </Form.Item>
+      <Form.Item name="username" label="仓库用户名" style={{ display: current === 0 ? 'initial' : 'none' }}>
+        <Input placeholder="请输入用户名" />
+      </Form.Item>
+      <Form.Item name="password" label="仓库密码" style={{ display: current === 0 ? 'initial' : 'none' }}>
+        <Input.Password placeholder="请输入密码" />
+      </Form.Item>
+      {/* <Form.Item name="badSmellThresholdSuiteId" label="Radio.Group" style={{ display: current === 0 ? 'none' : 'initial' }}>
           <Radio.Group>
             <Radio value="a">item 1</Radio>
             <Radio value="b">item 2</Radio>
             <Radio value="c">item 3</Radio>
           </Radio.Group>
         </Form.Item> */}
-      </Form>
     </div>
   );
 
@@ -193,11 +183,6 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     {
       title: 'First',
       content: systemInfoPage,
-    },
-    {
-      title: 'Second',
-      content: systemInfoPage,
-      // content: (data ? <BadSmellThreshold></BadSmellThreshold> : <AllBadSmellThreshold></AllBadSmellThreshold>),
     },
   ];
 
@@ -208,24 +193,31 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
           <Step key={item.title} title={item.title} />
         ))}
       </Steps>
-      <div className="steps-content">{steps[current].content}</div>
-      <div className="steps-action">
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => nextButton()}>
-            下一页
-          </Button>
-        )}
-        {current > 0 && (
-          <Button style={{ margin: '0 8px' }} onClick={() => prevButton()}>
-            上一页
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button type="primary" onClick={onFinish}>
-            确认
-          </Button>
-        )}
-      </div>
+      <Form
+        form={form}
+        layout="vertical"
+        onFinish={onFinish}
+        initialValues={{ repoType: "GIT", repo: [""], branch: "master" }}
+      >
+        <div className="steps-content">{steps[current].content}</div>
+        <Form.Item>
+          {current < steps.length - 1 && (
+            <Button type="primary" onClick={() => nextButton()}>
+              下一页
+            </Button>
+          )}
+          {current > 0 && (
+            <Button style={{ margin: '0 8px' }} onClick={() => prevButton()}>
+              上一页
+            </Button>
+          )}
+          {current === steps.length - 1 && (
+            <Button type="primary" htmlType="submit">
+              确认
+            </Button>
+          )}
+        </Form.Item>
+      </Form>
     </>
   );
 };
