@@ -19,7 +19,6 @@ const AllBadSmellThreshold = () => {
 
   return (
     <div className={styles.BadSmellThreshold}>
-      <div>请选择合适您系统的指标阈值：</div>
       <Collapse accordion ghost>
         {data &&
           data.map((allBadSmellOption) => {

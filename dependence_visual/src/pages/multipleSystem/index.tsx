@@ -55,7 +55,6 @@ const MultipleSystem = () => {
   };
 
   const onSubmitSystemInfo = (systemInfo: SystemInfo) => {
-    console.log('tototititata: ', systemInfo);
     if (systemInfo.id) {
       updateSystemInfo(systemInfo).then(() => {
         notification.success({
@@ -66,15 +65,15 @@ const MultipleSystem = () => {
         loadSystemList();
       });
     } else {
+      console.log('systemInfo: ', systemInfo);
       createSystemInfo(systemInfo).then(() => {
-        console.log('titi: ', systemInfo);
         notification.success({
           type: "success",
           message: "系统创建成功！",
         });
-        // onCancel();
-        // loadSystemList();
-      }).catch(() => { console.log('lalalalala'); });
+        onCancel();
+        loadSystemList();
+      });
     }
   };
 

@@ -171,10 +171,9 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       <Form.Item name="password" label="仓库密码" style={{ display: current === 0 ? 'initial' : 'none' }}>
         <Input.Password placeholder="请输入密码" />
       </Form.Item>
-      <Form.Item name="badSmellThresholdSuiteId" style={{ display: current === 0 ? 'none' : 'initial' }}>
+      <Form.Item name="badSmellThresholdSuiteId" label="请选择合适您系统的指标阈值：" style={{ display: current === 0 ? 'none' : 'initial' }}>
         <Radio.Group>
           {/* <Radio.Group onChange={onChange}> */}
-
           <AllBadSmellThreshold></AllBadSmellThreshold>
         </Radio.Group>
       </Form.Item>
