@@ -5,23 +5,19 @@ import { Store } from "antd/lib/form/interface";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import { useState } from 'react';
 import AllBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/AllBadSmellThreshold';
-import BadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/BadSmellThreshold';
-import { AllBadSmellOption, useAllBadSmellOption } from '@/api/module/allBadSmellThresholds';
-import BadSmellThresholdTable from '@/pages/systemEvolving/BadSmellThreshold/components/BadSmellThresholdTable';
 import SingleBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/SingleBadSmellThreshold';
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
   onSubmit(systemInfo: SystemInfo): void;
+  current: number;
 }
 const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
-  const { data, onSubmit } = props;
+  const { data, onSubmit, current } = props;
   const [form] = useForm();
   const [systemList] = useSystemList();
   const systemNames = systemList?.value!.map((item) => item.systemName);
-  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     form.setFieldsValue(data as Store);
@@ -40,8 +36,6 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       delete submitData.password;
     }
 
-    console.log('submitData: ', submitData);
-
     onSubmit(submitData);
   };
 
@@ -55,18 +49,10 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     return valueChanged && isIncluded;
   };
 
-  const nextButton = () => {
-    setCurrent(current + 1);
-  };
-
-  const prevButton = () => {
-    setCurrent(current - 1);
-  };
-
   const { Step } = Steps;
 
   const systemInfoPage = (
-    <div className="system-info-form">
+    <div>
       <h2>{data ? "编辑系统信息" : "创建新系统"}</h2>
       <Form.Item
         name="systemName"
@@ -173,8 +159,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         <Input.Password placeholder="请输入密码" />
       </Form.Item>
       <Form.Item name="badSmellThresholdSuiteId" label="请选择合适您系统的指标阈值：" style={{ display: current === 0 ? 'none' : 'initial' }}>
-        <Radio.Group>
-          {/* <Radio.Group onChange={onChange}> */}
+        <Radio.Group style={{ width: '100%' }}>
           data ? <SingleBadSmellThreshold></SingleBadSmellThreshold> : <AllBadSmellThreshold></AllBadSmellThreshold>
         </Radio.Group>
       </Form.Item>
@@ -194,35 +179,19 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
 
   return (
     <>
-      <Steps current={current}>
-        {steps.map(item => (
-          <Step key={item.title} title={item.title} />
-        ))}
-      </Steps>
       <Form
         form={form}
         layout="vertical"
         onFinish={onFinish}
         initialValues={{ repoType: "GIT", repo: [""], branch: "master" }}
+        scrollToFirstError
       >
-        <div className="steps-content">{steps[current].content}</div>
-        <Form.Item>
-          {current < steps.length - 1 && (
-            <Button type="primary" onClick={() => nextButton()}>
-              下一页
-            </Button>
-          )}
-          {current > 0 && (
-            <Button style={{ margin: '0 8px' }} onClick={() => prevButton()}>
-              上一页
-            </Button>
-          )}
-          {current === steps.length - 1 && (
-            <Button type="primary" htmlType="submit">
-              确认
-            </Button>
-          )}
-        </Form.Item>
+        <Steps current={current} style={{ padding: '10px 0' }}>
+          {steps.map(item => (
+            <Step key={item.title} title={item.title} />
+          ))}
+        </Steps>
+        <div className="StepsContent">{steps[current].content}</div>
       </Form>
     </>
   );

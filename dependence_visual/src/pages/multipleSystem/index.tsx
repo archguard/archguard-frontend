@@ -32,7 +32,7 @@ const MultipleSystem = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [helpModalVisible, setHelpModalVisible] = useState(false);
   const [currentSystemInfo, setCurrentSystemInfo] = useState<SystemInfo>();
-  const currentSystemId = Number(storage.getSystemId());
+  const [current, setCurrent] = useState(0);
 
   useMount(() => {
     storage.clear();
@@ -65,7 +65,6 @@ const MultipleSystem = () => {
         loadSystemList();
       });
     } else {
-      console.log('systemInfo: ', systemInfo);
       createSystemInfo(systemInfo).then(() => {
         notification.success({
           type: "success",
@@ -114,6 +113,14 @@ const MultipleSystem = () => {
     scanDependence(id).then(() => {
       loadSystemList();
     });
+  };
+
+  const nextButton = () => {
+    setCurrent(current + 1);
+  };
+
+  const prevButton = () => {
+    setCurrent(current - 1);
   };
 
   return (
@@ -177,12 +184,24 @@ const MultipleSystem = () => {
         onCancel={onCancel}
         onOk={onSubmit}
         destroyOnClose={true}
-        footer={null}
+        bodyStyle={{ height: '540px', overflowY: "auto" }}
+        footer={[
+          current === 0 && <Button type="primary" onClick={() => nextButton()}>
+            下一页
+          </Button>,
+          current === 1 && <Button style={{ margin: '0 8px' }} onClick={() => prevButton()}>
+            上一页
+          </Button>,
+          current === 1 && <Button type="primary" onClick={onSubmit}>
+            确认
+          </Button>,
+        ]}
       >
         <SystemInfoForm
           ref={ref}
           data={currentSystemInfo}
           onSubmit={onSubmitSystemInfo}
+          current={current}
         ></SystemInfoForm>
       </Modal>
 

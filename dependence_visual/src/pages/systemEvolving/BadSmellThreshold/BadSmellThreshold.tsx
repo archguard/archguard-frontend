@@ -66,7 +66,7 @@ const BadSmellThreshold = () => {
                   if (!badSmellOption) return null;
                   return (
                     <Collapse.Panel
-                      className={styles.collapseItem}
+                      style={{ marginTop: '10px', border: '1px solid #ddd', borderRadius: '8px' }}
                       header={badSmellOption.suiteName}
                       extra={renderRadio(badSmellOption)}
                       key={badSmellOption.id}

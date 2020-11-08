@@ -1,7 +1,6 @@
 import { BadSmellOption, useBadSmellOption } from '@/api/module/badSmellThresholds';
 import { Collapse, Radio } from "antd";
 import React from "react";
-import styles from "./BadSmellThreshold.less";
 import BadSmellThresholdTable from "./components/BadSmellThresholdTable";
 
 const SingleBadSmellThreshold = () => {
@@ -17,14 +16,14 @@ const SingleBadSmellThreshold = () => {
   const { data } = useBadSmellOption();
 
   return (
-    <div className={styles.BadSmellThreshold}>
+    <div>
       <Collapse accordion ghost>
         {data &&
           data.map((singleBadSmellOption) => {
             if (!singleBadSmellOption) return null;
             return (
               <Collapse.Panel
-                className={styles.collapseItem}
+                style={{ marginTop: '10px', border: '1px solid #ddd', borderRadius: '8px' }}
                 header={singleBadSmellOption.suiteName}
                 extra={renderRadio(singleBadSmellOption)}
                 key={singleBadSmellOption.id}
