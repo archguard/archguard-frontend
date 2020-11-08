@@ -107,6 +107,7 @@ const MultipleSystem = () => {
   const onCancel = () => {
     setModalVisible(false);
     ref.current.clear();
+    setCurrent(0);
   };
 
   const onScanning = (id: number) => {
