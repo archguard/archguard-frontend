@@ -10,6 +10,7 @@ import AllBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/AllBa
 import BadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/BadSmellThreshold';
 import { AllBadSmellOption, useAllBadSmellOption } from '@/api/module/allBadSmellThresholds';
 import BadSmellThresholdTable from '@/pages/systemEvolving/BadSmellThreshold/components/BadSmellThresholdTable';
+import SingleBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/SingleBadSmellThreshold';
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
@@ -174,7 +175,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       <Form.Item name="badSmellThresholdSuiteId" label="请选择合适您系统的指标阈值：" style={{ display: current === 0 ? 'none' : 'initial' }}>
         <Radio.Group>
           {/* <Radio.Group onChange={onChange}> */}
-          <AllBadSmellThreshold></AllBadSmellThreshold>
+          data ? <SingleBadSmellThreshold></SingleBadSmellThreshold> : <AllBadSmellThreshold></AllBadSmellThreshold>
         </Radio.Group>
       </Form.Item>
     </div>
@@ -188,7 +189,6 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     {
       title: 'Second',
       content: systemInfoPage,
-      // content: (data ? <BadSmellThreshold></BadSmellThreshold> : <AllBadSmellThreshold></AllBadSmellThreshold>),
     },
   ];
 
