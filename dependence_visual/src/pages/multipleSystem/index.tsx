@@ -103,6 +103,7 @@ const MultipleSystem = () => {
 
   const onSubmit = () => {
     ref.current.submit();
+    setCurrent(0);
   };
   const onCancel = () => {
     setModalVisible(false);
@@ -185,7 +186,7 @@ const MultipleSystem = () => {
         onCancel={onCancel}
         onOk={onSubmit}
         destroyOnClose={true}
-        bodyStyle={{ height: '540px', overflowY: "auto" }}
+        bodyStyle={{ height: "560px", overflowY: "auto", padding: "32px" }}
         footer={[
           current === 0 && <Button type="primary" onClick={() => nextButton()}>
             下一页
