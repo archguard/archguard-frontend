@@ -168,11 +168,11 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
 
   const steps = [
     {
-      title: '第一步',
+      title: '基础信息',
       content: systemInfoPage,
     },
     {
-      title: '第二步',
+      title: '指标阈值',
       content: systemInfoPage,
     },
   ];
