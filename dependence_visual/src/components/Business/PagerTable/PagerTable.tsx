@@ -60,8 +60,15 @@ export const BuPagerTable = (props: PagerTableProps) => {
     axios<PagerTableData>({
       baseURL: "",
       url,
-      method: "GET",
-      params: { currentPageNumber, numberPerPage, ...props.parameter },
+      method: "POST",
+      data: {
+        currentPageNumber: currentPageNumber,
+        numberPerPage: numberPerPage,
+        module: "",
+        className: "",
+        name: "",
+        packageName: "common"
+      },
     }).then((res) => {
       setTableData(autoAddUniqueKeys(res.data));
       setCount(res.count);
