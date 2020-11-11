@@ -7,32 +7,37 @@ const SizingEvaluation = () => {
   const [parameter, setParameter] = useState({});
 
   const onFinish = (values: any) => {
-    console.log('finish data values: ', values);
     setParameter(values);
   }
 
   return (
     <div>
       <Form
+        layout={"inline"}
         onFinish={onFinish}
+        style={{ marginBottom: "16px" }}
       >
         <Form.Item
           name="module"
+          style={{ flex: "auto" }}
         >
           <Input placeholder="请输入模块关键字" />
         </Form.Item>
         <Form.Item
           name="packageName"
+          style={{ flex: "auto" }}
         >
           <Input placeholder="请输入包关键字" />
         </Form.Item>
         <Form.Item
           name="className"
+          style={{ flex: "auto" }}
         >
           <Input placeholder="请输入类关键字" />
         </Form.Item>
         <Form.Item
           name="name"
+          style={{ flex: "auto" }}
         >
           <Input placeholder="请输入方法关键字" />
         </Form.Item>
