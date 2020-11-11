@@ -52,13 +52,13 @@ const SizingEvaluation = () => {
           <IssuesList issuesConfig={SizingEvaluationIssuesConfigs.METHOD} parameter={parameter} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="过大的类" key="class">
-          <IssuesList issuesConfig={SizingEvaluationIssuesConfigs.CLASS} />
+          <IssuesList issuesConfig={SizingEvaluationIssuesConfigs.CLASS} parameter={parameter} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="过大的包" key="package">
-          <IssuesList issuesConfig={SizingEvaluationIssuesConfigs.PACKAGE} />
+          <IssuesList issuesConfig={SizingEvaluationIssuesConfigs.PACKAGE} parameter={parameter} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="过大的模块" key="module">
-          <IssuesList issuesConfig={SizingEvaluationIssuesConfigs.MODULE} />
+          <IssuesList issuesConfig={SizingEvaluationIssuesConfigs.MODULE} parameter={parameter} />
         </Tabs.TabPane>
       </Tabs>
     </div>
