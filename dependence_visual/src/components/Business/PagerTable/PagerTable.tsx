@@ -51,6 +51,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
     onSortChange,
     onFilterChange,
     onPaginationChange,
+    parameter,
   } = props;
   const [currentPageNumber, setCurrentPageNumber] = useState(1);
   const [count, setCount] = useState(0);
@@ -64,10 +65,10 @@ export const BuPagerTable = (props: PagerTableProps) => {
       data: {
         currentPageNumber: currentPageNumber,
         numberPerPage: numberPerPage,
-        module: "",
-        className: "",
-        name: "",
-        packageName: "common"
+        module: parameter?.module,
+        className: parameter?.className,
+        name: parameter?.name,
+        packageName: parameter?.packageName,
       },
     }).then((res) => {
       setTableData(autoAddUniqueKeys(res.data));
@@ -77,6 +78,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
   };
 
   useEffect(() => {
+    console.log('pager table parameters: ', props.parameter);
     getTableData();
   }, [currentPageNumber, props.parameter]);
 
