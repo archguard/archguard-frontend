@@ -1,52 +1,20 @@
 import React, { useState } from "react";
-import { Button, Form, Input, Tabs } from "antd";
+import { Tabs } from "antd";
 import IssuesList from "@/components/Business/IssuesList/IssuesList";
 import { SizingEvaluationIssuesConfigs } from "./SizingEvaluationIssuesList.config";
+import SearchForm, { SearchFields } from '../components/SearchForm';
 
 const SizingEvaluation = () => {
   const [parameter, setParameter] = useState({});
+  const [currentSearchFields, setCurrentSearchFields] = useState<SearchFields>();
 
-  const onFinish = (values: any) => {
-    setParameter(values);
+  const updateParameter = (searchFields: SearchFields) => {
+    setParameter(searchFields);
   }
 
   return (
     <div>
-      <Form
-        layout={"inline"}
-        onFinish={onFinish}
-        style={{ marginBottom: "16px" }}
-      >
-        <Form.Item
-          name="module"
-          style={{ flex: "auto" }}
-        >
-          <Input placeholder="请输入模块关键字" />
-        </Form.Item>
-        <Form.Item
-          name="packageName"
-          style={{ flex: "auto" }}
-        >
-          <Input placeholder="请输入包关键字" />
-        </Form.Item>
-        <Form.Item
-          name="className"
-          style={{ flex: "auto" }}
-        >
-          <Input placeholder="请输入类关键字" />
-        </Form.Item>
-        <Form.Item
-          name="name"
-          style={{ flex: "auto" }}
-        >
-          <Input placeholder="请输入方法关键字" />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            查询
-        </Button>
-        </Form.Item>
-      </Form>
+      <SearchForm data={currentSearchFields} onSubmit={updateParameter}></SearchForm>
       <Tabs onChange={() => { }} type="card">
         <Tabs.TabPane tab="过大的方法" key="method">
           <IssuesList issuesConfig={SizingEvaluationIssuesConfigs.METHOD} parameter={parameter} />
