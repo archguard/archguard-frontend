@@ -7,6 +7,7 @@ import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import AllBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/AllBadSmellThreshold';
 import SingleBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/SingleBadSmellThreshold';
+import "./SystemInfoForm.less";
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
@@ -69,7 +70,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
           },
         ]}
         required
-        style={{ display: current === 0 ? 'initial' : 'none', paddingBottom: '4px' }}
+        style={{ display: current === 0 ? 'initial' : 'none' }}
       >
         <Input placeholder="请输入系统名称" />
       </Form.Item>
@@ -92,7 +93,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         {(fields, { add, remove }) => {
           return (
             <div style={{ display: current === 0 ? 'initial' : 'none' }}>
-              <div style={{ paddingBottom: 8 }}>
+              <div>
                 <span
                   style={{
                     marginRight: 4,
@@ -123,7 +124,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
                     style={{ width: "100%" }}
                     required
                   >
-                    <Input style={{ width: "100%", paddingBottom: "4px" }} placeholder="请输入仓库地址" />
+                    <Input style={{ width: "100%" }} placeholder="请输入仓库地址" />
                   </Form.Item>
                   {fields.length > 1 ? (
                     <MinusCircleOutlined
@@ -150,7 +151,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         required
         style={{ display: current === 0 ? 'initial' : 'none' }}
       >
-        <Input placeholder="master" style={{ paddingBottom: '4px' }} />
+        <Input placeholder="master" />
       </Form.Item>
       <Form.Item name="username" label="仓库用户名" style={{ display: current === 0 ? 'initial' : 'none' }}>
         <Input placeholder="请输入用户名" />
