@@ -5,20 +5,21 @@ import { Store } from "antd/lib/form/interface";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import AllBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/AllBadSmellThreshold';
-import SingleBadSmellThreshold from '@/pages/systemEvolving/BadSmellThreshold/SingleBadSmellThreshold';
 import "./SystemInfoForm.less";
+import BadSmellThresholdForm from '@/pages/systemEvolving/BadSmellThreshold/components/BadSmellThresholdForm';
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
   onSubmit(systemInfo: SystemInfo): void;
   current: number;
+  currentAction: string;
 }
 const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
-  const { data, onSubmit, current } = props;
+  const { data, onSubmit, current, currentAction } = props;
   const [form] = useForm();
   const [systemList] = useSystemList();
   const systemNames = systemList?.value!.map((item) => item.systemName);
+  const { Step } = Steps;
 
   useEffect(() => {
     form.setFieldsValue(data as Store);
@@ -50,7 +51,6 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     return valueChanged && isIncluded;
   };
 
-  const { Step } = Steps;
 
   const systemInfoPage = (
     <div>
@@ -161,7 +161,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       </Form.Item>
       <Form.Item name="badSmellThresholdSuiteId" label="请选择合适您系统的指标阈值：" style={{ display: current === 0 ? 'none' : 'initial' }}>
         <Radio.Group style={{ width: '100%' }}>
-          data ? <SingleBadSmellThreshold></SingleBadSmellThreshold> : <AllBadSmellThreshold></AllBadSmellThreshold>
+          <BadSmellThresholdForm currentAction={currentAction}></BadSmellThresholdForm>
         </Radio.Group>
       </Form.Item>
     </div>

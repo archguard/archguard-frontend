@@ -33,6 +33,7 @@ const MultipleSystem = () => {
   const [helpModalVisible, setHelpModalVisible] = useState(false);
   const [currentSystemInfo, setCurrentSystemInfo] = useState<SystemInfo>();
   const [current, setCurrent] = useState(0);
+  const [currentAction, setCurrentAction] = useState('');
 
   useMount(() => {
     storage.clear();
@@ -79,12 +80,14 @@ const MultipleSystem = () => {
   const onCreateClick = () => {
     setCurrentSystemInfo(undefined);
     setModalVisible(true);
+    setCurrentAction('create');
   };
 
   const onEditClick = (systemInfo: SystemInfo) => {
     setCurrentSystemInfo({ ...systemInfo });
     storage.setSystemId(systemInfo.id);
     setModalVisible(true);
+    setCurrentAction('edit');
   };
 
   const onRemoveClick = (systemInfo: SystemInfo) => {
@@ -204,6 +207,7 @@ const MultipleSystem = () => {
           data={currentSystemInfo}
           onSubmit={onSubmitSystemInfo}
           current={current}
+          currentAction={currentAction}
         ></SystemInfoForm>
       </Modal>
 
