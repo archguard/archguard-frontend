@@ -28,6 +28,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
   useImperativeHandle(ref, () => ({
     submit: () => form.submit(),
     clear: () => form.resetFields(["systemName", "repoType", "username", "password", "repo", "branch"]),
+    validateFields: () => form.getFieldsError(),
   }));
 
   const onFinish = (values: Store) => {
@@ -58,6 +59,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       <Form.Item
         name="systemName"
         label="系统名称"
+        validateTrigger={['onChange', 'onBlur']}
         rules={[
           {
             required: true,
@@ -77,6 +79,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       <Form.Item
         name="repoType"
         label="仓库类型"
+        validateTrigger={['onChange', 'onBlur']}
         rules={[{ required: true, message: "请选择仓库类型！" }]}
         required
         style={{ display: current === 0 ? 'initial' : 'none' }}
@@ -110,6 +113,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
                 <div style={{ display: "flex" }} key={field.key}>
                   <Form.Item
                     {...field}
+                    validateTrigger={['onChange', 'onBlur']}
                     rules={[
                       {
                         required: true,
@@ -143,6 +147,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       <Form.Item
         name="branch"
         label="分支名称"
+        validateTrigger={['onChange', 'onBlur']}
         rules={[
           {
             required: true,
