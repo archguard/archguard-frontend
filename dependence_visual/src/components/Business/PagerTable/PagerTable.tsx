@@ -61,7 +61,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
     axios<PagerTableData>({
       baseURL: "",
       url,
-      method: "POST",
+      method: "GET",
       data: {
         currentPageNumber: currentPageNumber,
         numberPerPage: numberPerPage,
