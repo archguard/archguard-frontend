@@ -62,14 +62,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
       baseURL: "",
       url,
       method: "GET",
-      data: {
-        currentPageNumber: currentPageNumber,
-        numberPerPage: numberPerPage,
-        module: parameter?.module,
-        className: parameter?.className,
-        name: parameter?.name,
-        packageName: parameter?.packageName,
-      },
+      params: { currentPageNumber, numberPerPage, ...props.parameter },
     }).then((res) => {
       setTableData(autoAddUniqueKeys(res.data));
       setCount(res.count);
