@@ -45,3 +45,9 @@ yarn start
 
 
 ## FAQ
+
+License
+---
+
+@ 2019~ Thoughtworks.  This code is distributed under the MPL license. See `LICENSE` in this directory.
+
