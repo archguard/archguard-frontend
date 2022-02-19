@@ -78,10 +78,6 @@ export default defineConfig({
           component: "@/pages/test/system-evaluation",
         },
         {
-          path: "test/retrofit-tools/plsql-to-kotlin",
-          component: "@/pages/test/retrofit-tools/plsql2kotlin",
-        },
-        {
           path: "test",
           component: "@/pages/test",
         },
