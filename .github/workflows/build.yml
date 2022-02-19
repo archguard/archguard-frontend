@@ -1,8 +1,6 @@
-name: ci
+name: CI
 
-on:
-  release:
-    types: [published]
+on: [push]
 
 jobs:
   publish:
@@ -25,11 +23,3 @@ jobs:
           cd archguard
           yarn
           yarn build
-
-      - name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKER_NAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: archguard/archguard
-          tag_with_ref: true
