@@ -4,7 +4,7 @@ import {TablePaginationConfig, ExpandableConfig} from "antd/lib/table/interface"
 import axios from "@/api/axios";
 import {genID} from "@/utils/utils";
 
-const DEFAULt_NUMBER_PER_PAGE = 5;
+const DEFAULT_NUMBER_PER_PAGE = 5;
 
 interface PagerTableProps {
   url: string;
@@ -47,7 +47,7 @@ export const BuPagerTable = (props: PagerTableProps) => {
     columns,
     url,
     expandable,
-    numberPerPage = DEFAULt_NUMBER_PER_PAGE,
+    numberPerPage = DEFAULT_NUMBER_PER_PAGE,
     onDataChange,
     onSortChange,
     onFilterChange,
@@ -62,8 +62,15 @@ export const BuPagerTable = (props: PagerTableProps) => {
     axios<PagerTableData>({
       baseURL: "",
       url,
-      method: "GET",
-      params: { currentPageNumber, numberPerPage, ...props.parameter },
+      method: "POST",
+      data: {
+        currentPageNumber: currentPageNumber,
+        numberPerPage: numberPerPage,
+        module: parameter?.module,
+        className: parameter?.className,
+        name: parameter?.name,
+        packageName: parameter?.packageName,
+      },
     }).then((res) => {
       setTableData(autoAddUniqueKeys(res.data));
       setCount(res.count);

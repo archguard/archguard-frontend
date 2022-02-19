@@ -70,18 +70,6 @@ export default defineConfig({
           component: "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile",
         },
         {
-          path: "system-evaluation/report/:id",
-          component: "@/pages/test/system-evaluation/report",
-        },
-        {
-          path: "test/system-evaluation",
-          component: "@/pages/test/system-evaluation",
-        },
-        {
-          path: "test",
-          component: "@/pages/test",
-        },
-        {
           path: "systemEvaluation/TestEvaluation",
           component: "@/pages/systemEvaluation/TestEvaluation/TestEvaluation",
         },
