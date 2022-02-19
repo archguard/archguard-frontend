@@ -16,7 +16,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
     tableConfigs: [
       {
         title: () => "只有一个方法的类的列表",
-        dataUrl: `/api/module/systems/${systemId}/redundancy/class/one-method`,
+        dataUrl: `/api/systems/${systemId}/redundancy/class/one-method`,
         columns: [
           {
             title: "模块",
@@ -38,7 +38,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
       },
       {
         title: () => "只包含一个属性及get/set的类列表。",
-        dataUrl: `/api/module/systems/${systemId}/redundancy/class/one-field`,
+        dataUrl: `/api/systems/${systemId}/redundancy/class/one-field`,
         columns: [
           {
             title: "模块",
@@ -74,7 +74,7 @@ export const RedundancyConfig: { [key: string]: IssuesConfig } = {
     tableConfigs: [
       {
         title: () => "只有一个继承/实现的接口/抽象类",
-        dataUrl: `/api/module/systems/${systemId}/redundancy/class/over-generalization`,
+        dataUrl: `/api/systems/${systemId}/redundancy/class/over-generalization`,
         columns: [
           {
             title: "父模块名",

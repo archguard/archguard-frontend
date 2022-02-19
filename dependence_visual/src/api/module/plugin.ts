@@ -2,7 +2,7 @@ import axios from "../axios";
 
 export function queryPluginTypes() {
   return axios<string[]>({
-    url: '/api/module/plugin/type',
+    url: '/api/plugin/type',
     method: "GET"
   });
 }
