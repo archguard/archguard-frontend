@@ -28,7 +28,7 @@ export interface AllBadSmellOption {
 
 export const useBadSmellOption = () => {
   const systemId = storage.getSystemId();
-  return useGet<BadSmellOption[]>(`/api/addition/evolution/badsmell-thresholds/system/${systemId}`);
+  return useGet<BadSmellOption[]>(`/api/evolution/badsmell-thresholds/system/${systemId}`);
 }
 
-export const useAllBadSmellOption = () => useGet<AllBadSmellOption[]>(`/api/addition/evolution/badsmell-thresholds`);
+export const useAllBadSmellOption = () => useGet<AllBadSmellOption[]>(`/api/evolution/badsmell-thresholds`);

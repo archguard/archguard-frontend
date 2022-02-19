@@ -1,1 +1,1 @@
-export const baseURL = '/api/addition'
+export const baseURL = '/api'
