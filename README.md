@@ -1,4 +1,11 @@
-# ArchGuard
+# ArchGuard Frontend
+
+[![CI](https://github.com/archguard/archguard-frontend/actions/workflows/build.yml/badge.svg)](https://github.com/archguard/archguard-frontend/actions/workflows/build.yml)
+
+Todo
+
+- [ ] auto deploy
+- [ ] package to release
 
 ## 技术选型
 
