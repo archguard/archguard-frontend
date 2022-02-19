@@ -26,7 +26,7 @@ jobs:
           NODE_OPTIONS: --max_old_space_size=4096
           BUILD_TARGET: zh
         run: |
-          cd dependence_visual
+          cd archguard
           yarn
           yarn build
       - name: Push to GitHub Packages
@@ -34,5 +34,5 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_NAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: archguard/dependence_visual
+          repository: archguard/archguard
           tag_with_ref: true
