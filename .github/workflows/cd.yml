@@ -1,0 +1,43 @@
+name: CD
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          submodules: true
+
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.x
+
+      - name: build
+        env:
+          NODE_OPTIONS: --max_old_space_size=4096
+          BUILD_TARGET: zh
+        run: |
+          cd archguard
+          yarn
+          yarn build
+
+      - name: zip
+        uses: montudor/action-zip@v1
+        with:
+          args: zip -qq -r vendor.zip archguard/dist
+
+      - name: Upload archguard to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: vendor.zip
+          tag: ${{ github.ref }}
