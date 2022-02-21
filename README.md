@@ -1,11 +1,18 @@
 # ArchGuard Frontend
 
-[![CI](https://github.com/archguard/archguard-frontend/actions/workflows/build.yml/badge.svg)](https://github.com/archguard/archguard-frontend/actions/workflows/build.yml)
+[![CI](https://github.com/archguard/archguard-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/archguard/archguard-frontend/actions/workflows/ci.yml)
+
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/archguard/archguard-frontend)
 
 Todo
 
-- [ ] auto deploy
-- [ ] package to release
+- [ ] DSL editor for C4
+- [ ] DevOps
+  - [ ] auto deploy
+  - [ ] package to release
+  - [ ] with dockers
+- [ ] Architecture Guarding
+  - [ ] component guarding
 
 ## 技术选型
 
