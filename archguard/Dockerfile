@@ -1,5 +1,5 @@
 FROM node:10-alpine as build 
-# the webpack version used here have problem with node 17: https://github.com/webpack/webpack/issues/14532
+# the webpack version used here have problem with node > 10: https://github.com/webpack/webpack/issues/14532
 WORKDIR /app
 RUN apk add --update alpine-sdk python3
 COPY package*.json ./
