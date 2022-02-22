@@ -28,6 +28,14 @@ yarn install
 yarn build
 ```
 
+## Docker 运行
+
+```
+cd archguard
+docker build -t archguard-frontend:latest .
+docker run -it --rm -p 3000:80 archguard-frontend:latest
+```
+
 License
 ---
 
