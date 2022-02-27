@@ -1,0 +1,18 @@
+- source:
+  - url: https://github.com/archguard/archguard-frontend
+    alias: fe
+    language: js
+  - url: https://github.com/archguard/archguard-backend
+    language: kotlin
+    alias: be
+  - url: https://github.com/archguard/archguard-scanner
+    language: kotlin
+    alias: scanner
+
+system:
+  - module: fe
+    source: fe/archguard
+  - module: be
+    source: be
+  - module: git_scanner
+    source: scanner/git_scanner
