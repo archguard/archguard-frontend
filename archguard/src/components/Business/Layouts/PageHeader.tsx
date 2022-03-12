@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Select } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { Select } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
 import { queryHotFiles } from "@/api/module/hotFile";
 import useSystemList from "@/store/global-cache-state/useSystemList";
@@ -61,7 +60,7 @@ export default function PageHeader(props: any) {
 
   return (
     <div>
-      <div style={{ float: "left" }}>
+      <div style={{float: "left"}}>
         <span
           title="点击返回系统选择页面"
           style={{
@@ -78,10 +77,10 @@ export default function PageHeader(props: any) {
         >
           ArchGuard
         </span>
-        <span style={{ marginLeft: 15, color: "white", userSelect: "none" }}>丨</span>
+        <span style={{marginLeft: 15, color: "white", userSelect: "none"}}>丨</span>
         <Select
           defaultValue={currentSystemId!}
-          style={{ width: 150, color: "#fff" }}
+          style={{width: 150, color: "#fff"}}
           bordered={false}
           showArrow={false}
           onChange={(value) => onSystemChange(value)}
