@@ -92,6 +92,22 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
           ))}
         </Select>
       </Form.Item>
+      <Form.Item
+        name="language"
+        label="编程语言"
+        validateTrigger={['onChange', 'onBlur']}
+        rules={[{ required: true, message: "请选择编程语言！" }]}
+        required
+        style={{ display: current === 0 ? 'initial' : 'none' }}
+      >
+        <Select>
+          {["Jvm", "TypeScript"].map((value) => (
+            <Select.Option value={value} key={value}>
+              {value}
+            </Select.Option>
+          ))}
+        </Select>
+      </Form.Item>
       <Form.List name="repo">
         {(fields, { add, remove }) => {
           return (
@@ -189,7 +205,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ repoType: "GIT", repo: [""], branch: "master", badSmellThresholdSuiteId: 1 }}
+        initialValues={{ repoType: "GIT", language: "Jvm", repo: [""], branch: "master", badSmellThresholdSuiteId: 1 }}
         scrollToFirstError
       >
         <Steps current={current} style={{ padding: '10px 0' }}>
