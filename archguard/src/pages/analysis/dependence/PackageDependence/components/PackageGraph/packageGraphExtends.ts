@@ -108,6 +108,15 @@ G6.registerEdge(
         },
       },
     },
+    getPath(points) {
+      const startPoint = points[0];
+      const endPoint = points[1];
+      return [
+        [ 'M', startPoint.x, startPoint.y ],
+        [ 'L', endPoint.x / 3 + 2 / 3 * startPoint.x, startPoint.y ],
+        [ 'L', endPoint.x / 3 + 2 / 3 * startPoint.x, endPoint.y ],
+        [ 'L', endPoint.x, endPoint.y ]];
+    },
     getShapeStyle(cfg: any) {
       const { style: defaultStyle } = this.options as any;
       const style = mix({}, defaultStyle, cfg.style);

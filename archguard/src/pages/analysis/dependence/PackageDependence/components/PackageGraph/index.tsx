@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useMemo, useRef, RefObject } from "react";
+import React, { forwardRef, useEffect, useMemo, useRef } from "react";
 import ReactDOM from "react-dom";
 import { useMeasure } from "react-use";
 import "./index.less";
