@@ -65,6 +65,10 @@ function ClassDependence() {
 
   function onShowClick(args: ClassFormData) {
     const { className, dependenceType, deep, module } = args;
+    if (className[0] === "") {
+      className.shift()
+    }
+
     queryClassDependence(className.join("."), dependenceType, {
       deep: deep,
       module: module,

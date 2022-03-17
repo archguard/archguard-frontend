@@ -43,7 +43,12 @@ function MethodDependence() {
   }, [query]);
 
   function onShowClick(args: MethodFormData) {
-    return queryMethodDependence(args.className.join('.'), args.dependenceType, {
+    let className = args.className;
+    if (className[0] === "") {
+      className.shift()
+    }
+
+    return queryMethodDependence(className.join('.'), args.dependenceType, {
       name: args.methodName,
       module: args.module,
       deep: args.deep,
@@ -51,7 +56,7 @@ function MethodDependence() {
       const tree = buildMethodTree(res);
       const nodeEdges = generateNodeEdges(tree, 3);
       setGraphData(nodeEdges);
-      setClassName(args.className.join('.'));
+      setClassName(className.join('.'));
       setMethodName(args.methodName||'');
     });
   }

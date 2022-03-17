@@ -53,6 +53,10 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
   const classCascaderOptions = transformCodeTreeToCascaderOptions(codeTree?.value!, true);
 
   const getMethodOptions = (module: string, className: string[]) => {
+    if (className && className.length > 0 && className[0] === "") {
+      className.shift()
+    }
+
     if (module && className) {
       queryMethodBy(module, className!.join(".")).then((res) => {
         setMethodOptions(buildMethodOptions(res));
