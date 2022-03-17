@@ -1,5 +1,5 @@
 declare class ELK {
-  constructor(options: any) {}
+  constructor(options?: any);
   layout(data: any): Promise<any>;
 }
 
