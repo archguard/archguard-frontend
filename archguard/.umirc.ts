@@ -8,6 +8,9 @@ export default defineConfig({
   hash: true,
   antd: {},
   dva: false,
+  locale: {
+    default: 'zh-CN'
+  },
   devServer: { port: 8080 },
   define: {
     "process.env.BUILD_TARGET": process.env.BUILD_TARGET,

@@ -18,7 +18,7 @@
     "cytoscape-elk": "^2.0.2",
     "echarts": "^4.8.0",
     "echarts-for-react": "^2.0.16",
-    "elkjs": "^0.7.1",
+    "elkjs": "0.7.0",
     "font-awesome": "^4.7.0",
     "markdown-navbar": "^1.4.2",
     "query-string": "^6.13.1",

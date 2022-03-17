@@ -2,7 +2,7 @@ import "./index.less";
 import React, { useState, useRef, useEffect } from "react";
 import { Tabs, Row, Col, Modal, notification, Button } from "antd";
 import { useMount, useInterval } from "react-use";
-import { QuestionCircleOutlined, UpOutlined } from "@ant-design/icons";
+import { QuestionCircleOutlined, UpOutlined, GlobalOutlined } from "@ant-design/icons";
 import { scanDependence } from "@/api/scanner/dependenceScanner";
 import {
   SystemInfo,
@@ -16,6 +16,7 @@ import SystemCard from "./components/SystemCard";
 import SystemInfoForm from "./components/SystemInfoForm";
 import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "../help";
+import {setLocale, useIntl} from "@@/plugin-locale/localeExports";
 
 interface UserProfile {
   name?: string;
@@ -25,6 +26,7 @@ interface UserProfile {
 const DEFAULT_LOAD_DATA_INTERVAL = 1000 * 60 * 5;
 
 const MultipleSystem = () => {
+  const { formatMessage } = useIntl();
   const ref = useRef<any>({});
   const [user, setUser] = useState<UserProfile>();
   const [systemList, loadSystemList] = useSystemList();
@@ -34,6 +36,7 @@ const MultipleSystem = () => {
   const [currentSystemInfo, setCurrentSystemInfo] = useState<SystemInfo>();
   const [current, setCurrent] = useState(0);
   const [currentAction, setCurrentAction] = useState('');
+  const [currentLanguage, setCurrentLanguage] = useState('zh-CN');
 
   useMount(() => {
     storage.clear();
@@ -132,6 +135,17 @@ const MultipleSystem = () => {
     setCurrent(current - 1);
   };
 
+  const setLanguage = () => {
+    if (currentLanguage === "zh-CN") {
+      setCurrentLanguage("en-US")
+    } else {
+      setCurrentLanguage("zh-CN")
+    }
+
+    setLocale(currentLanguage, false);
+  };
+
+
   return (
     <div className="multiple-system-container">
       <div className="multiple-system-header">
@@ -141,6 +155,14 @@ const MultipleSystem = () => {
         {user && (
           <div className="header-user">
             <div>
+              <Button
+                icon={<GlobalOutlined />}
+                onClick={() => setLanguage()}
+              >
+                {formatMessage({ id: 'SWITCH_LANGUAGE'})}
+              </Button>
+            </div>
+            <div>
               {getFeature(FEATURES.INSIDE_FEATURE) && (
                 <Button
                   type="link"
@@ -148,7 +170,7 @@ const MultipleSystem = () => {
                   icon={<QuestionCircleOutlined />}
                   onClick={() => setHelpModalVisible(true)}
                 >
-                  说明文档
+                  {formatMessage({ id: 'OPERATION_DOCUMENT'})}
                 </Button>
               )}
             </div>
@@ -165,7 +187,7 @@ const MultipleSystem = () => {
       </div>
       <div className="multiple-system-selector">
         <Tabs defaultActiveKey="my-system">
-          <Tabs.TabPane tab="我的系统" key="my-system">
+          <Tabs.TabPane tab={formatMessage({ id: 'MY_SYSTEM'})} key="my-system">
             <Row gutter={[12, 12]}>
               <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
                 <SystemCard onClick={onCreateClick}></SystemCard>
@@ -183,7 +205,7 @@ const MultipleSystem = () => {
               ))}
             </Row>
           </Tabs.TabPane>
-          <Tabs.TabPane tab="其他系统" key="other-system" disabled></Tabs.TabPane>
+          <Tabs.TabPane tab={formatMessage({ id: 'OTHER_SYSTEM'})} key="other-system" disabled></Tabs.TabPane>
         </Tabs>
       </div>
       <Modal
@@ -196,13 +218,13 @@ const MultipleSystem = () => {
         bodyStyle={{ height: "560px", overflowY: "auto", padding: "32px" }}
         footer={[
           current === 0 && <Button type="primary" onClick={() => nextButton()}>
-            下一页
+            {formatMessage({ id: 'NEXT'})}
           </Button>,
           current === 1 && <Button style={{ margin: '0 8px' }} onClick={() => prevButton()}>
-            上一页
+            {formatMessage({ id: 'PREV'})}
           </Button>,
           current === 1 && <Button type="primary" onClick={onSubmit}>
-            确认
+            {formatMessage({ id: 'OK'})}
           </Button>,
         ]}
       >

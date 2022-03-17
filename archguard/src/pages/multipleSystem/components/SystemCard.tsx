@@ -4,6 +4,7 @@ import Meta from "antd/lib/card/Meta";
 import { PlusOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { SystemInfo } from "@/api/addition/systemInfo";
 import moment from 'moment';
+import {useIntl} from "@@/plugin-locale/localeExports";
 
 interface SystemCardProps {
   systemInfo?: SystemInfo;
@@ -14,6 +15,7 @@ interface SystemCardProps {
 }
 
 const SystemCard = (props: SystemCardProps) => {
+  const { formatMessage } = useIntl();
   const { systemInfo, onClick, onScanning, onEdit, onRemove } = props;
 
   const menuClick = (key: string) => {
@@ -31,10 +33,10 @@ const SystemCard = (props: SystemCardProps) => {
 
   const menu = (
     <Menu onClick={({ key }) => menuClick(key as string)}>
-      <Menu.Item key="reScanning">重新扫描</Menu.Item>
-      <Menu.Item key="editSystemInfo">修改系统信息</Menu.Item>
+      <Menu.Item key="reScanning">{formatMessage({ id: 'RE_SCAN'})}</Menu.Item>
+      <Menu.Item key="editSystemInfo">{formatMessage({ id: 'MODIFY_SYSTEM'})}</Menu.Item>
       <Menu.Item danger key="removeSystem">
-        删除系统
+        {formatMessage({ id: 'DELETE_SYSTEM'})}
       </Menu.Item>
     </Menu>
   );
@@ -48,19 +50,19 @@ const SystemCard = (props: SystemCardProps) => {
 
     return scanned === "SCANNED" ? (
       <Button type="primary" onClick={onClick}>
-        进入
+        {formatMessage({ id: 'ENTER'})}
       </Button>
     ) : scanned === "SCANNING" ? (
       <Button type="primary" loading>
-        扫描中
+        {formatMessage({ id: 'SCANNING'})}
       </Button>
     ) : scanned === "FAILED" ? (
       <Button danger type="primary" onClick={onScannedClick}>
-        扫描失败，重新扫描
+        {formatMessage({ id: 'SCAN_FAILURE_RETRY'})}
       </Button>
     ) : (
             <Button type="primary" onClick={onScannedClick}>
-              扫描
+              {formatMessage({ id: 'SCAN'})}
             </Button>
           );
   };
@@ -85,7 +87,7 @@ const SystemCard = (props: SystemCardProps) => {
         <div className="card-btn">{renderSystemButton(systemInfo)}</div>
       </div>
       <div className="multiple-system-card-title">
-        <Meta title={systemInfo.systemName} description={`最近扫描时间: ${moment(systemInfo.updatedTime).format('DD/MM/YYYY HH:mm')}`} />
+        <Meta title={systemInfo.systemName} description={`${formatMessage({ id: 'LAST_SCAN_TIME'})}: ${moment(systemInfo.updatedTime).format('DD/MM/YYYY HH:mm')}`} />
       </div>
     </Card>
   ) : (
@@ -94,7 +96,7 @@ const SystemCard = (props: SystemCardProps) => {
           <PlusOutlined />
         </div>
         <div className="multiple-system-card-title add">
-          <span>新增系统</span>
+          <span>{formatMessage({ id: 'NEW_SYSTEM'})}</span>
         </div>
       </Card>
     );
