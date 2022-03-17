@@ -108,15 +108,16 @@ G6.registerEdge(
         },
       },
     },
-    getPath(points) {
-      const startPoint = points[0];
-      const endPoint = points[1];
-      return [
-        [ 'M', startPoint.x, startPoint.y ],
-        [ 'L', endPoint.x / 3 + 2 / 3 * startPoint.x, startPoint.y ],
-        [ 'L', endPoint.x / 3 + 2 / 3 * startPoint.x, endPoint.y ],
-        [ 'L', endPoint.x, endPoint.y ]];
-    },
+    // getPath(points) {
+    //   const startPoint = points[0];
+    //   const endPoint = points[1];
+    //   return [
+    //     ['M', startPoint.x, startPoint.y],
+    //     ['L', endPoint.x / 3 + (2 / 3) * startPoint.x, startPoint.y],
+    //     ['L', endPoint.x / 3 + (2 / 3) * startPoint.x, endPoint.y],
+    //     ['L', endPoint.x, endPoint.y],
+    //   ];
+    // },
     getShapeStyle(cfg: any) {
       const { style: defaultStyle } = this.options as any;
       const style = mix({}, defaultStyle, cfg.style);
@@ -128,11 +129,14 @@ G6.registerEdge(
         { x: -20 - index * 10, y: endPoint.y },
       ];
 
+      const source = cfg.sourceNode;
+      const target = cfg.targetNode;
+
       cfg.controlPoints = controlPoints;
 
       const points = [startPoint, ...controlPoints, endPoint];
       let routeCfg = { radius: style.radius };
-      let path = this.getPath(points, routeCfg);
+      let path = this.getPath(points, source, target, style.radius, routeCfg);
 
       const attrs = {
         ...style,
