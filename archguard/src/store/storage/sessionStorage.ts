@@ -1,4 +1,4 @@
-import { hotFile } from "@/api/module/hotFile";
+import { gitFile } from "@/api/module/gitFile";
 
 const PREFIX = "ArchGrard_";
 enum StorageKeys {
@@ -15,13 +15,13 @@ const setSystemId = (value: any) => {
 };
 
 const getHotFiles = () => {
-  const hotFiles: hotFile[] = JSON.parse(
+  const hotFiles: gitFile[] = JSON.parse(
     sessionStorage.getItem(PREFIX + StorageKeys.HOT_FILE) || "[]",
   );
   return hotFiles.map((file) => file.jclassId);
 };
 
-const setHotFiles = (hotFiles: hotFile[]) => {
+const setHotFiles = (hotFiles: gitFile[]) => {
   return sessionStorage.setItem(PREFIX + StorageKeys.HOT_FILE, JSON.stringify(hotFiles));
 };
 

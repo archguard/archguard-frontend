@@ -1,7 +1,7 @@
 import axios from "../axios";
 import { baseURL } from "./config";
 
-export interface hotFile {
+export interface gitFile {
   jclassId: string;
   systemId: number;
   moduleName: string;
@@ -11,9 +11,9 @@ export interface hotFile {
 }
 
 export function queryHotFiles() {
-  return axios<hotFile[]>({
+  return axios<gitFile[]>({
     baseURL,
-    url: "/git-hot-files/",
+    url: "/git/hot-files/",
     method: "GET",
   });
 }

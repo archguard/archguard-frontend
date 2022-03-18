@@ -1,7 +1,7 @@
 import React from "react";
 import { Select } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
-import { queryHotFiles } from "@/api/module/hotFile";
+import { queryHotFiles } from "@/api/module/gitFile";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { useMount } from "ahooks";
 import { history } from "umi";
