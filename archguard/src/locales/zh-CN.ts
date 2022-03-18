@@ -15,5 +15,6 @@ export default {
   SCAN: "扫描",
   SCANNING: "扫描中",
   ENTER: "进入",
+  CANCEL_SCAN: "取消扫描",
   SCAN_FAILURE_RETRY: "扫描失败，重新扫描"
 };

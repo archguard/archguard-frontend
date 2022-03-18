@@ -12,11 +12,12 @@ interface SystemCardProps {
   onEdit?(): void;
   onRemove?(): void;
   onScanning?(): void;
+  onCancel?(): void;
 }
 
 const SystemCard = (props: SystemCardProps) => {
   const { formatMessage } = useIntl();
-  const { systemInfo, onClick, onScanning, onEdit, onRemove } = props;
+  const { systemInfo, onClick, onScanning, onEdit, onRemove, onCancel } = props;
 
   const menuClick = (key: string) => {
     switch (key) {
@@ -28,16 +29,26 @@ const SystemCard = (props: SystemCardProps) => {
         break;
       case "removeSystem":
         onRemove!();
+        break;
+      case "cancelScan":
+        onCancel!();
+        break;
     }
   };
 
   const menu = (
     <Menu onClick={({ key }) => menuClick(key as string)}>
-      <Menu.Item key="reScanning">{formatMessage({ id: 'RE_SCAN'})}</Menu.Item>
-      <Menu.Item key="editSystemInfo">{formatMessage({ id: 'MODIFY_SYSTEM'})}</Menu.Item>
-      <Menu.Item danger key="removeSystem">
-        {formatMessage({ id: 'DELETE_SYSTEM'})}
-      </Menu.Item>
+      { systemInfo && systemInfo.scanned === "SCANNING" &&
+        <Menu.Item key="cancelScan">{formatMessage({ id: 'CANCEL_SCAN'})}</Menu.Item>
+      }
+      {
+        systemInfo && systemInfo.scanned !== "SCANNING" &&
+        <>
+          <Menu.Item key="reScanning">{formatMessage({ id: 'RE_SCAN'})}</Menu.Item>
+          <Menu.Item key="editSystemInfo">{formatMessage({ id: 'MODIFY_SYSTEM'})}</Menu.Item>
+          <Menu.Item danger key="removeSystem">{formatMessage({ id: 'DELETE_SYSTEM'})}</Menu.Item>
+        </>
+      }
     </Menu>
   );
 
@@ -75,7 +86,6 @@ const SystemCard = (props: SystemCardProps) => {
           placement="bottomLeft"
           className="more"
           trigger={["click"]}
-          disabled={systemInfo.scanned === "SCANNING"}
         >
           <Button size="small" shape="circle" icon={<EllipsisOutlined />}></Button>
         </Dropdown>

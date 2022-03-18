@@ -101,7 +101,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         style={{ display: current === 0 ? 'initial' : 'none' }}
       >
         <Select>
-          {["Jvm", "TypeScript", "Golang", "Python", "C#", "JavaScript"].map((value) => (
+          {["Jvm", "TypeScript", "Golang", "Python", "C#", "JavaScript", "Kotlin", "Java"].map((value) => (
             <Select.Option value={value} key={value}>
               {value}
             </Select.Option>

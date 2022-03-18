@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Tabs, Row, Col, Modal, notification, Button } from "antd";
 import { useMount, useInterval } from "react-use";
 import { QuestionCircleOutlined, UpOutlined, GlobalOutlined } from "@ant-design/icons";
-import { scanDependence } from "@/api/scanner/dependenceScanner";
+import { cancelScanDependence, scanDependence } from "@/api/scanner/dependenceScanner";
 import {
   SystemInfo,
   createSystemInfo,
@@ -92,6 +92,12 @@ const MultipleSystem = () => {
     storage.setSystemId(systemInfo.id);
     setModalVisible(true);
     setCurrentAction('edit');
+  };
+
+  const onCancelClick = (systemInfo: SystemInfo) => {
+    cancelScanDependence(systemInfo.id).then(() => {
+      loadSystemList();
+    });
   };
 
   const onRemoveClick = (systemInfo: SystemInfo) => {
@@ -200,6 +206,7 @@ const MultipleSystem = () => {
                     onClick={() => routeToHome(systemInfo)}
                     onScanning={() => onScanning(systemInfo.id)}
                     onEdit={() => onEditClick(systemInfo)}
+                    onCancel={() => onCancelClick(systemInfo)}
                     onRemove={() => onRemoveClick(systemInfo)}
                   ></SystemCard>
                 </Col>

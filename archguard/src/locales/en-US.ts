@@ -15,5 +15,6 @@ export default {
   SCAN: "Scan",
   SCANNING: "Scanning",
   ENTER: "Enter",
+  CANCEL_SCAN: "Cancel Scan",
   SCAN_FAILURE_RETRY: "Failure, ReScan"
 };
