@@ -125,7 +125,7 @@ const MultipleSystem = () => {
 
   const nextButton = () => {
     const errorList = ref.current.validateFields();
-    const errorResult = Object.values(errorList).filter((t) => { return t.errors.length > 0 }).length;
+    const errorResult = Object.values(errorList).filter((t: any) => { return t.errors.length > 0 }).length;
     if (errorResult === 0) {
       setCurrent(current + 1);
     }
