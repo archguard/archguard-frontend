@@ -2,6 +2,7 @@ export default {
   SWITCH_LANGUAGE: "English",
   MY_SYSTEM: "我的系统",
   OTHER_SYSTEM: "其它系统",
+  SERVICES_MAP: "服务地图",
   NEXT: "下一页",
   PREV: "上一页",
   OPERATION_DOCUMENT: "说明文档",

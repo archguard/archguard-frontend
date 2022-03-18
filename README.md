@@ -6,13 +6,11 @@
 
 Todo
 
-- [ ] DSL editor for C4
-- [ ] DevOps
-  - [ ] auto deploy
-  - [ ] package to release
-  - [ ] with dockers
-- [ ] Architecture Guarding
-  - [ ] component guarding
+- [ ] C4
+- [ ] Services Map
+  - [ ] analysis frontend API
+  - [ ] analysis backend API (Java)
+  - [ ] import Swagger
 
 ## 技术选型
 

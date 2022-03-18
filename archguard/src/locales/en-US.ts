@@ -2,6 +2,7 @@ export default {
   SWITCH_LANGUAGE: "中文",
   MY_SYSTEM: "My Systems",
   OTHER_SYSTEM: "Other Systems",
+  SERVICES_MAP: "Services Map",
   NEXT: "Next",
   PREV: "Prev",
   OPERATION_DOCUMENT: "Document",

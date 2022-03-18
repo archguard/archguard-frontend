@@ -17,6 +17,7 @@ import SystemInfoForm from "./components/SystemInfoForm";
 import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "../help";
 import {setLocale, useIntl} from "@@/plugin-locale/localeExports";
+import ServicesMap from "../servicesMap/ServicesMap";
 
 interface UserProfile {
   name?: string;
@@ -204,6 +205,9 @@ const MultipleSystem = () => {
                 </Col>
               ))}
             </Row>
+          </Tabs.TabPane>
+          <Tabs.TabPane tab={formatMessage({ id: 'SERVICES_MAP'})} key="services-map">
+            <ServicesMap />
           </Tabs.TabPane>
           <Tabs.TabPane tab={formatMessage({ id: 'OTHER_SYSTEM'})} key="other-system" disabled></Tabs.TabPane>
         </Tabs>
