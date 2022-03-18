@@ -20,7 +20,7 @@ function Summary() {
     const list = systemList?.value || [];
     const id = storage.getSystemId();
 
-    return list.find((system) => system.id == parseInt(id))?.systemName || "";
+    return list.find((system) => system.id === parseInt(id))?.systemName || "";
   };
 
   useEffect(() => {
@@ -53,8 +53,10 @@ function Summary() {
             <BuGrade text="架构质量等级" grade={overviewCount?.qualityLevel}></BuGrade>
           </div>
         </div>
-        {/*<GitChanges />*/}
       </div>
+      {/*<div className={styles.changes}>*/}
+      {/*  <GitChanges />*/}
+      {/*</div>*/}
     </div>
   );
 }

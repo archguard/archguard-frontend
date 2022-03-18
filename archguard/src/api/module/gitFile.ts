@@ -10,10 +10,23 @@ export interface gitFile {
   modifiedCount: number;
 }
 
+export interface GitChange {
+  path: string;
+  modifiedCount: number;
+}
+
 export function queryHotFiles() {
   return axios<gitFile[]>({
     baseURL,
     url: "/git/hot-files/",
+    method: "GET",
+  });
+}
+
+export function allGitChange() {
+  return axios<GitChange[]>({
+    baseURL,
+    url: "/git/changes/",
     method: "GET",
   });
 }
