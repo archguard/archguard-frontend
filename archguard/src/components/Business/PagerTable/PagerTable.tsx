@@ -4,7 +4,7 @@ import {TablePaginationConfig, ExpandableConfig} from "antd/lib/table/interface"
 import axios from "@/api/axios";
 import {genID} from "@/utils/utils";
 
-const DEFAULT_NUMBER_PER_PAGE = 5;
+const DEFAULT_NUMBER_PER_PAGE = 10;
 
 interface PagerTableProps {
   url: string;
