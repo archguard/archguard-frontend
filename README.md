@@ -1,7 +1,6 @@
 # ArchGuard Frontend
 
 [![CI](https://github.com/archguard/archguard-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/archguard/archguard-frontend/actions/workflows/ci.yml)
-
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/archguard/archguard-frontend)
 
 Todo
