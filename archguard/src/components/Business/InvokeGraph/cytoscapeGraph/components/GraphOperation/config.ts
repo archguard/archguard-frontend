@@ -1,4 +1,5 @@
 export const graphLayoutOptions = [
+  "preset",
   "elk",
   "breadthfirst",
   "random",

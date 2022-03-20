@@ -12,7 +12,6 @@ import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/compo
 import { Core, LayoutOptions } from "cytoscape";
 import { GraphData } from "@/models/graph";
 import { JavaItem } from "@/models/java";
-import { generateNodeEdges } from "@/pages/analysis/dependence/utils";
 import FullscreenContainer from "@/components/Business/FullscreenContainer";
 
 type Option = {
@@ -51,7 +50,7 @@ export default function Graph(props: GraphProps) {
   } = props;
   const [cy, setCy] = useState<Core>();
   const [graphLayout, setGraphLayout] = useState<LayoutOptions>({
-    name: "elk",
+    name: "random",
     nodeDimensionsIncludeLabels: true,
     fit: true,
   });
