@@ -1,7 +1,7 @@
 import SettingFilled from "@ant-design/icons/SettingFilled";
 import { Tabs } from "antd";
 import React, { useState } from "react";
-import { useHistory, useParams } from "umi";
+import { useHistory } from "umi";
 import ClassDependence from "./ClassDependence";
 import DependenceConfig from "./DependenceConfig";
 import "./index.css";

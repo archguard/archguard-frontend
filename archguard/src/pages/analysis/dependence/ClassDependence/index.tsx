@@ -7,8 +7,8 @@ import {
   buildClassMethodInvokesTree,
   generateNodeEdges,
 } from "../utils";
-import { GraphData } from "../../../../models/graph";
-import { JClass, JMethod } from "../../../../models/java";
+import { GraphData } from "@/models/graph";
+import { JClass, JMethod } from "@/models/java";
 import ClassDependenceArgsForm from "./ClassDependenceArgsForm";
 import useUrlQuery from '@/hooks/useUrlQuery';
 
