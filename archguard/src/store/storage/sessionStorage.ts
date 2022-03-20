@@ -3,6 +3,7 @@ import {GitChange, gitFile} from "@/api/module/gitFile";
 const PREFIX = "ArchGrard_";
 enum StorageKeys {
   SYSTEM_ID = "SYSTEM_ID",
+  SYSTEM_LANG = "SYSTEM_LANG",
   HOT_FILE = "HOT_FILE",
   GIT_CHANGE = "GIT_CHANGE",
 }
@@ -13,6 +14,14 @@ const getSystemId = () => {
 
 const setSystemId = (value: any) => {
   return sessionStorage.setItem(PREFIX + StorageKeys.SYSTEM_ID, value);
+};
+
+const getSystemLanguage = () => {
+  return sessionStorage.getItem(PREFIX + StorageKeys.SYSTEM_LANG) || "jvm";
+};
+
+const setSystemLanguage = (value: any) => {
+  return sessionStorage.setItem(PREFIX + StorageKeys.SYSTEM_LANG, value);
 };
 
 const getHotFiles = () => {
@@ -47,5 +56,7 @@ export const storage = {
   setHotFiles,
   setGitChanges,
   getGitChanges,
+  getSystemLanguage,
+  setSystemLanguage,
   clear,
 };

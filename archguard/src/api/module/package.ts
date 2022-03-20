@@ -6,10 +6,10 @@ interface PackageDependenciesModel {
   [key: string]: any;
 }
 
-export function queryPackageDependencies() {
+export function queryPackageDependencies(language: string) {
   return axios<PackageDependenciesModel[]>({
     baseURL,
-    url: '/package/dependencies',
+    url: `/package/dependencies?language=${language}`,
     method: "GET"
   });
 }

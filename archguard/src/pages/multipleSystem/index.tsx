@@ -56,6 +56,7 @@ const MultipleSystem = () => {
     if (systemInfo.scanned !== "SCANNED") return;
     const { id } = systemInfo;
     storage.setSystemId(id);
+    storage.setSystemLanguage(systemInfo.language);
     window.location.href = `/${id}/systemSummary/Summary`;
   };
 
@@ -90,6 +91,7 @@ const MultipleSystem = () => {
   const onEditClick = (systemInfo: SystemInfo) => {
     setCurrentSystemInfo({ ...systemInfo });
     storage.setSystemId(systemInfo.id);
+    storage.setSystemLanguage(systemInfo.language);
     setModalVisible(true);
     setCurrentAction('edit');
   };

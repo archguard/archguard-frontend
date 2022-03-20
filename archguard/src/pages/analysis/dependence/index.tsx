@@ -16,6 +16,7 @@ export default function Dependence() {
   const { tab } = useUrlQuery<{ tab: "class" | "method" | "package" | "module" }>();
 
   const systemId = storage.getSystemId();
+  const language = storage.getSystemLanguage();
 
   const [configVisible, setConfigVisible] = useState(false);
 
@@ -36,7 +37,7 @@ export default function Dependence() {
           <ModuleDependence />
         </Tabs.TabPane>
         <Tabs.TabPane tab="package" key="package">
-          <PackageDependence />
+          <PackageDependence language={language}/>
         </Tabs.TabPane>
         <Tabs.TabPane tab="class" key="class">
           <ClassDependence />

@@ -9,6 +9,7 @@ export interface SystemInfo {
   repoType: "GIT" | "SVN";
   username: string;
   password: string;
+  language: string;
   sql: string;
   scanned: "NONE" | "SCANNING" | "SCANNED" | "FAILED";
   updatedTime: number;

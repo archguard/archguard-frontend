@@ -1,13 +1,18 @@
 import { queryPackageDependencies } from "@/api/module/package";
 import { Button, Col, Row, Select } from "antd";
-import React, { useMemo, useRef, useState } from "react";
+import React, { forwardRef, useMemo, useRef, useState } from "react";
 import { useAsync } from "react-use";
 import "./index.css";
 import PackageGraph from "./components/PackageGraph";
 import FullscreenContainer from '@/components/Business/FullscreenContainer';
 
-export default function PackageDependence() {
-  const { value: allDependence = [] } = useAsync(queryPackageDependencies);
+interface PackageDependenceProps {
+  language: any;
+}
+
+const PackageDependence = forwardRef((props: PackageDependenceProps) => {
+  const { language } = props;
+  const { value: allDependence = [] } = useAsync(() => queryPackageDependencies(language));
   const [currentModule, setCurrentModule] = useState(0);
   const graph = useRef<any>(null);
 
@@ -67,4 +72,6 @@ export default function PackageDependence() {
       </FullscreenContainer>
     </div>
   );
-}
+});
+
+export default PackageDependence;
