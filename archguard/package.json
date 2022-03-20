@@ -14,11 +14,11 @@
     "codemirror": "^5.55.0",
     "common-tags": "^1.8.0",
     "copy-to-clipboard": "^3.3.1",
-    "cytoscape": "^3.21.0",
-    "cytoscape-elk": "^2.0.2",
+    "cytoscape": "3.21.0",
+    "cytoscape-elk": "2.0.2",
     "echarts": "^4.8.0",
     "echarts-for-react": "^2.0.16",
-    "elkjs": "0.7.0",
+    "elkjs": "0.7.1",
     "font-awesome": "^4.7.0",
     "markdown-navbar": "^1.4.2",
     "query-string": "^6.13.1",
@@ -33,7 +33,7 @@
     "react-use": "^15.3.2",
     "react-vuex-hook": "^5.0.3",
     "sprotty": "^0.8.0",
-    "web-worker": "^1.0.0",
+    "web-worker": "1.2.0",
     "xlsx": "^0.16.3"
   },
   "scripts": {

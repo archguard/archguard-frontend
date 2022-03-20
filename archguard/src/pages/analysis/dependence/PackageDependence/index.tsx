@@ -10,7 +10,7 @@ interface PackageDependenceProps {
   language: any;
 }
 
-const PackageDependence = forwardRef((props: PackageDependenceProps) => {
+const PackageDependence = (props: PackageDependenceProps) => {
   const { language } = props;
   const { value: allDependence = [] } = useAsync(() => queryPackageDependencies(language));
   const [currentModule, setCurrentModule] = useState(0);
@@ -72,6 +72,6 @@ const PackageDependence = forwardRef((props: PackageDependenceProps) => {
       </FullscreenContainer>
     </div>
   );
-});
+};
 
 export default PackageDependence;

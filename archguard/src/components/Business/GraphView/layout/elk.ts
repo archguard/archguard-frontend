@@ -1,6 +1,6 @@
 import { forEach } from "lodash";
 import { Util } from "@antv/g6/es";
-import ELK from "elkjs";
+import ELK from "elkjs/lib/elk.bundled";
 import { G6GraphData, GNode, GEdge } from "@/models/graph";
 
 type Node = GNode;

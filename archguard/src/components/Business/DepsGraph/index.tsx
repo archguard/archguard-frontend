@@ -77,7 +77,6 @@ export default function DepsGraph(props: DepsGraphProps) {
         }),
       })
       .then(({ children, edges }) => {
-        console.log(edges);
         const data = {
           nodes:
             children?.map(({ id, width = 0, height = 0, x = 0, y = 0, labels }) => {
