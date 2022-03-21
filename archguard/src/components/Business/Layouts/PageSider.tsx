@@ -26,7 +26,7 @@ const menuList = configForTargets({
         { key: "/systemEvaluation/CohesionEvaluation", text: "内聚维度" },
         { key: "/systemEvaluation/Redundancy", text: "冗余维度" },
         {
-          key: "/systemEvaluation/TestEvaluation",
+          key: "/BadSmellOverview/TestEvaluation",
           text: "测试维度",
         },
       ],
@@ -56,6 +56,10 @@ const menuList = configForTargets({
         {
           key: "/systemEvolving/QualityGateProfile",
           text: "质量阀",
+        },
+        {
+          key: "/systemEvolving/BadSmellOverview",
+          text: "坏味道看板",
         },
       ],
     },

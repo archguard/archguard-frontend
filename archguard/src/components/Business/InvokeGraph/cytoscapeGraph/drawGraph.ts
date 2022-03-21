@@ -2,6 +2,7 @@ import cytoscape, { Core, LayoutOptions, CollectionReturnValue, NodeCollection, 
 // import elk from "cytoscape-elk";
 // import dagre from 'cytoscape-dagre';
 // import cola from 'cytoscape-cola';
+// @ts-ignore
 import fcose from 'cytoscape-fcose';
 
 import copy from "copy-to-clipboard";
@@ -23,6 +24,7 @@ import { MessageType } from 'antd/lib/message';
 cytoscape.use(fcose);
 
 export function initCytoscape(id = "cy", onEvent: { cxttap: () => MessageType }) {
+  // @ts-ignore
   const cy = cytoscape({
     container: document.getElementById(id),
     style: [
@@ -47,11 +49,11 @@ export function initCytoscape(id = "cy", onEvent: { cxttap: () => MessageType })
   //   showHighlightBrachNode(cy, event.target);
   // });
 
-  cy.on("tap", "edge", function (event) {
+  cy.on("tap", "edge", function (event: any) {
     showHighlightBrachEdge(cy, event.target);
   });
 
-  cy.on("cxttap", "node", function (event) {
+  cy.on("cxttap", "node", function (event: any) {
     const node = event.target;
     copy(node.data("fullName"));
     onEvent.cxttap();

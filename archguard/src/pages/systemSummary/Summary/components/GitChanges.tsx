@@ -1,14 +1,15 @@
-import {CirclePacking} from '@ant-design/charts';
-import {allGitChange} from "@/api/module/gitFile";
-import {useEffect, useState} from "react";
+import { CirclePacking } from '@ant-design/charts';
+import { allGitChange } from "@/api/module/gitFile";
+import { useEffect, useState } from "react";
+import React from 'react';
 
 function GitChanges() {
   const [data, setData] = useState([]);
 
-  function hierarchy(data, delimiter = "/") {
+  function hierarchy(data: any, delimiter = "/") {
     let root;
     const map = new Map();
-    data.forEach(function find(data) {
+    data.forEach(function find(data: any) {
       const { name } = data;
       if (map.has(name)) return map.get(name);
       const i = name.lastIndexOf(delimiter);
@@ -38,11 +39,11 @@ function GitChanges() {
 
   const asyncFetch = () => {
     allGitChange().then((res) => {
-      setData(hierarchy(res));
+      setData(hierarchy(res) as any);
     });
   };
 
-  const config = {
+  const config: any = {
     autoFit: true,
     padding: 0,
     width: 600,
