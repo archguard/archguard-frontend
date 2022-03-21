@@ -10,6 +10,7 @@ export interface SystemInfo {
   username: string;
   password: string;
   language: string;
+  codePath: string;
   sql: string;
   scanned: "NONE" | "SCANNING" | "SCANNED" | "FAILED";
   updatedTime: number;

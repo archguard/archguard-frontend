@@ -27,7 +27,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
 
   useImperativeHandle(ref, () => ({
     submit: () => form.submit(),
-    clear: () => form.resetFields(["systemName", "repoType", "username", "password", "repo", "branch"]),
+    clear: () => form.resetFields(["systemName", "repoType", "username", "password", "repo", "branch", "codePath", "language"]),
     validateFields: () => form.getFieldsError(),
   }));
 
@@ -173,6 +173,14 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         style={{ display: current === 0 ? 'initial' : 'none' }}
       >
         <Input placeholder="master" />
+      </Form.Item>
+      <Form.Item
+        name="codePath"
+        label="源码目录"
+        validateTrigger={['onChange', 'onBlur']}
+        style={{ display: current === 0 ? 'initial' : 'none' }}
+      >
+        <Input placeholder="适用于无包概念的语言，如 TypeScript" />
       </Form.Item>
       <Form.Item name="username" label="仓库用户名" style={{ display: current === 0 ? 'initial' : 'none' }}>
         <Input placeholder="请输入用户名" />
