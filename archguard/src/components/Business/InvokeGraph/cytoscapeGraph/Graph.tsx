@@ -50,7 +50,7 @@ export default function Graph(props: GraphProps) {
   } = props;
   const [cy, setCy] = useState<Core>();
   const [graphLayout, setGraphLayout] = useState<LayoutOptions>({
-    name: "random",
+    name: "fcose",
     nodeDimensionsIncludeLabels: true,
     fit: true,
   });

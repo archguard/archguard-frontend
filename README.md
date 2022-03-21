@@ -5,11 +5,10 @@
 
 Todo
 
-- [ ] C4
-- [ ] Services Map
-  - [ ] analysis frontend API
-  - [ ] analysis backend API (Java)
-  - [ ] import Swagger
+- [ ] Layout Engine
+  - [Darge](https://github.com/cytoscape/cytoscape.js-dagre)
+  - [FCose](https://github.com/iVis-at-Bilkent/cytoscape.js-fcose)
+  - [Cola](https://github.com/cytoscape/cytoscape.js-cola)
 
 ## 技术选型
 
@@ -32,6 +31,14 @@ cd archguard
 docker build -t archguard-frontend:latest .
 docker run -it --rm -p 3000:80 archguard-frontend:latest
 ```
+
+## Graph Engine
+
+- Antv/g6, for Package dependencies
+  - with `ant-design/charts`
+- Cytoscape, for Class & Method dependencies 
+  - ext: `darge`, `cola`, `fcose`, ~~elk~~
+
 
 License
 ---

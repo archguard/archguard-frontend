@@ -1,5 +1,9 @@
 import cytoscape, { Core, LayoutOptions, CollectionReturnValue, NodeCollection, NodeSingular, EdgeSingular } from "cytoscape";
-import elk from "cytoscape-elk";
+// import elk from "cytoscape-elk";
+// import dagre from 'cytoscape-dagre';
+// import cola from 'cytoscape-cola';
+import fcose from 'cytoscape-fcose';
+
 import copy from "copy-to-clipboard";
 import {
   defaultNodeStyle,
@@ -13,7 +17,10 @@ import {
 } from "./config";
 import { MessageType } from 'antd/lib/message';
 
-cytoscape.use(elk);
+// cytoscape.use(elk);
+// cytoscape.use(dagre);
+// cytoscape.use(cola);
+cytoscape.use(fcose);
 
 export function initCytoscape(id = "cy", onEvent: { cxttap: () => MessageType }) {
   const cy = cytoscape({
@@ -66,9 +73,7 @@ export function drawByData(cy: Core | undefined, data: any | undefined, layout: 
 
 export function drawByLayout(
   cy: Core,
-  layout = {
-    name: "elk",
-  },
+  layout: any
 ) {
   cy.layout(layout).run();
 }
