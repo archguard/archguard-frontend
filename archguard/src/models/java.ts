@@ -19,7 +19,7 @@ export interface JClass extends JavaItem {
   callees: ClassCall[];
   callers: ClassCall[];
   classType: ClassType.NOT_DEFINED;
-  dependencees: JClass[];
+  dependencies: JClass[];
   dependencers: JClass[];
   fullName: string[];
   id: string;

@@ -116,7 +116,7 @@ export const buildMethodTree = (jMethods: JMethod[]) => {
 
 export const buildClassDependenceTree = (jClass: JClass): TreeNode<JClass>[] => {
   const parentsKey = "dependencers";
-  const childrenKey = "dependencees";
+  const childrenKey = "dependencies";
   const treeNodeMap: { [key: string]: TreeNode<JClass> } = {};
 
   const travelJClasses = (jClass: JClass): void => {
