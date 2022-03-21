@@ -3,11 +3,10 @@ import styles from "./Summary.less";
 import { BaButton } from "@/components/Basic/Button/Button";
 import { BaLabel } from "@/components/Basic/Label/Label";
 import { BuGrade } from "@/components/Business/Grade/Grade";
-import { useOverviewCount } from "@/api/module/codeLine";
+import { useOverview, useOverviewCount } from "@/api/module/codeLine";
 import { history } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import GitChanges from "@/pages/systemSummary/Summary/components/GitChanges";
 
 function Summary() {
   const { data: overviewCount } = useOverviewCount();
@@ -47,9 +46,9 @@ function Summary() {
           </div>
         </div>
       </div>
-      <div className={styles.changes}>
-        <GitChanges />
-      </div>
+      {/*<div className={styles.changes}>*/}
+      {/*  <GitChanges />*/}
+      {/*</div>*/}
     </div>
   );
 }
