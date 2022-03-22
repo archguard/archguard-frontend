@@ -10,7 +10,7 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import GitChanges from "@/pages/systemSummary/Summary/components/GitChanges";
 
 function Summary() {
-  const { data: overviewCount } = useOverviewCount();
+  const {data: overviewCount} = useOverviewCount();
   const [systemList] = useSystemList();
   const [systemName, setSystemName] = useState<string>("");
 
@@ -41,14 +41,16 @@ function Summary() {
           <div className={styles.overview}>
             <BaLabel value={overviewCount?.repoCount} text="代码仓数"></BaLabel>
             <BaLabel value={overviewCount?.moduleCount} text="模块数"></BaLabel>
-            <BaLabel value={overviewCount?.lineCount} text="总代码量"></BaLabel>
+            { overviewCount?.lineCount &&
+              <BaLabel value={overviewCount?.lineCount} text="总代码量"></BaLabel>
+            }
             <BaLabel value={overviewCount?.contributorCount} text="代码贡献人数"></BaLabel>
             <BuGrade text="架构质量等级" grade={overviewCount?.qualityLevel}></BuGrade>
           </div>
         </div>
       </div>
       <div className={styles.changes}>
-        <GitChanges />
+        <GitChanges/>
       </div>
     </div>
   );

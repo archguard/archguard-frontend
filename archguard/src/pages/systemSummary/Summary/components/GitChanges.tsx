@@ -10,12 +10,12 @@ function GitChanges() {
     let root;
     const map = new Map();
     data.forEach(function find(data: any) {
-      const { name } = data;
+      const {name} = data;
       if (map.has(name)) return map.get(name);
       const i = name.lastIndexOf(delimiter);
       map.set(name, data);
       if (i >= 0) {
-        let found = find({ name: name.substring(0, i), children: []});
+        let found = find({name: name.substring(0, i), children: []});
         if (found.children) {
           found.children.push(data);
         } else {
@@ -68,7 +68,10 @@ function GitChanges() {
     },
   };
 
-  return <CirclePacking {...config} />;
+  return <>
+    <h2>Git 修改频率</h2>
+    <CirclePacking {...config} />
+  </>;
 }
 
 export default GitChanges;
