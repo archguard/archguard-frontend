@@ -1,5 +1,5 @@
 import { CirclePacking } from '@ant-design/charts';
-import { allGitChange } from "@/api/module/gitFile";
+import { getGitPathChanges } from "@/api/module/gitFile";
 import { useEffect, useState } from "react";
 import React from 'react';
 
@@ -38,7 +38,7 @@ function GitChanges() {
   }, []);
 
   const asyncFetch = () => {
-    allGitChange().then((res) => {
+    getGitPathChanges().then((res) => {
       setData(hierarchy(res) as any);
     });
   };

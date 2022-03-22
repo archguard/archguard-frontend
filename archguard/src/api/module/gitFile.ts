@@ -12,9 +12,9 @@ export interface gitFile {
   modifiedCount: number;
 }
 
-export interface GitChange {
-  path: string;
-  modifiedCount: number;
+export interface GitPathChange {
+  name: string;
+  counts: number;
 }
 
 export function queryHotFiles() {
@@ -24,10 +24,9 @@ export function queryHotFiles() {
   });
 }
 
-export function allGitChange() {
-  return axios<GitChange[]>({
-    baseURL: ``,
-    url: `/api/systems/${systemId}/git/changes/`,
+export function getGitPathChanges() {
+  return axios<GitPathChange[]>({
+    url: `/api/systems/${systemId}/git//path-change-count/`,
     method: "GET",
   });
 }

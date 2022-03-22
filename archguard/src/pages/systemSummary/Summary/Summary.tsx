@@ -7,6 +7,7 @@ import { useOverview, useOverviewCount } from "@/api/module/codeLine";
 import { history } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
+import GitChanges from "@/pages/systemSummary/Summary/components/GitChanges";
 
 function Summary() {
   const { data: overviewCount } = useOverviewCount();
@@ -46,9 +47,9 @@ function Summary() {
           </div>
         </div>
       </div>
-      {/*<div className={styles.changes}>*/}
-      {/*  <GitChanges />*/}
-      {/*</div>*/}
+      <div className={styles.changes}>
+        <GitChanges />
+      </div>
     </div>
   );
 }
