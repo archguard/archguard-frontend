@@ -1,7 +1,7 @@
 export const graphLayoutOptions = [
   "preset",
   // "elk",
-  // "dagre",
+  "dagre",
   // "cola",
   "fcose",
   "breadthfirst",
