@@ -23,14 +23,6 @@ export default defineConfig({
       secure: false,
     },
   },
-  externals: {
-    'elkjs/lib/elk.bundled.js': {
-      commonjs: 'elkjs',
-      commonjs2: 'elkjs',
-      amd: 'elkjs',
-      root: 'ELK',
-    },
-  },
   routes: [
     { path: "/", redirect: "/multipleSystem" },
     { path: "/login", component: "@/pages/login" },

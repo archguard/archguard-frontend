@@ -38,13 +38,14 @@ function GitChanges() {
   }, []);
 
   const asyncFetch = () => {
+    console.log("asyncFetch")
     getGitPathChanges().then((res) => {
       setData(hierarchy(res) as any);
     });
   };
 
   const config: any = {
-    autoFit: true,
+    autoFit: false,
     padding: 0,
     width: 600,
     height: 600,

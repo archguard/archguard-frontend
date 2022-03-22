@@ -41,7 +41,7 @@ function Summary() {
           <div className={styles.overview}>
             <BaLabel value={overviewCount?.repoCount} text="代码仓数"></BaLabel>
             <BaLabel value={overviewCount?.moduleCount} text="模块数"></BaLabel>
-            { overviewCount?.lineCount &&
+            { overviewCount?.lineCount && overviewCount?.lineCount > 0 &&
               <BaLabel value={overviewCount?.lineCount} text="总代码量"></BaLabel>
             }
             <BaLabel value={overviewCount?.contributorCount} text="代码贡献人数"></BaLabel>
