@@ -8,9 +8,13 @@ import { history } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import GitChanges from "@/pages/systemSummary/Summary/components/GitChanges";
+import { queryContainerServices } from "@/api/module/containerService";
+import { Table } from 'antd';
 
 function Summary() {
   const {data: overviewCount} = useOverviewCount();
+  const [services, setServices] = useState([]);
+
   const [systemList] = useSystemList();
   const [systemName, setSystemName] = useState<string>("");
 
@@ -24,6 +28,18 @@ function Summary() {
   useEffect(() => {
     setSystemName(getSystemName());
   }, [systemList]);
+
+  useEffect(() => {
+    queryContainerServices().then((res) => {
+      setServices(res);
+    });
+  }, []);
+
+  const columns = [
+    {title: 'sourceMethod', dataIndex: 'sourceMethod', key: 'sourceMethod',},
+    {title: 'targetUrl', dataIndex: 'targetUrl', key: 'targetUrl',},
+    {title: 'targetHttpMethod', dataIndex: 'targetHttpMethod', key: 'targetHttpMethod',},
+  ];
 
   return (
     <div>
@@ -52,6 +68,7 @@ function Summary() {
       </div>
       <div className={styles.changes}>
         <h2>API 服务/使用清单</h2>
+        <Table dataSource={services} columns={columns}/>;
       </div>
       <div className={styles.changes}>
         <h2>模型依赖度清单</h2>
