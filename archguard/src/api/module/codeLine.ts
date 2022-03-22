@@ -4,7 +4,7 @@ import { badSmellWordingKeys, DashboardGroup, } from "@/pages/systemEvolving/Mea
 import { IndicatorLevel } from "@/pages/systemEvolving/MeasureIndicators/Components/Group";
 import { LEVEL_SCORE } from "@/pages/systemSummary/Summary/components/QualityEvaluation";
 import { storage } from "@/store/storage/sessionStorage";
-import { axiosWithModule } from "./config";
+import axios from '../axios';
 
 const systemId = storage.getSystemId();
 
@@ -24,8 +24,8 @@ interface MethodLinesPagedDataResponse {
 }
 
 export function getOverviewUsingMethods(currentPageNumber: number, numberPerPage: number) {
-  return axiosWithModule<MethodLinesPagedDataResponse>({
-    url: "/codeline/methods/above-threshold",
+  return axios<MethodLinesPagedDataResponse>({
+    url: `/api/systems/${systemId}/codeline/methods/above-threshold`,
     method: "GET",
     params: { currentPageNumber, numberPerPage },
   });

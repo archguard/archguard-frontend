@@ -1,16 +1,9 @@
-import { SystemEvaluationHistoryType } from "../../models/system-evaluation";
+import { SystemEvaluationHistoryType } from "@/models/system-evaluation";
 import axios from "../axios";
 
 export function queryEvaluationList() {
   return axios<SystemEvaluationHistoryType[]>({
     url: '/api/evaluations',
-    method: "GET",
-  });
-}
-
-export function queryEvaluation<T>(id: string) {
-  return axios<SystemEvaluationHistoryType[]>({
-    url: `/api/evaluations/${id}`,
     method: "GET",
   });
 }

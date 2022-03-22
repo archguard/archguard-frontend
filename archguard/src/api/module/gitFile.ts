@@ -19,16 +19,15 @@ export interface GitChange {
 
 export function queryHotFiles() {
   return axios<gitFile[]>({
-    baseURL: `/api/systems/${systemId}`,
-    url: "/git/hot-files/",
+    url: `/api/systems/${systemId}/git/hot-files/`,
     method: "GET",
   });
 }
 
 export function allGitChange() {
   return axios<GitChange[]>({
-    baseURL: `/api/systems/${systemId}`,
-    url: "/git/changes/",
+    baseURL: ``,
+    url: `/api/systems/${systemId}/git/changes/`,
     method: "GET",
   });
 }

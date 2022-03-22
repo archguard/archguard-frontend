@@ -5,16 +5,14 @@ const systemId = storage.getSystemId();
 
 export function queryConfig() {
   return axios<any>({
-    baseURL: `/api/systems/${systemId}`,
-    url: '/configures',
+    url: `/api/systems/${systemId}/configures`,
     method: "GET"
   });
 }
 
 export function updateConfig(type: string, parameter: any) {
   return axios<any>({
-    baseURL: `/api/systems/${systemId}`,
-    url: `/configures/types/${type}`,
+    url: `/api/systems/${systemId}/configures/types/${type}`,
     method: 'POST',
     data: parameter
   })

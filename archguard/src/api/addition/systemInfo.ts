@@ -1,5 +1,4 @@
 import axios from "../axios";
-const systemInfoApi = "/api/system-info";
 
 export interface SystemInfo {
   id: number;
@@ -19,14 +18,14 @@ export interface SystemInfo {
 
 export function querySystemInfo() {
   return axios<SystemInfo[]>({
-    url: systemInfoApi,
+    url: "/api/system-info",
     method: "GET",
   });
 }
 
 export function updateSystemInfo(parameter: any) {
   return axios<void>({
-    url: systemInfoApi,
+    url: "/api/system-info",
     method: "PUT",
     data: parameter,
   });
@@ -34,7 +33,7 @@ export function updateSystemInfo(parameter: any) {
 
 export function createSystemInfo(parameter: any) {
   return axios<void>({
-    url: systemInfoApi,
+    url: "/api/system-info",
     method: "POST",
     data: parameter,
   });
@@ -42,7 +41,7 @@ export function createSystemInfo(parameter: any) {
 
 export function deleteSystem(systemId: number) {
   return axios<void>({
-    url: `${systemInfoApi}/${systemId}`,
+    url: `/api/system-info/${systemId}`,
     method: "DELETE",
   });
 }

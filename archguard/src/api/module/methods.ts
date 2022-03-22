@@ -6,8 +6,7 @@ const systemId = storage.getSystemId();
 
 export function queryMethodBy(submodule: string, clazz: string) {
   return axios<JMethod[]>({
-    baseURL: `/api/systems/${systemId}`,
-    url: '/methods',
+    url: `/api/systems/${systemId}/methods`,
     method: "GET",
     params: { submodule, clazz },
   });

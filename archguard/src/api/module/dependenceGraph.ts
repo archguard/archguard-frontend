@@ -6,8 +6,7 @@ const systemId = storage.getSystemId();
 export function queryMethodDependence(className: string, dependenceType: string, parameter: any) {
   parameter.clazz = className;
   return axios<JMethod[]>({
-    baseURL: `/api/systems/${systemId}`,
-    url: `/methods/${dependenceType}`,
+    url: `/api/systems/${systemId}/methods/${dependenceType}`,
     method: "GET",
     params: parameter,
   });
@@ -15,8 +14,7 @@ export function queryMethodDependence(className: string, dependenceType: string,
 
 export function queryClassDependence(className: string, dependenceType: string, parameter: any) {
   return axios<any>({
-    baseURL: `/api/systems/${systemId}`,
-    url: `/classes/${className}/${dependenceType}`,
+    url: `/api/systems/${systemId}/classes/${className}/${dependenceType}`,
     method: "GET",
     params: parameter,
   });

@@ -17,8 +17,7 @@ export interface DFMSMetric {
 const systemId = storage.getSystemId();
 export function queryCodeTree() {
   return axios<CodeTree>({
-    baseURL: `/api/systems/${systemId}`,
-    url: '/code-tree/',
+    url: `/api/systems/${systemId}/code-tree/`,
     method: "GET"
   });
 }
@@ -28,8 +27,7 @@ export function queryDFMSMetricBy(
   params: MetricParams,
 ) {
   return axios<DFMSMetric>({
-    baseURL: `/api/systems/${systemId}`,
-    url: `/metric/dfms/${by}`,
+    url: `/api/systems/${systemId}/metric/dfms/${by}`,
     method: 'GET',
     params,
   })
