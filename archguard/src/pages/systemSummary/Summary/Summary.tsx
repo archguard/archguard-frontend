@@ -41,9 +41,7 @@ function Summary() {
           <div className={styles.overview}>
             <BaLabel value={overviewCount?.repoCount} text="代码仓数"></BaLabel>
             <BaLabel value={overviewCount?.moduleCount} text="模块数"></BaLabel>
-            { overviewCount?.lineCount && overviewCount?.lineCount > 0 &&
-              <BaLabel value={overviewCount?.lineCount} text="总代码量"></BaLabel>
-            }
+            <BaLabel value={overviewCount?.lineCount} text="总代码量"></BaLabel>
             <BaLabel value={overviewCount?.contributorCount} text="代码贡献人数"></BaLabel>
             <BuGrade text="架构质量等级" grade={overviewCount?.qualityLevel}></BuGrade>
           </div>
@@ -51,6 +49,12 @@ function Summary() {
       </div>
       <div className={styles.changes}>
         <GitChanges/>
+      </div>
+      <div className={styles.changes}>
+        <h2>API 服务/使用清单</h2>
+      </div>
+      <div className={styles.changes}>
+        <h2>模型依赖度清单</h2>
       </div>
     </div>
   );
