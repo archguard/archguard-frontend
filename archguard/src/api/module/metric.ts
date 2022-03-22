@@ -1,9 +1,10 @@
 import axios from "../axios";
-import { baseURL } from "./config";
+import { storage } from "@/store/storage/sessionStorage";
 
+const systemId = storage.getSystemId();
 export function queryAllModuleCoupling() {
   return axios<ModuleCoupling[]>({
-    baseURL,
+    baseURL: `/api/systems/${systemId}`,
     url: `/metric/coupling/all-module`,
     method: "GET",
   });
@@ -11,7 +12,7 @@ export function queryAllModuleCoupling() {
 
 export function queryClassCoupling(moduleName: string, packageName: string) {
   return axios<ClassCoupling[]>({
-    baseURL,
+    baseURL: `/api/systems/${systemId}`,
     url: `/metric/coupling/package-class-list`,
     params: {
       packageName,
@@ -23,7 +24,7 @@ export function queryClassCoupling(moduleName: string, packageName: string) {
 
 export function queryPackageCoupling(packageNames: string[]) {
   return axios<PackageCoupling[]>({
-    baseURL,
+    baseURL: `/api/systems/${systemId}`,
     url: `/metric/coupling/package-list`,
     method: "POST",
     data: packageNames,

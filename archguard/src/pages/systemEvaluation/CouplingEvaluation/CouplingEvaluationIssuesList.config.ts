@@ -1,11 +1,11 @@
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
-import { baseURL } from "@/api/module/config";
 import {
-  getHubColumns,
-  deepInheritenceColumns,
-  dataClumpsColumns,
-  circularDependency,
+    circularDependency,
+    dataClumpsColumns,
+    deepInheritenceColumns,
+    getHubColumns,
 } from "./CouplingEvaluationTableColumn.config";
+import { storage } from "@/store/storage/sessionStorage";
 
 enum CouplingEvaluationIssuesTypes {
   HUB_MODULE = "HUB_MODULE",
@@ -17,6 +17,7 @@ enum CouplingEvaluationIssuesTypes {
   CIRCULAR_DEPENDENCY = "CIRCULAR_DEPENDENCY",
 }
 
+const systemId = storage.getSystemId();
 export const CouplingEvaluationIssuesConfigs: {
   [key in CouplingEvaluationIssuesTypes]: IssuesConfig;
 } = {
@@ -30,7 +31,7 @@ export const CouplingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（出向依赖或入向依赖 > ${threshold} 的模块）`,
-        dataUrl: baseURL + "/hub/modules/above-threshold",
+        dataUrl: `/api/systems/${systemId}/hub/modules/above-threshold`,
         columns: getHubColumns("module"),
       },
     ],
@@ -45,7 +46,7 @@ export const CouplingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（出向依赖或入向依赖 > ${threshold} 的包）`,
-        dataUrl: baseURL + "/hub/packages/above-threshold",
+        dataUrl: `/api/systems/${systemId}/hub/packages/above-threshold`,
         columns: getHubColumns("package"),
       },
     ],
@@ -60,7 +61,7 @@ export const CouplingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（出向依赖或入向依赖 > ${threshold} 的类）`,
-        dataUrl: baseURL + "/hub/classes/above-threshold",
+        dataUrl: `/api/systems/${systemId}/hub/classes/above-threshold`,
         columns: getHubColumns("class"),
       },
     ],
@@ -75,7 +76,7 @@ export const CouplingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（出向依赖或入向依赖 > ${threshold} 的方法）`,
-        dataUrl: baseURL + "/hub/methods/above-threshold",
+        dataUrl: `/api/systems/${systemId}/hub/methods/above-threshold`,
         columns: getHubColumns("method"),
       },
     ],
@@ -87,7 +88,7 @@ export const CouplingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（缺乏内聚指标LCOM4 > ${threshold} 的类）`,
-        dataUrl: baseURL + "/coupling/data-clumps",
+        dataUrl: `/api/systems/${systemId}/coupling/data-clumps`,
         columns: dataClumpsColumns,
       },
     ],
@@ -102,7 +103,7 @@ export const CouplingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（继承深度 > ${threshold} 的类）`,
-        dataUrl: baseURL + "/coupling/deep-inheritance",
+        dataUrl: `/api/systems/${systemId}/coupling/deep-inheritance`,
         columns: deepInheritenceColumns,
       },
     ],
@@ -116,22 +117,22 @@ export const CouplingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: () => "问题列表（循环依赖的模块）",
-        dataUrl: baseURL + "/circular-dependency/module",
+        dataUrl: `/api/systems/${systemId}/circular-dependency/module`,
         columns: circularDependency,
       },
       {
         title: () => "问题列表（循环依赖的包）",
-        dataUrl: baseURL + "/circular-dependency/package",
+        dataUrl: `/api/systems/${systemId}/circular-dependency/package`,
         columns: circularDependency,
       },
       {
         title: () => "问题列表（循环依赖的类）",
-        dataUrl: baseURL + "/circular-dependency/class",
+        dataUrl: `/api/systems/${systemId}/circular-dependency/class`,
         columns: circularDependency,
       },
       {
         title: () => "问题列表（循环依赖的方法）",
-        dataUrl: baseURL + "/circular-dependency/method",
+        dataUrl: `/api/systems/${systemId}/circular-dependency/method`,
         columns: circularDependency,
       },
     ],

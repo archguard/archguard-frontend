@@ -1,9 +1,6 @@
-import {
-  classColumnRenderAsLink,
-  methodColumnRenderAsLink,
-} from "@/components/Business/IssuesList/ColumnRenderUtils";
+import { classColumnRenderAsLink, methodColumnRenderAsLink, } from "@/components/Business/IssuesList/ColumnRenderUtils";
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
-import { baseURL } from "@/api/module/config";
+import { storage } from "@/store/storage/sessionStorage";
 
 export const TEST_EVALUATION_TAB = {
   sleepTest: "包含休眠的测试",
@@ -14,6 +11,7 @@ export const TEST_EVALUATION_TAB = {
   staticMethod: "静态方法",
 } as const;
 
+const systemId = storage.getSystemId();
 export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, IssuesConfig> = {
   sleepTest: {
     title: TEST_EVALUATION_TAB.sleepTest,
@@ -24,7 +22,7 @@ export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, Is
   · 当处理异步测试场景时，建议使用 CompletableFuture 配合 CountDownLatch 的方式进行，从而不用硬编码休眠的时长。`,
     tableConfigs: [
       {
-        dataUrl: baseURL + "/test-bad-smell/sleep-test-methods",
+        dataUrl: `/api/systems/${systemId}/test-bad-smell/sleep-test-methods`,
         title: () => "包含Sleep休眠语句的测试用例列表",
         columns: [
           {
@@ -59,7 +57,7 @@ export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, Is
     suggestion: `当需求修改导致测试用例失败、失效了，应该尽快修复或移除而不是忽略。`,
     tableConfigs: [
       {
-        dataUrl: baseURL + "/test-bad-smell/ignore-test-methods",
+        dataUrl: `/api/systems/${systemId}/test-bad-smell/ignore-test-methods`,
         title: () => "被忽略的测试用例列表",
         columns: [
           {
@@ -94,7 +92,7 @@ export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, Is
     suggestion: `为每个测试用例都添加足够的自动校验 Assert 语句`,
     tableConfigs: [
       {
-        dataUrl: baseURL + "/test-bad-smell/unassert-test-methods",
+        dataUrl: `/api/systems/${systemId}/test-bad-smell/unassert-test-methods`,
         title: () => "问题列表",
         columns: [
           {
@@ -129,7 +127,7 @@ export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, Is
     suggestion: `建议每个测试用例聚焦于一个测试场景和目的，不要企图编写一个各种场景面面俱到的巨无霸测试，这将让后期的维护更加困难`,
     tableConfigs: [
       {
-        dataUrl: baseURL + "/test-bad-smell/multi-assert-test-methods",
+        dataUrl: `/api/systems/${systemId}/test-bad-smell/multi-assert-test-methods`,
         title: () => "包含繁杂Assert判断（如超过12个assert)的测试用例列表",
         columns: [
           {
@@ -164,7 +162,7 @@ export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, Is
     suggestion: `自动化测试用例中，应该使用自动的 Assert 语句，替代需要人眼观察的 Print`,
     tableConfigs: [
       {
-        dataUrl: baseURL + "/test-bad-smell/redundant-print-test-methods",
+        dataUrl: `/api/systems/${systemId}/test-bad-smell/redundant-print-test-methods`,
         title: () => "包含了过多调用打印信息(超过12个print语句)的测试用例",
         columns: [
           {
@@ -201,7 +199,7 @@ export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, Is
     tableConfigs: [
       {
         title: () => "静态方法列表",
-        dataUrl: baseURL + "/test-bad-smell/static-methods",
+        dataUrl: `/api/systems/${systemId}/test-bad-smell/static-methods`,
         columns: [
           {
             title: "模块",

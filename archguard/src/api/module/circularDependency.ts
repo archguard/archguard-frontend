@@ -1,5 +1,5 @@
 import { useGet } from "@/hooks/useGet";
-import { baseURL } from "./config";
+import { storage } from "@/store/storage/sessionStorage";
 
 interface CircularDependency {
   count: number;
@@ -7,14 +7,15 @@ interface CircularDependency {
   data: string[];
 }
 
+const systemId = storage.getSystemId();
 export const useClassCircularDependency = () =>
-  useGet<CircularDependency>(`${baseURL}/circular-dependency/class`);
+  useGet<CircularDependency>(`/api/systems/${systemId}/circular-dependency/class`);
 
 export const useMethodCircularDependency = () =>
-  useGet<CircularDependency>(`${baseURL}/circular-dependency/method`);
+  useGet<CircularDependency>(`/api/systems/${systemId}/circular-dependency/method`);
 
 export const useModuleCircularDependency = () =>
-  useGet<CircularDependency>(`${baseURL}/circular-dependency/module`);
+  useGet<CircularDependency>(`/api/systems/${systemId}/circular-dependency/module`);
 
 export const usePackageCircularDependency = () =>
-  useGet<CircularDependency>(`${baseURL}/circular-dependency/package`);
+  useGet<CircularDependency>(`/api/systems/${systemId}/circular-dependency/package`);

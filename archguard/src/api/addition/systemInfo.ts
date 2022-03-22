@@ -1,6 +1,5 @@
 import axios from "../axios";
-import { baseURL } from "./config";
-const systemInfoApi = "/system-info";
+const systemInfoApi = "/api/system-info";
 
 export interface SystemInfo {
   id: number;
@@ -20,7 +19,6 @@ export interface SystemInfo {
 
 export function querySystemInfo() {
   return axios<SystemInfo[]>({
-    baseURL,
     url: systemInfoApi,
     method: "GET",
   });
@@ -28,7 +26,6 @@ export function querySystemInfo() {
 
 export function updateSystemInfo(parameter: any) {
   return axios<void>({
-    baseURL,
     url: systemInfoApi,
     method: "PUT",
     data: parameter,
@@ -37,7 +34,6 @@ export function updateSystemInfo(parameter: any) {
 
 export function createSystemInfo(parameter: any) {
   return axios<void>({
-    baseURL,
     url: systemInfoApi,
     method: "POST",
     data: parameter,
@@ -46,7 +42,6 @@ export function createSystemInfo(parameter: any) {
 
 export function deleteSystem(systemId: number) {
   return axios<void>({
-    baseURL,
     url: `${systemInfoApi}/${systemId}`,
     method: "DELETE",
   });

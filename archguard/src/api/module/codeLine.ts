@@ -1,16 +1,12 @@
 import { Color } from "@/components/Business/Grade/Grade";
 import { useGet } from "@/hooks/useGet";
-import {
-  badSmellWordingKeys,
-  DashboardGroup,
-} from "@/pages/systemEvolving/MeasureIndicators/Components/ChartCard";
+import { badSmellWordingKeys, DashboardGroup, } from "@/pages/systemEvolving/MeasureIndicators/Components/ChartCard";
 import { IndicatorLevel } from "@/pages/systemEvolving/MeasureIndicators/Components/Group";
 import { LEVEL_SCORE } from "@/pages/systemSummary/Summary/components/QualityEvaluation";
 import { storage } from "@/store/storage/sessionStorage";
 import { axiosWithModule } from "./config";
 
 const systemId = storage.getSystemId();
-export const baseURL = `/api/systems/${systemId}`;
 
 export interface MethodLines {
   moduleName: string;
@@ -49,7 +45,7 @@ export interface MeasureIndicatorsData {
   groupData: GroupDataItem[];
 }
 
-export const useDashboard = () => useGet<MeasureIndicatorsData[]>(`${baseURL}/dashboard`);
+export const useDashboard = () => useGet<MeasureIndicatorsData[]>(`/api/systems/${systemId}/dashboard`);
 
 interface UseOverviewCount {
   repoCount: number;
@@ -58,7 +54,7 @@ interface UseOverviewCount {
   contributorCount: number;
   qualityLevel: keyof typeof Color;
 }
-export const useOverviewCount = () => useGet<UseOverviewCount>(`${baseURL}/overview/system`);
+export const useOverviewCount = () => useGet<UseOverviewCount>(`/api/systems/${systemId}/overview/system`);
 
 export interface Overview {
   level: keyof typeof LEVEL_SCORE;
@@ -71,7 +67,7 @@ interface UseOverview {
 }
 
 export function useOverview() {
-  const { data, run } = useGet<UseOverview>(`${baseURL}/overview`);
+  const { data, run } = useGet<UseOverview>(`/api/systems/${systemId}/overview`);
   return {
     data: data?.data || [],
     run,

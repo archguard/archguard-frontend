@@ -1,5 +1,7 @@
 import axios from "../axios";
-import { baseURL } from "./config";
+import { storage } from "@/store/storage/sessionStorage";
+
+const systemId = storage.getSystemId();
 
 export interface gitFile {
   jclassId: string;
@@ -17,7 +19,7 @@ export interface GitChange {
 
 export function queryHotFiles() {
   return axios<gitFile[]>({
-    baseURL,
+    baseURL: `/api/systems/${systemId}`,
     url: "/git/hot-files/",
     method: "GET",
   });
@@ -25,7 +27,7 @@ export function queryHotFiles() {
 
 export function allGitChange() {
   return axios<GitChange[]>({
-    baseURL,
+    baseURL: `/api/systems/${systemId}`,
     url: "/git/changes/",
     method: "GET",
   });

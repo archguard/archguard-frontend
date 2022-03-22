@@ -1,12 +1,12 @@
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
-import { baseURL } from "@/api/module/config";
 import {
-  methodColumns,
-  packageColumns,
-  moduleColumns,
-  classColumnsByLines,
-  classColumnsByMethodCount,
+    classColumnsByLines,
+    classColumnsByMethodCount,
+    methodColumns,
+    moduleColumns,
+    packageColumns,
 } from "./SizingEvaluationTableColumn.config";
+import { storage } from "@/store/storage/sessionStorage";
 
 enum SizingEvaluationIssuesTypes {
   "METHOD" = "METHOD",
@@ -15,6 +15,7 @@ enum SizingEvaluationIssuesTypes {
   "MODULE" = "MODULE",
 }
 
+const systemId = storage.getSystemId();
 export const SizingEvaluationIssuesConfigs: {
   [key in SizingEvaluationIssuesTypes]: IssuesConfig;
 } = {
@@ -28,7 +29,7 @@ export const SizingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（代码行数 > ${threshold} 行的方法）`,
-        dataUrl: baseURL + "/sizing/methods/above-threshold",
+        dataUrl: `/api/systems/${systemId}/sizing/methods/above-threshold`,
         columns: methodColumns,
       },
     ],
@@ -45,12 +46,12 @@ export const SizingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（代码行数 > ${threshold} 行的类）`,
-        dataUrl: baseURL + "/sizing/classes/above-line-threshold",
+        dataUrl: `/api/systems/${systemId}/sizing/classes/above-line-threshold`,
         columns: classColumnsByLines,
       },
       {
         title: (threshold) => `问题列表（类中包含的方法 > ${threshold} 个的类）`,
-        dataUrl: baseURL + "/sizing/classes/above-method-count-threshold",
+        dataUrl: `/api/systems/${systemId}/sizing/classes/above-method-count-threshold`,
         columns: classColumnsByMethodCount,
       },
     ],
@@ -63,12 +64,12 @@ export const SizingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（代码行数 > ${threshold} 行的包）`,
-        dataUrl: baseURL + "/sizing/packages/above-line-threshold",
+        dataUrl: `/api/systems/${systemId}/sizing/packages/above-line-threshold`,
         columns: packageColumns,
       },
       {
         title: (threshold) => `问题列表（所含的类 > ${threshold} 个的包）`,
-        dataUrl: baseURL + "/sizing/packages/above-threshold",
+        dataUrl: `/api/systems/${systemId}/sizing/packages/above-threshold`,
         columns: packageColumns,
       },
     ],
@@ -80,12 +81,12 @@ export const SizingEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: (threshold) => `问题列表（代码行数 > ${threshold} 行的模块）`,
-        dataUrl: baseURL + "/sizing/modules/above-line-threshold",
+        dataUrl: `/api/systems/${systemId}/sizing/modules/above-line-threshold`,
         columns: moduleColumns,
       },
       {
         title: (threshold) => `问题列表（所含Package包 > ${threshold} 个的模块）`,
-        dataUrl: baseURL + "/sizing/modules/above-threshold",
+        dataUrl: `/api/systems/${systemId}/sizing/modules/above-threshold`,
         columns: moduleColumns,
       },
     ],

@@ -1,10 +1,10 @@
 import { IssuesConfig } from "@/components/Business/IssuesList/IssuesList";
-import { baseURL } from "@/api/module/config";
 import { DataClassColumns, shotgunSurgeryColumns } from "./CohesionEvaluationTableColumn.config";
 import {
-  classColumnRenderAsLinkByClazzes,
-  renderDataClassFields,
+    classColumnRenderAsLinkByClazzes,
+    renderDataClassFields,
 } from "@/components/Business/IssuesList/ColumnRenderUtils";
+import { storage } from "@/store/storage/sessionStorage";
 
 export interface ShotgunSurgeryClazz {
   moduleName: string;
@@ -35,6 +35,7 @@ enum CohesionEvaluationIssuesTypes {
 
 export const MAX_COUNT_OF_RENDER_CLASSES = 5;
 
+const systemId = storage.getSystemId();
 export const CohesionEvaluationIssuesConfigs: {
   [key in CohesionEvaluationIssuesTypes]: IssuesConfig;
 } = {
@@ -49,7 +50,7 @@ export const CohesionEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: () => "问题列表",
-        dataUrl: baseURL + "/cohesion/shotgun-surgery",
+        dataUrl: `/api/systems/${systemId}/cohesion/shotgun-surgery`,
         columns: shotgunSurgeryColumns,
         expandable: {
           expandedRowRender: (record: ShotgunSurgery) =>
@@ -70,7 +71,7 @@ export const CohesionEvaluationIssuesConfigs: {
     tableConfigs: [
       {
         title: () => "问题列表",
-        dataUrl: baseURL + "/cohesion/data-class",
+        dataUrl: `/api/systems/${systemId}` + "/cohesion/data-class",
         columns: DataClassColumns,
         expandable: {
           expandedRowRender: (record) => renderDataClassFields(record),
