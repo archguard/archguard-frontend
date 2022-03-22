@@ -2,7 +2,7 @@ import React from "react";
 import { Tabs } from "antd";
 import { useHistory, useParams } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
-import Dfms from "./dfms";
+import Dfms from "./Dfms";
 import ModuleCouplingTree from "./ModuleCouplingTree";
 
 const Metrics = () => {
