@@ -1,6 +1,5 @@
 import GraphView from '@/components/Business/GraphView';
-import G6, { Graph } from "@antv/g6";
-import { GraphOptions } from "@antv/g6/lib/types";
+import G6, { Graph, GraphOptions } from "@antv/g6";
 import ELK from "elkjs";
 import React, { useEffect, useMemo, useState } from "react";
 import FullscreenContainer from '../FullscreenContainer';
@@ -79,7 +78,8 @@ export default function DepsGraph(props: DepsGraphProps) {
       .then(({ children, edges }) => {
         const data = {
           nodes:
-            children?.map(({ id, width = 0, height = 0, x = 0, y = 0, labels }) => {
+          // @ts-ignore
+          children?.map(({ id, width = 0, height = 0, x = 0, y = 0, labels }) => {
               const label = labels![0];
               return {
                 id,
@@ -111,7 +111,7 @@ export default function DepsGraph(props: DepsGraphProps) {
 
   useEffect(() => {
     if (graph) {
-      graph.data(renderData);
+      graph.data(renderData as any);
       graph.render();
       const rootPath = { title: "root", data: renderData };
       setNavPath([rootPath]);
@@ -137,7 +137,7 @@ export default function DepsGraph(props: DepsGraphProps) {
 
   const onNavClick = (path: GraphNavigatorPath) => {
     if (graph) {
-      graph.data(path.data);
+      graph.data(path.data as any);
       graph.render();
       setCurrentPath(path);
     }

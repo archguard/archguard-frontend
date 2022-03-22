@@ -1,14 +1,14 @@
 import React, { forwardRef, useImperativeHandle, useState, useEffect } from "react";
 import {
   getQuotaListByLayer,
-  LayerKeys,
-  Quota,
+
+
 } from "@/pages/analysis/metrics/ModuleCouplingTree/report";
 import { Form, Space, Button, Select, Input, Cascader } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useForm } from "antd/lib/form/Form";
 import { Store } from "antd/lib/form/interface";
-import { ProfileConfig } from "../../QualityGateProfile";
+import { LayerKeys, ProfileConfig, Quota } from "@/types/metrics/Metrics";
 
 const genOptions = (keys: string[]) =>
   keys.map((key) => {

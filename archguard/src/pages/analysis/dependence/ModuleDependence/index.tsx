@@ -4,12 +4,12 @@ import ModuleDependenceGraph from "./components/ModuleDependenceGraph";
 import ModuleDependenceTable from "./components/ModuleDependenceTable";
 import "./index.less";
 
-export default function ModuleDependence({ location }: any) {
+export default function ModuleDependence() {
   return (
     <div className="module-dependence">
       <ModuleConfig />
       <ModuleDependenceGraph />
-      <ModuleDependenceTable location={location} />
+      <ModuleDependenceTable/>
     </div>
   );
 }

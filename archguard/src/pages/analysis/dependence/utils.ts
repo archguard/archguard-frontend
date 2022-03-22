@@ -1,6 +1,6 @@
 import { every, filter, findIndex, forEach, reduce } from "lodash";
-import { JModule, JMethod, JClass, JavaItem } from "../../../models/java";
-import { TreeNode, Node, Edge, GraphData, GraphTree } from "../../../models/graph";
+import { JModule, JMethod, JClass, JavaItem } from "@/models/java";
+import { TreeNode, Node, Edge, GraphData, GraphTree } from "@/models/graph";
 
 const createJMethodNode = (jMethod: JMethod): TreeNode<JMethod> => {
   const { id, name, module, clazz } = jMethod;
@@ -251,7 +251,7 @@ export const generateNodeEdges = <T>(
     path.pop();
   };
 
-  forEach(rootNodes, (node) => {
+  forEach(rootNodes, (node: any) => {
     travelNode(node, 1, []);
   });
   return {

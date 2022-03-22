@@ -1,27 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileCard from "./components/ProfileCard/ProfileCard";
-import { Row, Col, notification } from "antd";
-import {
-  createQualityGateProfile,
-  updateQualityGateProfile,
-  deleteQualityGateProfile,
-} from "@/api/module/profile";
+import { Col, notification, Row } from "antd";
+import { createQualityGateProfile, deleteQualityGateProfile, updateQualityGateProfile, } from "@/api/module/profile";
 import * as _ from "lodash";
-import { LayerKeys } from "../../analysis/metrics/ModuleCouplingTree/report";
 import useQualityGate from "@/store/global-cache-state/useQualityGate";
-
-export interface ProfileConfig {
-  layer: LayerKeys;
-  quota: string;
-  operator: "BIGGER" | "LESS" | "EQUAL";
-  value: number;
-}
-
-export interface Profile {
-  id?: number;
-  name: string;
-  config: ProfileConfig[];
-}
+import { Profile } from "@/types/metrics/Metrics";
 
 const QualityGateProfile = () => {
   const [profileList, setProfileList] = useState<Profile[]>([]);
@@ -40,7 +23,7 @@ const QualityGateProfile = () => {
     });
   };
 
-  const editPropfile = (profile: Profile) => {
+  const editProfile = (profile: Profile) => {
     const index = _.findIndex(profileList, ["id", profile.id]);
     profileList[index] = profile;
     setProfileList([...profileList]);
@@ -72,7 +55,7 @@ const QualityGateProfile = () => {
               id={profile.id}
               data={profile.config}
               name={profile.name}
-              editProfile={editPropfile}
+              editProfile={editProfile}
               deleteProfile={deleteProfile}
             ></ProfileCard>
           </Col>

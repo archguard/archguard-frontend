@@ -1,4 +1,4 @@
-import { NodeConfig } from "@antv/g6/lib/types";
+import { NodeConfig } from "@antv/g6";
 
 export type DepsNodeSize = [number, number];
 

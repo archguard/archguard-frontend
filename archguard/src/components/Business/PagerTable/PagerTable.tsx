@@ -3,6 +3,7 @@ import {Table} from "antd";
 import {TablePaginationConfig, ExpandableConfig} from "antd/lib/table/interface";
 import axios from "@/api/axios";
 import {genID} from "@/utils/utils";
+import { FilterValue } from "antd/lib/table/interface";
 
 const DEFAULT_NUMBER_PER_PAGE = 10;
 
@@ -12,7 +13,7 @@ interface PagerTableProps {
   numberPerPage?: number;
   expandable?: ExpandableConfig<any>;
   onSortChange?: (sorter: any) => void;
-  onFilterChange?: (filter: Record<string, (string | number)[] | null>) => void;
+  onFilterChange?: (filter: Record<string, FilterValue | null>) => void;
   onPaginationChange?: (pagination: TablePaginationConfig) => void;
   onDataChange: (data: PagerTableData) => void;
   columns: Array<{

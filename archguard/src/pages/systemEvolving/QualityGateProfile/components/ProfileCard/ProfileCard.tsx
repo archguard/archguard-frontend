@@ -3,8 +3,8 @@ import { Card, Input, Button, Modal } from "antd";
 import ProfileCardContent from "./ProfileCardContent";
 import "./ProfileCard.less";
 import { PlusOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
-import { Profile, ProfileConfig } from "../../QualityGateProfile";
 import { Store } from "antd/lib/form/interface";
+import { Profile, ProfileConfig } from "@/types/metrics/Metrics";
 
 interface ProfileCardProps {
   addProfile?(profile: Profile): void;

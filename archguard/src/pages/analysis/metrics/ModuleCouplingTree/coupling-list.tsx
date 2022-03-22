@@ -12,7 +12,7 @@ export interface CouplingRecord {
   fullName: string;
   name: string;
   moduleId: string;
-  shortName: string;
+  shortName?: string;
   props: {
     desc: string;
     name: string;

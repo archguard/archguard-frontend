@@ -1,5 +1,35 @@
-import { Node, Edge, NodesEdges } from './cytoscapeGraph/components/GraphOperation/utils';
 import lodash from "lodash";
+
+export interface NodeProperies {
+  module: string;
+  color?: string;
+  parent?: Node;
+  parents?: Node[];
+  length: number;
+}
+
+export type Node = {
+  id: string;
+  title: string;
+  fullName: string;
+  properties: NodeProperies;
+  children?: Node[];
+  parents?: Node[];
+  visible?: boolean;
+  hidden?: boolean;
+};
+export type Edge = {
+  a: string;
+  b: string;
+  num?: number;
+  label?: string;
+  labels?: string[];
+  hidden?: boolean;
+};
+export class NodesEdges {
+  nodes: Node[] = [];
+  edges: Edge[] = [];
+}
 
 export function filterDataWithConfig(data: NodesEdges, configs: any):any {
   if (!data || !data.nodes || !configs) return data;

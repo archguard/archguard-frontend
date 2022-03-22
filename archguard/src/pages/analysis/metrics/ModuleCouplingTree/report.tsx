@@ -1,16 +1,9 @@
-import { MetricProps, Metric } from "@/models/analysis";
+import { Metric, MetricProps } from "@/models/analysis";
 import React, { useMemo, useState } from "react";
 import CouplingList, { CouplingRecord } from "./coupling-list";
-import {
-  queryPackageCoupling,
-  queryClassCoupling,
-  queryAllModuleCoupling,
-} from "@/api/module/metric";
+import { queryAllModuleCoupling, queryClassCoupling, queryPackageCoupling, } from "@/api/module/metric";
 import { useMount } from "react-use";
-import {
-  Profile,
-  ProfileConfig,
-} from "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile";
+import { LayerKeys, Profile, ProfileConfig, Quota } from "@/types/metrics/Metrics";
 
 export interface ReportMapper {
   [key: string]: { name: string; desc: string };
@@ -22,11 +15,6 @@ export enum Layer {
   CLASS = "CLASS",
   COUPLINGS = "COUPLINGS",
 }
-
-export type LayerKeys = keyof typeof Layer;
-export type Quota = {
-  [key in LayerKeys]: string[];
-};
 
 export const moduleMapping: ReportMapper = {
   outerInstabilityAvg: {

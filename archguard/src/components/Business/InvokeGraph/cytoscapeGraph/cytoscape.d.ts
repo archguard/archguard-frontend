@@ -67,6 +67,8 @@
  *
  */
 declare module "cytoscape" {
+  import * as cytoscape from "cytoscape";
+
   interface Position {
     x: number;
     y: number;

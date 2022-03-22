@@ -1,6 +1,5 @@
 import axios from "../axios";
-// todo: split profile from ssytem
-import { Profile } from '@/pages/systemEvolving/QualityGateProfile/QualityGateProfile';
+import { Profile } from "@/types/metrics/Metrics";
 const baseURL = '/api'
 
 export function queryAllQualityGateProfile() {
