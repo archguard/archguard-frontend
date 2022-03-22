@@ -1,19 +1,16 @@
 import axios from "../axios";
 import { Profile } from "@/types/metrics/Metrics";
-const baseURL = '/api'
 
 export function queryAllQualityGateProfile() {
   return axios<any>({
-    baseURL,
-    url: '/quality-gate-profile',
+    url: '/api/quality-gate-profile',
     method: "GET"
   });
 }
 
 export function createQualityGateProfile(params: Profile) {
   return axios<any>({
-    baseURL,
-    url: '/quality-gate-profile',
+    url: '/api/quality-gate-profile',
     method: "POST",
     data: params,
   });
@@ -21,8 +18,7 @@ export function createQualityGateProfile(params: Profile) {
 
 export function updateQualityGateProfile(id: number, params: Profile) {
   return axios<any>({
-    baseURL,
-    url: `/quality-gate-profile/${id}`,
+    url: `/api/quality-gate-profile/${id}`,
     method: "PUT",
     data: params,
   });
@@ -30,8 +26,7 @@ export function updateQualityGateProfile(id: number, params: Profile) {
 
 export function deleteQualityGateProfile(id: number) {
   return axios<any>({
-    baseURL,
-    url: `/quality-gate-profile/${id}`,
+    url: `/api/quality-gate-profile/${id}`,
     method: "DELETE",
   });
 }
