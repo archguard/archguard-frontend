@@ -18,7 +18,7 @@ enum ClassInsibilityKey {
   outerInstabilityAvg = "outerInstability",
 }
 
-interface DFMS {
+interface Dfms {
   key: "module" | "package" | "class";
   stability: "innerInstabilityAvg" | "outerInstabilityAvg";
 }
@@ -31,9 +31,9 @@ const Dfms = () => {
     package: transformCodeTreeToCascaderOptions(codeTree?.value!, false),
     class: transformCodeTreeToCascaderOptions(codeTree?.value!, true),
   };
-  const [currentKey, setCurrentKey] = useState<DFMS["key"]>("module");
+  const [currentKey, setCurrentKey] = useState<Dfms["key"]>("module");
   const [currentModule, setCurrentModule] = useState<SelectValue>();
-  const [currentStability, setCurrentStability] = useState<DFMS["stability"]>(
+  const [currentStability, setCurrentStability] = useState<Dfms["stability"]>(
     "outerInstabilityAvg",
   );
   const [dfmsMetric, setDFMSMetric] = useState<DFMSMetric>();
@@ -44,7 +44,7 @@ const Dfms = () => {
     DFMSCharts.setOption(getChartsOption());
   });
 
-  const onStabilityChange = (value: DFMS["stability"]) => {
+  const onStabilityChange = (value: Dfms["stability"]) => {
     setCurrentStability(value);
     const currentInstability =
       currentKey === "class" ? dfmsMetric![ClassInsibilityKey[value]] : dfmsMetric![value];
