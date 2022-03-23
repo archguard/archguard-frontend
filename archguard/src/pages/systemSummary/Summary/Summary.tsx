@@ -35,10 +35,15 @@ function Summary() {
     });
   }, []);
 
-  const columns = [
-    {title: 'sourceMethod', dataIndex: 'sourceMethod', key: 'sourceMethod',},
-    {title: 'targetUrl', dataIndex: 'targetUrl', key: 'targetUrl',},
-    {title: 'targetHttpMethod', dataIndex: 'targetHttpMethod', key: 'targetHttpMethod',},
+  const apiColumns = [
+    {title: 'Source Method', dataIndex: 'sourceMethod', key: 'sourceMethod',},
+    {title: 'URI', dataIndex: 'targetUrl', key: 'targetUrl',},
+    {title: 'HTTP Method', dataIndex: 'targetHttpMethod', key: 'targetHttpMethod',},
+  ];
+
+  const lineCountColumns = [
+    {title: '语言', dataIndex: 'language', key: 'language',},
+    {title: '行数', dataIndex: 'lineCount', key: 'lineCount',},
   ];
 
   return (
@@ -57,21 +62,24 @@ function Summary() {
           <div className={styles.overview}>
             <BaLabel value={overviewCount?.repoCount} text="代码仓数"></BaLabel>
             <BaLabel value={overviewCount?.moduleCount} text="模块数"></BaLabel>
-            <BaLabel value={overviewCount?.lineCount} text="逻辑总代码量"></BaLabel>
             <BaLabel value={overviewCount?.contributorCount} text="代码贡献人数"></BaLabel>
             <BuGrade text="架构质量等级" grade={overviewCount?.qualityLevel}></BuGrade>
+          </div>
+          <div>
+            <Table dataSource={overviewCount?.lineCounts} columns={lineCountColumns}/>
           </div>
         </div>
       </div>
       <div className={styles.physical}>
         <div className={styles.changes}>
+          <h2>提交变更频率</h2>
           <FileSizing />
         </div>
       </div>
       <div className={styles.container}>
         <div className={styles.changes}>
           <h2>API 使用清单</h2>
-          <Table dataSource={services} columns={columns}/>
+          <Table dataSource={services} columns={apiColumns}/>
         </div>
         <div className={styles.changes}>
           <h2>API 提供清单</h2>

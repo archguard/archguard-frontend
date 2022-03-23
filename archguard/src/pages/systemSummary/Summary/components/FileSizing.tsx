@@ -7,8 +7,8 @@ const FileSizing = () => {
   const [ data, setData ] = useState(null);
   const svgRef = useRef(null);
   const svgEl = d3.select(svgRef.current);
-  const svgWidth = 1200;
-  const svgHeight = 1200;
+  const svgWidth = 600;
+  const svgHeight = 600;
 
   function render(data: any[]) {
     if(data && data.length === 0) {

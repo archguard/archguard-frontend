@@ -47,10 +47,15 @@ export interface MeasureIndicatorsData {
 
 export const useDashboard = () => useGet<MeasureIndicatorsData[]>(`/api/systems/${systemId}/dashboard`);
 
+interface LineCount {
+  lineCount: number,
+  language: String
+}
+
 interface UseOverviewCount {
   repoCount: number;
   moduleCount: number;
-  lineCount: number;
+  lineCounts: LineCount[];
   contributorCount: number;
   qualityLevel: keyof typeof Color;
 }
