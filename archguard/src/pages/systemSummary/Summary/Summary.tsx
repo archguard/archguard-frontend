@@ -55,9 +55,9 @@ function Summary() {
   ];
 
   const unstableColumns = [
-    {title: '路径', dataIndex: 'name', key: 'name',},
-    {title: '变更', dataIndex: 'value', key: 'value',},
-    {title: '行数', dataIndex: 'lines', key: 'lines',},
+    {title: '路径', dataIndex: 'path', key: 'path',},
+    {title: '变更', dataIndex: 'changes', key: 'changes',},
+    {title: '行数', dataIndex: 'lineCount', key: 'lineCount',},
   ];
 
   return (
@@ -85,10 +85,6 @@ function Summary() {
         </div>
       </div>
       <div className={styles.physical}>
-        <div className={styles.unstable}>
-          <h2>不稳定文件（Top 20 行数 + Top 20 变更）</h2>
-          <Table dataSource={unstableFiles} columns={unstableColumns}/>
-        </div>
         <div className={styles.changes}>
           <h2>提交变更频率（大小）</h2>
           <FileSizing />
@@ -96,6 +92,12 @@ function Summary() {
         <div className={styles.changes}>
           <h2>提交变更频率（大小）-文件长度（颜色深浅）</h2>
           <FileChangeSizing />
+        </div>
+      </div>
+      <div className={styles.physical}>
+        <div className={styles.changes}>
+          <h2>不稳定文件（Top 50 行数 + Top 50 变更）</h2>
+          <Table dataSource={unstableFiles} columns={unstableColumns}/>
         </div>
       </div>
       <div className={styles.container}>
