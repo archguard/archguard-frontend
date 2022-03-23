@@ -27,20 +27,6 @@ const FileSizing = () => {
 
     let jdata = Object.values(dMap)
     let hierarchy = CodeSupport.hierarchy(jdata);
-    console.log(hierarchy)
-    var rootNode = d3.hierarchy(hierarchy).sum(function (d) {
-      return d.value || 0;
-    });
-
-    console.log(rootNode)
-    var treemap = voronoiTreemap().clip([
-      [0, 0],
-      [0, svgHeight],
-      [svgWidth, svgHeight],
-      [svgWidth, 0],
-    ]); // sets the clipping polygon
-    let layout = treemap(rootNode);
-    console.log(layout)
 
     let pack = function (data) {
       return d3.pack()
