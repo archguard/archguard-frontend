@@ -18,6 +18,7 @@
     "cytoscape-dagre": "^2.4.0",
     "cytoscape-fcose": "^2.1.0",
     "d3": "^7.3.0",
+    "d3-voronoi-treemap": "^1.1.1",
     "echarts": "^4.8.0",
     "echarts-for-react": "^2.0.16",
     "elkjs": "0.7.1",
@@ -58,6 +59,7 @@
   ],
   "devDependencies": {
     "@types/classnames": "^2.2.10",
+    "@types/d3": "^7.1.0",
     "@types/echarts": "^4.6.3",
     "@types/jest": "^26.0.4",
     "@types/lodash": "^4.14.179",
