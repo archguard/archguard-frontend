@@ -32,6 +32,7 @@ const FileSizing = () => {
     const rootNode = d3.hierarchy(hierarchy).sum(function (d) {
       return d.value || 0;
     });
+    let avarageCount = rootNode.value / data.length * 6
 
     const treemap = voronoiTreemap().clip([
       [0, 0],
@@ -64,15 +65,42 @@ const FileSizing = () => {
       })
       .attr("stroke", "#F5F5F2")
       .style('fill', function (d) {
-        return d3.color(color(d.value));
+        return d3.color(color(d.data.value));
       })
       .on("mouseover", function (event, d) {
         d3.select(this).attr("opacity", "0.5")
-        console.log(event)
         tooltip
           .style("opacity", 1)
           .html(`<h3>${d.data.name}, lines: ${d.data.lines}, change: ${d.data.value}</h3>`)
       })
+
+    const labels = svgEl.append("g").attr("transform", "translate(" + 10 + "," + 10 + ")");
+    labels.selectAll('text')
+      .data(allNodes.filter(d => {
+        if (d.data.value && d.data.value) {
+          if (d.data.value > avarageCount) {
+            return true;
+          }
+        }
+
+        return false;
+      }))
+      .enter()
+      .append('text')
+      .attr('class', d => `label-${d.id}`)
+      .attr('text-anchor', 'middle')
+      .attr("transform", d => {
+        if (d.polygon.site && d.polygon.site) {
+          return "translate("+[d.polygon.site.x, d.polygon.site.y]+")";
+        }
+        return "translate(0, 0)"
+      })
+      .text(d => {
+        return d.data.name;
+      })
+      .attr('cursor', 'default')
+      .attr('pointer-events', 'none')
+      .attr('fill', 'white')
   }
 
   useEffect(() => {
