@@ -36,7 +36,7 @@ let CodeSupport = {
           return data
         }
         data.name = name.substring(i + 1);
-        data.value = value;
+        data.value = value || 0;
       } else {
         root = data;
       }

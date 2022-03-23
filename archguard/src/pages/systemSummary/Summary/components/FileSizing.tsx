@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import CodeSupport from "@/pages/systemSummary/Summary/d3Support/CodeSupport";
 import { getGitPathChanges } from "@/api/module/gitFile";
+import { voronoiTreemap } from "d3-voronoi-treemap"
 
 const FileSizing = () => {
   const [ data, setData ] = useState(null);
@@ -18,14 +19,28 @@ const FileSizing = () => {
     let dMap = {};
 
     for (let datum of data) {
-      dMap["root." + datum.name] = {
-        name: "root." + datum.name,
+      dMap[datum.name] = {
+        name:  datum.name,
         value: datum.value
       }
     }
 
     let jdata = Object.values(dMap)
     let hierarchy = CodeSupport.hierarchy(jdata);
+    console.log(hierarchy)
+    var rootNode = d3.hierarchy(hierarchy).sum(function (d) {
+      return d.value || 0;
+    });
+
+    console.log(rootNode)
+    var treemap = voronoiTreemap().clip([
+      [0, 0],
+      [0, svgHeight],
+      [svgWidth, svgHeight],
+      [svgWidth, 0],
+    ]); // sets the clipping polygon
+    let layout = treemap(rootNode);
+    console.log(layout)
 
     let pack = function (data) {
       return d3.pack()

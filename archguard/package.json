@@ -18,6 +18,8 @@
     "cytoscape-dagre": "^2.4.0",
     "cytoscape-fcose": "^2.1.0",
     "d3": "^7.3.0",
+    "d3-hierarchy": "^3.1.1",
+    "d3-voronoi-map": "^2.1.0",
     "d3-voronoi-treemap": "^1.1.1",
     "echarts": "^4.8.0",
     "echarts-for-react": "^2.0.16",
