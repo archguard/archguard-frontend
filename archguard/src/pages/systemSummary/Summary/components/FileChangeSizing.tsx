@@ -33,15 +33,18 @@ const FileSizing = () => {
     const rootNode = d3.hierarchy(hierarchy).sum(function (d) {
       return d.value || 0;
     });
-    let avarageCount = rootNode.value / data.length * 6
 
+    let count = rootNode.value / data.length * 6;
+    let averageCount = count > 20 ? count : 20;
+
+    // todo: change layout see in: https://bl.ocks.org/veltman/522135ac8dcf20a2e96cadfc595e07e4
     const treemap = voronoiTreemap().clip([
       [0, 0],
       [0, svgHeight],
       [svgWidth, svgHeight],
       [svgWidth, 0],
     ]);
-    let layout = treemap(rootNode);
+    treemap(rootNode);
 
     let color = d3.scaleLinear()
       .domain([0, 200, 1000])
@@ -98,7 +101,7 @@ const FileSizing = () => {
     labels.selectAll('text')
       .data(allNodes.filter(d => {
         if (d.data.value && d.data.value) {
-          if (d.data.value > avarageCount) {
+          if (d.data.value > averageCount) {
             return true;
           }
         }
