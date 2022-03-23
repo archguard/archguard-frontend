@@ -14,7 +14,8 @@ export interface gitFile {
 
 export interface GitPathChange {
   name: string;
-  counts: number;
+  value: number;
+  lines: number;
 }
 
 export function queryHotFiles() {

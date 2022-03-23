@@ -9,7 +9,7 @@ import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerServices } from "@/api/module/containerService";
 import { Table } from 'antd';
-import FileSizing from "@/pages/systemSummary/Summary/components/FileSizing";
+import FileChangeSizing from "@/pages/systemSummary/Summary/components/FileChangeSizing";
 
 function Summary() {
   const {data: overviewCount} = useOverviewCount();
@@ -72,7 +72,7 @@ function Summary() {
         <div className={styles.physical}>
           <div className={styles.changes}>
             <h2>提交变更频率</h2>
-            <FileSizing />
+            <FileChangeSizing />
           </div>
         </div>
       </div>

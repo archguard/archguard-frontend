@@ -24,7 +24,7 @@ let CodeSupport = {
     let root;
     const map = new Map();
     data.forEach(function find(data) {
-      const {name, value} = data;
+      const { name, value, lines } = data;
       if (map.has(name)) return map.get(name);
       const i = name.lastIndexOf(delimiter);
       map.set(name, data);
@@ -37,6 +37,7 @@ let CodeSupport = {
         }
         data.name = name.substring(i + 1);
         data.value = value || 0;
+        data.lines = lines || 0;
       } else {
         root = data;
       }
