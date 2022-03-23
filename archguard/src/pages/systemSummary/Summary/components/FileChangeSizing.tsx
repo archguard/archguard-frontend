@@ -67,7 +67,7 @@ const FileSizing = () => {
       return data.data.name
     }
 
-    const voronoi = svgEl.append("g").attr("transform", "translate(" + 10 + "," + 10 + ")");
+    const voronoi = svgEl.append("g")
     let allNodes = rootNode.descendants();
     voronoi.selectAll('path')
       .data(allNodes)
@@ -97,7 +97,7 @@ const FileSizing = () => {
           .html(`<h3>${fullName(d)}, lines: ${d.data.lines}, change: ${d.data.value}</h3>`)
       });
 
-    const labels = svgEl.append("g").attr("transform", "translate(" + 10 + "," + 10 + ")");
+    const labels = svgEl.append("g")
     labels.selectAll('text')
       .data(allNodes.filter(d => {
         if (d.data.value && d.data.value) {
