@@ -10,6 +10,7 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerServices } from "@/api/module/containerService";
 import { Table } from 'antd';
 import FileChangeSizing from "@/pages/systemSummary/Summary/components/FileChangeSizing";
+import FileSizing from "@/pages/systemSummary/Summary/components/FileSizing";
 
 function Summary() {
   const {data: overviewCount} = useOverviewCount();
@@ -69,11 +70,15 @@ function Summary() {
             <Table dataSource={overviewCount?.lineCounts} columns={lineCountColumns}/>
           </div>
         </div>
-        <div className={styles.physical}>
-          <div className={styles.changes}>
-            <h2>提交变更频率</h2>
-            <FileChangeSizing />
-          </div>
+      </div>
+      <div className={styles.physical}>
+        <div className={styles.changes}>
+          <h2>提交变更频率</h2>
+          <FileSizing />
+        </div>
+        <div className={styles.changes}>
+          <h2>提交次数-文件大小</h2>
+          <FileChangeSizing />
         </div>
       </div>
       <div className={styles.container}>
