@@ -26,7 +26,7 @@ export function queryHotFiles() {
 
 export function getGitPathChanges() {
   return axios<GitPathChange[]>({
-    url: `/api/systems/${systemId}/git//path-change-count/`,
+    url: `/api/systems/${systemId}/git/path-change-count/`,
     method: "GET",
   });
 }

@@ -3,13 +3,13 @@ import styles from "./Summary.less";
 import { BaButton } from "@/components/Basic/Button/Button";
 import { BaLabel } from "@/components/Basic/Label/Label";
 import { BuGrade } from "@/components/Business/Grade/Grade";
-import { useOverview, useOverviewCount } from "@/api/module/codeLine";
+import { useOverviewCount } from "@/api/module/codeLine";
 import { history } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import GitChanges from "@/pages/systemSummary/Summary/components/GitChanges";
 import { queryContainerServices } from "@/api/module/containerService";
 import { Table } from 'antd';
+import FileSizing from "@/pages/systemSummary/Summary/components/FileSizing";
 
 function Summary() {
   const {data: overviewCount} = useOverviewCount();
@@ -65,7 +65,7 @@ function Summary() {
       </div>
       <div className={styles.physical}>
         <div className={styles.changes}>
-          <GitChanges/>
+          <FileSizing />
         </div>
       </div>
       <div className={styles.container}>
