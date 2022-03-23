@@ -8,6 +8,7 @@ const FileSizing = () => {
   const [data, setData] = useState(null);
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
+  const markedRef = useRef(null);
   const svgEl = d3.select(svgRef.current);
   const svgWidth = 600;
   const svgHeight = 600;
@@ -55,6 +56,14 @@ const FileSizing = () => {
     }
     const tooltip = d3.select(tooltipRef.current).call(createTooltip);
 
+    const fullName = (data) => {
+      if (!!data.parent) {
+        return `${fullName(data.parent)}/${data.data.name}`
+      }
+
+      return data.data.name
+    }
+
     const voronoi = svgEl.append("g").attr("transform", "translate(" + 10 + "," + 10 + ")");
     let allNodes = rootNode.descendants();
     voronoi.selectAll('path')
@@ -72,12 +81,18 @@ const FileSizing = () => {
         d3.select(this).attr("opacity", "0.5")
         tooltip
           .style("opacity", 1)
-          .html(`<h3>${d.data.name}, lines: ${d.data.lines}, change: ${d.data.value}</h3>`)
+          .html(`<h3>${fullName(d)}, lines: ${d.data.lines}, change: ${d.data.value}</h3>`)
       })
       .on("mouseleave", function (event, d) {
         d3.select(this).attr("opacity", "1")
         tooltip.style("opacity", 0)
       })
+      .on("click", function (event, d) {
+        d3.select(markedRef.current)
+          .call(createTooltip)
+          .style("opacity", 1)
+          .html(`<h3>${fullName(d)}, lines: ${d.data.lines}, change: ${d.data.value}</h3>`)
+      });
 
     const labels = svgEl.append("g").attr("transform", "translate(" + 10 + "," + 10 + ")");
     labels.selectAll('text')
@@ -96,7 +111,7 @@ const FileSizing = () => {
       .attr('text-anchor', 'middle')
       .attr("transform", d => {
         if (d.polygon.site && d.polygon.site) {
-          return "translate("+[d.polygon.site.x, d.polygon.site.y]+")";
+          return "translate(" + [d.polygon.site.x, d.polygon.site.y] + ")";
         }
         return "translate(0, 0)"
       })
@@ -123,6 +138,7 @@ const FileSizing = () => {
   return <div>
     <svg ref={svgRef} width={svgWidth} height={svgHeight}/>
     <div ref={tooltipRef}/>
+    <div ref={markedRef}/>
   </div>;
 };
 
