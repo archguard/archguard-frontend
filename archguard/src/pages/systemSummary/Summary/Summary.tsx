@@ -69,19 +69,19 @@ function Summary() {
             <Table dataSource={overviewCount?.lineCounts} columns={lineCountColumns}/>
           </div>
         </div>
-      </div>
-      <div className={styles.physical}>
-        <div className={styles.changes}>
-          <h2>提交变更频率</h2>
-          <FileSizing />
+        <div className={styles.physical}>
+          <div className={styles.changes}>
+            <h2>提交变更频率</h2>
+            <FileSizing />
+          </div>
         </div>
       </div>
       <div className={styles.container}>
-        <div className={styles.changes}>
+        <div className={styles.demand}>
           <h2>API 使用清单</h2>
           <Table dataSource={services} columns={apiColumns}/>
         </div>
-        <div className={styles.changes}>
+        <div className={styles.resource}>
           <h2>API 提供清单</h2>
         </div>
       </div>
