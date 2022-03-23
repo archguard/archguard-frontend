@@ -63,15 +63,24 @@ function Summary() {
           </div>
         </div>
       </div>
-      <div className={styles.changes}>
-        <GitChanges/>
+      <div className={styles.physical}>
+        <div className={styles.changes}>
+          <GitChanges/>
+        </div>
       </div>
-      <div className={styles.changes}>
-        <h2>API 服务/使用清单</h2>
-        <Table dataSource={services} columns={columns}/>
+      <div className={styles.container}>
+        <div className={styles.changes}>
+          <h2>API 使用清单</h2>
+          <Table dataSource={services} columns={columns}/>
+        </div>
+        <div className={styles.changes}>
+          <h2>API 提供清单</h2>
+        </div>
       </div>
-      <div className={styles.changes}>
-        <h2>模型依赖度清单</h2>
+      <div className={styles.logic}>
+        <div className={styles.changes}>
+          <h2>模型依赖度清单</h2>
+        </div>
       </div>
     </div>
   );
