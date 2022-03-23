@@ -42,8 +42,9 @@ const FileSizing = () => {
     ]);
     let layout = treemap(rootNode);
 
-    let names = d3.group(data, d => d.name);
-    let color = d3.scaleOrdinal(d3.schemeSet2).domain(names)
+    let color = d3.scaleLinear()
+      .domain([0, 200, 1000])
+      .range(['#475485', 'blue', 'red']);
 
     let createTooltip = function (el) {
       el
@@ -65,13 +66,17 @@ const FileSizing = () => {
       })
       .attr("stroke", "#F5F5F2")
       .style('fill', function (d) {
-        return d3.color(color(d.data.value));
+        return color(d.data.lines);
       })
       .on("mouseover", function (event, d) {
         d3.select(this).attr("opacity", "0.5")
         tooltip
           .style("opacity", 1)
           .html(`<h3>${d.data.name}, lines: ${d.data.lines}, change: ${d.data.value}</h3>`)
+      })
+      .on("mouseleave", function (event, d) {
+        d3.select(this).attr("opacity", "1")
+        tooltip.style("opacity", 0)
       })
 
     const labels = svgEl.append("g").attr("transform", "translate(" + 10 + "," + 10 + ")");
