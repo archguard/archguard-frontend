@@ -79,7 +79,7 @@ function Summary() {
       </div>
       <div className={styles.logic}>
         <div className={styles.changes}>
-          <h2>模型依赖度清单</h2>
+          <h2>模型依赖度清单（FanIn/FanOut）</h2>
         </div>
       </div>
     </div>

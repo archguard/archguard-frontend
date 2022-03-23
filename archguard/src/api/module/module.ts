@@ -1,7 +1,7 @@
 import _ from "lodash";
 import axios from "../axios";
 import { methodDependency } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceTable/columns";
-import { ReportMapper } from "@/pages/analysis/metrics/ModuleCouplingTree/report";
+import { ReportMapper } from "@/pages/analysis/metrics/ModuleCouplingTree/Report";
 import { storage } from "@/store/storage/sessionStorage";
 
 const systemId = storage.getSystemId();

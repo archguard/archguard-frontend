@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Report from "./report";
+import Report from "./Report";
 import useCodeTree from "@/store/global-cache-state/useCodeTree";
 import { expandCodeTree } from "@/utils/utils";
 import { Select } from "antd";
