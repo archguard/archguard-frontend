@@ -68,7 +68,7 @@ function Summary() {
       </div>
       <div className={styles.changes}>
         <h2>API 服务/使用清单</h2>
-        <Table dataSource={services} columns={columns}/>;
+        <Table dataSource={services} columns={columns}/>
       </div>
       <div className={styles.changes}>
         <h2>模型依赖度清单</h2>
