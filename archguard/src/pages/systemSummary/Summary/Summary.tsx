@@ -11,10 +11,12 @@ import { queryContainerServices } from "@/api/module/containerService";
 import { Table } from 'antd';
 import FileChangeSizing from "@/pages/systemSummary/Summary/components/FileChangeSizing";
 import FileSizing from "@/pages/systemSummary/Summary/components/FileSizing";
+import { queryUnstableFiles } from "@/api/module/gitFile";
 
 function Summary() {
   const {data: overviewCount} = useOverviewCount();
   const [services, setServices] = useState([]);
+  const [unstableFiles, setUnstableFiles] = useState([]);
 
   const [systemList] = useSystemList();
   const [systemName, setSystemName] = useState<string>("");
@@ -35,6 +37,11 @@ function Summary() {
       setServices(res);
     });
   }, []);
+  useEffect(() => {
+    queryUnstableFiles().then((res) => {
+      setUnstableFiles(res);
+    });
+  }, []);
 
   const apiColumns = [
     {title: 'Source Method', dataIndex: 'sourceMethod', key: 'sourceMethod',},
@@ -45,6 +52,12 @@ function Summary() {
   const lineCountColumns = [
     {title: '语言', dataIndex: 'language', key: 'language',},
     {title: '行数', dataIndex: 'lineCount', key: 'lineCount',},
+  ];
+
+  const unstableColumns = [
+    {title: '路径', dataIndex: 'name', key: 'name',},
+    {title: '变更', dataIndex: 'value', key: 'value',},
+    {title: '行数', dataIndex: 'lines', key: 'lines',},
   ];
 
   return (
@@ -72,12 +85,16 @@ function Summary() {
         </div>
       </div>
       <div className={styles.physical}>
+        <div className={styles.unstable}>
+          <h2>不稳定文件（Top 20 行数 + Top 20 变更）</h2>
+          <Table dataSource={unstableFiles} columns={unstableColumns}/>
+        </div>
         <div className={styles.changes}>
-          <h2>提交变更频率</h2>
+          <h2>提交变更频率（大小）</h2>
           <FileSizing />
         </div>
         <div className={styles.changes}>
-          <h2>提交次数-文件大小</h2>
+          <h2>提交变更频率（大小）-文件长度（颜色深浅）</h2>
           <FileChangeSizing />
         </div>
       </div>

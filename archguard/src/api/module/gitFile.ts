@@ -31,3 +31,9 @@ export function getGitPathChanges() {
     method: "GET",
   });
 }
+export function queryUnstableFiles() {
+  return axios<GitPathChange[]>({
+    url: `/api/systems/${systemId}/git/unstable-file/`,
+    method: "GET",
+  });
+}
