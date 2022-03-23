@@ -203,7 +203,6 @@ export default function Report(props: ReportProps) {
     return packageNodes
       ? packageNodes.map((pkg, index) => {
           const pkgFullName = `${parentPackage}.${pkg.name}`;
-          console.log(pkgFullName)
           const metric = metrics.find(
             (x) => x.fullName === pkgFullName && x.moduleName === moduleId && x.type === "PACKAGE",
           );
