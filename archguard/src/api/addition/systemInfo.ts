@@ -4,7 +4,7 @@ export interface SystemInfo {
   id: number;
   systemName: string;
   repo: string[];
-  repoType: "GIT" | "SVN";
+  repoType: "GIT" | "SVN" | "LOCAL";
   username: string;
   password: string;
   language: string;
