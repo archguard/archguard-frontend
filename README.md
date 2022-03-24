@@ -3,14 +3,9 @@
 [![CI](https://github.com/archguard/archguard-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/archguard/archguard-frontend/actions/workflows/ci.yml)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/archguard/archguard-frontend)
 
-Todo
+## Development
 
-- [x] Layout Engine
-  - [Darge](https://github.com/cytoscape/cytoscape.js-dagre)
-  - [FCose](https://github.com/iVis-at-Bilkent/cytoscape.js-fcose)
-  - [Cola](https://github.com/cytoscape/cytoscape.js-cola)
-
-## Tech decision (framework)
+### Tech decision (framework)
 
 - language：TypeScript
 - framework：React, UMI
@@ -22,14 +17,14 @@ Todo
 - lint：ESLint
 - build tool：yarn
 
-## 本地构建
+### local setup
 
 ```
 yarn install
 yarn build
 ```
 
-## Docker 运行
+### Docker setup
 
 ```
 cd archguard
