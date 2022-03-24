@@ -5,17 +5,22 @@
 
 Todo
 
-- [ ] Layout Engine
+- [x] Layout Engine
   - [Darge](https://github.com/cytoscape/cytoscape.js-dagre)
   - [FCose](https://github.com/iVis-at-Bilkent/cytoscape.js-fcose)
   - [Cola](https://github.com/cytoscape/cytoscape.js-cola)
 
-## 技术选型
+## Tech decision (framework)
 
-- 开发语言：javascript
-- 框架：React, UMI
-- 代码规范：ESLint
-- 依赖管理：yarn
+- language：TypeScript
+- framework：React, UMI
+- graph engine: 
+  - Antv/g6 for **Package** dependencies analysis
+  - Cytoscape for **Class**, **Method** dependencies analysis
+  - D3.js for custom layout in Dashboard
+  - bizcharts for badsmell overview
+- lint：ESLint
+- build tool：yarn
 
 ## 本地构建
 
