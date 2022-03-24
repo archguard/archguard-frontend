@@ -12,6 +12,7 @@ import { Table } from 'antd';
 import FileChangeSizing from "@/pages/systemSummary/Summary/components/FileChangeSizing";
 import FileSizing from "@/pages/systemSummary/Summary/components/FileSizing";
 import { queryUnstableFiles } from "@/api/module/gitFile";
+import { DonutChart } from "bizcharts";
 
 function Summary() {
   const {data: overviewCount} = useOverviewCount();
@@ -81,10 +82,21 @@ function Summary() {
             <BuGrade text="架构质量等级" grade={overviewCount?.qualityLevel}></BuGrade>
           </div>
         </div>
-        <div>
-          <Table dataSource={overviewCount?.lineCounts} columns={lineCountColumns} pagination={
+        <div className={styles.changes}>
+          <Table className={styles.codeChart} dataSource={overviewCount?.lineCounts} columns={lineCountColumns} size={'middle'} pagination={
             { defaultPageSize: 5 }
           }/>
+          <DonutChart
+            data={overviewCount?.lineCounts || []}
+            autoFit
+            height={350}
+            width={600}
+            radius={0.8}
+            padding="auto"
+            angleField="lineCount"
+            colorField="language"
+            pieStyle={{ stroke: "white", lineWidth: 5 }}
+          />
         </div>
       </div>
       <h2>不稳定性</h2>
