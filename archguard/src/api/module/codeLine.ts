@@ -49,6 +49,7 @@ export const useDashboard = () => useGet<MeasureIndicatorsData[]>(`/api/systems/
 
 interface LineCount {
   lineCount: number,
+  fileCount: number,
   language: String
 }
 

@@ -52,6 +52,7 @@ function Summary() {
   const lineCountColumns = [
     {title: '语言', dataIndex: 'language', key: 'language',},
     {title: '行数', dataIndex: 'lineCount', key: 'lineCount',},
+    {title: '文件数', dataIndex: 'fileCount', key: 'fileCount',},
   ];
 
   const unstableColumns = [
