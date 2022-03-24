@@ -80,28 +80,33 @@ function Summary() {
             <BaLabel value={overviewCount?.contributorCount} text="代码贡献人数"></BaLabel>
             <BuGrade text="架构质量等级" grade={overviewCount?.qualityLevel}></BuGrade>
           </div>
-          <div>
-            <Table dataSource={overviewCount?.lineCounts} columns={lineCountColumns}/>
+        </div>
+        <div>
+          <Table dataSource={overviewCount?.lineCounts} columns={lineCountColumns} pagination={
+            { defaultPageSize: 5 }
+          }/>
+        </div>
+      </div>
+      <h2>不稳定性</h2>
+      <div className={styles.physical}>
+        <div className={styles.changes}>
+          <div className={styles.graph}>
+            <h2>提交变更频率（大小）</h2>
+            <FileSizing/>
+          </div>
+          <div className={styles.graph}>
+            <h2>提交变更频率（大小）-文件长度（颜色深浅）</h2>
+            <FileChangeSizing/>
           </div>
         </div>
-      </div>
-      <div className={styles.physical}>
-        <div className={styles.changes}>
-          <h2>提交变更频率（大小）</h2>
-          <FileSizing />
-        </div>
-        <div className={styles.changes}>
-          <h2>提交变更频率（大小）-文件长度（颜色深浅）</h2>
-          <FileChangeSizing />
-        </div>
-      </div>
-      <div className={styles.physical}>
-        <div className={styles.changes}>
+        <div>
           <h2>不稳定文件（Top 50 行数 + Top 50 变更）</h2>
-          <Table dataSource={unstableFiles} columns={unstableColumns}/>
+          <Table dataSource={unstableFiles} columns={unstableColumns} pagination={
+            { defaultPageSize: 5 }
+          }/>
         </div>
       </div>
-      <div className={styles.container}>
+      <div className={styles.physical}>
         <div className={styles.demand}>
           <h2>API 使用清单</h2>
           <Table dataSource={services} columns={apiColumns}/>
