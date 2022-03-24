@@ -16,7 +16,7 @@ import { DonutChart } from "bizcharts";
 
 function Summary() {
   const {data: overviewCount} = useOverviewCount();
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState( {} as any);
   const [unstableFiles, setUnstableFiles] = useState([]);
 
   const [systemList] = useSystemList();
@@ -44,10 +44,18 @@ function Summary() {
     });
   }, []);
 
-  const apiColumns = [
+  const demandColumns = [
     {title: 'Source Method', dataIndex: 'sourceMethod', key: 'sourceMethod',},
     {title: 'URI', dataIndex: 'targetUrl', key: 'targetUrl',},
     {title: 'HTTP Method', dataIndex: 'targetHttpMethod', key: 'targetHttpMethod',},
+  ];
+
+  const resourceColumns = [
+    {title: 'Package Name', dataIndex: 'packageName', key: 'packageName',},
+    {title: 'className', dataIndex: 'className', key: 'className',},
+    {title: 'methodName', dataIndex: 'methodName', key: 'methodName',},
+    {title: 'sourceHttpMethod', dataIndex: 'sourceHttpMethod', key: 'sourceHttpMethod',},
+    {title: 'sourceUrl', dataIndex: 'sourceUrl', key: 'sourceUrl',},
   ];
 
   const lineCountColumns = [
@@ -120,11 +128,12 @@ function Summary() {
       </div>
       <div className={styles.physical}>
         <div className={styles.demand}>
-          <h2>API 使用清单</h2>
-          <Table dataSource={services} columns={apiColumns}/>
+          <h2>API 使用清单 ({services["demands"]?.length})</h2>
+          <Table dataSource={services["demands"]} columns={demandColumns}/>
         </div>
         <div className={styles.resource}>
-          <h2>API 提供清单</h2>
+          <h2>API 提供清单 ({services["resources"]?.length})</h2>
+          <Table dataSource={services["resources"]} columns={resourceColumns}/>
         </div>
       </div>
     </div>
