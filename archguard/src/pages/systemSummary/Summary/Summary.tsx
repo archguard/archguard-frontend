@@ -109,11 +109,6 @@ function Summary() {
           <h2>API 提供清单</h2>
         </div>
       </div>
-      <div className={styles.logic}>
-        <div className={styles.changes}>
-          <h2>模型依赖度清单（FanIn/FanOut）</h2>
-        </div>
-      </div>
     </div>
   );
 }
