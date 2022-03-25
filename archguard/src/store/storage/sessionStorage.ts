@@ -1,6 +1,6 @@
-import {GitChange, gitFile} from "@/api/module/gitFile";
+import { gitFile } from "@/api/module/gitFile";
 
-const PREFIX = "ArchGrard_";
+const PREFIX = "ArchGuard_";
 enum StorageKeys {
   SYSTEM_ID = "SYSTEM_ID",
   SYSTEM_LANG = "SYSTEM_LANG",
