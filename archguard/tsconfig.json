@@ -8,7 +8,7 @@
     "resolveJsonModule": true,
     "importHelpers": true,
     "allowJs": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": ".",
