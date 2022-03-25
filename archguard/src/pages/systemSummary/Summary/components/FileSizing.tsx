@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import CodeSupport from "@/pages/systemSummary/Summary/d3Support/CodeSupport";
 import { getGitPathChanges } from "@/api/module/gitFile";
 import { voronoiTreemap } from "d3-voronoi-treemap"
+import MenuSupport from "@/pages/systemSummary/Summary/d3Support/MenuSupport";
 
 const FileSizing = () => {
   const [ data, setData ] = useState(null);

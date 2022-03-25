@@ -9,3 +9,10 @@ export function queryContainerServices() {
     method: "GET"
   });
 }
+
+export function queryFlareData() {
+  return axios<any>({
+    url: `/api/container-service/flare/`,
+    method: "GET"
+  });
+}

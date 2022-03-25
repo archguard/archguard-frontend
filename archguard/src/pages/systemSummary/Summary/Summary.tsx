@@ -40,7 +40,7 @@ function Summary() {
   }, []);
   useEffect(() => {
     queryUnstableFiles().then((res) => {
-      setUnstableFiles(res);
+      setUnstableFiles(res as any);
     });
   }, []);
 

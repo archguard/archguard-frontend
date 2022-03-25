@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "./ServicesMap.less";
+import ServicesMapMapping from "@/pages/servicesMap/ServicesMapMapping";
 
 function ServicesMap() {
   return (<div>
-    <h1>Services Map</h1>
+    <ServicesMapMapping />
   </div>)
 }
 
