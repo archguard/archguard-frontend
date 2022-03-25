@@ -10,7 +10,7 @@ const systemId = storage.getSystemId();
 export function queryPackageDependencies(language: string) {
   return axios<PackageDependenciesModel[]>({
     baseURL: `/api/systems/${systemId}`,
-    url: `/package/dependencies?language=${language}`,
+    url: `/package/dependencies?language=${escape(language)}`,
     method: "GET"
   });
 }
