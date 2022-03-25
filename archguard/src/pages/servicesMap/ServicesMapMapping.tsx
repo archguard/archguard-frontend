@@ -25,7 +25,6 @@ const ServicesMapMapping = () => {
       .radius(innerRadius - 1)
       .padAngle(1 / innerRadius)
 
-    // const rename = (name: any) => name.substring(name.indexOf(".") + 1, name.lastIndexOf("."))
     const names = Array.from(new Set(data.flatMap(d => [d.source, d.target]))).sort(d3.ascending)
 
     const color = d3.scaleOrdinal(names, d3.quantize(d3.interpolateRainbow, names.length))
@@ -35,10 +34,7 @@ const ServicesMapMapping = () => {
     for (const {source, target, value} of data) matrix[index.get(source)][index.get(target)] += value;
 
     const svg = svgEl.attr("viewBox", [-width / 2, -height / 2, width, height]);
-
-    console.log(names, data, matrix)
     const chords = chord(matrix);
-    console.log(chords)
 
     const group = svg.append("g")
       .attr("font-size", 10)
@@ -101,7 +97,6 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming â
               source: service.name,
               target: resourceName,
             });
-            console.log(linkKey, demandMap)
             // @ts-ignore
             if (!!demandMap[linkKey]) {
               demandMap[linkKey] += 1
@@ -112,7 +107,6 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming â
         }
       }
 
-      console.log(demandMap);
       for (let key in demandMap) {
         let obj = JSON.parse(key);
         obj.value = demandMap[key];
