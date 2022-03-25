@@ -11,7 +11,7 @@ const ServicesMapMapping = () => {
   const innerRadius = Math.min(width, height) * 0.5 - 90
   const outerRadius = innerRadius + 10
 
-  function render(origin: any[]) {
+  function render(data: any[]) {
     const chord = d3.chordDirected()
       .padAngle(10 / innerRadius)
       .sortSubgroups(d3.descending)
@@ -25,12 +25,7 @@ const ServicesMapMapping = () => {
       .radius(innerRadius - 1)
       .padAngle(1 / innerRadius)
 
-    const rename = (name: any) => name.substring(name.indexOf(".") + 1, name.lastIndexOf("."))
-    var data = Array.from(d3.rollup(origin
-        .flatMap(({name: source, imports}) => imports.map((target: any) => [rename(source), rename(target)])),
-      ({0: [source, target], length: value}) => ({source, target, value}), link => link.join())
-      .values())
-
+    // const rename = (name: any) => name.substring(name.indexOf(".") + 1, name.lastIndexOf("."))
     const names = Array.from(new Set(data.flatMap(d => [d.source, d.target]))).sort(d3.ascending)
 
     const color = d3.scaleOrdinal(names, d3.quantize(d3.interpolateRainbow, names.length))
@@ -89,20 +84,10 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming â
     queryFlareData().then((res) => {
       setData([
         {
-          "name": "flare.analytics.cluster.AgglomerativeCluster",
-          "size": 3938,
-          "imports": ["flare.animate.Transitioner", "flare.vis.data.DataList", "flare.util.math.IMatrix", "flare.analytics.cluster.MergeEdge", "flare.analytics.cluster.HierarchicalCluster", "flare.vis.data.Data"]
-        },
-        {
-          "name": "flare.analytics.cluster.CommunityStructure",
-          "size": 3812,
-          "imports": ["flare.analytics.cluster.HierarchicalCluster", "flare.animate.Transitioner", "flare.vis.data.DataList", "flare.analytics.cluster.MergeEdge", "flare.util.math.IMatrix"]
-        },
-        {
-          "name": "flare.analytics.cluster.HierarchicalCluster",
-          "size": 6714,
-          "imports": ["flare.vis.data.EdgeSprite", "flare.vis.data.NodeSprite", "flare.vis.data.DataList", "flare.vis.data.Tree", "flare.util.Arrays", "flare.analytics.cluster.MergeEdge", "flare.util.Sort", "flare.vis.operator.Operator", "flare.util.Property", "flare.vis.data.Data"]
-        },
+          source: "analytics.cluster",
+          target: "animate",
+          value: 2
+        }
       ] as any);
     });
   }, [setData]);
