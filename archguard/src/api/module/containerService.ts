@@ -5,7 +5,7 @@ const systemId = storage.getSystemId();
 
 export function queryContainerServices() {
   return axios<any>({
-    url: `/api/systems/${systemId}/container-service`,
+    url: `/api/container-service/${systemId}/`,
     method: "GET"
   });
 }
