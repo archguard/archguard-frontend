@@ -81,14 +81,45 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming â
   }
 
   useEffect(() => {
-    queryFlareData().then((res) => {
-      setData([
-        {
-          source: "analytics.cluster",
-          target: "animate",
-          value: 2
+    queryFlareData().then((res: any[]) => {
+      let newData = [];
+      let resourceMap = {}
+      for (let service of res) {
+        for (let resource of service.resources) {
+          // @ts-ignore
+          resourceMap[resource.sourceUrl] = service.name
         }
-      ] as any);
+      }
+
+      let demandMap: any = {}
+      for (let service of res) {
+        for (let demand of service.demands) {
+          // @ts-ignore
+          let resourceName = resourceMap[demand.targetUrl];
+          if(resourceName) {
+            let linkKey = JSON.stringify({
+              source: service.name,
+              target: resourceName,
+            });
+            console.log(linkKey, demandMap)
+            // @ts-ignore
+            if (!!demandMap[linkKey]) {
+              demandMap[linkKey] += 1
+            } else {
+              demandMap[linkKey] = 1
+            }
+          }
+        }
+      }
+
+      console.log(demandMap);
+      for (let key in demandMap) {
+        let obj = JSON.parse(key);
+        obj.value = demandMap[key];
+        newData.push(obj)
+      }
+
+      setData(newData as any);
     });
   }, [setData]);
 
