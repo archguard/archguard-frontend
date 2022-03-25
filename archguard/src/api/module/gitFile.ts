@@ -20,20 +20,20 @@ export interface GitPathChange {
 
 export function queryHotFiles() {
   return axios<gitFile[]>({
-    url: `/api/systems/${systemId}/git/hot-files/`,
+    url: `/api/systems/${systemId}/git/hot-files`,
     method: "GET",
   });
 }
 
 export function getGitPathChanges() {
   return axios<GitPathChange[]>({
-    url: `/api/systems/${systemId}/git/path-change-count/`,
+    url: `/api/systems/${systemId}/git/path-change-count`,
     method: "GET",
   });
 }
 export function queryUnstableFiles() {
   return axios<GitPathChange[]>({
-    url: `/api/systems/${systemId}/git/unstable-file/`,
+    url: `/api/systems/${systemId}/git/unstable-file`,
     method: "GET",
   });
 }

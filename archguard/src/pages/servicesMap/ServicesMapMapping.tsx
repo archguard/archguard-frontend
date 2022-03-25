@@ -79,7 +79,7 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming â
   useEffect(() => {
     queryFlareData().then((res: any[]) => {
       let newData = [];
-      let resourceMap = {}
+      let resourceMap: any = {}
       for (let service of res) {
         for (let resource of service.resources) {
           // @ts-ignore
@@ -88,21 +88,38 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming â
       }
 
       let demandMap: any = {}
+
+      function setLink(service: any, resourceName: String) {
+        let linkKey = JSON.stringify({
+          source: service.name,
+          target: resourceName,
+        });
+        // @ts-ignore
+        if (!!demandMap[linkKey]) {
+          demandMap[linkKey] += 1
+        } else {
+          demandMap[linkKey] = 1
+        }
+      }
+
       for (let service of res) {
         for (let demand of service.demands) {
           // @ts-ignore
           let resourceName = resourceMap[demand.targetUrl];
+          // first match
           if(resourceName) {
-            let linkKey = JSON.stringify({
-              source: service.name,
-              target: resourceName,
-            });
+            setLink(service, resourceName);
+          } else if (demand.targetUrl.endsWith("@uri@")) {
+            // remove `/api/resource/@uri@` to as second match
             // @ts-ignore
-            if (!!demandMap[linkKey]) {
-              demandMap[linkKey] += 1
+            let resourceName = resourceMap[demand.targetUrl.slice(0, -"/@uri@".length)];
+            if(resourceName) {
+              setLink(service, resourceName);
             } else {
-              demandMap[linkKey] = 1
+              console.log(demand.targetUrl)
             }
+          } else {
+            console.log(demand.targetUrl)
           }
         }
       }
