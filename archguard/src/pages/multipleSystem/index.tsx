@@ -196,7 +196,7 @@ const MultipleSystem = () => {
       </div>
       <div className="multiple-system-selector">
         <Tabs defaultActiveKey="my-system">
-          <Tabs.TabPane tab={formatMessage({ id: 'MY_SYSTEM'})} key="my-system">
+          <Tabs.TabPane tab={formatMessage({ id: 'COMPONENT_ANALYSIS'})} key="my-system">
             <Row gutter={[12, 12]}>
               <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
                 <SystemCard onClick={onCreateClick}></SystemCard>
@@ -218,7 +218,10 @@ const MultipleSystem = () => {
           <Tabs.TabPane tab={formatMessage({ id: 'SERVICES_MAP'})} key="services-map">
             <ServicesMap />
           </Tabs.TabPane>
-          <Tabs.TabPane tab={formatMessage({ id: 'OTHER_SYSTEM'})} key="other-system" disabled></Tabs.TabPane>
+          <Tabs.TabPane tab={formatMessage({ id: 'CODE_ANALYSIS'})} key="code-analysis" disabled>
+
+          </Tabs.TabPane>
+          <Tabs.TabPane tab={formatMessage({ id: 'DATABASE_MAP'})} key="database-map" disabled></Tabs.TabPane>
         </Tabs>
       </div>
       <Modal

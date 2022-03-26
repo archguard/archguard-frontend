@@ -1,8 +1,11 @@
 export default {
   SWITCH_LANGUAGE: "English",
   MY_SYSTEM: "我的系统",
+  SERVICES_MAP: "服务分析",
+  COMPONENT_ANALYSIS: "模块分析",
+  CODE_ANALYSIS: "代码分析",
   OTHER_SYSTEM: "其它系统",
-  SERVICES_MAP: "服务地图",
+  DATABASE_MAP: "数据库地图 (测试)",
   NEXT: "下一页",
   PREV: "上一页",
   OPERATION_DOCUMENT: "说明文档",

@@ -1,8 +1,11 @@
 export default {
   SWITCH_LANGUAGE: "中文",
-  MY_SYSTEM: "My Systems",
   OTHER_SYSTEM: "Other Systems",
-  SERVICES_MAP: "Services Map",
+  COMPONENT_ANALYSIS: "Component Analysis",
+  MY_SYSTEM: "My Systems",
+  SERVICES_MAP: "Container Analysis",
+  CODE_ANALYSIS: "Code Analysis",
+  DATABASE_MAP: "Database Map (Alpha)",
   NEXT: "Next",
   PREV: "Prev",
   OPERATION_DOCUMENT: "Document",
