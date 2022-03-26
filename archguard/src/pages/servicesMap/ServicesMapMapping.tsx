@@ -102,24 +102,29 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming â
         }
       }
 
+      function getPathFromUrl(url: string) {
+        return url.split("?")[0];
+      }
+
       for (let service of res) {
         for (let demand of service.demands) {
           // @ts-ignore
-          let resourceName = resourceMap[demand.targetUrl];
+          let targetUrl = getPathFromUrl(demand.targetUrl);
+          let resourceName = resourceMap[targetUrl];
           // first match
           if(resourceName) {
             setLink(service, resourceName);
-          } else if (demand.targetUrl.endsWith("@uri@")) {
+          } else if (targetUrl.endsWith("@uri@")) {
             // remove `/api/resource/@uri@` to as second match
             // @ts-ignore
-            let resourceName = resourceMap[demand.targetUrl.slice(0, -"/@uri@".length)];
+            let resourceName = resourceMap[targetUrl.slice(0, -"/@uri@".length)];
             if(resourceName) {
               setLink(service, resourceName);
             } else {
-              console.log(demand.targetUrl)
+              console.log(targetUrl)
             }
           } else {
-            console.log(demand.targetUrl)
+            console.log(targetUrl)
           }
         }
       }
