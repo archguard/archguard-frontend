@@ -7,7 +7,7 @@ import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
 import { buildModuleDependenceTree, generateNodeEdges } from "../../../utils";
 import { GraphData } from "@/models/graph";
-import { JavaItem } from "@/models/java";
+import { SourceCodeItem } from "@/models/java";
 import CollapsibleCard from "@/components/Business/CollapsibleCard";
 
 export interface Measurements {
@@ -18,7 +18,7 @@ export interface Measurements {
   nodeKey: string;
 }
 
-function transformData(data: any): GraphData<JavaItem> {
+function transformData(data: any): GraphData<SourceCodeItem> {
   data.nodes = data.nodes.map((item: any) => ({
     id: item.id,
     title: item.name,
@@ -48,7 +48,7 @@ function getMeasurements(moduleCoupling?: any): Measurements | undefined {
 }
 
 function ModuleDependenceGraph() {
-  const [graphData, setGraphData] = useState<GraphData<JavaItem>>();
+  const [graphData, setGraphData] = useState<GraphData<SourceCodeItem>>();
   const [moduleCoupling] = useModuleCoupling();
   const [selectedNode] = useSelectedNode();
 

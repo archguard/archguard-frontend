@@ -16,11 +16,11 @@ import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/compo
 import { NodeLabel } from "../../Graph";
 import { SelectValue } from "antd/lib/select";
 import { GraphData } from "@/models/graph";
-import { JavaItem } from "@/models/java";
+import { SourceCodeItem } from "@/models/java";
 
 interface GraphOperationProps {
   cy?: Core;
-  graphData?: GraphData<JavaItem>;
+  graphData?: GraphData<SourceCodeItem>;
   graphLayout: any;
   graphLayoutCallBack?: Function;
   measurements?: Measurements;

@@ -4,7 +4,7 @@ export enum ClassType {
   NOT_DEFINED,
 }
 
-export interface JavaItem {
+export interface SourceCodeItem {
   id: string;
   name: string;
   module?: string;
@@ -14,7 +14,7 @@ export interface ClassCall {
   clazz: JClass;
 }
 
-export interface JClass extends JavaItem {
+export interface JClass extends SourceCodeItem {
   configuresMap: any;
   callees: ClassCall[];
   callers: ClassCall[];
@@ -31,7 +31,7 @@ export interface JClass extends JavaItem {
   parents: JClass[];
 }
 
-export interface JMethod extends JavaItem {
+export interface JMethod extends SourceCodeItem {
   id: string;
   module: string;
   clazz: string;
@@ -44,7 +44,7 @@ export interface JMethod extends JavaItem {
   implements: JMethod[];
 }
 
-export interface JModule extends JavaItem {}
+export interface JModule extends SourceCodeItem {}
 export interface JNode {
   id: string;
   fullName: string;

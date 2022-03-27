@@ -11,7 +11,11 @@ import PackageDependence from "./PackageDependence";
 import { storage } from "@/store/storage/sessionStorage";
 import useUrlQuery from "@/hooks/useUrlQuery";
 
-export default function Dependence() {
+interface DependenceProp {
+  withRouter: boolean,
+}
+
+export default function Dependence(props: DependenceProp) {
   const history = useHistory();
   const { tab } = useUrlQuery<{ tab: "class" | "method" | "package" | "module" }>();
 
@@ -20,17 +24,23 @@ export default function Dependence() {
 
   const [configVisible, setConfigVisible] = useState(false);
 
+  function onChangeTab(activeKey: string) {
+    if (!props.withRouter) {
+      return
+    }
+
+    return history.replace(`/${ systemId }/analysis/dependence?tab=${ activeKey }`);
+  }
+
   return (
     <div>
-      <Tabs
-        activeKey={tab}
-        tabBarExtraContent={
+      <Tabs activeKey={tab} tabBarExtraContent={
           <div className="dependence-extra-content">
             <SettingFilled onClick={() => setConfigVisible(true)} />
           </div>
         }
         onChange={(activeKey) =>
-          history.replace(`/${systemId}/analysis/dependence?tab=${activeKey}`)
+          onChangeTab(activeKey)
         }
       >
         <Tabs.TabPane tab="module" key="module">

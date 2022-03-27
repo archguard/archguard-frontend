@@ -1,6 +1,6 @@
 import { forEach, remove, some } from "lodash";
 import { TreeNode, Edge, GraphData } from "@/models/graph";
-import { JavaItem } from "@/models/java";
+import { SourceCodeItem } from "@/models/java";
 
 function dfs(
   node: string,
@@ -66,9 +66,9 @@ export function findLoopPaths(edges: Edge[], sourceKey = "source", targetKey = "
 }
 
 export function expandNode(
-  node: TreeNode<JavaItem>,
-  { nodes, edges }: GraphData<JavaItem>,
-): GraphData<JavaItem> {
+  node: TreeNode<SourceCodeItem>,
+  { nodes, edges }: GraphData<SourceCodeItem>,
+): GraphData<SourceCodeItem> {
   const newNodes = nodes.slice();
   const newEdges = edges.slice();
   const { id, children } = node;
@@ -84,13 +84,13 @@ export function expandNode(
 }
 
 export function collapseNode(
-  node: TreeNode<JavaItem>,
-  { nodes, edges }: GraphData<JavaItem>,
-): GraphData<JavaItem> {
+  node: TreeNode<SourceCodeItem>,
+  { nodes, edges }: GraphData<SourceCodeItem>,
+): GraphData<SourceCodeItem> {
   const newNodes = nodes.slice();
   const newEdges = edges.slice();
 
-  const hideChildNode = (parentId: string, node: TreeNode<JavaItem>) => {
+  const hideChildNode = (parentId: string, node: TreeNode<SourceCodeItem>) => {
     const { id, parents, children } = node;
     const hasParentVisble = some(parents, (parent) => {
       return parent.id !== parentId && parent.visible;
@@ -117,6 +117,6 @@ export function collapseNode(
   };
 }
 
-export function isExpand(node: TreeNode<JavaItem>, edges: Edge[]) {
+export function isExpand(node: TreeNode<SourceCodeItem>, edges: Edge[]) {
   return some(edges, (edge) => edge.source === node.id);
 }

@@ -11,7 +11,7 @@ import { expandNode, collapseNode, isExpand } from "./components/GraphOperation/
 import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph";
 import { Core, LayoutOptions } from "cytoscape";
 import { GraphData } from "@/models/graph";
-import { JavaItem } from "@/models/java";
+import { SourceCodeItem } from "@/models/java";
 import FullscreenContainer from "@/components/Business/FullscreenContainer";
 
 type Option = {
@@ -26,7 +26,7 @@ export interface NodeLabel {
 
 interface GraphProps {
   id: string;
-  data: GraphData<JavaItem>;
+  data: GraphData<SourceCodeItem>;
   title?: string;
   configs?: any;
   measurements?: Measurements;
@@ -54,7 +54,7 @@ export default function Graph(props: GraphProps) {
     nodeDimensionsIncludeLabels: true,
     fit: true,
   });
-  const [visibleNodeEdges, setNodeEdges] = useState<GraphData<JavaItem>>({ nodes: [], edges: [] });
+  const [visibleNodeEdges, setNodeEdges] = useState<GraphData<SourceCodeItem>>({ nodes: [], edges: [] });
 
   const onNodeClick = useCallback(
     (event) => {
@@ -123,7 +123,7 @@ export default function Graph(props: GraphProps) {
         measurements={measurements}
         nodeLabel={nodeLabel}
         showAllSelect={showAllSelect}
-        graphDataCallBack={(newNodeEdges: GraphData<JavaItem>) =>
+        graphDataCallBack={(newNodeEdges: GraphData<SourceCodeItem>) =>
           drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title)
         }
       />

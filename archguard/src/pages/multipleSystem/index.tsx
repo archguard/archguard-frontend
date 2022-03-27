@@ -18,6 +18,8 @@ import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "../help";
 import {setLocale, useIntl} from "@@/plugin-locale/localeExports";
 import ServicesMap from "../servicesMap/ServicesMap";
+import Dependence from "@/pages/analysis/dependence";
+import CodeAnalysis from "@/pages/code";
 
 interface UserProfile {
   name?: string;
@@ -218,8 +220,8 @@ const MultipleSystem = () => {
           <Tabs.TabPane tab={formatMessage({ id: 'SERVICES_MAP'})} key="services-map">
             <ServicesMap />
           </Tabs.TabPane>
-          <Tabs.TabPane tab={formatMessage({ id: 'CODE_ANALYSIS'})} key="code-analysis" disabled>
-
+          <Tabs.TabPane tab={formatMessage({ id: 'CODE_ANALYSIS'})} key="code-analysis">
+            <CodeAnalysis />
           </Tabs.TabPane>
           <Tabs.TabPane tab={formatMessage({ id: 'DATABASE_MAP'})} key="database-map" disabled></Tabs.TabPane>
         </Tabs>

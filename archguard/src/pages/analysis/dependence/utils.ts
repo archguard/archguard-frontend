@@ -1,5 +1,5 @@
 import { every, filter, findIndex, forEach, reduce } from "lodash";
-import { JModule, JMethod, JClass, JavaItem } from "@/models/java";
+import { JModule, JMethod, JClass, SourceCodeItem } from "@/models/java";
 import { TreeNode, Node, Edge, GraphData, GraphTree } from "@/models/graph";
 
 const createJMethodNode = (jMethod: JMethod): TreeNode<JMethod> => {
@@ -42,7 +42,7 @@ const pushNode = <T>(node: TreeNode<T>, nodes: TreeNode<T>[]) => {
   }
 };
 
-const createTreeNode = <T extends JavaItem, U = TreeNode<T>>(
+const createTreeNode = <T extends SourceCodeItem, U = TreeNode<T>>(
   javaItem: T,
   treeNodeMap: { [key: string]: U },
   createMethod: (javaItem: T) => U,
