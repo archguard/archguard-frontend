@@ -224,6 +224,7 @@ const MultipleSystem = () => {
             <CodeAnalysis />
           </Tabs.TabPane>
           <Tabs.TabPane tab={formatMessage({ id: 'DATABASE_MAP'})} key="database-map" disabled></Tabs.TabPane>
+          <Tabs.TabPane tab={formatMessage({ id: 'HOTSPOT_TEST'})} key="hotspot-map" disabled></Tabs.TabPane>
         </Tabs>
       </div>
       <Modal
