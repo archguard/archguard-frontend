@@ -17,8 +17,10 @@ export function urlMapping(container: any[], unMapping: any[], unusedResource: a
   }
 
   let demandMap: any = {}
+  let mappedResource: any = {};
 
   function setLink(service: any, resourceName: String) {
+    mappedResource[resourceName] = true;
     let linkKey = JSON.stringify({
       source: service.name,
       target: resourceName,

@@ -1,27 +1,37 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import styles from "./ServicesMapMapping.less"
-import { queryFlareData } from "@/api/module/containerService";
 import { urlMapping } from "@/pages/servicesMap/UrlMapping";
 import { Table } from "antd";
 
-const ServicesMapMapping = () => {
+interface ServicesMapMappingProps {
+  datasource: any[]
+}
+
+const ServicesMapMapping = (props: ServicesMapMappingProps) => {
   const [data, setData] = useState(null);
   const [unmap, setUnmap] = useState([] as any);
   const svgRef = useRef(null);
-  const svgEl = d3.select(svgRef.current);
   const width = 920;
   const height = 600;
   const innerRadius = Math.min(width, height) * 0.5 - 90
   const outerRadius = innerRadius + 10
 
   const unmapColumns = [
-    {title: 'service', dataIndex: 'service'},
-    {title: 'originUrl', dataIndex: 'originUrl'},
-    {title: 'process url', dataIndex: 'url',},
+    { title: 'service', dataIndex: 'service' },
+    { title: 'originUrl', dataIndex: 'originUrl' },
+    { title: 'process url', dataIndex: 'url', },
   ]
 
-  function render(data: any[]) {
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+
+    console.log(`svgRef.current: ${ svgRef.current }`);
+    d3.select(svgRef.current).selectAll("g").remove();
+    const svgEl = d3.select(svgRef.current)
+
     const chord = d3.chordDirected()
       .padAngle(10 / innerRadius)
       .sortSubgroups(d3.descending)
@@ -41,7 +51,7 @@ const ServicesMapMapping = () => {
 
     const index = new Map(names.map((name, i) => [name, i]));
     const matrix = Array.from(index, () => new Array(names.length).fill(0));
-    for (const {source, target, value} of data) { // @ts-ignore
+    for (const { source, target, value } of data) { // @ts-ignore
       matrix[index.get(source)][index.get(target)] += value;
     }
 
@@ -66,9 +76,9 @@ const ServicesMapMapping = () => {
       .attr("dy", "0.35em")
       // @ts-ignore
       .attr("transform", (d: any) => `
-        rotate(${(d.angle * 180 / Math.PI - 90)})
-        translate(${outerRadius + 5})
-        ${d.angle > Math.PI ? "rotate(180)" : ""}
+        rotate(${ (d.angle * 180 / Math.PI - 90) })
+        translate(${ outerRadius + 5 })
+        ${ d.angle > Math.PI ? "rotate(180)" : "" }
       `)
       .attr("text-anchor", (d: any) => d.angle > Math.PI ? "end" : null)
       .text(d => names[d.index]);
@@ -84,9 +94,9 @@ const ServicesMapMapping = () => {
     }
 
     group.append("title")
-      .text((d: any) => `${names[d.index]}
-${(outgoingCount(d))} outgoing →
-${(incomingCount(d))} incoming ←`);
+      .text((d: any) => `${ names[d.index] }
+${ (outgoingCount(d)) } outgoing →
+${ (incomingCount(d)) } incoming ←`);
 
     svg.append("g")
       .attr("fill-opacity", 0.75)
@@ -98,32 +108,24 @@ ${(incomingCount(d))} incoming ←`);
       // @ts-ignore
       .attr("d", ribbon)
       .append("title")
-      .text(d => `${names[d.source.index]} → ${names[d.target.index]} ${d.source.value}`);
-
-  }
-
-  useEffect(() => {
-    queryFlareData().then((res: any[]) => {
-      let unmap: any[] = [];
-      let unusedResource: any[] = [];
-      let newData = urlMapping(res, unmap, unusedResource)
-      setUnmap(unmap)
-
-      setData(newData as any);
-    });
-  }, [setData, setUnmap]);
-
-  useEffect(() => {
-    if (!!data) {
-      render(data as any)
-    }
+      .text(d => `${ names[d.source.index] } → ${ names[d.target.index] } ${ d.source.value }`);
   }, [data]);
 
-  return <div className={styles.service}>
-    <svg ref={svgRef} width={width} height={height}/>
+  useEffect(() => {
+    let unmap: any[] = [];
+    let unusedResource: any[] = [];
+
+    let newData = urlMapping(props.datasource, unmap, unusedResource)
+    setUnmap(unmap)
+
+    setData(newData as any);
+  }, [props.datasource]);
+
+  return <div className={ styles.service }>
+    <svg ref={ svgRef } width={ width } height={ height }/>
     <div>
       <h2>未匹配到的消费端 URL</h2>
-      <Table dataSource={unmap} columns={unmapColumns}/>
+      <Table dataSource={ unmap } columns={ unmapColumns }/>
     </div>
   </div>;
 };
