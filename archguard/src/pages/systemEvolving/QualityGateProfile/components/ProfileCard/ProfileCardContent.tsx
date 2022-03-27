@@ -88,7 +88,7 @@ const ProfileCardContent = (props: PropfileCardContentProps, ref: any) => {
         {(fields, { add, remove }) => {
           return (
             <div>
-              {fields.map((field) => (
+              {fields.map((field: any) => (
                 <Space key={field.key}>
                   <Form.Item
                     {...field}

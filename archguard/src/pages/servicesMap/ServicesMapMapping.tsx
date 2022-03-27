@@ -55,9 +55,9 @@ const ServicesMapMapping = () => {
       .data(chords.groups)
       .join("g");
 
-    // @ts-ignore
     group.append("path")
       .attr("fill", d => color(names[d.index]))
+      // @ts-ignore
       .attr("d", arc);
 
     group.append("text")
@@ -65,18 +65,28 @@ const ServicesMapMapping = () => {
       .each(d => (d.angle = (d.startAngle + d.endAngle) / 2))
       .attr("dy", "0.35em")
       // @ts-ignore
-      .attr("transform", d => `
+      .attr("transform", (d: any) => `
         rotate(${(d.angle * 180 / Math.PI - 90)})
         translate(${outerRadius + 5})
         ${d.angle > Math.PI ? "rotate(180)" : ""}
       `)
-      .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
+      .attr("text-anchor", (d: any) => d.angle > Math.PI ? "end" : null)
       .text(d => names[d.index]);
 
+    function outgoingCount(d: any) {
+      // @ts-ignore
+      return d3.sum(chords, (c: any) => (c.source.index === d.index) * c.source.value);
+    }
+
+    function incomingCount(d: any) {
+      // @ts-ignore
+      return d3.sum(chords, (c: any) => (c.target.index === d.index) * c.source.value);
+    }
+
     group.append("title")
-      .text(d => `${names[d.index]}
-${d3.sum(chords, (c: any) => (c.source.index === d.index) * c.source.value)} outgoing →
-${d3.sum(chords, (c: any) => (c.target.index === d.index) * c.source.value)} incoming ←`);
+      .text((d: any) => `${names[d.index]}
+${(outgoingCount(d))} outgoing →
+${(incomingCount(d))} incoming ←`);
 
     svg.append("g")
       .attr("fill-opacity", 0.75)
