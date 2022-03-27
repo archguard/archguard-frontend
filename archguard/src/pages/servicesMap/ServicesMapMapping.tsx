@@ -105,7 +105,8 @@ ${(incomingCount(d))} incoming ←`);
   useEffect(() => {
     queryFlareData().then((res: any[]) => {
       let unmap: any[] = [];
-      let newData = urlMapping(res, unmap)
+      let unusedResource: any[] = [];
+      let newData = urlMapping(res, unmap, unusedResource)
       setUnmap(unmap)
 
       setData(newData as any);

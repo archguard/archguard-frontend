@@ -6,10 +6,10 @@ function removeEndUriPlaceholder(targetUrl: string) {
   return targetUrl.slice(0, -"/@uri@".length);
 }
 
-export function urlMapping(res: any[], unMapping: any[]) {
+export function urlMapping(container: any[], unMapping: any[], unusedResource: any[]) {
   let newData = [];
   let resourceMap: any = {}
-  for (let service of res) {
+  for (let service of container) {
     for (let resource of service.resources) {
       // @ts-ignore
       resourceMap[resource.sourceUrl] = service.name
@@ -31,7 +31,7 @@ export function urlMapping(res: any[], unMapping: any[]) {
     }
   }
 
-  for (let service of res) {
+  for (let service of container) {
     for (let demand of service.demands) {
       let targetUrl = getPathFromUrl(demand.targetUrl);
       let resourceName = resourceMap[targetUrl];
