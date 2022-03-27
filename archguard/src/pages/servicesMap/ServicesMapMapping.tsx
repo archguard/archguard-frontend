@@ -1,17 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import styles from "./ServicesMapMapping.less"
 import { queryFlareData } from "@/api/module/containerService";
 import { urlMapping } from "@/pages/servicesMap/UrlMapping";
-
+import { Table } from "antd";
 
 const ServicesMapMapping = () => {
   const [data, setData] = useState(null);
+  const [unmap, setUnmap] = useState([] as any);
   const svgRef = useRef(null);
   const svgEl = d3.select(svgRef.current);
-  const width = 1920;
-  const height = 1200;
+  const width = 920;
+  const height = 600;
   const innerRadius = Math.min(width, height) * 0.5 - 90
   const outerRadius = innerRadius + 10
+
+  const unmapColumns = [
+    {title: 'service', dataIndex: 'service'},
+    {title: 'originUrl', dataIndex: 'originUrl'},
+    {title: 'process url', dataIndex: 'url',},
+  ]
 
   function render(data: any[]) {
     const chord = d3.chordDirected()
@@ -67,8 +75,8 @@ const ServicesMapMapping = () => {
 
     group.append("title")
       .text(d => `${names[d.index]}
-${d3.sum(chords, c => (c.source.index === d.index) * c.source.value)} outgoing →
-${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming ←`);
+${d3.sum(chords, (c: any) => (c.source.index === d.index) * c.source.value)} outgoing →
+${d3.sum(chords, (c: any) => (c.target.index === d.index) * c.source.value)} incoming ←`);
 
     svg.append("g")
       .attr("fill-opacity", 0.75)
@@ -77,6 +85,7 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming �
       .join("path")
       .style("mix-blend-mode", "multiply")
       .attr("fill", d => color(names[d.target.index]))
+      // @ts-ignore
       .attr("d", ribbon)
       .append("title")
       .text(d => `${names[d.source.index]} → ${names[d.target.index]} ${d.source.value}`);
@@ -85,11 +94,13 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming �
 
   useEffect(() => {
     queryFlareData().then((res: any[]) => {
-      let newData = urlMapping(res);
+      let unmap: any[] = [];
+      let newData = urlMapping(res, unmap)
+      setUnmap(unmap)
 
       setData(newData as any);
     });
-  }, [setData]);
+  }, [setData, setUnmap]);
 
   useEffect(() => {
     if (!!data) {
@@ -97,8 +108,12 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming �
     }
   }, [data]);
 
-  return <div>
+  return <div className={styles.service}>
     <svg ref={svgRef} width={width} height={height}/>
+    <div>
+      <h2>未匹配到的消费端 URL</h2>
+      <Table dataSource={unmap} columns={unmapColumns}/>
+    </div>
   </div>;
 };
 

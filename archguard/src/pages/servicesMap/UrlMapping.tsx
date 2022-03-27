@@ -2,7 +2,11 @@ function getPathFromUrl(url: string) {
   return url.split("?")[0];
 }
 
-export function urlMapping(res: any[]) {
+function removeEndUriPlaceholder(targetUrl: string) {
+  return targetUrl.slice(0, -"/@uri@".length);
+}
+
+export function urlMapping(res: any[], unMapping: any[]) {
   let newData = [];
   let resourceMap: any = {}
   for (let service of res) {
@@ -29,7 +33,6 @@ export function urlMapping(res: any[]) {
 
   for (let service of res) {
     for (let demand of service.demands) {
-      // @ts-ignore
       let targetUrl = getPathFromUrl(demand.targetUrl);
       let resourceName = resourceMap[targetUrl];
       // first match
@@ -37,15 +40,22 @@ export function urlMapping(res: any[]) {
         setLink(service, resourceName);
       } else if (targetUrl.endsWith("@uri@")) {
         // remove `/api/resource/@uri@` to as second match
-        // @ts-ignore
-        let resourceName = resourceMap[targetUrl.slice(0, -"/@uri@".length)];
+        let resourceName = resourceMap[removeEndUriPlaceholder(targetUrl)];
         if (resourceName) {
           setLink(service, resourceName);
         } else {
-          console.log(targetUrl)
+          unMapping.push({
+            service: service.name,
+            originUrl: demand.originUrl,
+            url: targetUrl
+          })
         }
       } else {
-        console.log(targetUrl)
+        unMapping.push({
+          service: service.name,
+          originUrl: demand.originUrl,
+          url: targetUrl
+        })
       }
     }
   }
@@ -55,5 +65,6 @@ export function urlMapping(res: any[]) {
     obj.value = demandMap[key];
     newData.push(obj)
   }
+
   return newData;
 }
