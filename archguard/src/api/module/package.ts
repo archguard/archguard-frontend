@@ -6,10 +6,9 @@ interface PackageDependenciesModel {
   [key: string]: any;
 }
 
-const systemId = storage.getSystemId();
 export function queryPackageDependencies(language: string) {
   return axios<PackageDependenciesModel[]>({
-    baseURL: `/api/systems/${systemId}`,
+    baseURL: `/api/systems/${(storage.getSystemId())}`,
     url: `/package/dependencies?language=${escape(language)}`,
     method: "GET"
   });
