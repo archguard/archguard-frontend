@@ -18,7 +18,7 @@ const CodeAnalysis = () => {
       // todo: is a dirty fix for old code which no fetch system id
       setTimeout(() => {
         setIsInChanging(true)
-      })
+      }, 50)
     }
   }, [setIsInChanging]);
 
