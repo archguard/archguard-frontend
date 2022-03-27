@@ -1,9 +1,9 @@
 import axios from "../axios";
 import { storage } from "@/store/storage/sessionStorage";
 
-const systemId = storage.getSystemId();
-
 export function queryConfig() {
+  const systemId = storage.getSystemId();
+
   return axios<any>({
     url: `/api/systems/${systemId}/configures`,
     method: "GET"
@@ -11,6 +11,8 @@ export function queryConfig() {
 }
 
 export function updateConfig(type: string, parameter: any) {
+  const systemId = storage.getSystemId();
+
   return axios<any>({
     url: `/api/systems/${systemId}/configures/types/${type}`,
     method: 'POST',

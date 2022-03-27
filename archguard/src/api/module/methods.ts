@@ -2,9 +2,9 @@ import axios from '../axios'
 import { JMethod } from '@/models/java';
 import { storage } from "@/store/storage/sessionStorage";
 
-const systemId = storage.getSystemId();
-
 export function queryMethodBy(submodule: string, clazz: string) {
+  const systemId = storage.getSystemId();
+
   return axios<JMethod[]>({
     url: `/api/systems/${systemId}/methods`,
     method: "GET",

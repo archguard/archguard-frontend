@@ -1,8 +1,6 @@
 import axios from "../axios";
 import { storage } from "@/store/storage/sessionStorage";
 
-const systemId = storage.getSystemId();
-
 export interface gitFile {
   jclassId: string;
   systemId: number;
@@ -19,6 +17,8 @@ export interface GitPathChange {
 }
 
 export function queryHotFiles() {
+  const systemId = storage.getSystemId();
+
   return axios<gitFile[]>({
     url: `/api/systems/${systemId}/git/hot-files`,
     method: "GET",
@@ -26,12 +26,16 @@ export function queryHotFiles() {
 }
 
 export function getGitPathChanges() {
+  const systemId = storage.getSystemId();
+
   return axios<GitPathChange[]>({
     url: `/api/systems/${systemId}/git/path-change-count`,
     method: "GET",
   });
 }
 export function queryUnstableFiles() {
+  const systemId = storage.getSystemId();
+
   return axios<GitPathChange[]>({
     url: `/api/systems/${systemId}/git/unstable-file`,
     method: "GET",

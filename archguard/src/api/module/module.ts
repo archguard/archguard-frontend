@@ -4,8 +4,6 @@ import { methodDependency } from "@/pages/analysis/dependence/ModuleDependence/c
 import { ReportMapper } from "@/pages/analysis/metrics/ModuleCouplingTree/Report";
 import { storage } from "@/store/storage/sessionStorage";
 
-const systemId = storage.getSystemId();
-
 export interface Module {
   id?: string;
   name: string;
@@ -14,6 +12,8 @@ export interface Module {
 }
 
 export function queryModule() {
+  const systemId = storage.getSystemId();
+
   return axios<Module[]>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules",
@@ -22,6 +22,8 @@ export function queryModule() {
 }
 
 export function deleteModule(parameter: { id: string }) {
+  const systemId = storage.getSystemId();
+
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: `/logic-modules/${parameter.id}`,
@@ -30,6 +32,8 @@ export function deleteModule(parameter: { id: string }) {
 }
 
 export function updateModule(parameter: Module) {
+  const systemId = storage.getSystemId();
+
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: `/logic-modules/${parameter.id}`,
@@ -39,6 +43,8 @@ export function updateModule(parameter: Module) {
 }
 
 export function createModule(parameter: {}) {
+  const systemId = storage.getSystemId();
+
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules",
@@ -48,6 +54,8 @@ export function createModule(parameter: {}) {
 }
 
 export function queryModuleOptions() {
+  const systemId = storage.getSystemId();
+
   return axios<string[]>({
     baseURL: `/api/systems/${systemId}`,
     url: "/base-modules",
@@ -56,6 +64,8 @@ export function queryModuleOptions() {
 }
 
 export function autoDefineModule() {
+  const systemId = storage.getSystemId();
+
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/auto-define",
@@ -64,6 +74,8 @@ export function autoDefineModule() {
 }
 
 export function queryModuleDependencies(parameter: {}) {
+  const systemId = storage.getSystemId();
+
   return axios<methodDependency[]>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/dependencies",
@@ -73,6 +85,8 @@ export function queryModuleDependencies(parameter: {}) {
 }
 
 export function queryModuleCoupling() {
+  const systemId = storage.getSystemId();
+
   return axios<ReportMapper[]>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/metrics",
@@ -81,6 +95,8 @@ export function queryModuleCoupling() {
 }
 
 export function hideAllModules() {
+  const systemId = storage.getSystemId();
+
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/hide-all",
@@ -89,6 +105,8 @@ export function hideAllModules() {
 }
 
 export function showAllModules() {
+  const systemId = storage.getSystemId();
+
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/show-all",
@@ -97,6 +115,8 @@ export function showAllModules() {
 }
 
 export function reverseAllModules() {
+  const systemId = storage.getSystemId();
+
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/reverse-all",
@@ -105,6 +125,8 @@ export function reverseAllModules() {
 }
 
 export function queryAllModuleDependence() {
+  const systemId = storage.getSystemId();
+
   return axios<{
     nodes: {
       fullName: string;
