@@ -6,6 +6,7 @@ import { LEVEL_SCORE } from "@/pages/systemSummary/Summary/components/QualityEva
 import { storage } from "@/store/storage/sessionStorage";
 import axios from '../axios';
 
+const systemId = storage.getSystemId();
 
 export interface MethodLines {
   moduleName: string;
@@ -24,7 +25,7 @@ interface MethodLinesPagedDataResponse {
 
 export function getOverviewUsingMethods(currentPageNumber: number, numberPerPage: number) {
   return axios<MethodLinesPagedDataResponse>({
-    url: `/api/systems/${(storage.getSystemId())}/codeline/methods/above-threshold`,
+    url: `/api/systems/${systemId}/codeline/methods/above-threshold`,
     method: "GET",
     params: { currentPageNumber, numberPerPage },
   });
@@ -44,7 +45,7 @@ export interface MeasureIndicatorsData {
   groupData: GroupDataItem[];
 }
 
-export const useDashboard = () => useGet<MeasureIndicatorsData[]>(`/api/systems/${(storage.getSystemId())}/dashboard`);
+export const useDashboard = () => useGet<MeasureIndicatorsData[]>(`/api/systems/${systemId}/dashboard`);
 
 interface LineCount {
   lineCount: number,
@@ -59,7 +60,7 @@ interface UseOverviewCount {
   contributorCount: number;
   qualityLevel: keyof typeof Color;
 }
-export const useOverviewCount = () => useGet<UseOverviewCount>(`/api/systems/${(storage.getSystemId())}/overview/system`);
+export const useOverviewCount = () => useGet<UseOverviewCount>(`/api/systems/${systemId}/overview/system`);
 
 export interface Overview {
   level: keyof typeof LEVEL_SCORE;
@@ -72,7 +73,7 @@ interface UseOverview {
 }
 
 export function useOverview() {
-  const { data, run } = useGet<UseOverview>(`/api/systems/${(storage.getSystemId())}/overview`);
+  const { data, run } = useGet<UseOverview>(`/api/systems/${systemId}/overview`);
   return {
     data: data?.data || [],
     run,
