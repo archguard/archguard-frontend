@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { queryFlareData } from "@/api/module/containerService";
+import { urlMapping } from "@/pages/servicesMap/UrlMapping";
+
 
 const ServicesMapMapping = () => {
   const [data, setData] = useState(null);
@@ -31,7 +33,9 @@ const ServicesMapMapping = () => {
 
     const index = new Map(names.map((name, i) => [name, i]));
     const matrix = Array.from(index, () => new Array(names.length).fill(0));
-    for (const {source, target, value} of data) matrix[index.get(source)][index.get(target)] += value;
+    for (const {source, target, value} of data) { // @ts-ignore
+      matrix[index.get(source)][index.get(target)] += value;
+    }
 
     const svg = svgEl.attr("viewBox", [-width / 2, -height / 2, width, height]);
     const chords = chord(matrix);
@@ -43,13 +47,16 @@ const ServicesMapMapping = () => {
       .data(chords.groups)
       .join("g");
 
+    // @ts-ignore
     group.append("path")
       .attr("fill", d => color(names[d.index]))
       .attr("d", arc);
 
     group.append("text")
+      // @ts-ignore
       .each(d => (d.angle = (d.startAngle + d.endAngle) / 2))
       .attr("dy", "0.35em")
+      // @ts-ignore
       .attr("transform", d => `
         rotate(${(d.angle * 180 / Math.PI - 90)})
         translate(${outerRadius + 5})
@@ -78,62 +85,7 @@ ${d3.sum(chords, c => (c.target.index === d.index) * c.source.value)} incoming â
 
   useEffect(() => {
     queryFlareData().then((res: any[]) => {
-      let newData = [];
-      let resourceMap: any = {}
-      for (let service of res) {
-        for (let resource of service.resources) {
-          // @ts-ignore
-          resourceMap[resource.sourceUrl] = service.name
-        }
-      }
-
-      let demandMap: any = {}
-
-      function setLink(service: any, resourceName: String) {
-        let linkKey = JSON.stringify({
-          source: service.name,
-          target: resourceName,
-        });
-        // @ts-ignore
-        if (!!demandMap[linkKey]) {
-          demandMap[linkKey] += 1
-        } else {
-          demandMap[linkKey] = 1
-        }
-      }
-
-      function getPathFromUrl(url: string) {
-        return url.split("?")[0];
-      }
-
-      for (let service of res) {
-        for (let demand of service.demands) {
-          // @ts-ignore
-          let targetUrl = getPathFromUrl(demand.targetUrl);
-          let resourceName = resourceMap[targetUrl];
-          // first match
-          if(resourceName) {
-            setLink(service, resourceName);
-          } else if (targetUrl.endsWith("@uri@")) {
-            // remove `/api/resource/@uri@` to as second match
-            // @ts-ignore
-            let resourceName = resourceMap[targetUrl.slice(0, -"/@uri@".length)];
-            if(resourceName) {
-              setLink(service, resourceName);
-            } else {
-              console.log(targetUrl)
-            }
-          } else {
-            console.log(targetUrl)
-          }
-        }
-      }
-
-      for (let key in demandMap) {
-        let obj = JSON.parse(key);
-        obj.value = demandMap[key];
-        newData.push(obj)
-      }
+      let newData = urlMapping(res);
 
       setData(newData as any);
     });
