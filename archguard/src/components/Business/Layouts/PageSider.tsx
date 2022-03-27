@@ -5,6 +5,7 @@ import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import CloudSyncOutlined from "@ant-design/icons/CloudSyncOutlined";
 import FileTextOutlined from "@ant-design/icons/FileTextOutlined";
 import { storage } from "@/store/storage/sessionStorage";
+import { SettingOutlined } from "@ant-design/icons";
 
 export const BUILD_TARGET = process.env.BUILD_TARGET || "default";
 
@@ -34,39 +35,26 @@ const menuList = configForTargets({
       icon: <BarChartOutlined />,
       children: [
         { key: "/analysis/dependence", text: "依赖分析" },
-        { key: "/analysis/metric", text: "指标分析" },
       ],
     },
     {
       key: "systemEvolving",
-      text: "架构演进",
+      text: "指标分析",
       icon: <CloudSyncOutlined />,
       children: [
-        {
-          key: "/systemEvolving/MeasureIndicators",
-          text: "指标看板",
-        },
-        {
-          key: "/systemEvolving/BadSmellThreshold",
-          text: "坏味道阈值",
-        },
-        {
-          key: "/systemEvolving/QualityGateProfile",
-          text: "质量阀",
-        },
-        {
-          key: "/systemEvolving/BadSmellOverview",
-          text: "坏味道看板",
-        },
+        { key: "/analysis/metric", text: "指标分析" },
+        { key: "/systemEvolving/MeasureIndicators", text: "指标看板", },
+        { key: "/systemEvolving/BadSmellOverview", text: "坏味道看板", },
       ],
     },
-  ],
-  zh: [
     {
-      key: "analysisTools",
-      text: "架构分析",
-      icon: <BarChartOutlined />,
-      children: [{ key: "/analysis/dependence", text: "依赖分析" }],
+      key: "metricConfig",
+      text: "指标设置",
+      icon: <SettingOutlined  />,
+      children: [
+        { key: "/systemEvolving/BadSmellThreshold", text: "坏味道阈值", },
+        { key: "/systemEvolving/QualityGateProfile", text: "质量阀", },
+      ],
     },
   ],
 });
