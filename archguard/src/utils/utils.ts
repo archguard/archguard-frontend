@@ -29,6 +29,7 @@ interface CacheState<T> {
  * 创建一个全局缓存的状态，只会被自动加载一次，并随时可以手动刷新
  * @param {*} asyncFn 获取状态的异步方法
  * @param {*} defaultValue 默认值
+ * @param systemId
  */
 export default function createCacheState<T = any>(
   asyncFn: (systemId: number) => Promise<T>,

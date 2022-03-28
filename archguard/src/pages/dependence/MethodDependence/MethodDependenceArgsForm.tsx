@@ -112,7 +112,7 @@ const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
               options={classCascaderOptions[currentModule as string]}
               placeholder="类名"
               notFoundContent="请先选择模块！"
-              onChange={(value) => onCascaderChange(value as string[])}
+              onChange={(value: any) => onCascaderChange(value as string[])}
             />
           </Form.Item>
         </Col>
