@@ -83,11 +83,11 @@ const getStyle = (): cytoscape.Stylesheet[] => {
           isService(el) ? '60%' : '40%',
         'background-width': (el: cytoscape.NodeSingular) =>
           isService(el) ? '60%' : '40%',
-        'border-color': '#006bb4',
+        'border-color': '#7de2d1',
         'border-style': 'solid',
         'border-width': getBorderWidth,
         color: (el: cytoscape.NodeSingular) =>
-          el.hasClass('primary') || el.selected() ? "#006bb4" : "#343741",
+          el.hasClass('primary') || el.selected() ? "#7de2d1" : "#343741",
         // theme.euiFontFamily doesn't work here for some reason, so we're just
         // specifying a subset of the fonts for the label text.
         'font-family': 'Inter UI, Segoe UI, Helvetica, Arial, sans-serif',
@@ -104,7 +104,7 @@ const getStyle = (): cytoscape.Stylesheet[] => {
         'min-zoomed-font-size': 8,
         'overlay-opacity': 0,
         shape: (el: cytoscape.NodeSingular) => isService(el) ? 'ellipse' : 'diamond',
-        'text-background-color': '#006bb4',
+        'text-background-color': '#7de2d1',
         'text-background-opacity': (el: cytoscape.NodeSingular) => el.hasClass('primary') || el.selected() ? 0.1 : 0,
         'text-background-padding': '4px',
         'text-background-shape': 'roundrectangle',
@@ -156,9 +156,9 @@ const getStyle = (): cytoscape.Stylesheet[] => {
       style: {
         width: 4,
         'z-index': zIndexEdgeHover,
-        'line-color': '#69707d',
-        'source-arrow-color': '#69707d',
-        'target-arrow-color': '#69707d',
+        'line-color': '#98a2b3',
+        'source-arrow-color': '#98a2b3',
+        'target-arrow-color': '#98a2b3',
       },
     },
     {
@@ -171,9 +171,9 @@ const getStyle = (): cytoscape.Stylesheet[] => {
       selector: 'edge.highlight',
       style: {
         width: 4,
-        'line-color': '#006bb4',
-        'source-arrow-color': '#006bb4',
-        'target-arrow-color': '#006bb4',
+        'line-color': '#7de2d1',
+        'source-arrow-color': '#7de2d1',
+        'target-arrow-color': '#7de2d1',
         'z-index': zIndexEdgeHighlight,
       },
     },
