@@ -1,12 +1,11 @@
 import {
   autoDefineModule,
   deleteModule,
-  hideAllModules,
+  hideAllModules, queryModule,
   queryModuleOptions,
   reverseAllModules,
   showAllModules,
   updateModule,
-  Module,
 } from "@/api/module/module";
 import {
   DeleteOutlined,
@@ -16,21 +15,41 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import { Button, notification, Table, Tag, Tooltip } from "antd";
-import React, { useCallback, useMemo, useState } from "react";
-import useModules from "@/store/global-cache-state/useModules";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ModuleConfigModal from "../ModuleConfigModal";
 import "./index.less";
 import CollapsibleCard from '@/components/Business/CollapsibleCard';
+import { Module } from "@/types/module";
+import _ from 'lodash';
 
-interface ModuleConfigProps{
+interface ModuleConfigProps {
   systemId: number
 }
 
 export default function ModuleConfig(props: ModuleConfigProps) {
-  const [modules, load] = useModules();
-  const loading = modules?.loading
-  const value = modules?.value || []
+  const [loading, setLoading] = useState(false)
+  const [modules, setModules] = useState([]);
   const [editingModule, setEditingModule] = useState<Module>();
+
+  let load = useCallback(() => {
+    setLoading(true)
+    queryModule(props.systemId).then((res) =>
+      _.orderBy(res, ["status", "name"], ["desc", "asc"]))
+      .then((res) => {
+        setLoading(false)
+        setModules(res as any);
+      })
+  }, [setModules, setLoading]);
+
+  useEffect(() => {
+    queryModule(props.systemId).then((res) =>
+      _.orderBy(res, ["status", "name"], ["desc", "asc"]))
+      .then((res) => {
+        console.log(res)
+        setLoading(false)
+        setModules(res as any);
+      })
+  }, [setModules, setLoading])
 
   const removeModule = useCallback(
     (module) => {
@@ -60,9 +79,9 @@ export default function ModuleConfig(props: ModuleConfigProps) {
         render({ members }: Module) {
           return (
             <div>
-              {members.map((member, index) => (
-                <Tag key={index}>{member}</Tag>
-              ))}
+              { members.map((member: any, index: any) => (
+                <Tag key={ index }>{ member }</Tag>
+              )) }
             </div>
           );
         },
@@ -73,16 +92,16 @@ export default function ModuleConfig(props: ModuleConfigProps) {
         render: (item: Module) => {
           return (
             <Button.Group>
-              <Button onClick={() => setEditingModule(item)} icon={<FormOutlined />}>
+              <Button onClick={ () => setEditingModule(item) } icon={ <FormOutlined/> }>
                 修改
               </Button>
               <Button
-                onClick={() => toggleHiddenModule(item)}
-                icon={item.status === "NORMAL" ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+                onClick={ () => toggleHiddenModule(item) }
+                icon={ item.status === "NORMAL" ? <EyeInvisibleOutlined/> : <EyeOutlined/> }
               >
-                {item.status === "NORMAL" ? "隐藏" : "展示"}
+                { item.status === "NORMAL" ? "隐藏" : "展示" }
               </Button>
-              <Button danger onClick={() => removeModule(item)} icon={<DeleteOutlined />}>
+              <Button danger onClick={ () => removeModule(item) } icon={ <DeleteOutlined/> }>
                 删除
               </Button>
             </Button.Group>
@@ -131,47 +150,47 @@ export default function ModuleConfig(props: ModuleConfigProps) {
     <CollapsibleCard
       className="module-config"
       title="自定义逻辑模块"
-      collapsed={true}
+      collapsed={ true }
       extra={
         <div>
-          <Button onClick={onReverseAll}>全部反转</Button>
-          <Button onClick={onShowAll}>全部展示</Button>
-          <Button onClick={onHideAll}>全部隐藏</Button>
-          <Button onClick={onRefreshModules}>刷新(重排序)</Button>
+          <Button onClick={ onReverseAll }>全部反转</Button>
+          <Button onClick={ onShowAll }>全部展示</Button>
+          <Button onClick={ onHideAll }>全部隐藏</Button>
+          <Button onClick={ onRefreshModules }>刷新(重排序)</Button>
           <Tooltip title="从依赖扫描结果中自动定义逻辑模块">
-            <Button onClick={onAutoDefine}>自动定义</Button>
+            <Button onClick={ onAutoDefine }>自动定义</Button>
           </Tooltip>
         </div>
       }
     >
       <Table
         bordered
-        footer={() => (
+        footer={ () => (
           <Button
-            onClick={() => setEditingModule({ name: "", members: [] })}
-            style={{ width: "100%" }}
-            icon={<PlusOutlined />}
+            onClick={ () => setEditingModule({ name: "", members: [] }) }
+            style={ { width: "100%" } }
+            icon={ <PlusOutlined/> }
             type="dashed"
           >
             新增模块
           </Button>
-        )}
+        ) }
         size="small"
         rowKey="id"
-        pagination={false}
-        dataSource={value}
-        loading={loading}
-        columns={columns}
+        pagination={ false }
+        dataSource={ modules }
+        loading={ loading }
+        columns={ columns }
       />
       <ModuleConfigModal
-        systemId={props.systemId}
-        onSuccess={() => {
+        systemId={ props.systemId }
+        onSuccess={ () => {
           load();
           setEditingModule(undefined);
-        }}
-        module={editingModule!}
-        onClose={() => setEditingModule(undefined)}
-        visible={!!editingModule}
+        } }
+        module={ editingModule! }
+        onClose={ () => setEditingModule(undefined) }
+        visible={ !!editingModule }
       />
     </CollapsibleCard>
   );

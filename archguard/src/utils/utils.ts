@@ -156,7 +156,7 @@ export function expandCodeTree(codeTree: CodeTree) {
   };
 
   const mapPackageNode = (packageNode: TreeNode, prefix?: string): PackageNode => {
-    const nodeName = prefix ? `${prefix}.${packageNode.node}` : packageNode.node;
+    const nodeName = prefix ? `${ prefix }.${ packageNode.node }` : packageNode.node;
     const node: PackageNode = {
       name: nodeName,
     };

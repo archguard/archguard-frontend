@@ -1,10 +1,11 @@
-import { createModule, queryModuleOptions, updateModule, Module } from "@/api/module/module";
+import { createModule, queryModuleOptions, updateModule} from "@/api/module/module";
 import { Form, Input, Modal, notification } from "antd";
 import React, { useEffect, useRef, useState } from "react";
 import { useAsync } from "react-use";
 import "./index.less";
 import MembersInput from "./MembersInput";
 import { Store } from 'antd/lib/form/interface';
+import { Module } from "@/types/module";
 
 interface ModuleConfigModalProps {
   visible: boolean;

@@ -1,24 +1,15 @@
-import _ from "lodash";
 import axios from "../axios";
 import { methodDependency } from "@/pages/dependence/ModuleDependence/components/ModuleDependenceTable/columns";
 import { ReportMapper } from "@/pages/metrics/ModuleCouplingTree/Report";
 import { storage } from "@/store/storage/sessionStorage";
+import { Module } from "@/types/module";
 
-export interface Module {
-  id?: string;
-  name: string;
-  members: string[];
-  status?: string;
-}
-
-export function queryModule() {
-  const systemId = storage.getSystemId();
-
+export function queryModule(systemId: number) {
   return axios<Module[]>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules",
     method: "GET",
-  }).then((res) => _.orderBy(res, ["status", "name"], ["desc", "asc"]));
+  });
 }
 
 export function deleteModule(parameter: { id: string }, systemId: number) {

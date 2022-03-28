@@ -1,11 +1,11 @@
-import { queryModuleDependencies, Module } from "@/api/module/module";
+import { queryModule, queryModuleDependencies } from "@/api/module/module";
 import { Table } from "antd";
-import React, { useState } from "react";
-import useModules from "@/store/global-cache-state/useModules";
+import React, { useEffect, useState } from "react";
 import columns, { methodDependency } from "./columns";
 import { FormItemOption } from '@/models/form';
 import ModuleDependenceArgsForm from './ModuleDependenceArgsForm'
 import CollapsibleCard from '@/components/Business/CollapsibleCard';
+import { Module } from "@/types/module";
 
 function getRowKey(item: any) {
   const { caller, callee } = item;
@@ -26,8 +26,13 @@ interface ModuleDependenceProps {
 
 export default function ModuleDependence(props: ModuleDependenceProps) {
   const [tableData, setTableData] = useState<methodDependency[]>([]);
-  const [modulesValue] = useModules();
-  const modulesOption = getModulesOption(modulesValue?.value)
+  const [modulesOption, setModulesOption] = useState([]);
+  useEffect(() => {
+    queryModule(props.systemId).then((res) => {
+      let options = getModulesOption(res);
+      setModulesOption(options as any)
+    })
+  }, [setModulesOption])
 
   const onBtnClick = (args: { moduleAName: string, moduleBName: string }) => {
     queryModuleDependencies({

@@ -58,11 +58,11 @@ export default defineConfig({
         },
         {
           path: "analysis/metric/:type?",
-          component: "@/pages/analysis/metrics",
+          component: "@/pages/metrics",
         },
         {
           path: "analysis/dependence",
-          component: "@/pages/analysis/dependence",
+          component: "@/pages/dependence",
         },
         {
           path: "systemEvolving",
