@@ -6,7 +6,7 @@
  */
 
 import React, { CSSProperties } from "react";
-import { Cytoscape } from "@/pages/servicesMap/graph/cytoscape";
+import CytoscapeComponent, { Cytoscape } from "@/pages/servicesMap/graph/cytoscape";
 import { useRefDimensions } from "@/pages/servicesMap/graph/dimensions";
 
 export enum FETCH_STATUS {
@@ -34,16 +34,14 @@ interface ServicesMapGraphProps {
 }
 
 function ServicesMapGraph(props: ServicesMapGraph) {
-  // const { data } = props.datasource;
   const { ref, height } = useRefDimensions();
-  const PADDING_BOTTOM = 24;
-  const heightWithPadding = height - PADDING_BOTTOM;
+  const heightWithPadding = 1000;
   const status = "success";
   const elements = {
     nodes: [
-      { data: { id: '0-0' } },
-      { data: { id: '0-1' } },
-      { data: { id: '0-2' } },
+      { data: { id: '0-0', 'service.name': "Demo" } },
+      { data: { id: '0-1', 'service.name': "Demo 1" } },
+      { data: { id: '0-2', 'service.name': "Demo 2"  } },
     ],
     edges: [
       { data: { source: '0-0', target: '0-1', id: '1' } },
@@ -52,11 +50,13 @@ function ServicesMapGraph(props: ServicesMapGraph) {
   }
 
   return (
-    <div style={ { height: heightWithPadding } } ref={ ref }>
-      <Cytoscape elements={ elements } height={ heightWithPadding } serviceName={ "ServicesMap" }
+    <div style={ { height: heightWithPadding } }>
+      <CytoscapeComponent elements={ elements }
+                 height={ heightWithPadding }
+                 serviceName={ "ServicesMap" }
                  style={ getCytoscapeDivStyle(status) }>
         { "serviceName" }
-      </Cytoscape>
+      </CytoscapeComponent>
     </div>)
 }
 

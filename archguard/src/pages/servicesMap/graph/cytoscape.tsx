@@ -7,7 +7,6 @@
 
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
-import { isEqual } from 'lodash';
 import React, {
   createContext,
   CSSProperties,
@@ -107,19 +106,21 @@ function CytoscapeComponent({
   );
 }
 
-export const Cytoscape = memo(CytoscapeComponent, (prevProps, nextProps) => {
-  const prevElementIds = prevProps.elements
-    .map((element) => element.data.id)
-    .sort();
-  const nextElementIds = nextProps.elements
-    .map((element) => element.data.id)
-    .sort();
+// export const Cytoscape = memo(CytoscapeComponent, (prevProps, nextProps) => {
+//   const prevElementIds = prevProps.elements
+//     .map((element) => element.data.id)
+//     .sort();
+//   const nextElementIds = nextProps.elements
+//     .map((element) => element.data.id)
+//     .sort();
+//
+//   const propsAreEqual =
+//     prevProps.height === nextProps.height &&
+//     prevProps.serviceName === nextProps.serviceName &&
+//     isEqual(prevProps.style, nextProps.style) &&
+//     isEqual(prevElementIds, nextElementIds);
+//
+//   return propsAreEqual;
+// });
 
-  const propsAreEqual =
-    prevProps.height === nextProps.height &&
-    prevProps.serviceName === nextProps.serviceName &&
-    isEqual(prevProps.style, nextProps.style) &&
-    isEqual(prevElementIds, nextElementIds);
-
-  return propsAreEqual;
-});
+export default CytoscapeComponent;

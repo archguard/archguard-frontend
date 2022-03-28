@@ -6,6 +6,7 @@
  */
 
 import cytoscape from 'cytoscape';
+const DefaultIcon = require("@/assets/svg/services/default.svg");
 
 function applyCubicBezierStyles(edges: cytoscape.EdgeCollection) {
   edges.forEach((edge) => {
@@ -32,8 +33,7 @@ export const getAnimationOptions = (): cytoscape.AnimationOptions => ({
   easing: "ease-in-quad",
 });
 
-
-export const getNodeHeight = (): number => parseInt(120, 10);
+export const getNodeHeight = (): number => parseInt(40, 10);
 
 export const getCytoscapeOptions = (
 ): cytoscape.CytoscapeOptions => ({
@@ -44,6 +44,7 @@ export const getCytoscapeOptions = (
 });
 
 export const SERVICE_NAME = 'service.name';
+
 const zIndexNode = 200;
 const zIndexEdge = 100;
 const zIndexEdgeHighlight = 110;
@@ -57,6 +58,10 @@ function isService(el: cytoscape.NodeSingular) {
 
 function getBorderWidth(el: cytoscape.NodeSingular) {
   return 4;
+}
+
+export function iconForNode(node: cytoscape.NodeSingular) {
+  return DefaultIcon
 }
 
 const getStyle = (): cytoscape.Stylesheet[] => {
@@ -73,7 +78,7 @@ const getStyle = (): cytoscape.Stylesheet[] => {
         'background-color': "#fffff",
         // The DefinitelyTyped definitions don't specify that a function can be
         // used here.
-        // 'background-image': (el: cytoscape.NodeSingular) => iconForNode(el),
+        'background-image': (el: cytoscape.NodeSingular) => iconForNode(el),
         'background-height': (el: cytoscape.NodeSingular) =>
           isService(el) ? '60%' : '40%',
         'background-width': (el: cytoscape.NodeSingular) =>
