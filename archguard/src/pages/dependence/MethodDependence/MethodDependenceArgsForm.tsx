@@ -34,6 +34,7 @@ interface MethodDependenceArgsFormProps {
     deep?: number;
   }): void;
   defaultFormData: any;
+  systemId: number;
 }
 
 const buildMethodOptions = (methods: JMethod[]) => {
@@ -46,7 +47,7 @@ const buildMethodOptions = (methods: JMethod[]) => {
 const MethodDependenceArgsForm = (props: MethodDependenceArgsFormProps) => {
   const { onFinish, defaultFormData } = props;
   const [form] = Form.useForm();
-  const [codeTree] = useCodeTree();
+  const [codeTree] = useCodeTree(props.systemId);
   const [currentModule, setCurrentModule] = useState<SelectValue>();
   const [methodOptions, setMethodOptions] = useState<FormItemOption[]>([]);
   const moduleOptions = transformCodeTreeToModuleOptions(codeTree?.value!);

@@ -31,8 +31,9 @@ interface CacheState<T> {
  * @param {*} defaultValue 默认值
  */
 export default function createCacheState<T = any>(
-  asyncFn: () => Promise<T>,
+  asyncFn: (systemId: number) => Promise<T>,
   defaultValue: T,
+  systemId: number
 ): () => [CacheState<T> | undefined, () => void] {
   const useCacheValue = createGlobalState<CacheState<T>>({ loading: false, value: defaultValue });
   let loaded = false;
@@ -41,7 +42,7 @@ export default function createCacheState<T = any>(
     const [state, setState] = useCacheValue();
     const load = () => {
       setState({ ...state, loading: true });
-      asyncFn().then((v) => {
+      asyncFn(systemId).then((v) => {
         setState({
           value: v,
           loading: false,

@@ -6,8 +6,12 @@ import { Select } from "antd";
 import useQualityGate from "@/store/global-cache-state/useQualityGate";
 import { Profile } from "@/types/metrics/Metrics";
 
-function ModuleCouplingTable() {
-  const [codeTree] = useCodeTree();
+interface ModuleCouplingTableProps {
+  systemId: number
+}
+
+function ModuleCouplingTable(props: ModuleCouplingTableProps) {
+  const [codeTree] = useCodeTree(props.systemId);
 
   const [qualityGateProfile, setQualityGateProfile] = useState<Profile[]>([]);
   const [currentGateProfile, setCurrentGateProfile] = useState<Profile | undefined>();

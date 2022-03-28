@@ -14,9 +14,7 @@ export interface DFMSMetric {
   [key: string]: any
 }
 
-export function queryCodeTree() {
-  const systemId = storage.getSystemId();
-
+export function queryCodeTree(systemId: number) {
   return axios<CodeTree>({
     url: `/api/systems/${systemId}/code-tree/`,
     method: "GET"

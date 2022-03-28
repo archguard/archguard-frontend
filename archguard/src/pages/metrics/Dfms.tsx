@@ -12,6 +12,8 @@ import { SelectValue } from "antd/lib/select";
 import { Store } from "antd/lib/form/interface";
 import { queryDFMSMetricBy, DFMSMetric } from "@/api/module/codeTree";
 import { useForm } from "antd/lib/form/Form";
+import { storage } from "@/store/storage/sessionStorage";
+import { useParams } from "umi";
 
 enum ClassInsibilityKey {
   innerInstabilityAvg = "innerInstability",
@@ -25,7 +27,7 @@ interface Dfms {
 
 let DFMSCharts: ECharts;
 const Dfms = () => {
-  const [codeTree] = useCodeTree();
+  const [codeTree] = useCodeTree(parseInt(storage.getSystemId()));
   const options = {
     module: transformCodeTreeToModuleOptions(codeTree?.value!),
     package: transformCodeTreeToCascaderOptions(codeTree?.value!, false),

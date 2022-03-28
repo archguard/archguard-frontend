@@ -69,7 +69,7 @@ function MethodDependence(props: MethodDependenceProps) {
   return (
     <div>
       <div>
-        <MethodDependenceArgsForm onFinish={onShowClick} defaultFormData={defaultFormData}></MethodDependenceArgsForm>
+        <MethodDependenceArgsForm onFinish={ onShowClick } defaultFormData={ defaultFormData } systemId={props.systemId}/>
         <InvokeGraph
           id="methodDependenceGraph"
           data={graphData}
@@ -94,7 +94,7 @@ function MethodDependence(props: MethodDependenceProps) {
             },
           }}
           showAllSelect={true}
-        />
+         systemId={props.systemId}/>
       </div>
     </div>
   );
