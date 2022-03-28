@@ -160,7 +160,7 @@ const Home = () => {
     <div className="multiple-system-container">
       <div className="multiple-system-header">
         <div className="header-logo">
-          <img src={require("@/assets/images/logo.png")} alt="logo"></img>
+          <img src={require("@/assets/images/logo.png")} alt="logo" />
         </div>
         {user && (
           <div className="header-user">
@@ -200,7 +200,7 @@ const Home = () => {
           <Tabs.TabPane tab={formatMessage({ id: 'COMPONENT_ANALYSIS'})} key="my-system">
             <Row gutter={[12, 12]}>
               <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
-                <SystemCard onClick={onCreateClick}></SystemCard>
+                <SystemCard onClick={onCreateClick} />
               </Col>
               {systemInfoList.map((systemInfo) => (
                 <Col xs={24} sm={12} md={8} lg={6} xxl={4} key={systemInfo.id}>
@@ -211,7 +211,7 @@ const Home = () => {
                     onEdit={() => onEditClick(systemInfo)}
                     onCancel={() => onCancelClick(systemInfo)}
                     onRemove={() => onRemoveClick(systemInfo)}
-                  ></SystemCard>
+                  />
                 </Col>
               ))}
             </Row>
@@ -222,8 +222,8 @@ const Home = () => {
           <Tabs.TabPane tab={formatMessage({ id: 'CODE_ANALYSIS'})} key="code-analysis">
             <CodeAnalysis />
           </Tabs.TabPane>
-          <Tabs.TabPane tab={formatMessage({ id: 'DATABASE_MAP'})} key="database-map" disabled></Tabs.TabPane>
-          <Tabs.TabPane tab={formatMessage({ id: 'HOTSPOT_TEST'})} key="hotspot-map" disabled></Tabs.TabPane>
+          <Tabs.TabPane tab={formatMessage({ id: 'DATABASE_MAP'})} key="database-map" disabled />
+          <Tabs.TabPane tab={formatMessage({ id: 'HOTSPOT_TEST'})} key="hotspot-map" disabled />
         </Tabs>
       </div>
       <Modal
@@ -252,7 +252,7 @@ const Home = () => {
           onSubmit={onSubmitSystemInfo}
           current={current}
           currentAction={currentAction}
-        ></SystemInfoForm>
+         />
       </Modal>
 
       <Modal
