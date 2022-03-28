@@ -67,6 +67,18 @@ function getBorderWidth(el: cytoscape.NodeSingular) {
   return 4;
 }
 
+function getWidth(node: cytoscape.NodeSingular) {
+  let ratio = 4;
+  const value = node.data('value') / ratio;
+  if (value > 1 && value < 20) {
+    return value;
+  } else if (value <= 1) {
+    return 1;
+  } else {
+    return 20;
+  }
+}
+
 export function iconForNode(node: cytoscape.NodeSingular) {
   const language = node.data('language').toLowerCase();
   switch (language) {
@@ -158,7 +170,7 @@ const getStyle = (): cytoscape.Stylesheet[] => {
         //
         // @ts-expect-error
         'target-distance-from-node': isIE11 ? undefined : '4px',
-        width: 1,
+        width: getWidth,
         'source-arrow-shape': 'none',
         'z-index': zIndexEdge,
       },
