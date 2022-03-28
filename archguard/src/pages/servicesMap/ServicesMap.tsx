@@ -5,9 +5,9 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerByIds } from "@/api/module/containerService";
 
 function ServicesMap() {
-  const [systemInfo] = useSystemList();
+  const [ systemInfo ] = useSystemList();
   const [ selectedIds, setSelectedIds ] = useState([] as any[])
-  const [ services, setServices ] = useState(null)
+  const [ services, setServices ] = useState([])
 
   const handleChange = useCallback((value: string[]) => {
     setSelectedIds(value)
@@ -19,14 +19,16 @@ function ServicesMap() {
     }
 
     queryContainerByIds(selectedIds).then((res: any[]) => {
-      setServices(res)
+      setServices(res as any)
     })
   }, [selectedIds, setServices]);
 
   return (<div>
     <p>说明：前端当前支持 Axios、UMI-Request，后端支持 Java/Kotlin + Spring、C# + .Net</p>
-    <p>新的语言和框架支持，请移步：<a href="https://github.com/archguard/scanner"
-                        target={ "_blank" }>https://github.com/archguard/scanner</a></p>
+    <p>新的语言和框架支持，请移步：
+      <a href="https://github.com/archguard/scanner" target={ "_blank" }>https://github.com/archguard/scanner</a>
+    </p>
+
     { systemInfo?.value &&
       <>
         <Row gutter={ 24 } key="dependence-module">
