@@ -46,7 +46,6 @@ function ServicesMapGraph(props: ServicesMapGraphProps) {
       edges: props.datasource.edges.map((item) => ({ data: item }))
     };
 
-    console.log(convertData)
     setElements(convertData)
   }, [props.datasource, setElements])
 

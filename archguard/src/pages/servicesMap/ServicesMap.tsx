@@ -10,7 +10,7 @@ function ServicesMap() {
   const [ systemInfo ] = useSystemList();
   const [ selectedIds, setSelectedIds ] = useState([] as any[])
   const [ links, setLinks ] = useState([])
-  const [ elements, setElements ] = useState([])
+  const [ elements, setElements ] = useState({ nodes: [], edges: [] })
   const [ unmapUrls, setUnmapUrls ] = useState([])
 
   const handleChange = useCallback((value: string[]) => {
@@ -21,6 +21,8 @@ function ServicesMap() {
     if (!selectedIds) {
       return;
     }
+
+    setElements({ nodes: [], edges: [] })
 
     queryContainerByIds(selectedIds).then((res: any[]) => {
       let unmap: any[] = [];
@@ -69,7 +71,7 @@ function ServicesMap() {
             </Button>
           </Col>
         </Row>
-        { links && links.length > 0 && <ServicesMapGraph datasource={elements}/> }
+        { elements && elements.nodes && elements.nodes.length > 0 && <ServicesMapGraph datasource={elements}/> }
         { links && links.length > 0 && <ServicesMapMapping datasource={links} unmapUrls={unmapUrls}/> }
       </>
     }

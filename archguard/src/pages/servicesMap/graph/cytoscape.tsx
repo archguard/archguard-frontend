@@ -54,13 +54,7 @@ function useCytoscape(options: cytoscape.CytoscapeOptions) {
   return [ref, cy] as [React.MutableRefObject<any>, cytoscape.Core | undefined];
 }
 
-function CytoscapeComponent({
-  children,
-  elements,
-  height,
-  serviceName,
-  style,
-}: CytoscapeProps) {
+function CytoscapeComponent({ children, elements, height, serviceName, style }: CytoscapeProps) {
   const [ref, cy] = useCytoscape({
     ...getCytoscapeOptions(),
     elements,
@@ -97,9 +91,9 @@ function CytoscapeComponent({
   const divStyle = { ...style, height };
 
   return (
-    <CytoscapeContext.Provider value={cy}>
-      <div ref={ref} style={divStyle}>
-        {children}
+    <CytoscapeContext.Provider value={ cy }>
+      <div ref={ ref } style={ divStyle }>
+        { children }
       </div>
     </CytoscapeContext.Provider>
   );
