@@ -18,7 +18,7 @@ import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "../help";
 import {setLocale, useIntl} from "@@/plugin-locale/localeExports";
 import ServicesMap from "../servicesMap/ServicesMap";
-import Dependence from "@/pages/analysis/dependence";
+import Dependence from "@/pages/dependence";
 import CodeAnalysis from "@/pages/code";
 
 interface UserProfile {

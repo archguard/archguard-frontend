@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Dependence from "@/pages/analysis/dependence";
+import Dependence from "@/pages/dependence";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Select } from "antd";
 import { storage } from "@/store/storage/sessionStorage";

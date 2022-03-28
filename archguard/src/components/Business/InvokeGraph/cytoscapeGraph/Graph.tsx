@@ -8,7 +8,7 @@ import GraphOperation from "./components/GraphOperation";
 import { drawByData, initCytoscape, showHighlightBrachNode } from "./drawGraph";
 import { transform } from "./transform";
 import { expandNode, collapseNode, isExpand } from "./components/GraphOperation/utils";
-import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph";
+import { Measurements } from "@/pages/dependence/ModuleDependence/components/ModuleDependenceGraph";
 import { Core, LayoutOptions } from "cytoscape";
 import { GraphData } from "@/models/graph";
 import { SourceCodeItem } from "@/models/java";

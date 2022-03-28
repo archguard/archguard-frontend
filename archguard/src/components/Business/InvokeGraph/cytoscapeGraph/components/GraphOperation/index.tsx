@@ -12,7 +12,7 @@ import {
 } from "../../drawGraph";
 import { findLoopPaths } from "./utils";
 import { Core } from "cytoscape";
-import { Measurements } from "@/pages/analysis/dependence/ModuleDependence/components/ModuleDependenceGraph";
+import { Measurements } from "@/pages/dependence/ModuleDependence/components/ModuleDependenceGraph";
 import { NodeLabel } from "../../Graph";
 import { SelectValue } from "antd/lib/select";
 import { GraphData } from "@/models/graph";

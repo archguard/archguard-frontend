@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useMount } from "react-use";
 import _ from "lodash";
 import { Card, Drawer, notification } from "antd";
-import ConfigForm from "./ConfigForm/index";
+import ConfigForm from "./ConfigForm";
 import { queryConfig, updateConfig } from '@/api/module/dependenceConfig';
 import { ConfigData, configType } from './ConfigForm/config';
 import PluginConfig from './PluginConfig';

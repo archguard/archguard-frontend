@@ -45,7 +45,7 @@ function PluginConfig(props: { data: ConfigData; updateData: Function }) {
           {(fields, { add, remove }) => {
             return (
               <div>
-                {fields.map((field) => {
+                {fields.map((field: any) => {
                   return (
                       <Space key={field.key} style={{ display: 'flex'}} align="baseline">
                         <Form.Item

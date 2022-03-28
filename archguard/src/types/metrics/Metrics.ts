@@ -1,4 +1,4 @@
-import { Layer } from "@/pages/analysis/metrics/ModuleCouplingTree/Report";
+import { Layer } from "@/pages/metrics/ModuleCouplingTree/Report";
 
 export type LayerKeys = keyof typeof Layer;
 export type Quota = {
