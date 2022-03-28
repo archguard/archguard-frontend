@@ -16,8 +16,8 @@ export enum FETCH_STATUS {
 }
 
 export const getCytoscapeDivStyle = (): CSSProperties => ({
-  background: `linear-gradient(90deg, #fafbfd 20px, transparent 20%) center, linear-gradient(#fafbfd 20px, transparent 20%) center, #d3dae6`,
-  backgroundSize: `24px 24px`,
+  background: `linear-gradient(90deg, #fafbfd 30px, transparent 20%) center, linear-gradient(#fafbfd 30px, transparent 20%) center, #d3dae6`,
+  backgroundSize: `32px 32px`,
   cursor: 'grab',
   marginTop: 0,
 });
@@ -52,7 +52,6 @@ function ServicesMapGraph(props: ServicesMapGraphProps) {
           height={ heightWithPadding }
           serviceName={ "Services Map" }
           style={ getCytoscapeDivStyle() }>
-          { "Services Map" }
         </CytoscapeComponent>
       }
     </div>)
