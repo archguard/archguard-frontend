@@ -5,7 +5,7 @@
  * 2.0.
  */
 
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useEffect, useState } from "react";
 import CytoscapeComponent from "@/pages/servicesMap/graph/cytoscape";
 
 export enum FETCH_STATUS {
@@ -29,33 +29,39 @@ center, #d3dae6`,
 
 
 interface ServicesMapGraphProps {
-  datasource: any[]
+  datasource: {
+    edges: any[],
+    nodes: any[]
+  }
 }
 
 function ServicesMapGraph(props: ServicesMapGraphProps) {
-  const heightWithPadding = 1000;
+  const heightWithPadding = 800;
   const status = "success";
+  const [elements, setElements] = useState(null)
 
-  // const elements = {
-  //   nodes: [
-  //     { data: { id: '0-0', 'service.name': "Demo" } },
-  //     { data: { id: '0-1', 'service.name': "Demo 1" } },
-  //     { data: { id: '0-2', 'service.name': "Demo 2" } },
-  //   ],
-  //   edges: [
-  //     { data: { source: '0-0', target: '0-1', id: '1' } },
-  //     { data: { source: '0-1', target: '0-2', id: '2' } },
-  //   ]
-  // }
+  useEffect(() => {
+    let convertData = {
+      nodes: props.datasource.nodes.map((item) => ({ data: item })),
+      edges: props.datasource.edges.map((item) => ({ data: item }))
+    };
+
+    console.log(convertData)
+    setElements(convertData)
+  }, [props.datasource, setElements])
+
 
   return (
     <div style={ { height: heightWithPadding } }>
-      <CytoscapeComponent elements={ props.datasource }
-                          height={ heightWithPadding }
-                          serviceName={ "Services Map" }
-                          style={ getCytoscapeDivStyle(status) }>
-        { "Services Map" }
-      </CytoscapeComponent>
+      { elements &&
+        <CytoscapeComponent
+          elements={ elements }
+          height={ heightWithPadding }
+          serviceName={ "Services Map" }
+          style={ getCytoscapeDivStyle(status) }>
+          { "Services Map" }
+        </CytoscapeComponent>
+      }
     </div>)
 }
 

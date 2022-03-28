@@ -10,7 +10,6 @@ export function urlMapping(container: any[], unMapping: any[], elements: { nodes
   let linkData = [];
   let resourceMap: any = {}
   for (let service of container) {
-    console.log(service)
     elements.nodes.push({
       id: service.name,
       'service.name': service.name,
@@ -75,9 +74,6 @@ export function urlMapping(container: any[], unMapping: any[], elements: { nodes
     linkData.push(obj)
   }
 
-  // elements.edges = linkData
-  console.log(elements)
-  console.log(linkData)
-
+  elements.edges = linkData
   return linkData;
 }

@@ -32,8 +32,8 @@ function ServicesMap() {
       let data = urlMapping(res, unmap, elms)
 
       setElements(elms)
-      setLinks(data as any)
       setUnmapUrls(unmap as any)
+      setLinks(data as any)
     })
   }, [selectedIds, setLinks, setElements, setUnmapUrls]);
 
@@ -69,8 +69,8 @@ function ServicesMap() {
             </Button>
           </Col>
         </Row>
-        { links && links.length > 0 && <ServicesMapMapping datasource={links} unmapUrls={unmapUrls}/> }
         { links && links.length > 0 && <ServicesMapGraph datasource={elements}/> }
+        { links && links.length > 0 && <ServicesMapMapping datasource={links} unmapUrls={unmapUrls}/> }
       </>
     }
   </div>)
