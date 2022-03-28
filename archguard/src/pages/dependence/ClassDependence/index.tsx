@@ -88,7 +88,8 @@ function ClassDependence(props: ClassDependenceProps) {
       <ClassDependenceArgsForm
         onFinish={onShowClick}
         defaultFormData={defaultFormData}
-      ></ClassDependenceArgsForm>
+        systemId={props.systemId}
+       />
       {/* <Graph graphData={graphData}/> */}
       <InvokeGraph
         id="classDependenceGraph"

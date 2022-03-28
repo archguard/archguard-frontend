@@ -7,6 +7,7 @@ import {
   transformCodeTreeToCascaderOptions,
 } from "@/utils/utils";
 import { SelectValue } from "antd/lib/select";
+import { queryCodeTree } from "@/api/module/codeTree";
 
 const dependenceTypeOptions: FormItemOption[] = [
   {
@@ -31,6 +32,7 @@ interface ClassDependenceArgsFormProps {
     deep?: number;
   }): void;
   defaultFormData: any;
+  systemId: number;
 }
 
 const ClassDependenceArgsForm = (props: ClassDependenceArgsFormProps) => {
