@@ -24,9 +24,9 @@ export default defineConfig({
     },
   },
   routes: [
-    { path: "/", redirect: "/multipleSystem" },
+    { path: "/", redirect: "/home" },
     { path: "/login", component: "@/pages/login" },
-    { path: "/multipleSystem", component: "@/pages/multipleSystem" },
+    { path: "/home", component: "@/pages/home" },
     {
       exact: false,
       path: "/:systemId",

@@ -54,7 +54,7 @@ export default function PageHeader(props: any) {
       pathArray[1] = systemId.toString();
       window.location.href = pathArray.join("/");
     } else {
-      props.history.push("/multipleSystem");
+      props.history.push("/home");
     }
   };
 
@@ -72,7 +72,7 @@ export default function PageHeader(props: any) {
             cursor: "pointer",
           }}
           onClick={() => {
-            history.push("/multipleSystem");
+            history.push("/home");
           }}
         >
           ArchGuard
