@@ -20,6 +20,7 @@ export default function Dependence(props: DependenceProp) {
   const history = useHistory();
   const { tab } = useUrlQuery<{ tab: "class" | "method" | "package" | "module" }>();
 
+  storage.setSystemId(props.systemId)
   const language = storage.getSystemLanguage();
 
   const [configVisible, setConfigVisible] = useState(false);
