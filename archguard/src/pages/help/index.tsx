@@ -13,10 +13,11 @@ export default function Help() {
   const { name = "index" } = useParams<{ name: "index" | "module-coupling" }>();
   const doc = docs[name];
 
+  // @ts-ignore
   return (
     <div>
       <MarkdownNavbar source={doc} />
-      <ReactMarkdown source={doc} />
+      <ReactMarkdown children={doc}/>
     </div>
   );
 }
