@@ -21,9 +21,7 @@ export function queryModule() {
   }).then((res) => _.orderBy(res, ["status", "name"], ["desc", "asc"]));
 }
 
-export function deleteModule(parameter: { id: string }) {
-  const systemId = storage.getSystemId();
-
+export function deleteModule(parameter: { id: string }, systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: `/logic-modules/${parameter.id}`,
@@ -31,9 +29,7 @@ export function deleteModule(parameter: { id: string }) {
   });
 }
 
-export function updateModule(parameter: Module) {
-  const systemId = storage.getSystemId();
-
+export function updateModule(parameter: Module, systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: `/logic-modules/${parameter.id}`,
@@ -42,9 +38,7 @@ export function updateModule(parameter: Module) {
   });
 }
 
-export function createModule(parameter: {}) {
-  const systemId = storage.getSystemId();
-
+export function createModule(parameter: {}, systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules",
@@ -53,9 +47,7 @@ export function createModule(parameter: {}) {
   });
 }
 
-export function queryModuleOptions() {
-  const systemId = storage.getSystemId();
-
+export function queryModuleOptions(systemId: number) {
   return axios<string[]>({
     baseURL: `/api/systems/${systemId}`,
     url: "/base-modules",
@@ -63,9 +55,7 @@ export function queryModuleOptions() {
   });
 }
 
-export function autoDefineModule() {
-  const systemId = storage.getSystemId();
-
+export function autoDefineModule(systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/auto-define",
@@ -92,9 +82,7 @@ export function queryModuleCoupling() {
   });
 }
 
-export function hideAllModules() {
-  const systemId = storage.getSystemId();
-
+export function hideAllModules(systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/hide-all",
@@ -102,9 +90,7 @@ export function hideAllModules() {
   });
 }
 
-export function showAllModules() {
-  const systemId = storage.getSystemId();
-
+export function showAllModules(systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/show-all",
@@ -112,9 +98,7 @@ export function showAllModules() {
   });
 }
 
-export function reverseAllModules() {
-  const systemId = storage.getSystemId();
-
+export function reverseAllModules(systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/reverse-all",

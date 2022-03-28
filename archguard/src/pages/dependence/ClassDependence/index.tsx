@@ -94,6 +94,7 @@ function ClassDependence(props: ClassDependenceProps) {
         id="classDependenceGraph"
         data={graphData}
         title={className}
+        systemId={props.systemId}
         nodeLabel={{
           placeholder: "类名显示",
           options: [

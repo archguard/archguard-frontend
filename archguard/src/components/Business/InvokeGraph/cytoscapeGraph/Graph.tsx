@@ -8,11 +8,11 @@ import GraphOperation from "./components/GraphOperation";
 import { drawByData, initCytoscape, showHighlightBrachNode } from "./drawGraph";
 import { transform } from "./transform";
 import { expandNode, collapseNode, isExpand } from "./components/GraphOperation/utils";
-import { Measurements } from "@/pages/dependence/ModuleDependence/components/ModuleDependenceGraph";
 import { Core, LayoutOptions } from "cytoscape";
 import { GraphData } from "@/models/graph";
 import { SourceCodeItem } from "@/models/java";
 import FullscreenContainer from "@/components/Business/FullscreenContainer";
+import { Measurements } from "@/types/measurements";
 
 type Option = {
   label: string;
@@ -33,6 +33,7 @@ interface GraphProps {
   selectedNode?: any;
   nodeLabel?: NodeLabel;
   deep?: number;
+  systemId: number;
   showAllSelect?: boolean;
 }
 
@@ -69,6 +70,7 @@ export default function Graph(props: GraphProps) {
           ? collapseNode(treeNode!, visibleNodeEdges)
           : expandNode(treeNode!, visibleNodeEdges);
         setNodeEdges(newNodeEdges);
+        // @ts-ignore
         drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title);
       }
     },
@@ -91,7 +93,7 @@ export default function Graph(props: GraphProps) {
 
   useEffect(() => {
     setNodeEdges(data);
-    drawByData(cy, transform(filterDataWithConfig(data, configs)), graphLayout, title);
+    drawByData(cy, transform(filterDataWithConfig(data as any, configs)), graphLayout, title);
   }, [data, title, graphLayout, configs, deep]);
 
   useEffect(() => {
@@ -124,6 +126,7 @@ export default function Graph(props: GraphProps) {
         nodeLabel={nodeLabel}
         showAllSelect={showAllSelect}
         graphDataCallBack={(newNodeEdges: GraphData<SourceCodeItem>) =>
+          // @ts-ignore
           drawByData(cy, transform(filterDataWithConfig(newNodeEdges, configs)), graphLayout, title)
         }
       />

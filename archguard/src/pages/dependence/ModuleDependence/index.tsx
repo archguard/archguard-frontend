@@ -11,7 +11,7 @@ interface ModuleDependenceProps {
 export default function ModuleDependence(props: ModuleDependenceProps) {
   return (
     <div className="module-dependence">
-      <ModuleConfig />
+      <ModuleConfig systemId={props.systemId}/>
       <ModuleDependenceGraph systemId={props.systemId}/>
       <ModuleDependenceTable systemId={props.systemId}/>
     </div>

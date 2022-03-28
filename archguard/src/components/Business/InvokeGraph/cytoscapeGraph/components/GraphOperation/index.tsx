@@ -12,11 +12,11 @@ import {
 } from "../../drawGraph";
 import { findLoopPaths } from "./utils";
 import { Core } from "cytoscape";
-import { Measurements } from "@/pages/dependence/ModuleDependence/components/ModuleDependenceGraph";
 import { NodeLabel } from "../../Graph";
 import { SelectValue } from "antd/lib/select";
 import { GraphData } from "@/models/graph";
 import { SourceCodeItem } from "@/models/java";
+import { Measurements } from "@/types/measurements";
 
 interface GraphOperationProps {
   cy?: Core;

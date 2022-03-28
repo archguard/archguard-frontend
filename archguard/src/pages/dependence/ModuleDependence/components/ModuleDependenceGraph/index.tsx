@@ -9,28 +9,7 @@ import { buildModuleDependenceTree, generateNodeEdges } from "../../../utils";
 import { GraphData } from "@/models/graph";
 import { SourceCodeItem } from "@/models/java";
 import CollapsibleCard from "@/components/Business/CollapsibleCard";
-
-export interface Measurements {
-  label: string;
-  options: { label: string; value: string }[];
-  data: any[];
-  dataKey: string;
-  nodeKey: string;
-}
-
-function transformData(data: any): GraphData<SourceCodeItem> {
-  data.nodes = data.nodes.map((item: any) => ({
-    id: item.id,
-    title: item.name,
-    properties: {},
-  }));
-  data.edges = data.edges.map((item: any) => ({
-    a: item.a,
-    b: item.b,
-    labels: [item.num],
-  }));
-  return data;
-}
+import { Measurements } from "@/types/measurements";
 
 function getMeasurements(moduleCoupling?: any): Measurements | undefined {
   if (!moduleCoupling || moduleCoupling.length === 0) return;
@@ -65,20 +44,21 @@ function ModuleDependenceGraph(props: ModuleDependenceGraphProps) {
   }
 
   return (
-    <CollapsibleCard title="模块间依赖" collapsed={true}>
+    <CollapsibleCard title="模块间依赖" collapsed={ true }>
       <Button
         type="primary"
-        onClick={() => showAllModuleDependence()}
-        style={{ marginBottom: "16px" }}
+        onClick={ () => showAllModuleDependence() }
+        style={ { marginBottom: "16px" } }
       >
         查询
       </Button>
       <InvokeGraph
         id="moduleDependenceGraph"
-        data={graphData!}
-        selectedNode={selectedNode}
-        measurements={getMeasurements(moduleCoupling)}
-      />
+        data={ graphData! }
+        selectedNode={ selectedNode }
+        measurements={ getMeasurements(moduleCoupling) }
+        systemId={ props.systemId }/>
+
     </CollapsibleCard>
   );
 }

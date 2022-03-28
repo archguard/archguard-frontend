@@ -22,7 +22,11 @@ import ModuleConfigModal from "../ModuleConfigModal";
 import "./index.less";
 import CollapsibleCard from '@/components/Business/CollapsibleCard';
 
-export default function ModuleConfig() {
+interface ModuleConfigProps{
+  systemId: number
+}
+
+export default function ModuleConfig(props: ModuleConfigProps) {
   const [modules, load] = useModules();
   const loading = modules?.loading
   const value = modules?.value || []
@@ -30,7 +34,7 @@ export default function ModuleConfig() {
 
   const removeModule = useCallback(
     (module) => {
-      deleteModule(module).then(() => {
+      deleteModule(module, props.systemId).then(() => {
         load();
         notification.success({
           message: "删除模块成功！",
@@ -43,7 +47,7 @@ export default function ModuleConfig() {
   const toggleHiddenModule = useCallback(
     (module) => {
       module.status = module.status === "HIDE" ? "NORMAL" : "HIDE";
-      updateModule(module).then(load);
+      updateModule(module, props.systemId).then(load);
     },
     [load],
   );
@@ -89,35 +93,35 @@ export default function ModuleConfig() {
   }, [removeModule, toggleHiddenModule]);
 
   const onReverseAll = () => {
-    reverseAllModules().then((res) => {
+    reverseAllModules(props.systemId).then((res) => {
       notification.success({ message: "反转所有模块状态成功！" });
       load();
     });
   };
 
   const onShowAll = () => {
-    showAllModules().then((res) => {
+    showAllModules(props.systemId).then((res) => {
       notification.success({ message: "展示所有模块成功！" });
       load();
     });
   };
 
   const onHideAll = () => {
-    hideAllModules().then((res) => {
+    hideAllModules(props.systemId).then((res) => {
       notification.success({ message: "隐藏全部模块成功" });
       load();
     });
   };
 
   const onRefreshModules = () => {
-    queryModuleOptions().then((res) => {
+    queryModuleOptions(props.systemId).then((res) => {
       notification.success({ message: "刷新(重排序)成功！" });
       load();
     });
   };
 
   const onAutoDefine = () => {
-    autoDefineModule().then((res) => {
+    autoDefineModule(props.systemId).then((res) => {
       notification.success({ message: "自动定义成功！" });
       load();
     });
@@ -160,6 +164,7 @@ export default function ModuleConfig() {
         columns={columns}
       />
       <ModuleConfigModal
+        systemId={props.systemId}
         onSuccess={() => {
           load();
           setEditingModule(undefined);

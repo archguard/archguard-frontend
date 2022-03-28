@@ -11,6 +11,7 @@ interface ModuleConfigModalProps {
   onClose(): void;
   onSuccess(): void;
   module: Module;
+  systemId: number;
 }
 
 function ModuleConfigModal(props: ModuleConfigModalProps) {
@@ -20,7 +21,7 @@ function ModuleConfigModal(props: ModuleConfigModalProps) {
 
   const title = module?.id ? "修改模块" : "添加模块";
   const { value: options = [] } = useAsync(async () => {
-    return queryModuleOptions().then((res) => {
+    return queryModuleOptions(props.systemId).then((res) => {
       setModuleNames(res)
       return res.sort().map((i) => ({ label: i, value: i }));
     });
@@ -32,12 +33,12 @@ function ModuleConfigModal(props: ModuleConfigModalProps) {
 
   const onFinish = async (values: Store) => {
     if (module.id) {
-      await updateModule({ ...module, ...values });
+      await updateModule({ ...module, ...values }, props.systemId);
       notification.success({
         message: "修改成功！",
       });
     } else {
-      await createModule({ ...module, ...values });
+      await createModule({ ...module, ...values }, props.systemId);
       notification.success({
         message: "新增成功！",
       });
