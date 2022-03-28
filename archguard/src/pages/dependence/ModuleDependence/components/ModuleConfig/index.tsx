@@ -45,7 +45,6 @@ export default function ModuleConfig(props: ModuleConfigProps) {
     queryModule(props.systemId).then((res) =>
       _.orderBy(res, ["status", "name"], ["desc", "asc"]))
       .then((res) => {
-        console.log(res)
         setLoading(false)
         setModules(res as any);
       })
