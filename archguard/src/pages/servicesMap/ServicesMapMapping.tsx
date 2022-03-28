@@ -45,13 +45,16 @@ const ServicesMapMapping = (props: ServicesMapMappingProps) => {
       .radius(innerRadius - 1)
       .padAngle(1 / innerRadius)
 
-    const names = Array.from(new Set(data.flatMap(d => [d.source, d.target]))).sort(d3.ascending)
+    // @ts-ignore
+    const names: any[] = Array.from(new Set(data.flatMap((d: any) => [d.source, d.target]))).sort(d3.ascending)
 
     const color = d3.scaleOrdinal(names, d3.quantize(d3.interpolateRainbow, names.length))
 
     const index = new Map(names.map((name, i) => [name, i]));
     const matrix = Array.from(index, () => new Array(names.length).fill(0));
-    for (const { source, target, value } of data) { // @ts-ignore
+    // @ts-ignore
+    for (const { source, target, value } of data) {
+      // @ts-ignore
       matrix[index.get(source)][index.get(target)] += value;
     }
 
@@ -104,7 +107,7 @@ ${ (incomingCount(d)) } incoming ←`);
       .data(chords)
       .join("path")
       .style("mix-blend-mode", "multiply")
-      .attr("fill", d => color(names[d.target.index]))
+      .attr("fill", (d: any) => color(names[d.target.index]))
       // @ts-ignore
       .attr("d", ribbon)
       .append("title")
