@@ -38,7 +38,8 @@ function ServicesMap() {
   }, [selectedIds, setLinks, setElements, setUnmapUrls]);
 
   return (<div>
-    <p>说明：前端当前支持 Axios、UMI-Request，后端支持 Java/Kotlin + Spring、C# + .Net</p>
+    <p>API 消费端：前端 Axios、UMI-Request，后端：Java Spring + REST Template</p>
+    <p>API 生产端：支持 Java/Kotlin + Spring、C# + .Net</p>
     <p>新的语言和框架支持，请移步：
       <a href="https://github.com/archguard/scanner" target={ "_blank" } rel="noreferrer">https://github.com/archguard/scanner</a>
     </p>
