@@ -3,6 +3,7 @@ import ServicesMapMapping from "@/pages/servicesMap/ServicesMapMapping";
 import { Button, Col, Row, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerByIds } from "@/api/module/containerService";
+import ServicesMapGraph from "@/pages/servicesMap/ServicesMapGraph";
 
 function ServicesMap() {
   const [ systemInfo ] = useSystemList();
@@ -55,6 +56,7 @@ function ServicesMap() {
           </Col>
         </Row>
         { services && services.length > 0 && <ServicesMapMapping datasource={services}/> }
+        { services && services.length > 0 && <ServicesMapGraph datasource={services}/> }
       </>
     }
   </div>)
