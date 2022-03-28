@@ -18,7 +18,6 @@ import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "../help";
 import {setLocale, useIntl} from "@@/plugin-locale/localeExports";
 import ServicesMap from "../servicesMap/ServicesMap";
-import Dependence from "@/pages/dependence";
 import CodeAnalysis from "@/pages/code";
 
 interface UserProfile {
@@ -28,7 +27,7 @@ interface UserProfile {
 
 const DEFAULT_LOAD_DATA_INTERVAL = 1000 * 60 * 5;
 
-const MultipleSystem = () => {
+const Home = () => {
   const { formatMessage } = useIntl();
   const ref = useRef<any>({});
   const [user, setUser] = useState<UserProfile>();
@@ -270,4 +269,4 @@ const MultipleSystem = () => {
   );
 };
 
-export default MultipleSystem;
+export default Home;
