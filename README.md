@@ -43,5 +43,7 @@ docker run -it --rm -p 3000:80 archguard-frontend:latest
 License
 ---
 
+[ServiceMap graph](archguard/src/pages/servicesMap/graph) copy from ElasticSearch with SSPL license.
+
 @ 2020 ~ Thoughtworks. This code is distributed under the MPL license. See `LICENSE` in this directory.
 
