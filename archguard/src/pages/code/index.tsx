@@ -7,6 +7,7 @@ import { storage } from "@/store/storage/sessionStorage";
 const CodeAnalysis = () => {
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
+  const [systemId, setSystemId] = useState(0);
 
   const onSystemChange = useCallback((index: number) => {
     setIsInChanging(false)
@@ -15,6 +16,7 @@ const CodeAnalysis = () => {
       storage.setSystemId(system.id);
       storage.setSystemLanguage(system.language);
 
+      setSystemId(system.id)
       // todo: is a dirty fix for old code which no fetch system id
       setTimeout(() => {
         setIsInChanging(true)
@@ -43,7 +45,7 @@ const CodeAnalysis = () => {
               </Select.Option>
             )) }
           </Select>
-          { isInChanging && <Dependence withRouter={ false }/> }
+          { isInChanging && systemId && <Dependence withRouter={ false } systemId={systemId} /> }
         </>
       }
     </div>

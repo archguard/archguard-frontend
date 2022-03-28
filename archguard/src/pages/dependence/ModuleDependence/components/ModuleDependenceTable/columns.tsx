@@ -31,6 +31,7 @@ type method = {
 
 let searchText: Key = "";
 let searchedColumn: string = "";
+// @ts-ignore
 let searchInput: Input | null = null;
 
 const getEndString = (value?: string): string => {

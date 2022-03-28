@@ -73,9 +73,7 @@ export function autoDefineModule() {
   });
 }
 
-export function queryModuleDependencies(parameter: {}) {
-  const systemId = storage.getSystemId();
-
+export function queryModuleDependencies(parameter: {}, systemId: number) {
   return axios<methodDependency[]>({
     baseURL: `/api/systems/${systemId}`,
     url: "/logic-modules/dependencies",
@@ -124,9 +122,7 @@ export function reverseAllModules() {
   });
 }
 
-export function queryAllModuleDependence() {
-  const systemId = storage.getSystemId();
-
+export function queryAllModuleDependence(systemId: number) {
   return axios<{
     nodes: {
       fullName: string;

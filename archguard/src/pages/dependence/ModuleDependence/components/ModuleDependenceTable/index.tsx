@@ -20,7 +20,11 @@ const getModulesOption = (modules?: Module[]): FormItemOption[] => {
   })
 }
 
-export default function ModuleDependence() {
+interface ModuleDependenceProps {
+  systemId: number
+}
+
+export default function ModuleDependence(props: ModuleDependenceProps) {
   const [tableData, setTableData] = useState<methodDependency[]>([]);
   const [modulesValue] = useModules();
   const modulesOption = getModulesOption(modulesValue?.value)
@@ -28,8 +32,8 @@ export default function ModuleDependence() {
   const onBtnClick = (args: { moduleAName: string, moduleBName: string }) => {
     queryModuleDependencies({
       caller: args.moduleAName,
-      callee: args.moduleBName,
-    }).then((res) => {
+      callee: args.moduleBName
+    }, props.systemId).then((res) => {
       setTableData(res);
     });
   }

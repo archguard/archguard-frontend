@@ -4,12 +4,16 @@ import ModuleDependenceGraph from "./components/ModuleDependenceGraph";
 import ModuleDependenceTable from "./components/ModuleDependenceTable";
 import "./index.less";
 
-export default function ModuleDependence() {
+interface ModuleDependenceProps {
+  systemId: number
+}
+
+export default function ModuleDependence(props: ModuleDependenceProps) {
   return (
     <div className="module-dependence">
       <ModuleConfig />
-      <ModuleDependenceGraph />
-      <ModuleDependenceTable/>
+      <ModuleDependenceGraph systemId={props.systemId}/>
+      <ModuleDependenceTable systemId={props.systemId}/>
     </div>
   );
 }

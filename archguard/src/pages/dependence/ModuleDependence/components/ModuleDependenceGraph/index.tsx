@@ -47,13 +47,17 @@ function getMeasurements(moduleCoupling?: any): Measurements | undefined {
   };
 }
 
-function ModuleDependenceGraph() {
+interface ModuleDependenceGraphProps {
+  systemId: number
+}
+
+function ModuleDependenceGraph(props: ModuleDependenceGraphProps) {
   const [graphData, setGraphData] = useState<GraphData<SourceCodeItem>>();
   const [moduleCoupling] = useModuleCoupling();
   const [selectedNode] = useSelectedNode();
 
   function showAllModuleDependence() {
-    queryAllModuleDependence().then((res: any) => {
+    queryAllModuleDependence(props.systemId).then((res: any) => {
       const tree = buildModuleDependenceTree(res);
       const nodeEdges = generateNodeEdges(tree);
       setGraphData(nodeEdges);

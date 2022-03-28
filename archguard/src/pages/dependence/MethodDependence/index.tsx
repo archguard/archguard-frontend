@@ -20,7 +20,12 @@ type MethodFormData = {
   className: string[];
   methodName?: string;
 };
-function MethodDependence() {
+
+interface MethodDependenceProps {
+  systemId: number
+}
+
+function MethodDependence(props: MethodDependenceProps) {
   const query = useUrlQuery();
 
   const [graphData, setGraphData] = useState<GraphData<JMethod>>({ nodes: [], edges: [] });
@@ -37,7 +42,7 @@ function MethodDependence() {
         className: query.className.split('.')
       };
       setDefaultFormData(defaultData);
-      onShowClick(defaultData);
+      onShowClick(defaultData).then(r => {});
       setGraphData({ nodes: [], edges: [] });
     }
   }, [query]);
@@ -52,7 +57,7 @@ function MethodDependence() {
       name: args.methodName,
       module: args.module,
       deep: args.deep,
-    }).then((res) => {
+    }, props.systemId).then((res) => {
       const tree = buildMethodTree(res);
       const nodeEdges = generateNodeEdges(tree, 3);
       setGraphData(nodeEdges);

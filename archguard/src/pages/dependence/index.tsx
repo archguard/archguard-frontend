@@ -13,13 +13,13 @@ import useUrlQuery from "@/hooks/useUrlQuery";
 
 interface DependenceProp {
   withRouter: boolean,
+  systemId: number,
 }
 
 export default function Dependence(props: DependenceProp) {
   const history = useHistory();
   const { tab } = useUrlQuery<{ tab: "class" | "method" | "package" | "module" }>();
 
-  const systemId = storage.getSystemId();
   const language = storage.getSystemLanguage();
 
   const [configVisible, setConfigVisible] = useState(false);
@@ -29,7 +29,7 @@ export default function Dependence(props: DependenceProp) {
       return
     }
 
-    return history.replace(`/${ systemId }/analysis/dependence?tab=${ activeKey }`);
+    return history.replace(`/${ props.systemId }/analysis/dependence?tab=${ activeKey }`);
   }
 
   return (
@@ -44,16 +44,16 @@ export default function Dependence(props: DependenceProp) {
         }
       >
         <Tabs.TabPane tab="module" key="module">
-          <ModuleDependence />
+          <ModuleDependence systemId={props.systemId} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="package" key="package">
-          <PackageDependence language={language}/>
+          <PackageDependence language={language} systemId={props.systemId} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="class" key="class">
-          <ClassDependence />
+          <ClassDependence systemId={props.systemId}/>
         </Tabs.TabPane>
         <Tabs.TabPane tab="method" key="method">
-          <MethodDependence />
+          <MethodDependence systemId={props.systemId} />
         </Tabs.TabPane>
       </Tabs>
       <DependenceConfig visible={configVisible} hide={() => setConfigVisible(false)} />

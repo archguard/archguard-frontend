@@ -42,7 +42,11 @@ type ClassFormData = {
   module?: string;
 };
 
-function ClassDependence() {
+interface ClassDependenceProps {
+  systemId: number
+}
+
+function ClassDependence(props: ClassDependenceProps) {
   const query = useUrlQuery();
 
   const [graphData, setGraphData] = useState<GraphData<JItem>>({ edges: [], nodes: [] });
@@ -72,7 +76,7 @@ function ClassDependence() {
     queryClassDependence(className.join("."), dependenceType, {
       deep: deep,
       module: module,
-    }).then((res) => {
+    }, props.systemId).then((res) => {
       const nodeEdges = calculateNodeEdges(dependenceType, res);
       setGraphData(nodeEdges);
       setClassName(className.join("."));

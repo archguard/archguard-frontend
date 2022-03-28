@@ -15,7 +15,8 @@ import { queryUnstableFiles } from "@/api/module/gitFile";
 import { DonutChart } from "bizcharts";
 
 function Summary() {
-  const {data: overviewCount} = useOverviewCount();
+  // todo: load system id from url
+  const { data: overviewCount } = useOverviewCount();
   const [services, setServices] = useState( {} as any);
   const [unstableFiles, setUnstableFiles] = useState([]);
 
@@ -38,6 +39,7 @@ function Summary() {
       setServices(res);
     });
   }, []);
+
   useEffect(() => {
     queryUnstableFiles().then((res) => {
       setUnstableFiles(res as any);

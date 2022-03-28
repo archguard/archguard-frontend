@@ -8,11 +8,12 @@ import FullscreenContainer from '@/components/Business/FullscreenContainer';
 
 interface PackageDependenceProps {
   language: any;
+  systemId: number
 }
 
 const PackageDependence = (props: PackageDependenceProps) => {
   const { language } = props;
-  const { value: allDependence = [] } = useAsync(() => queryPackageDependencies(language));
+  const { value: allDependence = [] } = useAsync(() => queryPackageDependencies(language, props.systemId));
   const [currentModule, setCurrentModule] = useState(0);
   const graph = useRef<any>(null);
 
