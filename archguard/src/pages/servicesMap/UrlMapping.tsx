@@ -6,10 +6,16 @@ function removeEndUriPlaceholder(targetUrl: string) {
   return targetUrl.slice(0, -"/@uri@".length);
 }
 
-export function urlMapping(container: any[], unMapping: any[], unusedResource: any[]) {
-  let newData = [];
+export function urlMapping(container: any[], unMapping: any[], elements: { nodes: any[], edges: any[] }) {
+  let linkData = [];
   let resourceMap: any = {}
   for (let service of container) {
+    console.log(service)
+    elements.nodes.push({
+      id: service.name,
+      'service.name': service.name,
+    })
+
     for (let resource of service.resources) {
       // @ts-ignore
       resourceMap[resource.sourceUrl] = service.name
@@ -22,6 +28,7 @@ export function urlMapping(container: any[], unMapping: any[], unusedResource: a
   function setLink(service: any, resourceName: String) {
     mappedResource[resourceName] = true;
     let linkKey = JSON.stringify({
+      id: `${service.name}~${resourceName}`,
       source: service.name,
       target: resourceName,
     });
@@ -65,8 +72,12 @@ export function urlMapping(container: any[], unMapping: any[], unusedResource: a
   for (let key in demandMap) {
     let obj = JSON.parse(key);
     obj.value = demandMap[key];
-    newData.push(obj)
+    linkData.push(obj)
   }
 
-  return newData;
+  // elements.edges = linkData
+  console.log(elements)
+  console.log(linkData)
+
+  return linkData;
 }

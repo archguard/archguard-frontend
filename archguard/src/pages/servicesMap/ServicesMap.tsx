@@ -4,11 +4,14 @@ import { Button, Col, Row, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerByIds } from "@/api/module/containerService";
 import ServicesMapGraph from "@/pages/servicesMap/ServicesMapGraph";
+import { urlMapping } from "@/pages/servicesMap/UrlMapping";
 
 function ServicesMap() {
   const [ systemInfo ] = useSystemList();
   const [ selectedIds, setSelectedIds ] = useState([] as any[])
-  const [ services, setServices ] = useState([])
+  const [ links, setLinks ] = useState([])
+  const [ elements, setElements ] = useState([])
+  const [ unmapUrls, setUnmapUrls ] = useState([])
 
   const handleChange = useCallback((value: string[]) => {
     setSelectedIds(value)
@@ -20,14 +23,24 @@ function ServicesMap() {
     }
 
     queryContainerByIds(selectedIds).then((res: any[]) => {
-      setServices(res as any)
+      let unmap: any[] = [];
+      let elms = {
+        nodes: [],
+        edges: []
+      };
+
+      let data = urlMapping(res, unmap, elms)
+
+      setElements(elms)
+      setLinks(data as any)
+      setUnmapUrls(unmap as any)
     })
-  }, [selectedIds, setServices]);
+  }, [selectedIds, setLinks, setElements, setUnmapUrls]);
 
   return (<div>
     <p>说明：前端当前支持 Axios、UMI-Request，后端支持 Java/Kotlin + Spring、C# + .Net</p>
     <p>新的语言和框架支持，请移步：
-      <a href="https://github.com/archguard/scanner" target={ "_blank" }>https://github.com/archguard/scanner</a>
+      <a href="https://github.com/archguard/scanner" target={ "_blank" } rel="noreferrer">https://github.com/archguard/scanner</a>
     </p>
 
     { systemInfo?.value &&
@@ -55,8 +68,8 @@ function ServicesMap() {
             </Button>
           </Col>
         </Row>
-        { services && services.length > 0 && <ServicesMapMapping datasource={services}/> }
-        { services && services.length > 0 && <ServicesMapGraph datasource={services}/> }
+        { links && links.length > 0 && <ServicesMapMapping datasource={links} unmapUrls={unmapUrls}/> }
+        { links && links.length > 0 && <ServicesMapGraph datasource={elements}/> }
       </>
     }
   </div>)

@@ -75,7 +75,7 @@ const getStyle = (): cytoscape.Stylesheet[] => {
     {
       selector: 'node',
       style: {
-        'background-color': "#fffff",
+        'background-color': "#ffffff",
         // The DefinitelyTyped definitions don't specify that a function can be
         // used here.
         'background-image': (el: cytoscape.NodeSingular) => iconForNode(el),

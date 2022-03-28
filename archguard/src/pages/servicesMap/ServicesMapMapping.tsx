@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import styles from "./ServicesMapMapping.less"
-import { urlMapping } from "@/pages/servicesMap/UrlMapping";
 import { Table } from "antd";
 
 interface ServicesMapMappingProps {
-  datasource: any[]
+  datasource: any[],
+  unmapUrls: any[],
 }
 
 const ServicesMapMapping = (props: ServicesMapMappingProps) => {
-  const [data, setData] = useState(null);
-  const [unmap, setUnmap] = useState([] as any);
+  const [data] = useState(props.datasource);
+  const [unmapUrls] = useState(props.unmapUrls);
   const svgRef = useRef(null);
   const width = 920;
   const height = 600;
@@ -28,7 +28,6 @@ const ServicesMapMapping = (props: ServicesMapMappingProps) => {
       return;
     }
 
-    console.log(`svgRef.current: ${ svgRef.current }`);
     d3.select(svgRef.current).selectAll("g").remove();
     const svgEl = d3.select(svgRef.current)
 
@@ -114,21 +113,11 @@ ${ (incomingCount(d)) } incoming ←`);
       .text(d => `${ names[d.source.index] } → ${ names[d.target.index] } ${ d.source.value }`);
   }, [data]);
 
-  useEffect(() => {
-    let unmap: any[] = [];
-    let unusedResource: any[] = [];
-
-    let newData = urlMapping(props.datasource, unmap, unusedResource)
-    setUnmap(unmap)
-
-    setData(newData as any);
-  }, [props.datasource]);
-
   return <div className={ styles.service }>
     <svg ref={ svgRef } width={ width } height={ height }/>
     <div>
       <h2>未匹配到的消费端 URL</h2>
-      <Table dataSource={ unmap } columns={ unmapColumns }/>
+      <Table dataSource={ unmapUrls } columns={ unmapColumns }/>
     </div>
   </div>;
 };

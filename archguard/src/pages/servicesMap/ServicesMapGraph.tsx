@@ -32,24 +32,25 @@ interface ServicesMapGraphProps {
   datasource: any[]
 }
 
-function ServicesMapGraph(props: ServicesMapGraph) {
+function ServicesMapGraph(props: ServicesMapGraphProps) {
   const heightWithPadding = 1000;
   const status = "success";
-  const elements = {
-    nodes: [
-      { data: { id: '0-0', 'service.name': "Demo" } },
-      { data: { id: '0-1', 'service.name': "Demo 1" } },
-      { data: { id: '0-2', 'service.name': "Demo 2" } },
-    ],
-    edges: [
-      { data: { source: '0-0', target: '0-1', id: '1' } },
-      { data: { source: '0-1', target: '0-2', id: '2' } },
-    ]
-  }
+
+  // const elements = {
+  //   nodes: [
+  //     { data: { id: '0-0', 'service.name': "Demo" } },
+  //     { data: { id: '0-1', 'service.name': "Demo 1" } },
+  //     { data: { id: '0-2', 'service.name': "Demo 2" } },
+  //   ],
+  //   edges: [
+  //     { data: { source: '0-0', target: '0-1', id: '1' } },
+  //     { data: { source: '0-1', target: '0-2', id: '2' } },
+  //   ]
+  // }
 
   return (
     <div style={ { height: heightWithPadding } }>
-      <CytoscapeComponent elements={ elements }
+      <CytoscapeComponent elements={ props.datasource }
                           height={ heightWithPadding }
                           serviceName={ "Services Map" }
                           style={ getCytoscapeDivStyle(status) }>
