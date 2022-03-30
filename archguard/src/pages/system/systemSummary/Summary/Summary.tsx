@@ -13,6 +13,7 @@ import FileChangeSizing from "@/pages/system/systemSummary/Summary/components/Fi
 import FileSizing from "@/pages/system/systemSummary/Summary/components/FileSizing";
 import { queryUnstableFiles } from "@/api/module/gitFile";
 import { DonutChart } from "bizcharts";
+import ApiResourceTree from "@/pages/system/systemSummary/Summary/components/ApiResourceTree";
 
 function Summary() {
   // todo: load system id from url
@@ -136,6 +137,7 @@ function Summary() {
         <div className={styles.resource}>
           <h2>API 提供清单 ({services["resources"]?.length})</h2>
           <Table dataSource={services["resources"]} columns={resourceColumns}/>
+          <ApiResourceTree dataSource={services["resources"]} />
         </div>
       </div>
     </div>
