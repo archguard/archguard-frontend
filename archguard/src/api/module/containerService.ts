@@ -1,10 +1,7 @@
 import axios from "../axios";
-import { storage } from "@/store/storage/sessionStorage";
 import qs from 'qs';
 
-export function queryContainerServices() {
-  const systemId = storage.getSystemId();
-
+export function queryContainerServices(systemId: number) {
   return axios<any>({
     url: `/api/container-service/${systemId}/`,
     method: "GET"

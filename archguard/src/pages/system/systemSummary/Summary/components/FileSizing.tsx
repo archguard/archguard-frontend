@@ -4,7 +4,11 @@ import CodeSupport from "@/pages/system/systemSummary/Summary/d3Support/CodeSupp
 import { getGitPathChanges } from "@/api/module/gitFile";
 import MenuSupport from "@/pages/system/systemSummary/Summary/d3Support/MenuSupport";
 
-const FileSizing = () => {
+interface FileSizingProps {
+  systemId: String
+}
+
+const FileSizing = (props: FileSizingProps) => {
   const [ data, setData ] = useState(null);
   const svgRef = useRef(null);
   const svgEl = d3.select(svgRef.current);
@@ -135,7 +139,7 @@ const FileSizing = () => {
   }
 
   useEffect(() => {
-    getGitPathChanges().then((res) => {
+    getGitPathChanges(props.systemId).then((res) => {
       setData(res as any);
     });
   }, [setData]);

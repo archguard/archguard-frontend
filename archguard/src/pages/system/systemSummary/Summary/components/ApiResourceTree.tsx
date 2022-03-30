@@ -1,13 +1,13 @@
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useState } from "react";
+import CodeSupport from "@/pages/system/systemSummary/Summary/d3Support/CodeSupport";
 
 interface ApiResourceTreeProps {
-  data: any[]
+  dataSource: any
 }
 
 const ApiResourceTree = (props: ApiResourceTreeProps) => {
-  console.log(props)
-  // const [data] = useState(props.data);
+  const [ dataSource ] = useState(props.dataSource);
   const [data] = useState({
     name: 'flare',
     children: [
@@ -30,6 +30,18 @@ const ApiResourceTree = (props: ApiResourceTreeProps) => {
   const [options, setOptions] = useState(null)
 
   useEffect(() => {
+    let apiMap = {}
+    for (let element of dataSource) {
+      apiMap[element.sourceUrl] = {
+        name: element.sourceUrl,
+        value: 0
+      }
+    }
+
+    console.log(apiMap)
+    // let hierarchy = CodeSupport.hierarchy(apiMap);
+    // console.log(hierarchy)
+
     setOptions({
       tooltip: {
         trigger: 'item',

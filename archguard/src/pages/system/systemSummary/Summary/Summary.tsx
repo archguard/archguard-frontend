@@ -4,7 +4,7 @@ import { BaButton } from "@/components/Basic/Button/Button";
 import { BaLabel } from "@/components/Basic/Label/Label";
 import { BuGrade } from "@/components/Business/Grade/Grade";
 import { useOverviewCount } from "@/api/module/codeLine";
-import { history } from "umi";
+import { history, useParams } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerServices } from "@/api/module/containerService";
@@ -21,14 +21,15 @@ function Summary() {
   const [services, setServices] = useState({} as any);
   const [unstableFiles, setUnstableFiles] = useState([]);
 
+  const { systemId } = useParams();
+  storage.setSystemId(systemId)
+
   const [systemList] = useSystemList();
   const [systemName, setSystemName] = useState<string>("");
 
   const getSystemName = (): string => {
     const list = systemList?.value || [];
-    const id = storage.getSystemId();
-
-    return list.find((system) => system.id === parseInt(id))?.systemName || "";
+    return list.find((system) => system.id === parseInt(systemId))?.systemName || "";
   };
 
   useEffect(() => {
@@ -36,13 +37,13 @@ function Summary() {
   }, [systemList]);
 
   useEffect(() => {
-    queryContainerServices().then((res) => {
+    queryContainerServices(systemId).then((res) => {
       setServices(res);
     });
   }, []);
 
   useEffect(() => {
-    queryUnstableFiles().then((res) => {
+    queryUnstableFiles(systemId).then((res) => {
       setUnstableFiles(res as any);
     });
   }, []);
@@ -87,10 +88,10 @@ function Summary() {
       <div className={ styles.body }>
         <div className={ styles.detail }>
           <div className={ styles.overview }>
-            <BaLabel value={ overviewCount?.repoCount } text="代码仓数"></BaLabel>
-            <BaLabel value={ overviewCount?.moduleCount } text="模块数"></BaLabel>
-            <BaLabel value={ overviewCount?.contributorCount } text="代码贡献人数"></BaLabel>
-            <BuGrade text="架构质量等级" grade={ overviewCount?.qualityLevel }></BuGrade>
+            <BaLabel value={ overviewCount?.repoCount } text="代码仓数"/>
+            <BaLabel value={ overviewCount?.moduleCount } text="模块数"/>
+            <BaLabel value={ overviewCount?.contributorCount } text="代码贡献人数"/>
+            <BuGrade text="架构质量等级" grade={ overviewCount?.qualityLevel }/>
           </div>
         </div>
         <div className={ styles.changes }>
@@ -116,11 +117,11 @@ function Summary() {
         <div className={ styles.changes }>
           <div className={ styles.graph }>
             <h2>提交变更频率（大小）</h2>
-            <FileSizing/>
+            <FileSizing systemId={systemId}/>
           </div>
           <div className={ styles.graph }>
             <h2>提交变更频率（大小）-文件长度（颜色深浅）</h2>
-            <FileChangeSizing/>
+            <FileChangeSizing systemId={systemId}/>
           </div>
         </div>
         <div>
@@ -135,11 +136,13 @@ function Summary() {
           <h2>API 使用清单 ({ services["demands"]?.length })</h2>
           <Table dataSource={ services["demands"] } columns={ demandColumns }/>
         </div>
-        <div className={ styles.resource }>
-          <h2>API 提供清单 ({ services["resources"]?.length })</h2>
-          <Table dataSource={ services["resources"] } columns={ resourceColumns }/>
-          <ApiResourceTree dataSource={ services["resources"] }/>
-        </div>
+        { services["resources"]?.length &&
+          <div className={ styles.resource }>
+            <h2>API 提供清单 ({ services["resources"]?.length })</h2>
+            <Table dataSource={ services["resources"] } columns={ resourceColumns }/>
+            <ApiResourceTree dataSource={ services["resources"] }/>
+          </div>
+        }
       </div>
     </div>
   );

@@ -25,17 +25,13 @@ export function queryHotFiles() {
   });
 }
 
-export function getGitPathChanges() {
-  const systemId = storage.getSystemId();
-
+export function getGitPathChanges(systemId: String) {
   return axios<GitPathChange[]>({
     url: `/api/systems/${systemId}/git/path-change-count`,
     method: "GET",
   });
 }
-export function queryUnstableFiles() {
-  const systemId = storage.getSystemId();
-
+export function queryUnstableFiles(systemId: String) {
   return axios<GitPathChange[]>({
     url: `/api/systems/${systemId}/git/unstable-file`,
     method: "GET",

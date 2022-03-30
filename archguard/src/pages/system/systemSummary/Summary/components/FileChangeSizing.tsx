@@ -4,7 +4,11 @@ import CodeSupport from "@/pages/system/systemSummary/Summary/d3Support/CodeSupp
 import { getGitPathChanges } from "@/api/module/gitFile";
 import { voronoiTreemap } from "d3-voronoi-treemap"
 
-const FileSizing = () => {
+interface FileChangeSizingProps {
+  systemId: String
+}
+
+const FileChangeSizing = (props: FileChangeSizingProps) => {
   const [data, setData] = useState(null);
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
@@ -127,10 +131,10 @@ const FileSizing = () => {
   }
 
   useEffect(() => {
-    getGitPathChanges().then((res) => {
+    getGitPathChanges(props.systemId).then((res) => {
       setData(res);
     });
-  }, [setData]);
+  }, [props.systemId, setData]);
 
   useEffect(() => {
     if (!!data) {
@@ -145,4 +149,4 @@ const FileSizing = () => {
   </div>;
 };
 
-export default FileSizing;
+export default FileChangeSizing;
