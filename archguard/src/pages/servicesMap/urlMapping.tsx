@@ -3,14 +3,17 @@ function getPathFromUrl(url: string) {
 }
 
 function removeUriSuffixAndPrefix(targetUrl: string) {
-  let url = targetUrl.slice(0, -"/@uri@".length);
+  let url = targetUrl
   if (url.startsWith("@uri@/")) {
-    url.slice("@uri@".length)
+    url = url.slice("@uri@".length)
+  }
+  if (url.endsWith("/@uri@")) {
+    url = url.slice(0, -"/@uri@".length);
   }
   return url;
 }
 
-export function urlMapping(container: any[], unMapping: any[], elements: { nodes: any[], edges: any[] }) {
+export function urlMapping(container: any[], unmapping: any[], elements: { nodes: any[], edges: any[] }) {
   let linkData = [];
   let resourceMap: any = {}
   for (let service of container) {
@@ -48,21 +51,25 @@ export function urlMapping(container: any[], unMapping: any[], elements: { nodes
       // first match
       if (resourceName) {
         setLink(service, resourceName);
-      } else if (targetUrl.endsWith("@uri@")) {
-        // remove `/api/resource/@uri@` to as second match
+        continue;
+      }
+
+      // remove `/api/resource/@uri@` || `@uri/api/resource/` to as second match
+      if (targetUrl.endsWith("@uri@") || targetUrl.startsWith("@uri@")) {
         let fixedUrl = removeUriSuffixAndPrefix(targetUrl);
+        console.log(fixedUrl)
         let resourceName = resourceMap[fixedUrl];
         if (resourceName) {
           setLink(service, resourceName);
         } else {
-          unMapping.push({
+          unmapping.push({
             service: service.name,
             originUrl: demand.originUrl,
             url: targetUrl
           })
         }
       } else {
-        unMapping.push({
+        unmapping.push({
           service: service.name,
           originUrl: demand.originUrl,
           url: targetUrl
@@ -78,6 +85,7 @@ export function urlMapping(container: any[], unMapping: any[], elements: { nodes
   }
 
   console.log(linkData)
+  console.log(unmapping)
 
   elements.edges = linkData
   return linkData;
