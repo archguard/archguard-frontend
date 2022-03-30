@@ -62,6 +62,7 @@
   ],
   "devDependencies": {
     "@types/classnames": "^2.2.10",
+    "@types/cytoscape-dagre": "^2.3.0",
     "@types/d3": "^7.1.0",
     "@types/echarts": "^4.6.3",
     "@types/jest": "^26.0.4",
