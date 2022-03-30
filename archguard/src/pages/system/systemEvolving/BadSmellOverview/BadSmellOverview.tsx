@@ -1,4 +1,4 @@
-import QualityEvaluation from "@/pages/systemSummary/Summary/components/QualityEvaluation";
+import QualityEvaluation from "@/pages/system/systemSummary/Summary/components/QualityEvaluation";
 import React from "react";
 import { useOverview } from "@/api/module/codeLine";
 

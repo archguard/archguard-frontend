@@ -6,7 +6,7 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import "./SystemInfoForm.less";
-import BadSmellThresholdForm from '@/pages/systemEvolving/BadSmellThreshold/components/BadSmellThresholdForm';
+import BadSmellThresholdForm from '@/pages/system/systemEvolving/BadSmellThreshold/components/BadSmellThresholdForm';
 
 interface SystemInfoFormProps {
   data?: SystemInfo;

@@ -9,8 +9,8 @@ import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerServices } from "@/api/module/containerService";
 import { Table } from 'antd';
-import FileChangeSizing from "@/pages/systemSummary/Summary/components/FileChangeSizing";
-import FileSizing from "@/pages/systemSummary/Summary/components/FileSizing";
+import FileChangeSizing from "@/pages/system/systemSummary/Summary/components/FileChangeSizing";
+import FileSizing from "@/pages/system/systemSummary/Summary/components/FileSizing";
 import { queryUnstableFiles } from "@/api/module/gitFile";
 import { DonutChart } from "bizcharts";
 

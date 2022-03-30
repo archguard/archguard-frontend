@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import CodeSupport from "@/pages/systemSummary/Summary/d3Support/CodeSupport";
+import CodeSupport from "@/pages/system/systemSummary/Summary/d3Support/CodeSupport";
 import { getGitPathChanges } from "@/api/module/gitFile";
 import { voronoiTreemap } from "d3-voronoi-treemap"
 

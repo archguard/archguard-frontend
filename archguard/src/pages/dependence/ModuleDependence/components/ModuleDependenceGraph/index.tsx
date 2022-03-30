@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "antd";
 import InvokeGraph from "@/components/Business/InvokeGraph";
-import { moduleMapping } from "@/pages/metrics/ModuleCouplingTree/Report";
+import { moduleMapping } from "@/pages/system/metrics/ModuleCouplingTree/Report";
 import { queryAllModuleDependence } from "@/api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";

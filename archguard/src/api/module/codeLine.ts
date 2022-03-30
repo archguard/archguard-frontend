@@ -1,8 +1,8 @@
 import { Color } from "@/components/Business/Grade/Grade";
 import { useGet } from "@/hooks/useGet";
-import { badSmellWordingKeys, DashboardGroup, } from "@/pages/systemEvolving/MeasureIndicators/Components/ChartCard";
-import { IndicatorLevel } from "@/pages/systemEvolving/MeasureIndicators/Components/Group";
-import { LEVEL_SCORE } from "@/pages/systemSummary/Summary/components/QualityEvaluation";
+import { badSmellWordingKeys, DashboardGroup, } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
+import { IndicatorLevel } from "@/pages/system/systemEvolving/MeasureIndicators/Components/Group";
+import { LEVEL_SCORE } from "@/pages/system/systemSummary/Summary/components/QualityEvaluation";
 import { storage } from "@/store/storage/sessionStorage";
 import axios from '../axios';
 

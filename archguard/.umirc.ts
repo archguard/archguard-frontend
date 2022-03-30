@@ -25,7 +25,6 @@ export default defineConfig({
   },
   routes: [
     { path: "/", redirect: "/home" },
-    { path: "/login", component: "@/pages/login" },
     { path: "/home", component: "@/pages/home" },
     {
       exact: false,
@@ -33,56 +32,56 @@ export default defineConfig({
       component: "@/components/Business/Layouts/PageLayout",
       routes: [
         {
-          path: "systemSummary/Summary",
-          component: "@/pages/systemSummary/Summary/Summary",
-        },
-        {
-          path: "systemEvolving/MeasureIndicators",
-          component: "@/pages/systemEvolving/MeasureIndicators/MeasureIndicators",
-        },
-        {
-          path: "systemEvaluation/Redundancy",
-          component: "@/pages/systemEvaluation/Redundancy/Redundancy",
-        },
-        {
-          path: "systemEvaluation/SizingEvaluation",
-          component: "@/pages/systemEvaluation/SizingEvaluation/SizingEvaluation",
-        },
-        {
-          path: "systemEvaluation/CouplingEvaluation",
-          component: "@/pages/systemEvaluation/CouplingEvaluation/CouplingEvaluation",
-        },
-        {
-          path: "systemEvaluation/cohesionEvaluation",
-          component: "@/pages/systemEvaluation/CohesionEvaluation/CohesionEvaluation",
-        },
-        {
-          path: "analysis/metric/:type?",
-          component: "@/pages/metrics",
-        },
-        {
           path: "analysis/dependence",
           component: "@/pages/dependence",
         },
         {
+          path: "systemSummary/Summary",
+          component: "@/pages/system/systemSummary/Summary/Summary",
+        },
+        {
+          path: "systemEvolving/MeasureIndicators",
+          component: "@/pages/system/systemEvolving/MeasureIndicators/MeasureIndicators",
+        },
+        {
+          path: "systemEvaluation/Redundancy",
+          component: "@/pages/system/systemEvaluation/Redundancy/Redundancy",
+        },
+        {
+          path: "systemEvaluation/SizingEvaluation",
+          component: "@/pages/system/systemEvaluation/SizingEvaluation/SizingEvaluation",
+        },
+        {
+          path: "systemEvaluation/CouplingEvaluation",
+          component: "@/pages/system/systemEvaluation/CouplingEvaluation/CouplingEvaluation",
+        },
+        {
+          path: "systemEvaluation/cohesionEvaluation",
+          component: "@/pages/system/systemEvaluation/CohesionEvaluation/CohesionEvaluation",
+        },
+        {
+          path: "analysis/metric/:type?",
+          component: "@/pages/system/metrics",
+        },
+        {
           path: "systemEvolving",
-          component: "@/pages/systemEvolving/SystemEvolving",
+          component: "@/pages/system/systemEvolving/SystemEvolving",
         },
         {
           path: "systemEvolving/QualityGateProfile",
-          component: "@/pages/systemEvolving/QualityGateProfile/QualityGateProfile",
+          component: "@/pages/system/systemEvolving/QualityGateProfile/QualityGateProfile",
         },
         {
           path: "systemEvaluation/TestEvaluation",
-          component: "@/pages/systemEvaluation/TestEvaluation/TestEvaluation",
+          component: "@/pages/system/systemEvaluation/TestEvaluation/TestEvaluation",
         },
         {
           path: "systemEvolving/BadSmellThreshold",
-          component: "@/pages/systemEvolving/BadSmellThreshold/BadSmellThreshold",
+          component: "@/pages/system/systemEvolving/BadSmellThreshold/BadSmellThreshold",
         },
         {
           path: "systemEvolving/BadSmellOverview",
-          component: "@/pages/systemEvolving/BadSmellOverview/BadSmellOverview",
+          component: "@/pages/system/systemEvolving/BadSmellOverview/BadSmellOverview",
         },
       ],
     },

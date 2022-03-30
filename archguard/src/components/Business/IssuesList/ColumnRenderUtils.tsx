@@ -8,7 +8,7 @@ import {
   DataClass,
   MAX_COUNT_OF_RENDER_CLASSES,
   ShotgunSurgeryClazz,
-} from "@/pages/systemEvaluation/CohesionEvaluation/CohesionEvaluationIssuesList.config";
+} from "@/pages/system/systemEvaluation/CohesionEvaluation/CohesionEvaluationIssuesList.config";
 
 interface IssuesListRowData {
   id?: string;

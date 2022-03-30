@@ -1,9 +1,9 @@
 export default {
   SWITCH_LANGUAGE: "English",
   MY_SYSTEM: "我的系统",
-  SERVICES_MAP: "服务地图",
+  SERVICES_MAP: "服务地图（HTTP API 分析）",
   COMPONENT_ANALYSIS: "系统分析",
-  CODE_ANALYSIS: "代码级",
+  CODE_ANALYSIS: "代码级分析",
   OTHER_SYSTEM: "其它系统",
   DATABASE_MAP: "数据库地图 (3.0 规划）",
   HOTSPOT_TEST: "精准测试 (3.0 规划）",
