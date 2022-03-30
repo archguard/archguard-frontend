@@ -57,7 +57,6 @@ export function urlMapping(container: any[], unmapping: any[], elements: { nodes
       // remove `/api/resource/@uri@` || `@uri/api/resource/` to as second match
       if (targetUrl.endsWith("@uri@") || targetUrl.startsWith("@uri@")) {
         let fixedUrl = removeUriSuffixAndPrefix(targetUrl);
-        console.log(fixedUrl)
         let resourceName = resourceMap[fixedUrl];
         if (resourceName) {
           setLink(service, resourceName);
@@ -83,9 +82,6 @@ export function urlMapping(container: any[], unmapping: any[], elements: { nodes
     obj.value = demandMap[key];
     linkData.push(obj)
   }
-
-  console.log(linkData)
-  console.log(unmapping)
 
   elements.edges = linkData
   return linkData;
