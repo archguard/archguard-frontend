@@ -16,32 +16,12 @@ const KotlinIcon = require("@/assets/svg/services/kotlin.svg");
 const CSharpIcon = require("@/assets/svg/services/csharp.svg");
 const TypeScriptIcon = require("@/assets/svg/services/typescript.svg");
 
-function applyCubicBezierStyles(edges: cytoscape.EdgeCollection) {
-  edges.forEach((edge) => {
-    const { x: x0, y: y0 } = edge.source().position();
-    const { x: x1, y: y1 } = edge.target().position();
-    const x = x1 - x0;
-    const y = y1 - y0;
-    const z = Math.sqrt(x * x + y * y);
-    const costheta = z === 0 ? 0 : x / z;
-    const alpha = 0.25;
-    // Two values for control-point-distances represent a pair symmetric quadratic
-    // bezier curves joined in the middle as a seamless cubic bezier curve:
-    edge.style('control-point-distances', [
-      -alpha * y * costheta,
-      alpha * y * costheta,
-    ]);
-    edge.style('control-point-weights', [alpha, 1 - alpha]);
-  });
-}
-
 export const getAnimationOptions = (): cytoscape.AnimationOptions => ({
   duration: 250,
-  // @ts-expect-error The cubic-bezier options here are not recognized by the cytoscape types
   easing: "ease-in-quad",
 });
 
-export const getNodeHeight = (): number => parseInt(40, 10);
+export const getNodeHeight = (): number => 40;
 
 export const getCytoscapeOptions = (): cytoscape.CytoscapeOptions => ({
   boxSelectionEnabled: false,
