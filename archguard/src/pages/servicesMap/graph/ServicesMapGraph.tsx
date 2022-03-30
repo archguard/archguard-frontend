@@ -7,13 +7,7 @@
 
 import React, { CSSProperties, useEffect, useState } from "react";
 import CytoscapeComponent from "@/pages/servicesMap/graph/cytoscape";
-
-export enum FETCH_STATUS {
-  LOADING = 'loading',
-  SUCCESS = 'success',
-  FAILURE = 'failure',
-  NOT_INITIATED = 'not_initiated',
-}
+import cytoscape from "cytoscape";
 
 export const getCytoscapeDivStyle = (): CSSProperties => ({
   background: `linear-gradient(90deg, #fafbfd 30px, transparent 20%) center, linear-gradient(#fafbfd 30px, transparent 20%) center, #d3dae6`,
@@ -40,9 +34,9 @@ function ServicesMapGraph(props: ServicesMapGraphProps) {
       edges: props.datasource.edges.map((item) => ({ data: item }))
     };
 
+    // @ts-ignore
     setElements(convertData)
   }, [props.datasource, setElements])
-
 
   return (
     <div style={ { height: heightWithPadding } }>

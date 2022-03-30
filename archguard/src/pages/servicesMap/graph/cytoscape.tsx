@@ -26,7 +26,7 @@ export const CytoscapeContext = createContext<cytoscape.Core | undefined>(
 
 export interface CytoscapeProps {
   children?: ReactNode;
-  elements: cytoscape.ElementDefinition[];
+  elements: cytoscape.ElementDefinition[] | any;
   height: number;
   serviceName?: string;
   style?: CSSProperties;
@@ -71,14 +71,14 @@ function CytoscapeComponent({ children, elements, height, serviceName, style }: 
 
       cy.add(elements);
       // Remove any old elements that don't exist in the new set of elements.
-      const elementIds = elements.map((element) => element.data.id);
+      const elementIds = elements.map((element: any) => element.data.id);
       cy.elements().forEach((element) => {
         if (!elementIds.includes(element.data('id'))) {
           cy.remove(element);
         } else {
           // Doing an "add" with an element with the same id will keep the original
           // element. Set the data with the new element data.
-          const newElement = elements.find((el) => el.data.id === element.id());
+          const newElement = elements.find((el: any) => el.data.id === element.id());
           element.data(newElement?.data ?? element.data());
         }
       });
