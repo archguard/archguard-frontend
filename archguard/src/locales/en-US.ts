@@ -6,7 +6,7 @@ export default {
   SERVICES_MAP: "Container Analysis",
   CODE_ANALYSIS: "Code Analysis",
   DATABASE_MAP: "Database Map (3.0)",
-  HOTSPOT_TEST: "精准测试 (3.0）",
+  HOTSPOT_TEST: "HOTSPOT TEST",
   NEXT: "Next",
   PREV: "Prev",
   OPERATION_DOCUMENT: "Document",
