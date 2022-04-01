@@ -1,12 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import { Select } from "antd";
+import { Select, Table } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
+import { queryDatamap } from "@/api/datamap/datamap";
+import { useParams } from "umi";
 
 const DatabaseMap = () => {
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
-  const [systemId, setSystemId] = useState(0);
+  // @ts-ignore
+  const [systemId, setSystemId] = useState(useParams().systemId);
+  const [dbRecords, setDbRecords] = useState([]);
 
   const onSystemChange = useCallback((index: number) => {
     setIsInChanging(false)
@@ -16,12 +20,20 @@ const DatabaseMap = () => {
       storage.setSystemLanguage(system.language);
 
       setSystemId(system.id)
-      // todo: is a dirty fix for old code which no fetch system id
-      setTimeout(() => {
-        setIsInChanging(true)
-      }, 50)
+
+      queryDatamap(system.id).then((res) => {
+        setDbRecords(res)
+        setIsInChanging(true);
+      })
     }
-  }, [setIsInChanging]);
+  }, [setIsInChanging, setDbRecords]);
+
+  const unmapColumns = [
+    { title: 'packageName', dataIndex: 'packageName' },
+    { title: 'className', dataIndex: 'className' },
+    { title: 'functionName', dataIndex: 'functionName', },
+    { title: 'tables', dataIndex: 'tables', },
+  ]
 
   return (
     <div>
@@ -44,6 +56,7 @@ const DatabaseMap = () => {
               </Select.Option>
             )) }
           </Select>
+          { isInChanging && systemId &&       <Table dataSource={ dbRecords } columns={ unmapColumns }/> }
         </>
       }
     </div>
