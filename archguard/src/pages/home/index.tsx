@@ -19,6 +19,8 @@ import Help from "../help";
 import {setLocale, useIntl} from "@@/plugin-locale/localeExports";
 import ServicesMap from "../servicesMap/ServicesMap";
 import CodeAnalysis from "@/pages/code";
+import DatabaseMap from '../data/DatabaseMap';
+import ChangeDetect from "@/pages/change/ChangeDetect";
 
 interface UserProfile {
   name?: string;
@@ -221,8 +223,12 @@ const Home = () => {
           <Tabs.TabPane tab={ formatMessage({ id: 'CODE_ANALYSIS' }) } key="code-analysis">
             <CodeAnalysis/>
           </Tabs.TabPane>
-          <Tabs.TabPane tab={ formatMessage({ id: 'DATABASE_MAP' }) } key="database-map"/>
-          <Tabs.TabPane tab={ formatMessage({ id: 'CHANGE_DETECT' }) } key="hotspot-map"/>
+          <Tabs.TabPane tab={ formatMessage({ id: 'DATABASE_MAP' }) } key="database-map">
+            <DatabaseMap />
+          </Tabs.TabPane>
+          <Tabs.TabPane tab={ formatMessage({ id: 'CHANGE_DETECT' }) } key="hotspot-map">
+            <ChangeDetect />
+          </Tabs.TabPane>
         </Tabs>
       </div>
       <Modal
