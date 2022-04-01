@@ -197,33 +197,33 @@ const Home = () => {
       </div>
       <div className="multiple-system-selector">
         <Tabs defaultActiveKey="my-system">
-          <Tabs.TabPane tab={formatMessage({ id: 'COMPONENT_ANALYSIS'})} key="my-system">
-            <Row gutter={[12, 12]}>
-              <Col xs={24} sm={12} md={8} lg={6} xxl={4}>
-                <SystemCard onClick={onCreateClick} />
+          <Tabs.TabPane tab={ formatMessage({ id: 'COMPONENT_ANALYSIS' }) } key="my-system">
+            <Row gutter={ [12, 12] }>
+              <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 }>
+                <SystemCard onClick={ onCreateClick }/>
               </Col>
-              {systemInfoList.map((systemInfo) => (
-                <Col xs={24} sm={12} md={8} lg={6} xxl={4} key={systemInfo.id}>
+              { systemInfoList.map((systemInfo) => (
+                <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 } key={ systemInfo.id }>
                   <SystemCard
-                    systemInfo={systemInfo}
-                    onClick={() => routeToHome(systemInfo)}
-                    onScanning={() => onScanning(systemInfo.id)}
-                    onEdit={() => onEditClick(systemInfo)}
-                    onCancel={() => onCancelClick(systemInfo)}
-                    onRemove={() => onRemoveClick(systemInfo)}
+                    systemInfo={ systemInfo }
+                    onClick={ () => routeToHome(systemInfo) }
+                    onScanning={ () => onScanning(systemInfo.id) }
+                    onEdit={ () => onEditClick(systemInfo) }
+                    onCancel={ () => onCancelClick(systemInfo) }
+                    onRemove={ () => onRemoveClick(systemInfo) }
                   />
                 </Col>
-              ))}
+              )) }
             </Row>
           </Tabs.TabPane>
-          <Tabs.TabPane tab={formatMessage({ id: 'SERVICES_MAP'})} key="services-map">
-            <ServicesMap />
+          <Tabs.TabPane tab={ formatMessage({ id: 'SERVICES_MAP' }) } key="services-map">
+            <ServicesMap/>
           </Tabs.TabPane>
-          <Tabs.TabPane tab={formatMessage({ id: 'CODE_ANALYSIS'})} key="code-analysis">
-            <CodeAnalysis />
+          <Tabs.TabPane tab={ formatMessage({ id: 'CODE_ANALYSIS' }) } key="code-analysis">
+            <CodeAnalysis/>
           </Tabs.TabPane>
-          <Tabs.TabPane tab={formatMessage({ id: 'DATABASE_MAP'})} key="database-map" disabled />
-          <Tabs.TabPane tab={formatMessage({ id: 'HOTSPOT_TEST'})} key="hotspot-map" disabled />
+          <Tabs.TabPane tab={ formatMessage({ id: 'DATABASE_MAP' }) } key="database-map"/>
+          <Tabs.TabPane tab={ formatMessage({ id: 'CHANGE_DETECT' }) } key="hotspot-map"/>
         </Tabs>
       </div>
       <Modal
