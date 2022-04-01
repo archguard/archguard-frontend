@@ -155,45 +155,44 @@ const Home = () => {
     setLocale(currentLanguage, false);
   };
 
-
   return (
     <div className="multiple-system-container">
       <div className="multiple-system-header">
         <div className="header-logo">
-          <img src={require("@/assets/images/logo.png")} alt="logo" />
+          <img src={ require("@/assets/images/logo.png") } alt="logo"/>
         </div>
-        {user && (
+        { user && (
           <div className="header-user">
             <div>
               <Button
-                icon={<GlobalOutlined />}
-                onClick={() => setLanguage()}
+                icon={ <GlobalOutlined/> }
+                onClick={ () => setLanguage() }
               >
-                {formatMessage({ id: 'SWITCH_LANGUAGE'})}
+                { formatMessage({ id: 'SWITCH_LANGUAGE' }) }
               </Button>
             </div>
             <div>
-              {getFeature(FEATURES.INSIDE_FEATURE) && (
+              { getFeature(FEATURES.INSIDE_FEATURE) && (
                 <Button
                   type="link"
-                  style={{ color: "#ffffff" }}
-                  icon={<QuestionCircleOutlined />}
-                  onClick={() => setHelpModalVisible(true)}
+                  style={ { color: "#ffffff" } }
+                  icon={ <QuestionCircleOutlined/> }
+                  onClick={ () => setHelpModalVisible(true) }
                 >
-                  {formatMessage({ id: 'OPERATION_DOCUMENT'})}
+                  { formatMessage({ id: 'OPERATION_DOCUMENT' }) }
                 </Button>
-              )}
+              ) }
             </div>
 
             <div className="user-info">
-              <img src={require("@/assets/images/userProfile.png")}></img>
+              <img src={ require("@/assets/images/userProfile.png") }></img>
               <span className="user-name">
-                {user.name} / {user.account}
+                { user.name } / { user.account }
               </span>
-              <UpOutlined className="user-icon" />
+              <UpOutlined className="user-icon"/>
             </div>
           </div>
-        )}
+        ) }
       </div>
       <div className="multiple-system-selector">
         <Tabs defaultActiveKey="my-system">
@@ -228,42 +227,42 @@ const Home = () => {
       </div>
       <Modal
         centered
-        maskClosable={false}
-        visible={modalVisible}
-        onCancel={onCancel}
-        onOk={onSubmit}
-        destroyOnClose={true}
-        bodyStyle={{ height: "560px", overflowY: "auto", padding: "32px" }}
-        footer={[
-          current === 0 && <Button type="primary" onClick={() => nextButton()}>
-            {formatMessage({ id: 'NEXT'})}
+        maskClosable={ false }
+        visible={ modalVisible }
+        onCancel={ onCancel }
+        onOk={ onSubmit }
+        destroyOnClose={ true }
+        bodyStyle={ { height: "560px", overflowY: "auto", padding: "32px" } }
+        footer={ [
+          current === 0 && <Button type="primary" onClick={ () => nextButton() }>
+            { formatMessage({ id: 'NEXT' }) }
           </Button>,
-          current === 1 && <Button style={{ margin: '0 8px' }} onClick={() => prevButton()}>
-            {formatMessage({ id: 'PREV'})}
+          current === 1 && <Button style={ { margin: '0 8px' } } onClick={ () => prevButton() }>
+            { formatMessage({ id: 'PREV' }) }
           </Button>,
-          current === 1 && <Button type="primary" onClick={onSubmit}>
-            {formatMessage({ id: 'OK'})}
+          current === 1 && <Button type="primary" onClick={ onSubmit }>
+            { formatMessage({ id: 'OK' }) }
           </Button>,
-        ]}
+        ] }
       >
         <SystemInfoForm
-          ref={ref}
-          data={currentSystemInfo}
-          onSubmit={onSubmitSystemInfo}
-          current={current}
-          currentAction={currentAction}
-         />
+          ref={ ref }
+          data={ currentSystemInfo }
+          onSubmit={ onSubmitSystemInfo }
+          current={ current }
+          currentAction={ currentAction }
+        />
       </Modal>
 
       <Modal
-        onCancel={() => setHelpModalVisible(false)}
-        width={1300}
-        footer={null}
-        maskClosable={true}
+        onCancel={ () => setHelpModalVisible(false) }
+        width={ 1300 }
+        footer={ null }
+        maskClosable={ true }
         centered
-        visible={helpModalVisible}
+        visible={ helpModalVisible }
       >
-        <Help />
+        <Help/>
       </Modal>
     </div>
   );
