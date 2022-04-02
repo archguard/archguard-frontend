@@ -20,10 +20,10 @@ let CodeSupport = {
       .replace(/.src./g, ".")
       .replace(/src./g, "main.");
   },
-  hierarchy: function (data, delimiter = "/") {
+  hierarchy: function (data: any, delimiter = "/") {
     let root;
     const map = new Map();
-    data.forEach(function find(data) {
+    data.forEach(function find(data: any) {
       const { name, value, lines } = data;
       if (map.has(name)) return map.get(name);
       const i = name.lastIndexOf(delimiter);

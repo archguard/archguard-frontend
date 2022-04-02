@@ -1,4 +1,5 @@
 import ReactECharts from 'echarts-for-react';
+import React from 'react';
 import { useEffect, useState } from "react";
 import CodeSupport from "@/pages/system/systemSummary/Summary/d3Support/CodeSupport";
 
@@ -8,14 +9,14 @@ interface ApiResourceTreeProps {
 
 const ApiResourceTree = (props: ApiResourceTreeProps) => {
   const [dataSource] = useState(props.dataSource);
-  const [options, setOptions] = useState(null)
+  const [options, setOptions] = useState(null as any)
 
   useEffect(() => {
     if (!dataSource) {
       return
     }
 
-    let apiMap = {}
+    let apiMap: any = {}
     for (let element of dataSource) {
       apiMap[element.sourceUrl] = {
         name: element.sourceUrl,
@@ -24,9 +25,10 @@ const ApiResourceTree = (props: ApiResourceTreeProps) => {
     }
 
     let dataMap = Object.values(apiMap)
-    let hierarchy = CodeSupport.hierarchy(dataMap).children[0];
+    let hierarchy = (CodeSupport.hierarchy(dataMap) as any).children[0];
 
     setOptions({
+      // @ts-ignore
       tooltip: {
         trigger: 'item',
         triggerOn: 'mousemove'
@@ -62,7 +64,7 @@ const ApiResourceTree = (props: ApiResourceTreeProps) => {
         }
       ]
     })
-  }, dataSource, setOptions)
+  }, [dataSource, setOptions])
 
   return (
     options && <ReactECharts

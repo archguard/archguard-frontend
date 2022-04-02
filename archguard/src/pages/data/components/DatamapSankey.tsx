@@ -1,5 +1,6 @@
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useState } from "react";
+import React from 'react';
 
 interface DatamapSankeyProps {
   dataSource: any[]
@@ -7,7 +8,7 @@ interface DatamapSankeyProps {
 
 const DatamapSankey = (props: DatamapSankeyProps) => {
   const [dataSource] = useState(props.dataSource);
-  const [options, setOptions] = useState(null)
+  const [options, setOptions] = useState(null as any)
 
   useEffect(() => {
     if (!dataSource) {
@@ -60,8 +61,9 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
     console.log(data)
 
     setOptions({
+      // @ts-ignore
       title: {
-        text: 'Sankey Diagram'
+        text: '数据库依赖图'
       },
       tooltip: {
         trigger: 'item',
@@ -123,7 +125,7 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
         }
       ]
     })
-  }, dataSource, setOptions)
+  }, [dataSource, setOptions])
 
   return (
     options && <ReactECharts
