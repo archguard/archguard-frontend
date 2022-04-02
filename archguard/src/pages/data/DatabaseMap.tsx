@@ -4,6 +4,7 @@ import { Select, Table } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
 import { queryDatamap } from "@/api/datamap/datamap";
 import { useParams } from "umi";
+import DatamapSankey from "@/pages/data/components/DatamapSankey";
 
 const DatabaseMap = () => {
   const [systemInfo] = useSystemList();
@@ -56,7 +57,8 @@ const DatabaseMap = () => {
               </Select.Option>
             )) }
           </Select>
-          { isInChanging && systemId &&       <Table dataSource={ dbRecords } columns={ unmapColumns }/> }
+          { isInChanging && systemId && <Table dataSource={ dbRecords } columns={ unmapColumns }/> }
+          { isInChanging && systemId && <DatamapSankey dataSource={ dbRecords }/> }
         </>
       }
     </div>
