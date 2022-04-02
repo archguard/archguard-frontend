@@ -1,5 +1,5 @@
 let CodeSupport = {
-  convertPath: function (str) {
+  convertPath: function (str: any) {
     // todo: multiple languages support
     return str
       .replace(".rs", "")
