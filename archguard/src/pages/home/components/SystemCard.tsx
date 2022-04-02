@@ -91,7 +91,7 @@ const SystemCard = (props: SystemCardProps) => {
         </Dropdown>
         <img
           style={{ margin: "30px 0", width: "180px" }}
-          src={require("@/assets/images/systemExample.png")}
+          src={require("@/assets/images/evolveLogo.png")}
           alt="example"
         />
         <div className="card-btn">{renderSystemButton(systemInfo)}</div>
