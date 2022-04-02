@@ -57,8 +57,8 @@ const DatabaseMap = () => {
               </Select.Option>
             )) }
           </Select>
-          { isInChanging && systemId && <Table dataSource={ dbRecords } columns={ unmapColumns }/> }
           { isInChanging && systemId && <DatamapSankey dataSource={ dbRecords }/> }
+          { isInChanging && systemId && <Table dataSource={ dbRecords } columns={ unmapColumns }/> }
         </>
       }
     </div>
