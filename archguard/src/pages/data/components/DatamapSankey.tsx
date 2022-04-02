@@ -29,15 +29,26 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
         if (!nodeMap[nodeName]) {
           nodeMap[nodeName] = {}
         }
+        let packageName = datum.packageName;
+        if (!nodeMap[packageName]) {
+          nodeMap[packageName] = {}
+        }
         if (!nodeMap[table]) {
           nodeMap[table] = {}
         }
 
         let linkName = datum.className + "->" + table
+        let codeLinkName = datum.packageName + "->" + datum.className
         if (!linkMap[linkName]) {
           linkMap[linkName] = 1
         } else  {
           linkMap[linkName] ++
+        }
+
+        if (!linkMap[codeLinkName]) {
+          linkMap[codeLinkName] = 1
+        } else  {
+          linkMap[codeLinkName] ++
         }
 
       }
