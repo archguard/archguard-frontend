@@ -5,6 +5,8 @@
 
 ## Development
 
+Node.js version: 16.x
+
 ### Tech decision (framework)
 
 - language：TypeScript
