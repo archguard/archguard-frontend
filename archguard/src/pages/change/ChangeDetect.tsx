@@ -1,20 +1,31 @@
 import React, { useCallback, useState } from "react";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import { Select } from "antd";
+import { Button, Select } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
-import { DatePicker} from 'antd';
+import { DatePicker } from 'antd';
+import { queryCommitByRanges } from "@/api/module/gitFile";
+import { useParams } from "umi";
 
 const { RangePicker } = DatePicker;
 
 const ChangeDetect = () => {
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
-  const [systemId, setSystemId] = useState(0);
+  // @ts-ignore
+  const [systemId, setSystemId] = useState(useParams().systemId);
+  const [timeRange, setTimeRange] = useState({
+    startTime: "",
+    endTime: ""
+  });
+  const [commits, setCommits] = useState([])
 
   // @ts-ignore
   const changeTime = useCallback((date, dateString) => {
-    console.log(date, dateString);
-  });
+    setTimeRange({
+      startTime: (date[0].unix() * 1000).toString(),
+      endTime: (date[1].unix() * 1000).toString(),
+    })
+  }, [setTimeRange]);
 
   const onSystemChange = useCallback((index: number) => {
     setIsInChanging(false)
@@ -30,6 +41,12 @@ const ChangeDetect = () => {
       }, 50)
     }
   }, [setIsInChanging]);
+
+  const queryChange = useCallback(() => {
+    queryCommitByRanges(systemId, timeRange.startTime, timeRange.endTime).then((res) => {
+      setCommits(res)
+    })
+  }, [systemId, timeRange])
 
   return (
     <div>
@@ -53,7 +70,17 @@ const ChangeDetect = () => {
             )) }
           </Select>
 
-          <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) } />
+          <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) }/>
+          <Button type="primary" onClick={ () => queryChange() } disabled={ timeRange.startTime === "" }>
+            确定
+          </Button>
+
+          <>
+            { commits.map((commit) => (
+              <p>{ commit }</p>
+            ))
+            }
+          </>
         </>
       }
     </div>

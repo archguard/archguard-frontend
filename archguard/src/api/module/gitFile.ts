@@ -31,9 +31,22 @@ export function getGitPathChanges(systemId: String) {
     method: "GET",
   });
 }
+
 export function queryUnstableFiles(systemId: String) {
   return axios<GitPathChange[]>({
     url: `/api/systems/${systemId}/change/unstable-file`,
+    method: "GET",
+  });
+}
+
+export function queryCommitByRanges(systemId: String, startTime: String, endTime: String) {
+  console.log(systemId, systemId, endTime)
+  return axios<string[]>({
+    url: `/api/systems/${systemId}/change/commit-ids`,
+    params: {
+      startTime,
+      endTime,
+    },
     method: "GET",
   });
 }
