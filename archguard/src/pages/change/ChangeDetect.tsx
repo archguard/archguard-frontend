@@ -1,12 +1,20 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Select } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
+import { DatePicker} from 'antd';
+
+const { RangePicker } = DatePicker;
 
 const ChangeDetect = () => {
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
   const [systemId, setSystemId] = useState(0);
+
+  // @ts-ignore
+  const changeTime = useCallback((date, dateString) => {
+    console.log(date, dateString);
+  });
 
   const onSystemChange = useCallback((index: number) => {
     setIsInChanging(false)
@@ -44,6 +52,8 @@ const ChangeDetect = () => {
               </Select.Option>
             )) }
           </Select>
+
+          <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) } />
         </>
       }
     </div>
