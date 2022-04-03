@@ -20,20 +20,20 @@ export function queryHotFiles() {
   const systemId = storage.getSystemId();
 
   return axios<gitFile[]>({
-    url: `/api/systems/${systemId}/git/hot-files`,
+    url: `/api/systems/${systemId}/change/hot-files`,
     method: "GET",
   });
 }
 
 export function getGitPathChanges(systemId: String) {
   return axios<GitPathChange[]>({
-    url: `/api/systems/${systemId}/git/path-change-count`,
+    url: `/api/systems/${systemId}/change/path-change-count`,
     method: "GET",
   });
 }
 export function queryUnstableFiles(systemId: String) {
   return axios<GitPathChange[]>({
-    url: `/api/systems/${systemId}/git/unstable-file`,
+    url: `/api/systems/${systemId}/change/unstable-file`,
     method: "GET",
   });
 }
