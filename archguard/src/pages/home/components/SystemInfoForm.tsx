@@ -101,11 +101,11 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         style={{ display: current === 0 ? 'initial' : 'none' }}
       >
         <Select>
-          {["Jvm", "TypeScript", "Golang", "Python", "C#", "JavaScript", "Kotlin", "Java"].map((value) => (
-            <Select.Option value={value} key={value}>
-              {value}
+          { ["Java", "Kotlin", "TypeScript", "Golang", "Python", "C#", "JavaScript", "Jvm"].map((value) => (
+            <Select.Option value={ value } key={ value }>
+              { value === "Jvm" ? "JVM（不推荐）" : value }
             </Select.Option>
-          ))}
+          )) }
         </Select>
       </Form.Item>
       <Form.List name="repo">
