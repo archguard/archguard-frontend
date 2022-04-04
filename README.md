@@ -19,11 +19,12 @@ Node.js version: 16.x
 - lint：ESLint
 - build tool：yarn
 
-### local setup
+### Local setup
 
 ```
+cd archguard
 yarn install
-yarn build
+yarn start
 ```
 
 ### Docker setup
