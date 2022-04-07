@@ -123,7 +123,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
                 >
                   *
                   </span>
-                <span>仓库地址</span>
+                <span>仓库地址（如：https://github.com/archguard/archguard）</span>
               </div>
               {fields.map((field) => (
                 <div style={{ display: "flex" }} key={field.key}>
