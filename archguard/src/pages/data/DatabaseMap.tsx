@@ -40,6 +40,7 @@ const DatabaseMap = () => {
     <div>
       { systemInfo?.value &&
         <>
+          <p>当前支持 Java/Kotlin 中的 JPA/JDBI</p>
           <Select
             style={ { width: 150, color: "#000" } }
             bordered={ true }
