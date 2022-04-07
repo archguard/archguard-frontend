@@ -87,7 +87,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         <Select>
           {["GIT", "SVN", "LOCAL"].map((value) => (
             <Select.Option value={value} key={value}>
-              {value}
+              { value === "LOCAL" ? "LOCAL（仅限于本地开发时）" : value }
             </Select.Option>
           ))}
         </Select>
