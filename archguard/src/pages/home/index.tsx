@@ -226,7 +226,7 @@ const Home = () => {
           <Tabs.TabPane tab={ formatMessage({ id: 'DATABASE_MAP' }) } key="database-map">
             <DatabaseMap />
           </Tabs.TabPane>
-          <Tabs.TabPane tab={ formatMessage({ id: 'CHANGE_DETECT' }) } key="hotspot-map">
+          <Tabs.TabPane tab={ formatMessage({ id: 'CHANGE_DETECT' }) } key="hotspot-map" disabled>
             <ChangeDetect />
           </Tabs.TabPane>
         </Tabs>
