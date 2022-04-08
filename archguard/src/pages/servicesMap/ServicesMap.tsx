@@ -5,13 +5,15 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerByIds } from "@/api/module/containerService";
 import ServicesMapGraph from "@/pages/servicesMap/graph/ServicesMapGraph";
 import { urlMapping } from "@/pages/servicesMap/urlMapping";
+import { useIntl } from 'umi';
 
 function ServicesMap() {
-  const [ systemInfo ] = useSystemList();
-  const [ selectedIds, setSelectedIds ] = useState([] as any[])
-  const [ links, setLinks ] = useState([])
-  const [ elements, setElements ] = useState({ nodes: [], edges: [] })
-  const [ unmapUrls, setUnmapUrls ] = useState([])
+  const { formatMessage } = useIntl();
+  const [systemInfo] = useSystemList();
+  const [selectedIds, setSelectedIds] = useState([] as any[])
+  const [links, setLinks] = useState([])
+  const [elements, setElements] = useState({ nodes: [], edges: [] })
+  const [unmapUrls, setUnmapUrls] = useState([])
 
   const handleChange = useCallback((value: string[]) => {
     setSelectedIds(value)
@@ -40,17 +42,18 @@ function ServicesMap() {
   }, [selectedIds, setLinks, setElements, setUnmapUrls]);
 
   return (<div>
-    <p>API 消费端：前端 Axios、UMI-Request，后端：Java Spring + RestTemplate、Kotlin Spring + RestTemplate </p>
-    <p>API 生产端：支持 Java/Kotlin + Spring、C# + .Net</p>
-    <p>新的语言和框架支持，请移步：
-      <a href="https://github.com/archguard/scanner" target={ "_blank" } rel="noreferrer">https://github.com/archguard/scanner</a>
+    <p>{ formatMessage({ id: 'SERVICES_MAP_TIPS' }) }
+      <a href="https://github.com/archguard/scanner"
+         target={ "_blank" }
+         rel="noreferrer">https://github.com/archguard/scanner</a>
     </p>
 
     { systemInfo?.value &&
       <>
         <Row gutter={ 24 } key="dependence-module">
           <Col span={ 8 }>
-            <Select mode="multiple" style={ { width: '100%' } } placeholder="请选择系统" onChange={ handleChange }>
+            <Select mode="multiple" style={ { width: '100%' } } placeholder={ formatMessage({ id: 'SELECT_SYSTEM' }) }
+                    onChange={ handleChange }>
               { systemInfo?.value!.map((system, index) => (
                 <Select.Option
                   value={ system.id }
@@ -67,12 +70,12 @@ function ServicesMap() {
               onClick={ () => createMapping() }
               style={ { marginBottom: "16px" } }
             >
-              查询
+              { formatMessage({ id: 'QUERY' }) }
             </Button>
           </Col>
         </Row>
-        { elements && elements.nodes && elements.nodes.length > 0 && <ServicesMapGraph datasource={elements}/> }
-        { links && links.length > 0 && <ServicesMapMapping datasource={links} unmapUrls={unmapUrls}/> }
+        { elements && elements.nodes && elements.nodes.length > 0 && <ServicesMapGraph datasource={ elements }/> }
+        { links && links.length > 0 && <ServicesMapMapping datasource={ links } unmapUrls={ unmapUrls }/> }
       </>
     }
   </div>)

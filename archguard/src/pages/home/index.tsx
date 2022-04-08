@@ -218,10 +218,10 @@ const Home = () => {
             </Row>
           </Tabs.TabPane>
           <Tabs.TabPane tab={ formatMessage({ id: 'SERVICES_MAP' }) } key="services-map">
-            <ServicesMap/>
+            <ServicesMap />
           </Tabs.TabPane>
           <Tabs.TabPane tab={ formatMessage({ id: 'CODE_ANALYSIS' }) } key="code-analysis">
-            <CodeAnalysis/>
+            <CodeAnalysis />
           </Tabs.TabPane>
           <Tabs.TabPane tab={ formatMessage({ id: 'DATABASE_MAP' }) } key="database-map">
             <DatabaseMap />
