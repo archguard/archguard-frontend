@@ -44,7 +44,7 @@ const ChangeDetect = () => {
 
   const queryChange = useCallback(() => {
     queryCommitByRanges(systemId, timeRange.startTime, timeRange.endTime).then((res) => {
-      setCommits(res)
+      setCommits(res as any)
     })
   }, [systemId, timeRange])
 

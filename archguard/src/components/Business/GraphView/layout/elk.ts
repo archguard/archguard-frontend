@@ -38,6 +38,7 @@ export class ELKLayout {
       ...options,
     };
     this.options = options;
+    // @ts-ignore
     this.elk = new ELK({ defaultLayoutOptions: defaultOptions });
   }
   getWidth(node: Node) {
