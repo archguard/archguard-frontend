@@ -18,8 +18,8 @@ const ApiResourceTree = (props: ApiResourceTreeProps) => {
 
     let apiMap: any = {}
     for (let element of dataSource) {
-      apiMap[element.sourceUrl] = {
-        name: element.sourceUrl,
+      apiMap["root/" + element.sourceUrl] = {
+        name: "root/" + element.sourceUrl,
         value: element.className + "." + element.methodName
       }
     }
