@@ -1,12 +1,14 @@
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useState } from "react";
 import React from 'react';
+import { useIntl } from "umi";
 
 interface DatamapSankeyProps {
   dataSource: any[]
 }
 
 const DatamapSankey = (props: DatamapSankeyProps) => {
+  const { formatMessage } = useIntl();
   const [dataSource] = useState(props.dataSource);
   const [options, setOptions] = useState(null as any)
 
@@ -74,7 +76,7 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
     setOptions({
       // @ts-ignore
       title: {
-        text: '数据库依赖图'
+        text: formatMessage({ id: 'DATAMAP_DEP_CALL_MAP'})
       },
       tooltip: {
         trigger: 'item',

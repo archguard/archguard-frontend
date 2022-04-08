@@ -4,7 +4,7 @@ import { BaButton } from "@/components/Basic/Button/Button";
 import { BaLabel } from "@/components/Basic/Label/Label";
 import { BuGrade } from "@/components/Business/Grade/Grade";
 import { useOverviewCount } from "@/api/module/codeLine";
-import { history, useParams } from "umi";
+import { history, useIntl, useParams } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerServices } from "@/api/module/containerService";
@@ -16,7 +16,7 @@ import { DonutChart } from "bizcharts";
 import ApiResourceTree from "@/pages/system/systemSummary/Summary/components/ApiResourceTree";
 
 function Summary() {
-  // todo: load system id from url
+  const { formatMessage } = useIntl();
   const { data: overviewCount } = useOverviewCount();
   const [services, setServices] = useState({} as any);
   const [unstableFiles, setUnstableFiles] = useState([]);
@@ -63,15 +63,15 @@ function Summary() {
   ];
 
   const lineCountColumns = [
-    { title: '语言', dataIndex: 'language', key: 'language', },
-    { title: '行数', dataIndex: 'lineCount', key: 'lineCount', },
-    { title: '文件数', dataIndex: 'fileCount', key: 'fileCount', },
+    { title: formatMessage({ id: 'SYSTEM_OVERVIEW.LANGUAGE' }), dataIndex: 'language', key: 'language', },
+    { title: formatMessage({ id: 'SYSTEM_OVERVIEW.LINE_COUNT' }), dataIndex: 'lineCount', key: 'lineCount', },
+    { title: formatMessage({ id: 'SYSTEM_OVERVIEW.FILE_COUNT' }), dataIndex: 'fileCount', key: 'fileCount', },
   ];
 
   const unstableColumns = [
-    { title: '路径', dataIndex: 'path', key: 'path', },
-    { title: '变更', dataIndex: 'changes', key: 'changes', },
-    { title: '行数', dataIndex: 'lineCount', key: 'lineCount', },
+    { title: formatMessage({ id: 'SYSTEM_OVERVIEW.PATH' }), dataIndex: 'path', key: 'path', },
+    { title: formatMessage({ id: 'SYSTEM_OVERVIEW.CHANGES' }), dataIndex: 'changes', key: 'changes', },
+    { title: formatMessage({ id: 'SYSTEM_OVERVIEW.LINES' }), dataIndex: 'lineCount', key: 'lineCount', },
   ];
 
   return (
@@ -81,17 +81,20 @@ function Summary() {
           <div className={ styles.name }>{ systemName }</div>
         </div>
         <BaButton onClick={ () => history.push(`/${ storage.getSystemId() }/systemEvolving/MeasureIndicators`) }>
-          查看指标看板
+          { formatMessage({ id: 'SYSTEM_OVERVIEW.VIEW_METRIC_DASHBOARD' }) }
         </BaButton>
       </div>
 
       <div className={ styles.body }>
         <div className={ styles.detail }>
           <div className={ styles.overview }>
-            <BaLabel value={ overviewCount?.repoCount } text="代码仓数"/>
-            <BaLabel value={ overviewCount?.moduleCount } text="模块数"/>
-            <BaLabel value={ overviewCount?.contributorCount } text="代码贡献人数"/>
-            <BuGrade text="架构质量等级" grade={ overviewCount?.qualityLevel }/>
+            {/*<BaLabel value={ overviewCount?.repoCount } text="代码仓数"/>*/ }
+            <BaLabel value={ overviewCount?.moduleCount }
+                     text={ formatMessage({ id: 'SYSTEM_OVERVIEW.MODULE_COUNT' }) }/>
+            <BaLabel value={ overviewCount?.contributorCount }
+                     text={ formatMessage({ id: 'SYSTEM_OVERVIEW.CONTRIBUTORS' }) }/>
+            <BuGrade text={ formatMessage({ id: 'SYSTEM_OVERVIEW.ARCH_LEVEL' }) }
+                     grade={ overviewCount?.qualityLevel }/>
           </div>
         </div>
         <div className={ styles.changes }>
@@ -112,20 +115,20 @@ function Summary() {
           />
         </div>
       </div>
-      <h2>不稳定性</h2>
+      <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.UNSTABLE' }) }</h2>
       <div className={ styles.physical }>
         <div className={ styles.changes }>
           <div className={ styles.graph }>
-            <h2>提交变更频率（大小）</h2>
-            <FileSizing systemId={systemId}/>
+            <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.CHANGE_FREQUENCY_SIZE' }) }</h2>
+            <FileSizing systemId={ systemId }/>
           </div>
           <div className={ styles.graph }>
-            <h2>提交变更频率（大小）-文件长度（颜色深浅）</h2>
-            <FileChangeSizing systemId={systemId}/>
+            <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.CHANGE_FREQUENCY_SIZE_LINE_COUNT' }) }</h2>
+            <FileChangeSizing systemId={ systemId }/>
           </div>
         </div>
         <div>
-          <h2>不稳定文件（Top 50 行数 + Top 50 变更）</h2>
+          <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.UNSTABLE_TOP_50_FILE' }) }</h2>
           <Table dataSource={ unstableFiles } columns={ unstableColumns } pagination={
             { defaultPageSize: 5 }
           }/>
@@ -133,12 +136,12 @@ function Summary() {
       </div>
       <div className={ styles.physical }>
         <div className={ styles.demand }>
-          <h2>API 使用清单 ({ services["demands"]?.length })</h2>
+          <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.API_DEMAND_LIST' }) } ({ services["demands"]?.length })</h2>
           <Table dataSource={ services["demands"] } columns={ demandColumns }/>
         </div>
         { services["resources"]?.length &&
           <div className={ styles.resource }>
-            <h2>API 提供清单 ({ services["resources"]?.length })</h2>
+            <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.API_RESOURCE_LIST' }) } ({ services["resources"]?.length })</h2>
             <Table dataSource={ services["resources"] } columns={ resourceColumns }/>
             <ApiResourceTree dataSource={ services["resources"] }/>
           </div>

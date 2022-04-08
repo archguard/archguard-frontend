@@ -3,8 +3,10 @@ import Dependence from "@/pages/dependence";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Select } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
+import { useIntl } from "umi";
 
 const CodeAnalysis = () => {
+  const { formatMessage } = useIntl();
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
   const [systemId, setSystemId] = useState(0);
@@ -32,7 +34,7 @@ const CodeAnalysis = () => {
             style={ { width: 150, color: "#000" } }
             bordered={ true }
             showArrow={ true }
-            placeholder="请选择系统"
+            placeholder={ formatMessage({ id: 'SELECT_SYSTEM' }) }
             onChange={ (index) => onSystemChange(index) }
           >
             { systemInfo?.value!.map((system, index) => (

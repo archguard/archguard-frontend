@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import styles from "./ServicesMapMapping.less"
 import { Table } from "antd";
+import { useIntl } from "umi";
 
 interface ServicesMapMappingProps {
   datasource: any[],
@@ -9,6 +10,7 @@ interface ServicesMapMappingProps {
 }
 
 const ServicesMapMapping = (props: ServicesMapMappingProps) => {
+  const { formatMessage } = useIntl();
   const [data] = useState(props.datasource);
   const [unmapUrls] = useState(props.unmapUrls);
   const svgRef = useRef(null);
@@ -116,7 +118,7 @@ ${ (incomingCount(d)) } incoming ←`);
   return <div className={ styles.service }>
     <svg ref={ svgRef } width={ width } height={ height }/>
     <div>
-      <h2>未匹配到的消费端 URL</h2>
+      <h2>{ formatMessage({ id: 'UNMATCH_URL'}) }</h2>
       <Table dataSource={ unmapUrls } columns={ unmapColumns }/>
     </div>
   </div>;

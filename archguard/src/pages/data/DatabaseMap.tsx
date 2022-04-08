@@ -3,10 +3,11 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Select, Table } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
 import { queryDatamap } from "@/api/datamap/datamap";
-import { useParams } from "umi";
+import { useIntl, useParams } from "umi";
 import DatamapSankey from "@/pages/data/components/DatamapSankey";
 
 const DatabaseMap = () => {
+  const { formatMessage } = useIntl();
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
   // @ts-ignore
@@ -40,12 +41,12 @@ const DatabaseMap = () => {
     <div>
       { systemInfo?.value &&
         <>
-          <p>当前支持 Java/Kotlin 中的 JPA/JDBI</p>
+          <p>{ formatMessage({ id: 'DATABASE_MAP_TIPS' }) }</p>
           <Select
             style={ { width: 150, color: "#000" } }
             bordered={ true }
             showArrow={ true }
-            placeholder="请选择系统"
+            placeholder={ formatMessage({ id: 'SELECT_SYSTEM' }) }
             onChange={ (index) => onSystemChange(index) }
           >
             { systemInfo?.value!.map((system, index) => (

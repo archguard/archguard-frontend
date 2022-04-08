@@ -42,7 +42,11 @@ function ServicesMap() {
   }, [selectedIds, setLinks, setElements, setUnmapUrls]);
 
   return (<div>
-    <p>{ formatMessage({ id: 'SERVICES_MAP_TIPS' }) }
+    <p>{ formatMessage({ id: 'SERVICES_MAP_TIPS' }).split(/\\n/)
+      .reduce((result: any, word) => {
+        return result.length ? [...result, <br/>, word] : [word];
+      }, [])  }
+
       <a href="https://github.com/archguard/scanner"
          target={ "_blank" }
          rel="noreferrer">https://github.com/archguard/scanner</a>
