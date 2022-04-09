@@ -26,6 +26,7 @@ export default {
   SCANNING: "Scanning",
   ENTER: "Enter",
   CANCEL_SCAN: "Cancel Scan",
+  VIEW_LOG: "View log",
   SCAN_FAILURE_RETRY: "Failure, ReScan",
 
   'SYSTEM_OVERVIEW.VIEW_METRIC_DASHBOARD': 'View metrics',

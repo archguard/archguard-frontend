@@ -119,10 +119,15 @@ const Home = () => {
     });
   };
 
+  const onViewLog = (systemInfo: SystemInfo) => {
+    //
+  };
+
   const onSubmit = () => {
     ref.current.submit();
     setCurrent(0);
   };
+
   const onCancel = () => {
     setModalVisible(false);
     ref.current.clear();
@@ -212,6 +217,7 @@ const Home = () => {
                     onEdit={ () => onEditClick(systemInfo) }
                     onCancel={ () => onCancelClick(systemInfo) }
                     onRemove={ () => onRemoveClick(systemInfo) }
+                    viewLog={ () => onViewLog(systemInfo) }
                   />
                 </Col>
               )) }

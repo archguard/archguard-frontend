@@ -13,11 +13,12 @@ interface SystemCardProps {
   onRemove?(): void;
   onScanning?(): void;
   onCancel?(): void;
+  viewLog?(): void;
 }
 
 const SystemCard = (props: SystemCardProps) => {
   const { formatMessage } = useIntl();
-  const { systemInfo, onClick, onScanning, onEdit, onRemove, onCancel } = props;
+  const { systemInfo, onClick, onScanning, onEdit, onRemove, onCancel, viewLog } = props;
 
   const menuClick = (key: string) => {
     switch (key) {
@@ -26,6 +27,9 @@ const SystemCard = (props: SystemCardProps) => {
         break;
       case "editSystemInfo":
         onEdit!();
+        break;
+      case "viewLog":
+        viewLog!();
         break;
       case "removeSystem":
         onRemove!();
@@ -45,6 +49,7 @@ const SystemCard = (props: SystemCardProps) => {
         systemInfo && systemInfo.scanned !== "SCANNING" &&
         <>
           <Menu.Item key="reScanning">{formatMessage({ id: 'RE_SCAN'})}</Menu.Item>
+          <Menu.Item key="viewLog" disabled>{formatMessage({ id: 'VIEW_LOG'})}</Menu.Item>
           <Menu.Item key="editSystemInfo">{formatMessage({ id: 'MODIFY_SYSTEM'})}</Menu.Item>
           <Menu.Item danger key="removeSystem">{formatMessage({ id: 'DELETE_SYSTEM'})}</Menu.Item>
         </>
