@@ -49,7 +49,7 @@ const SystemCard = (props: SystemCardProps) => {
         systemInfo && systemInfo.scanned !== "SCANNING" &&
         <>
           <Menu.Item key="reScanning">{formatMessage({ id: 'RE_SCAN'})}</Menu.Item>
-          <Menu.Item key="viewLog" disabled>{formatMessage({ id: 'VIEW_LOG'})}</Menu.Item>
+          <Menu.Item key="viewLog">{formatMessage({ id: 'VIEW_LOG'})}</Menu.Item>
           <Menu.Item key="editSystemInfo">{formatMessage({ id: 'MODIFY_SYSTEM'})}</Menu.Item>
           <Menu.Item danger key="removeSystem">{formatMessage({ id: 'DELETE_SYSTEM'})}</Menu.Item>
         </>

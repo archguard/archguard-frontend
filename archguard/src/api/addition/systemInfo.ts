@@ -45,3 +45,16 @@ export function deleteSystem(systemId: number) {
     method: "DELETE",
   });
 }
+
+interface SystemLog {
+  id: string,
+  workdir: string,
+  log: string
+}
+
+export function viewSystemLog(systemId: number) {
+  return axios<SystemLog>({
+    url: `/api/system-info/${systemId}/log`,
+    method: "GET",
+  });
+}

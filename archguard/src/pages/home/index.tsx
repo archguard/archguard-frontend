@@ -8,7 +8,7 @@ import {
   SystemInfo,
   createSystemInfo,
   updateSystemInfo,
-  deleteSystem,
+  deleteSystem, viewSystemLog,
 } from "@/api/addition/systemInfo";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
@@ -16,7 +16,7 @@ import SystemCard from "./components/SystemCard";
 import SystemInfoForm from "./components/SystemInfoForm";
 import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "../help";
-import {setLocale, useIntl} from "@@/plugin-locale/localeExports";
+import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
 import ServicesMap from "../servicesMap/ServicesMap";
 import CodeAnalysis from "@/pages/code";
 import DatabaseMap from '../data/DatabaseMap';
@@ -60,7 +60,7 @@ const Home = () => {
     const { id } = systemInfo;
     storage.setSystemId(id);
     storage.setSystemLanguage(systemInfo.language);
-    window.location.href = `/${id}/systemSummary/Summary`;
+    window.location.href = `/${ id }/systemSummary/Summary`;
   };
 
   const onSubmitSystemInfo = (systemInfo: SystemInfo) => {
@@ -109,7 +109,7 @@ const Home = () => {
     Modal.confirm({
       type: "error",
       title: "删除",
-      content: `确定要删除 ${systemInfo.systemName} 系统吗？`,
+      content: `确定要删除 ${ systemInfo.systemName } 系统吗？`,
       centered: true,
       onOk: () => {
         deleteSystem(systemInfo.id).then(() => {
@@ -120,7 +120,19 @@ const Home = () => {
   };
 
   const onViewLog = (systemInfo: SystemInfo) => {
-    //
+    viewSystemLog(systemInfo.id).then(({ log }) => {
+      Modal.confirm({
+        type: "info",
+        title: "日志",
+        style: { whiteSpace: "pre" },
+        width: "80%",
+        content: log.split(/\\n/)
+          .reduce((result: any, word) => {
+            return result.length ? [...result, <br/>, word] : [word];
+          }, []),
+        centered: true
+      });
+    })
   };
 
   const onSubmit = () => {
@@ -142,7 +154,9 @@ const Home = () => {
 
   const nextButton = () => {
     const errorList = ref.current.validateFields();
-    const errorResult = Object.values(errorList).filter((t: any) => { return t.errors.length > 0 }).length;
+    const errorResult = Object.values(errorList).filter((t: any) => {
+      return t.errors.length > 0
+    }).length;
     if (errorResult === 0) {
       setCurrent(current + 1);
     }
@@ -224,16 +238,16 @@ const Home = () => {
             </Row>
           </Tabs.TabPane>
           <Tabs.TabPane tab={ formatMessage({ id: 'SERVICES_MAP' }) } key="services-map">
-            <ServicesMap />
+            <ServicesMap/>
           </Tabs.TabPane>
           <Tabs.TabPane tab={ formatMessage({ id: 'CODE_ANALYSIS' }) } key="code-analysis">
-            <CodeAnalysis />
+            <CodeAnalysis/>
           </Tabs.TabPane>
           <Tabs.TabPane tab={ formatMessage({ id: 'DATABASE_MAP' }) } key="database-map">
-            <DatabaseMap />
+            <DatabaseMap/>
           </Tabs.TabPane>
           <Tabs.TabPane tab={ formatMessage({ id: 'CHANGE_DETECT' }) } key="hotspot-map" disabled>
-            <ChangeDetect />
+            <ChangeDetect/>
           </Tabs.TabPane>
         </Tabs>
       </div>
