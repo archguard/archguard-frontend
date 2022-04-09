@@ -193,6 +193,13 @@ const Home = () => {
               </Button>
             </div>
             <div>
+              <a href="https://archguard.org/docs/faq.html" target={ "_blank" }>
+                <Button type="link" style={ { color: "#ffffff" } } icon={ <QuestionCircleOutlined/> }>
+                  FAQ
+                </Button>
+              </a>
+            </div>
+            <div>
               { getFeature(FEATURES.INSIDE_FEATURE) && (
                 <Button
                   type="link"
