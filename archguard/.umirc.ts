@@ -11,7 +11,7 @@ export default defineConfig({
   locale: {
     default: 'zh-CN'
   },
-  devServer: { port: 8080 },
+  devServer: { port: 8081 },
   define: {
     "process.env.BUILD_TARGET": process.env.BUILD_TARGET,
   },
