@@ -124,12 +124,16 @@ const Home = () => {
       Modal.confirm({
         type: "info",
         title: "日志",
+        cancelText: "创建 issue",
         style: { whiteSpace: "pre" },
         width: "80%",
         content: log.split(/\\n/)
           .reduce((result: any, word) => {
             return result.length ? [...result, <br/>, word] : [word];
           }, []),
+        onCancel: () => {
+          window.open("https://github.com/archguard/archguard/issues/new?assignees=&labels=&template=bug_report.md&title=")
+        },
         centered: true
       });
     })
