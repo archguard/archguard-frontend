@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import { Button, Select, Input, Row, Col, Form } from "antd";
+import { Button, Select, Input, Row, Col, Form, Space } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
 import { DatePicker } from 'antd';
 import { queryCommitByIds, queryCommitByRanges, queryHistory } from "@/api/module/gitFile";
@@ -64,45 +64,49 @@ const ChangeDetect = () => {
     <div>
       { systemInfo?.value &&
         <>
-          <Select
-            style={ { width: 150, color: "#000" } }
-            bordered={ true }
-            showArrow={ true }
-            placeholder="请选择系统"
-            onChange={ (index) => onSystemChange(index) }
-          >
-            { systemInfo?.value!.map((system, index) => (
-              <Select.Option
-                disabled={ system.scanned !== "SCANNED" }
-                value={ system.id }
-                key={ `${ system.systemName }_${ index }` }
-              >
-                { system.systemName }
-              </Select.Option>
-            )) }
-          </Select>
+          <Space direction="vertical" size="middle">
 
-          <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) }/>
-          <Button type="primary" onClick={ () => queryByTime() } disabled={ timeRange.startTime === "" }>
-            分析（通过时间）
-          </Button>
+            <Select
+              style={ { width: 150, color: "#000" } }
+              bordered={ true }
+              showArrow={ true }
+              placeholder="请选择系统"
+              onChange={ (index) => onSystemChange(index) }
+            >
+              { systemInfo?.value!.map((system, index) => (
+                <Select.Option
+                  disabled={ system.scanned !== "SCANNED" }
+                  value={ system.id }
+                  key={ `${ system.systemName }_${ index }` }
+                >
+                  { system.systemName }
+                </Select.Option>
+              )) }
+            </Select>
 
-          <Form name="basic" onFinish={ queryByCommitId } autoComplete="off">
-            <Row>
-              <Form.Item label="起始 commit id " name="since">
-                <Input/>
-              </Form.Item>
+            <Space size="middle">
+              <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) }/>
+              <Button type="primary" onClick={ () => queryByTime() } disabled={ timeRange.startTime === "" }>
+                分析
+              </Button>
+            </Space>
 
-              <Form.Item label="结束 commit id " name="until">
-                <Input/>
-              </Form.Item>
+            <Form name="basic" onFinish={ queryByCommitId } autoComplete="off">
+              <Row>
+                <Form.Item label="起始 commit id " name="since">
+                  <Input/>
+                </Form.Item>
 
-              <Form.Item wrapperCol={ { offset: 8, span: 16 } }>
-                <Button type="primary" htmlType="submit">分析</Button>
-              </Form.Item>
-            </Row>
+                <Form.Item label="结束 commit id " name="until">
+                  <Input/>
+                </Form.Item>
 
-          </Form>
+                <Form.Item wrapperCol={ { offset: 8, span: 16 } }>
+                  <Button type="primary" htmlType="submit">分析</Button>
+                </Form.Item>
+              </Row>
+            </Form>
+          </Space>
 
           <>
             { !!commits &&
