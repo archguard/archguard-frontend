@@ -60,3 +60,10 @@ export function queryCommitByIds(systemId: String, since: String, until: String)
     method: "GET",
   });
 }
+
+export function queryHistory(systemId: String) {
+  return axios<any[]>({
+    url: `/api/systems/${systemId}/diff/influence/history`,
+    method: "GET",
+  });
+}

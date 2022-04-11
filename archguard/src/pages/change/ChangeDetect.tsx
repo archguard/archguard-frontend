@@ -3,8 +3,9 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Button, Select, Input, Row, Col, Form } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
 import { DatePicker } from 'antd';
-import { queryCommitByIds, queryCommitByRanges } from "@/api/module/gitFile";
+import { queryCommitByIds, queryCommitByRanges, queryHistory } from "@/api/module/gitFile";
 import { useParams } from "umi";
+import RelationMap from "@/pages/change/RelationMap";
 
 const { RangePicker } = DatePicker;
 
@@ -17,7 +18,7 @@ const ChangeDetect = () => {
     startTime: "",
     endTime: ""
   });
-  const [commits, setCommits] = useState([])
+  const [commits, setCommits] = useState(null)
 
   // @ts-ignore
   const changeTime = useCallback((date, dateString) => {
@@ -35,30 +36,29 @@ const ChangeDetect = () => {
       storage.setSystemLanguage(system.language);
 
       setSystemId(system.id)
+      queryHistory(String(system.id)).then((res) => {
+        setCommits(res as any)
+      })
+
       // todo: is a dirty fix for old code which no fetch system id
       setTimeout(() => {
         setIsInChanging(true)
       }, 50)
     }
-  }, [setIsInChanging]);
+  }, [setIsInChanging, setCommits]);
 
   const queryByTime = useCallback(() => {
     queryCommitByRanges(systemId, timeRange.startTime, timeRange.endTime).then((res) => {
       setCommits(res as any)
     })
   }, [systemId, timeRange])
-  useCallback(() => {
-    queryCommitByRanges(systemId, timeRange.startTime, timeRange.endTime).then((res) => {
-      setCommits(res as any)
-    })
-  }, [systemId, timeRange]);
 
   const queryByCommitId = useCallback((value) => {
     queryCommitByIds(systemId, value.since, value.until).then((res) => {
     // queryCommitByIds(systemId, "aa2b5379", "965be8c2").then((res) => {
       setCommits(res as any)
     })
-  }, [systemId])
+  }, [systemId, setCommits])
 
   return (
     <div>
@@ -105,8 +105,13 @@ const ChangeDetect = () => {
           </Form>
 
           <>
-            { commits.map((commit) => (
-              <p>{ commit }</p>
+            { !!commits &&
+              // @ts-ignore
+              commits.map((commit: any) => (
+              <>
+                <p> Function: {commit.packageName}.{commit.className}</p>
+                <RelationMap dataSource={ JSON.parse(commit.relations) }/>
+              </>
             ))
             }
           </>
