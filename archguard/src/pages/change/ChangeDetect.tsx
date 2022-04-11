@@ -136,7 +136,7 @@ const ChangeDetect = () => {
           { isInChanging &&
             <>
               { !!relations && relations.length > 0 &&
-                <RelationMap dataSource={ relations } title={ formatMessage({ id: 'ANALYSIS' }) }/> }
+                <RelationMap dataSource={ relations } title={ formatMessage({ id: 'CHANGE_DETECT_OVERVIEW' }) }/> }
               { !!commits &&
                 // @ts-ignore
                 commits.map((commit: any, index) => (

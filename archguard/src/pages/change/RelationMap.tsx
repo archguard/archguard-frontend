@@ -1,7 +1,6 @@
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useState } from "react";
 import React from 'react';
-import { useIntl } from "umi";
 
 interface DatamapSankeyProps {
   dataSource: any[],
@@ -9,10 +8,9 @@ interface DatamapSankeyProps {
 }
 
 const RelationMap = (props: DatamapSankeyProps) => {
-  const { formatMessage } = useIntl();
   const [dataSource] = useState(props.dataSource);
   const [options, setOptions] = useState(null as any)
-  const title = useState(props.title)
+  const [title] = useState(props.title)
 
   useEffect(() => {
     if (!dataSource) {
