@@ -49,16 +49,23 @@ const ChangeDetect = () => {
   }, [setIsInChanging, setCommits]);
 
   const queryByTime = useCallback(() => {
+    setIsInChanging(true)
+
     queryCommitByRanges(systemId, timeRange.startTime, timeRange.endTime).then((res) => {
+      setIsInChanging(false)
+
       setCommits(res as any)
     })
-  }, [systemId, timeRange, setCommits])
+  }, [systemId, timeRange, setCommits, setRelations])
 
   const queryByCommitId = useCallback((value) => {
+    setIsInChanging(true)
+
     queryCommitByIds(systemId, value.since, value.until).then((res) => {
+      setIsInChanging(false)
       setCommits(res as any)
     })
-  }, [systemId, setCommits])
+  }, [systemId, setCommits, setRelations])
 
   useEffect(() => {
     if (!commits) return;
@@ -69,7 +76,6 @@ const ChangeDetect = () => {
       results = results.concat(JSON.parse(relation.relations))
     }
 
-    console.log(results)
     // @ts-ignore
     setRelations(results)
   }, [commits, setRelations])
@@ -126,19 +132,21 @@ const ChangeDetect = () => {
             }
           </Space>
 
-          <>
-            { !!relations && relations.length > 0 && <RelationMap dataSource={ relations }/> }
-            { !!commits &&
+          { isInChanging &&
+            <>
+              { !!relations && relations.length > 0 && <RelationMap dataSource={ relations }/> }
+              { !!commits &&
                 // @ts-ignore
                 commits.map((commit: any, index) => (
-                  <div key={ `${ commit }_${ index }` }>
+                  <div key={ `commit_${ index }` }>
                     <p> sinceRev: {commit.sinceRev}, untilRev: {commit.untilRev}, Function: {commit.packageName}.{commit.className}</p>
                     {/* "[]".length = 2 */}
                     { commit.relations.length > 2 && <RelationMap dataSource={ JSON.parse(commit.relations) }/> }
                   </div>
                 ))
-            }
-          </>
+              }
+            </>
+          }
         </>
       }
     </div>
