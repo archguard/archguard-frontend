@@ -51,7 +51,7 @@ export function queryCommitByRanges(systemId: String, startTime: String, endTime
 }
 
 export function queryCommitByIds(systemId: String, since: String, until: String) {
-  return axios<string[]>({
+  return axios<any[]>({
     url: `/api/systems/${systemId}/diff/influence/commit`,
     params: {
       since,

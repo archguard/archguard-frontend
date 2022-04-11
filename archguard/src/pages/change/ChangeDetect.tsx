@@ -55,7 +55,8 @@ const ChangeDetect = () => {
 
   const queryByCommitId = useCallback((value) => {
     queryCommitByIds(systemId, value.since, value.until).then((res) => {
-
+    // queryCommitByIds(systemId, "aa2b5379", "965be8c2").then((res) => {
+      setCommits(res as any)
     })
   }, [systemId])
 
@@ -86,22 +87,22 @@ const ChangeDetect = () => {
             分析（通过时间）
           </Button>
 
-            <Form name="basic" onFinish={ queryByCommitId } autoComplete="off">
-              <Row>
-                <Form.Item label="起始 commit id " name="since">
-                  <Input/>
-                </Form.Item>
+          <Form name="basic" onFinish={ queryByCommitId } autoComplete="off">
+            <Row>
+              <Form.Item label="起始 commit id " name="since">
+                <Input/>
+              </Form.Item>
 
-                <Form.Item label="结束 commit id " name="until">
-                  <Input/>
-                </Form.Item>
+              <Form.Item label="结束 commit id " name="until">
+                <Input/>
+              </Form.Item>
 
-                <Form.Item wrapperCol={ { offset: 8, span: 16 } }>
-                  <Button type="primary" htmlType="submit">分析</Button>
-                </Form.Item>
-              </Row>
+              <Form.Item wrapperCol={ { offset: 8, span: 16 } }>
+                <Button type="primary" htmlType="submit">分析</Button>
+              </Form.Item>
+            </Row>
 
-            </Form>
+          </Form>
 
           <>
             { commits.map((commit) => (
