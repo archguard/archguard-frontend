@@ -4,10 +4,8 @@ import { Button, DatePicker, Form, Input, Row, Select, Space } from 'antd';
 import { useIntl, useParams } from "umi";
 
 import { storage } from "@/store/storage/sessionStorage";
-import { queryCommitByIds, queryCommitByRanges, queryHistory } from "@/api/module/gitFile";
+import { queryCommitByIds, queryHistory } from "@/api/module/gitFile";
 import RelationMap from "@/pages/change/RelationMap";
-
-const { RangePicker } = DatePicker;
 
 const ChangeDetect = () => {
   const { formatMessage } = useIntl();
@@ -15,20 +13,8 @@ const ChangeDetect = () => {
   const [isInChanging, setIsInChanging] = useState(false);
   // @ts-ignore
   const [systemId, setSystemId] = useState(useParams().systemId);
-  const [timeRange, setTimeRange] = useState({
-    startTime: "",
-    endTime: ""
-  });
   const [commits, setCommits] = useState(null)
   const [relations, setRelations] = useState([])
-
-  // @ts-ignore
-  const changeTime = useCallback((date, dateString) => {
-    setTimeRange({
-      startTime: (date[0].unix() * 1000).toString(),
-      endTime: (date[1].unix() * 1000).toString(),
-    })
-  }, [setTimeRange]);
 
   const onSystemChange = useCallback((index: number) => {
     setIsInChanging(false)
@@ -48,16 +34,6 @@ const ChangeDetect = () => {
       }, 50)
     }
   }, [setIsInChanging, setCommits]);
-
-  const queryByTime = useCallback(() => {
-    setIsInChanging(true)
-
-    queryCommitByRanges(systemId, timeRange.startTime, timeRange.endTime).then((res) => {
-      setIsInChanging(false)
-
-      setCommits(res as any)
-    })
-  }, [systemId, timeRange, setCommits, setRelations])
 
   const queryByCommitId = useCallback((value) => {
     setIsInChanging(true)
@@ -105,14 +81,7 @@ const ChangeDetect = () => {
               )) }
             </Select>
 
-            { systemId && <>
-              <Space size="middle">
-                <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) }/>
-                <Button type="primary" onClick={ () => queryByTime() } disabled={ timeRange.startTime === "" }>
-                  { formatMessage({ id: 'ANALYSIS' }) }
-                </Button>
-              </Space>
-
+            { systemId &&
               <Form name="basic" onFinish={ queryByCommitId } autoComplete="off">
                 <Row>
                   <Form.Item label={ formatMessage({ id: 'SINCE_COMMIT_ID' }) } name="since">
@@ -128,8 +97,6 @@ const ChangeDetect = () => {
                   </Form.Item>
                 </Row>
               </Form>
-
-            </>
             }
           </Space>
 
