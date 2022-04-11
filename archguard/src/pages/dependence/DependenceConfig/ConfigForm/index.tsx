@@ -91,7 +91,7 @@ const ConfigForm = (props: ConfigFormProps) => {
         {(fields, { add, remove }) => {
           return (
             <div>
-              {fields.map(field => (
+              {fields.map((field: any) => (
                 <Space key={field.name} className="form-items">
                   { formItems.map(item => item.type === 'select' ?
                       renderSelectByFormItem(field, item) :
