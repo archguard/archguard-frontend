@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Button, Select, Input, Row, Col, Form, Space } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
@@ -19,6 +19,7 @@ const ChangeDetect = () => {
     endTime: ""
   });
   const [commits, setCommits] = useState(null)
+  const [relations, setRelations] = useState([])
 
   // @ts-ignore
   const changeTime = useCallback((date, dateString) => {
@@ -51,14 +52,27 @@ const ChangeDetect = () => {
     queryCommitByRanges(systemId, timeRange.startTime, timeRange.endTime).then((res) => {
       setCommits(res as any)
     })
-  }, [systemId, timeRange])
+  }, [systemId, timeRange, setCommits])
 
   const queryByCommitId = useCallback((value) => {
     queryCommitByIds(systemId, value.since, value.until).then((res) => {
-    // queryCommitByIds(systemId, "aa2b5379", "965be8c2").then((res) => {
       setCommits(res as any)
     })
   }, [systemId, setCommits])
+
+  useEffect(() => {
+    if (!commits) return;
+
+    let results: any[] = []
+    // @ts-ignore
+    for (let relation of commits) {
+      results = results.concat(JSON.parse(relation.relations))
+    }
+
+    console.log(results)
+    // @ts-ignore
+    setRelations(results)
+  }, [commits, setRelations])
 
   return (
     <div>
@@ -113,15 +127,16 @@ const ChangeDetect = () => {
           </Space>
 
           <>
+            { !!relations && relations.length > 0 && <RelationMap dataSource={ relations }/> }
             { !!commits &&
-              // @ts-ignore
-              commits.map((commit: any) => (
-              <>
-                <p> sinceRev: {commit.sinceRev}, untilRev: {commit.untilRev}, Function: {commit.packageName}.{commit.className}</p>
-                {/* "[]".length = 2 */}
-                { commit.relations.length > 2 && <RelationMap dataSource={ JSON.parse(commit.relations) }/> }
-              </>
-            ))
+                // @ts-ignore
+                commits.map((commit: any) => (
+                  <>
+                    <p> sinceRev: {commit.sinceRev}, untilRev: {commit.untilRev}, Function: {commit.packageName}.{commit.className}</p>
+                    {/* "[]".length = 2 */}
+                    { commit.relations.length > 2 && <RelationMap dataSource={ JSON.parse(commit.relations) }/> }
+                  </>
+                ))
             }
           </>
         </>
