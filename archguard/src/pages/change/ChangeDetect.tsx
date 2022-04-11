@@ -1,15 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import { Button, Select, Input, Row, Col, Form, Space } from "antd";
+import { Button, DatePicker, Form, Input, Row, Select, Space } from 'antd';
+import { useIntl, useParams } from "umi";
+
 import { storage } from "@/store/storage/sessionStorage";
-import { DatePicker } from 'antd';
 import { queryCommitByIds, queryCommitByRanges, queryHistory } from "@/api/module/gitFile";
-import { useParams } from "umi";
 import RelationMap from "@/pages/change/RelationMap";
 
 const { RangePicker } = DatePicker;
 
 const ChangeDetect = () => {
+  const { formatMessage } = useIntl();
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
   // @ts-ignore
@@ -90,7 +91,7 @@ const ChangeDetect = () => {
               style={ { width: 150, color: "#000" } }
               bordered={ true }
               showArrow={ true }
-              placeholder="请选择系统"
+              placeholder={ formatMessage({ id: 'SELECT_SYSTEM' }) }
               onChange={ (index) => onSystemChange(index) }
             >
               { systemInfo?.value!.map((system, index) => (
@@ -108,22 +109,22 @@ const ChangeDetect = () => {
               <Space size="middle">
                 <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) }/>
                 <Button type="primary" onClick={ () => queryByTime() } disabled={ timeRange.startTime === "" }>
-                  分析
+                  { formatMessage({ id: 'ANALYSIS' }) }
                 </Button>
               </Space>
 
               <Form name="basic" onFinish={ queryByCommitId } autoComplete="off">
                 <Row>
-                  <Form.Item label="起始 commit id " name="since">
+                  <Form.Item label={ formatMessage({ id: 'SINCE_COMMIT_ID' }) } name="since">
                     <Input/>
                   </Form.Item>
 
-                  <Form.Item label="结束 commit id " name="until">
+                  <Form.Item label={ formatMessage({ id: 'UNTIL_COMMIT_ID' }) } name="until">
                     <Input/>
                   </Form.Item>
 
                   <Form.Item wrapperCol={ { offset: 8, span: 16 } }>
-                    <Button type="primary" htmlType="submit">分析</Button>
+                    <Button type="primary" htmlType="submit">{ formatMessage({ id: 'ANALYSIS' }) }</Button>
                   </Form.Item>
                 </Row>
               </Form>
@@ -134,14 +135,17 @@ const ChangeDetect = () => {
 
           { isInChanging &&
             <>
-              { !!relations && relations.length > 0 && <RelationMap dataSource={ relations }/> }
+              { !!relations && relations.length > 0 &&
+                <RelationMap dataSource={ relations } title={ formatMessage({ id: 'ANALYSIS' }) }/> }
               { !!commits &&
                 // @ts-ignore
                 commits.map((commit: any, index) => (
                   <div key={ `commit_${ index }` }>
-                    <p> sinceRev: {commit.sinceRev}, untilRev: {commit.untilRev}, Function: {commit.packageName}.{commit.className}</p>
-                    {/* "[]".length = 2 */}
-                    { commit.relations.length > 2 && <RelationMap dataSource={ JSON.parse(commit.relations) }/> }
+                    <p> sinceRev: { commit.sinceRev }, untilRev: { commit.untilRev },
+                      Function: { commit.packageName }.{ commit.className }</p>
+                    {/* "[]".length = 2 */ }
+                    { commit.relations.length > 2 &&
+                      <RelationMap dataSource={ JSON.parse(commit.relations) } title={ "CALL" }/> }
                   </div>
                 ))
               }

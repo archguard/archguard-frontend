@@ -27,6 +27,12 @@ export default {
   ENTER: "Enter",
   CANCEL_SCAN: "Cancel Scan",
   VIEW_LOG: "View log",
+
+  ANALYSIS: "Analysis",
+  SINCE_COMMIT_ID: "Start Commit id",
+  UNTIL_COMMIT_ID: "Until Commit id",
+  CHANGE_DETECT_OVERVIEW: "Change Influence Overview",
+
   SCAN_FAILURE_RETRY: "Failure, ReScan",
 
   'SYSTEM_OVERVIEW.VIEW_METRIC_DASHBOARD': 'View metrics',

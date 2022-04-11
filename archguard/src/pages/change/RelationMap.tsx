@@ -4,13 +4,15 @@ import React from 'react';
 import { useIntl } from "umi";
 
 interface DatamapSankeyProps {
-  dataSource: any[]
+  dataSource: any[],
+  title: String
 }
 
 const RelationMap = (props: DatamapSankeyProps) => {
   const { formatMessage } = useIntl();
   const [dataSource] = useState(props.dataSource);
   const [options, setOptions] = useState(null as any)
+  const title = useState(props.title)
 
   useEffect(() => {
     if (!dataSource) {
@@ -45,7 +47,7 @@ const RelationMap = (props: DatamapSankeyProps) => {
     setOptions({
       // @ts-ignore
       title: {
-        text: "Call"
+        text: title
       },
       tooltip: {
         trigger: 'item',

@@ -27,7 +27,11 @@ export default {
   ENTER: "进入",
   CANCEL_SCAN: "取消扫描",
   VIEW_LOG: "查询日志",
+  ANALYSIS: "分析",
+  SINCE_COMMIT_ID: "起始 Commit id",
+  UNTIL_COMMIT_ID: "结束 Commit id",
   SCAN_FAILURE_RETRY: "扫描失败，重新扫描",
+  CHANGE_DETECT_OVERVIEW: "变更影响总览",
 
   'SYSTEM_OVERVIEW.VIEW_METRIC_DASHBOARD': '查看指标看板',
   'SYSTEM_OVERVIEW.MODULE_COUNT': '模块数',
