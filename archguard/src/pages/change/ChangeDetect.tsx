@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from "react";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import { Button, Select } from "antd";
+import { Button, Select, Input, Row, Col, Form } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
 import { DatePicker } from 'antd';
-import { queryCommitByRanges } from "@/api/module/gitFile";
+import { queryCommitByIds, queryCommitByRanges } from "@/api/module/gitFile";
 import { useParams } from "umi";
 
 const { RangePicker } = DatePicker;
@@ -42,11 +42,22 @@ const ChangeDetect = () => {
     }
   }, [setIsInChanging]);
 
-  const queryChange = useCallback(() => {
+  const queryByTime = useCallback(() => {
     queryCommitByRanges(systemId, timeRange.startTime, timeRange.endTime).then((res) => {
       setCommits(res as any)
     })
   }, [systemId, timeRange])
+  useCallback(() => {
+    queryCommitByRanges(systemId, timeRange.startTime, timeRange.endTime).then((res) => {
+      setCommits(res as any)
+    })
+  }, [systemId, timeRange]);
+
+  const queryByCommitId = useCallback((value) => {
+    queryCommitByIds(systemId, value.since, value.until).then((res) => {
+
+    })
+  }, [systemId])
 
   return (
     <div>
@@ -71,9 +82,26 @@ const ChangeDetect = () => {
           </Select>
 
           <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) }/>
-          <Button type="primary" onClick={ () => queryChange() } disabled={ timeRange.startTime === "" }>
-            确定
+          <Button type="primary" onClick={ () => queryByTime() } disabled={ timeRange.startTime === "" }>
+            分析（通过时间）
           </Button>
+
+            <Form name="basic" onFinish={ queryByCommitId } autoComplete="off">
+              <Row>
+                <Form.Item label="起始 commit id " name="since">
+                  <Input/>
+                </Form.Item>
+
+                <Form.Item label="结束 commit id " name="until">
+                  <Input/>
+                </Form.Item>
+
+                <Form.Item wrapperCol={ { offset: 8, span: 16 } }>
+                  <Button type="primary" htmlType="submit">分析</Button>
+                </Form.Item>
+              </Row>
+
+            </Form>
 
           <>
             { commits.map((commit) => (

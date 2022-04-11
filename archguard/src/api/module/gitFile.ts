@@ -49,3 +49,14 @@ export function queryCommitByRanges(systemId: String, startTime: String, endTime
     method: "GET",
   });
 }
+
+export function queryCommitByIds(systemId: String, since: String, until: String) {
+  return axios<string[]>({
+    url: `/api/systems/${systemId}/diff/influence/commit`,
+    params: {
+      since,
+      until,
+    },
+    method: "GET",
+  });
+}
