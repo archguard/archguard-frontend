@@ -40,9 +40,8 @@ export function queryUnstableFiles(systemId: String) {
 }
 
 export function queryCommitByRanges(systemId: String, startTime: String, endTime: String) {
-  console.log(systemId, systemId, endTime)
   return axios<string[]>({
-    url: `/api/systems/${systemId}/change/commit-ids`,
+    url: `/api/systems/${systemId}/diff/influence`,
     params: {
       startTime,
       endTime,
