@@ -84,28 +84,32 @@ const ChangeDetect = () => {
               )) }
             </Select>
 
-            <Space size="middle">
-              <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) }/>
-              <Button type="primary" onClick={ () => queryByTime() } disabled={ timeRange.startTime === "" }>
-                分析
-              </Button>
-            </Space>
+            { systemId && <>
+              <Space size="middle">
+                <RangePicker showTime onChange={ (date, dateString) => changeTime(date, dateString) }/>
+                <Button type="primary" onClick={ () => queryByTime() } disabled={ timeRange.startTime === "" }>
+                  分析
+                </Button>
+              </Space>
 
-            <Form name="basic" onFinish={ queryByCommitId } autoComplete="off">
-              <Row>
-                <Form.Item label="起始 commit id " name="since">
-                  <Input/>
-                </Form.Item>
+              <Form name="basic" onFinish={ queryByCommitId } autoComplete="off">
+                <Row>
+                  <Form.Item label="起始 commit id " name="since">
+                    <Input/>
+                  </Form.Item>
 
-                <Form.Item label="结束 commit id " name="until">
-                  <Input/>
-                </Form.Item>
+                  <Form.Item label="结束 commit id " name="until">
+                    <Input/>
+                  </Form.Item>
 
-                <Form.Item wrapperCol={ { offset: 8, span: 16 } }>
-                  <Button type="primary" htmlType="submit">分析</Button>
-                </Form.Item>
-              </Row>
-            </Form>
+                  <Form.Item wrapperCol={ { offset: 8, span: 16 } }>
+                    <Button type="primary" htmlType="submit">分析</Button>
+                  </Form.Item>
+                </Row>
+              </Form>
+
+            </>
+            }
           </Space>
 
           <>
