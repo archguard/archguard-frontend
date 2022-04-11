@@ -42,8 +42,6 @@ const RelationMap = (props: DatamapSankeyProps) => {
       })
     }
 
-    console.log(data)
-
     setOptions({
       // @ts-ignore
       title: {
@@ -114,7 +112,7 @@ const RelationMap = (props: DatamapSankeyProps) => {
   return (
     options && <ReactECharts
       option={ options }
-      style={ { height: '960px', width: '100%' } }/>
+      style={ { height: '480px', width: '100%' } }/>
   )
 }
 

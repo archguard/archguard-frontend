@@ -117,8 +117,9 @@ const ChangeDetect = () => {
               // @ts-ignore
               commits.map((commit: any) => (
               <>
-                <p> Function: {commit.packageName}.{commit.className}</p>
-                <RelationMap dataSource={ JSON.parse(commit.relations) }/>
+                <p> sinceRev: {commit.sinceRev}, untilRev: {commit.untilRev}, Function: {commit.packageName}.{commit.className}</p>
+                {/* "[]".length = 2 */}
+                { commit.relations.length > 2 && <RelationMap dataSource={ JSON.parse(commit.relations) }/> }
               </>
             ))
             }
