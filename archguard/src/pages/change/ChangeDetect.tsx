@@ -130,12 +130,12 @@ const ChangeDetect = () => {
             { !!relations && relations.length > 0 && <RelationMap dataSource={ relations }/> }
             { !!commits &&
                 // @ts-ignore
-                commits.map((commit: any) => (
-                  <>
+                commits.map((commit: any, index) => (
+                  <div key={ `${ commit }_${ index }` }>
                     <p> sinceRev: {commit.sinceRev}, untilRev: {commit.untilRev}, Function: {commit.packageName}.{commit.className}</p>
                     {/* "[]".length = 2 */}
                     { commit.relations.length > 2 && <RelationMap dataSource={ JSON.parse(commit.relations) }/> }
-                  </>
+                  </div>
                 ))
             }
           </>
