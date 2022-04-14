@@ -7,7 +7,7 @@ export default {
   CODE_ANALYSIS: "代码级分析",
   OTHER_SYSTEM: "其它系统",
   DATABASE_MAP: "数据库地图",
-  DATABASE_MAP_TIPS: "当前支持 Java/Kotlin 中的 JPA/JDBI",
+  DATABASE_MAP_TIPS: "当前支持 Java/Kotlin 中的 JPA, JDBI, MyBatis",
   DATAMAP_DEP_CALL_MAP: "数据库依赖图",
   CHANGE_DETECT: "变更影响分析",
   SELECT_SYSTEM: "请选择系统",
