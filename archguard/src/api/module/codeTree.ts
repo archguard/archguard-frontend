@@ -16,7 +16,7 @@ export interface DFMSMetric {
 
 export function queryCodeTree(systemId: number) {
   return axios<CodeTree>({
-    url: `/api/systems/${systemId}/code-tree/`,
+    url: `/api/systems/${systemId}/classes/code-tree/`,
     method: "GET"
   });
 }
