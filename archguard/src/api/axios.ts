@@ -4,7 +4,6 @@ import { util as loadingUtil } from "../components/Business/Loading";
 
 export const axiosInstance = axios.create({
   baseURL: "",
-  timeout: 60000, // 请求超时时间
   withCredentials: true, // 允许跨域携带cookie
 });
 
