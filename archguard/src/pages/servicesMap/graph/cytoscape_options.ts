@@ -6,7 +6,7 @@
  */
 
 import cytoscape from 'cytoscape';
-import { iconForNode } from "@/pages/servicesMap/graph2/services-map-icon";
+import { iconForNode } from "@/pages/servicesMap/graph2/servicesMapIcon";
 
 export const getAnimationOptions = (): cytoscape.AnimationOptions => ({
   duration: 250,

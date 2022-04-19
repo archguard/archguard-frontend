@@ -8,7 +8,7 @@
 import cytoscape from 'cytoscape';
 import { useEffect } from 'react';
 import { getAnimationOptions, getNodeHeight } from './cytoscape_options';
-import { applyCubicBezierStyles } from '../graph2/bazier-style';
+import { applyCubicBezierStyles } from '../graph2/bazierStyle';
 
 function getLayoutOptions({
   fit = false,
