@@ -231,13 +231,13 @@ const Home = () => {
           <Tabs.TabPane tab={ formatMessage({ id: 'COMPONENT_ANALYSIS' }) } key="my-system">
             <Row gutter={ [12, 12] }>
               <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 }>
-                <SystemCard onClick={ onCreateClick }/>
+                <SystemCard onCreate={ onCreateClick }/>
               </Col>
               { systemInfoList.map((systemInfo) => (
                 <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 } key={ systemInfo.id }>
                   <SystemCard
                     systemInfo={ systemInfo }
-                    onClick={ () => routeToHome(systemInfo) }
+                    onCreate={ () => routeToHome(systemInfo) }
                     onScanning={ () => onScanning(systemInfo.id) }
                     onEdit={ () => onEditClick(systemInfo) }
                     onCancel={ () => onCancelClick(systemInfo) }

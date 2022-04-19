@@ -8,7 +8,7 @@ import {useIntl} from "@@/plugin-locale/localeExports";
 
 interface SystemCardProps {
   systemInfo?: SystemInfo;
-  onClick?(): void;
+  onCreate?(): void;
   onEdit?(): void;
   onRemove?(): void;
   onScanning?(): void;
@@ -18,7 +18,7 @@ interface SystemCardProps {
 
 const SystemCard = (props: SystemCardProps) => {
   const { formatMessage } = useIntl();
-  const { systemInfo, onClick, onScanning, onEdit, onRemove, onCancel, viewLog } = props;
+  const { systemInfo, onCreate, onScanning, onEdit, onRemove, onCancel, viewLog } = props;
 
   const menuClick = (key: string) => {
     switch (key) {
@@ -65,7 +65,7 @@ const SystemCard = (props: SystemCardProps) => {
     };
 
     return scanned === "SCANNED" ? (
-      <Button type="primary" onClick={onClick}>
+      <Button type="primary" onClick={onCreate}>
         {formatMessage({ id: 'ENTER'})}
       </Button>
     ) : scanned === "SCANNING" ? (
@@ -106,7 +106,7 @@ const SystemCard = (props: SystemCardProps) => {
       </div>
     </Card>
   ) : (
-      <Card hoverable className="multiple-system-card" onClick={onClick}>
+      <Card hoverable className="multiple-system-card" onClick={onCreate}>
         <div className="multiple-system-card-content add">
           <PlusOutlined />
         </div>
