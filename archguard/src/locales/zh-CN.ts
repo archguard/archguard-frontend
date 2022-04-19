@@ -33,6 +33,10 @@ export default {
   SCAN_FAILURE_RETRY: "扫描失败，重新扫描",
   CHANGE_DETECT_OVERVIEW: "变更影响总览",
 
+  RepoAuthType: "仓库鉴权方式",
+  SshKeyString: "SSH Key 字符串",
+  UsernameAndPassword: "用户名和密码",
+
   'SYSTEM_OVERVIEW.VIEW_METRIC_DASHBOARD': '查看指标看板',
   'SYSTEM_OVERVIEW.MODULE_COUNT': '模块数',
   'SYSTEM_OVERVIEW.CONTRIBUTORS': '代码贡献人数',

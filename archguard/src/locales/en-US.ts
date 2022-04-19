@@ -33,6 +33,10 @@ export default {
   UNTIL_COMMIT_ID: "Until Commit id",
   CHANGE_DETECT_OVERVIEW: "Change Influence Overview",
 
+  RepoAuthType: "Repo auth type",
+  SshKeyString: "SSH Key string",
+  UsernameAndPassword: "Username and Password",
+
   SCAN_FAILURE_RETRY: "Failure, ReScan",
 
   'SYSTEM_OVERVIEW.VIEW_METRIC_DASHBOARD': 'View metrics',

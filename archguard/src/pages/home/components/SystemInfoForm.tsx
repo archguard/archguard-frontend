@@ -7,6 +7,7 @@ import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import "./SystemInfoForm.less";
 import BadSmellThresholdForm from '@/pages/system/systemEvolving/BadSmellThreshold/components/BadSmellThresholdForm';
+import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
@@ -15,6 +16,7 @@ interface SystemInfoFormProps {
   currentAction: string;
 }
 const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
+  const { formatMessage } = useIntl();
   const { data, onSubmit, current, currentAction } = props;
   const [form] = useForm();
   const [systemList] = useSystemList();
@@ -52,6 +54,14 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     return valueChanged && isIncluded;
   };
 
+  const RepoAuthType: any = {
+    "SshKeyString": {
+      display: formatMessage({ id: "SshKeyString" })
+    },
+    "UsernameAndPassword": {
+      display: formatMessage({ id: "UsernameAndPassword" })
+    }
+  }
 
   const systemInfoPage = (
     <div>
@@ -176,11 +186,28 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       </Form.Item>
       <Form.Item
         name="codePath"
-        label="源码目录"
+        label="仓库内代码目录"
         validateTrigger={['onChange', 'onBlur']}
         style={{ display: current === 0 ? 'initial' : 'none' }}
       >
         <Input placeholder="适用于无包概念的语言，如 TypeScript" />
+      </Form.Item>
+      <Form.Item
+        name="repoAuthType"
+        label={ formatMessage({ id: 'RepoAuthType' }) }
+        validateTrigger={['onChange', 'onBlur']}
+        initialValue={ 'UsernameAndPassword'}
+        rules={[{ required: true, message: "请选择鉴权方式！" }]}
+        required
+        style={{ display: current === 0 ? 'initial' : 'none' }}
+      >
+        <Select>
+          { ["SshKeyString", "UsernameAndPassword"].map((value) => (
+            <Select.Option value={ value } key={ value }>
+              { RepoAuthType[value].display }
+            </Select.Option>
+          )) }
+        </Select>
       </Form.Item>
       <Form.Item name="username" label="仓库用户名" style={{ display: current === 0 ? 'initial' : 'none' }}>
         <Input placeholder="请输入用户名" />
