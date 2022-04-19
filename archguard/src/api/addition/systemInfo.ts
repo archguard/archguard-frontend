@@ -13,6 +13,8 @@ export interface SystemInfo {
   scanned: "NONE" | "SCANNING" | "SCANNED" | "FAILED";
   updatedTime: number;
   badSmellThresholdSuiteId: number;
+  repoAuthType: "SshKeyString" | "UsernameAndPassword";
+  sshKey: string;
   branch: string;
 }
 
