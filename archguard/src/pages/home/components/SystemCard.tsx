@@ -64,23 +64,24 @@ const SystemCard = (props: SystemCardProps) => {
       return event.stopPropagation();
     };
 
-    return scanned === "SCANNED" ? (
-      <Button type="primary" onClick={onCreate}>
-        {formatMessage({ id: 'ENTER'})}
-      </Button>
-    ) : scanned === "SCANNING" ? (
-      <Button type="primary" loading>
-        {formatMessage({ id: 'SCANNING'})}
-      </Button>
-    ) : scanned === "FAILED" ? (
-      <Button danger type="primary" onClick={onScannedClick}>
-        {formatMessage({ id: 'SCAN_FAILURE_RETRY'})}
-      </Button>
-    ) : (
-            <Button type="primary" onClick={onScannedClick}>
-              {formatMessage({ id: 'SCAN'})}
-            </Button>
-          );
+    switch (scanned) {
+      case "SCANNED":
+        return <Button type="primary" onClick={ onCreate }>
+          { formatMessage({ id: 'ENTER' }) }
+        </Button>
+      case "FAILED":
+        return <Button danger type="primary" onClick={ onScannedClick }>
+          { formatMessage({ id: 'SCAN_FAILURE_RETRY' }) }
+        </Button>
+      case "SCANNING":
+        return <Button type="primary" loading>
+          { formatMessage({ id: 'SCANNING' }) }
+        </Button>
+      default:
+        return <Button type="primary" onClick={ onScannedClick }>
+          { formatMessage({ id: 'SCAN' }) }
+        </Button>
+    }
   };
 
   return systemInfo ? (
