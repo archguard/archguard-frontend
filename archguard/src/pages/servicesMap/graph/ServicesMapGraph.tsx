@@ -1,5 +1,5 @@
 import React, { CSSProperties, useEffect, useState } from "react";
-import CytoscapeComponent from "@/pages/servicesMap/graph/cytoscape";
+import ServicesMapComponent from "@/pages/servicesMap/graph/ServicesMapComponent";
 
 export const getCytoscapeDivStyle = (): CSSProperties => ({
   background: `linear-gradient(90deg, #fafbfd 30px, transparent 20%) center, linear-gradient(#fafbfd 30px, transparent 20%) center, #d3dae6`,
@@ -32,12 +32,12 @@ function ServicesMapGraph(props: ServicesMapGraphProps) {
   return (
     <div style={ { height: heightWithPadding } }>
       { elements &&
-        <CytoscapeComponent
+        <ServicesMapComponent
           elements={ elements }
           height={ heightWithPadding }
           serviceName={ "Services Map" }
           style={ getCytoscapeDivStyle() }>
-        </CytoscapeComponent>
+        </ServicesMapComponent>
       }
     </div>)
 }

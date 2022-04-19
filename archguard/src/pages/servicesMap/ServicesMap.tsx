@@ -3,7 +3,7 @@ import ServicesMapMapping from "@/pages/servicesMap/ServicesMapMapping";
 import { Button, Col, Row, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerByIds } from "@/api/module/containerService";
-import ServicesMapGraph from "@/pages/servicesMap/graph2/ServicesMapGraph";
+import ServicesMapGraph from "@/pages/servicesMap/graph/ServicesMapGraph";
 import { urlMapping } from "@/pages/servicesMap/urlMapping";
 import { useIntl } from 'umi';
 
