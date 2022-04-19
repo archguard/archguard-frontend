@@ -42,7 +42,6 @@ docker run -it --rm -p 3000:80 archguard-frontend:latest
 - Cytoscape, for Class & Method dependencies 
   - ext: `darge`, `cola`, `fcose`, ~~elk~~
 
-
 License
 ---
 

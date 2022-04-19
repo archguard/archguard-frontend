@@ -1,7 +1,4 @@
 import cytoscape, { Core, LayoutOptions, CollectionReturnValue, NodeCollection, NodeSingular, EdgeSingular } from "cytoscape";
-// import elk from "cytoscape-elk";
-// import dagre from 'cytoscape-dagre';
-// import cola from 'cytoscape-cola';
 // @ts-ignore
 import fcose from 'cytoscape-fcose';
 
@@ -18,9 +15,6 @@ import {
 } from "./config";
 import { MessageType } from 'antd/lib/message';
 
-// cytoscape.use(elk);
-// cytoscape.use(dagre);
-// cytoscape.use(cola);
 cytoscape.use(fcose);
 
 export function initCytoscape(id = "cy", onEvent: { cxttap: () => MessageType }) {
@@ -50,7 +44,7 @@ export function initCytoscape(id = "cy", onEvent: { cxttap: () => MessageType })
   // });
 
   cy.on("tap", "edge", function (event: any) {
-    showHighlightBrachEdge(cy, event.target);
+    showHighlightBranchEdge(cy, event.target);
   });
 
   cy.on("cxttap", "node", function (event: any) {
@@ -149,7 +143,7 @@ export function showHighlightBrachNode(cy: Core, node: NodeSingular) {
   node.style(focusNodeStyle);
 }
 
-function showHighlightBrachEdge(cy: Core, edge: EdgeSingular) {
+function showHighlightBranchEdge(cy: Core, edge: EdgeSingular) {
   setHiddenStyle(cy);
   if (!edge) return;
   edge.target().style(highlightBrachNodeStyle);

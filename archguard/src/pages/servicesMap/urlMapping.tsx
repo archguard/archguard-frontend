@@ -20,7 +20,7 @@ export function urlMapping(container: any[], unmapping: any[], elements: { nodes
     elements.nodes.push({
       id: service.name,
       language: service.language,
-      'service.name': service.name,
+      label: service.name,
     })
 
     for (let resource of service.resources) {
