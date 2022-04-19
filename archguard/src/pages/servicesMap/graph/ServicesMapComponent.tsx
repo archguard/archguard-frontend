@@ -4,6 +4,7 @@ import Cytoscape from "cytoscape";
 import dagre from 'cytoscape-dagre';
 
 import { applyCubicBezierStyles } from "@/pages/servicesMap/graph/bazierStyle";
+import { iconForNode } from "@/pages/servicesMap/graph/servicesMapIcon";
 
 export interface CytoscapeProps {
   children?: ReactNode;
@@ -14,6 +15,18 @@ export interface CytoscapeProps {
 }
 
 Cytoscape.use(dagre);
+
+function getWidth(node: cytoscape.NodeSingular) {
+  let ratio = 4;
+  const value = node.data('value') / ratio;
+  if (value > 1 && value < 20) {
+    return value;
+  } else if (value <= 1) {
+    return 1;
+  } else {
+    return 20;
+  }
+}
 
 export default function ServicesMapComponent(props: CytoscapeProps) {
   const cyRef = useRef<Cytoscape.Core>();
@@ -39,16 +52,17 @@ export default function ServicesMapComponent(props: CytoscapeProps) {
       selector: "node",
       style: {
         "background-color": "#1976d2",
-        width: "label",
-        height: "label",
-        // a single "padding" is not supported in the types :(
+        'background-image': (el: cytoscape.NodeSingular) => iconForNode(el),
         "padding-top": "4",
         "padding-bottom": "4",
         "padding-left": "4",
         "padding-right": "4",
-        // this fixes the text being shifted down on nodes (sadly no fix for edges, but it's not as obvious there without borders)
-        "text-margin-y": -3,
-        shape: "round-rectangle",
+
+        'text-background-color': "black",
+        "text-margin-y": 30,
+        'text-max-width': '200px',
+        'text-background-shape': 'roundrectangle',
+        shape: "ellipse",
       },
     },
     {
@@ -56,30 +70,31 @@ export default function ServicesMapComponent(props: CytoscapeProps) {
       style: {
         label: "data(label)",
         "font-size": "12",
-        color: "white",
+        color: "black",
         "text-halign": "center",
         "text-valign": "center",
       },
     },
     {
-      selector: "edge",
+      selector: 'edge',
       style: {
-        "curve-style": "bezier",
-        "target-arrow-shape": "triangle",
-        width: 1.5,
+        'curve-style': 'unbundled-bezier',
+        'line-color': 'black',
+        'overlay-opacity': 0,
+        'target-arrow-color': 'black',
+        'target-arrow-shape': 'triangle',
+        width: getWidth
       },
     },
     {
-      selector: "edge[label]",
+      selector: 'edge[bidirectional]',
       style: {
-        label: "data(label)",
-        "font-size": "12",
-        "text-background-color": "white",
-        "text-background-opacity": 1,
-        "text-background-padding": "2px",
-        "text-margin-y": -4,
-        // so the transition is selected when its label/name is selected
-        "text-events": "yes",
+        'source-arrow-shape': 'triangle',
+        'source-arrow-color': 'black',
+        'target-arrow-shape': 'triangle',
+        // @ts-expect-error
+        'source-distance-from-node': 20,
+        'target-distance-from-node': 20,
       },
     },
   ];
