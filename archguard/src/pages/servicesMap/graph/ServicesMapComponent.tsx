@@ -30,8 +30,7 @@ function getWidth(node: cytoscape.NodeSingular) {
 
 export default function ServicesMapComponent(props: CytoscapeProps) {
   const cyRef = useRef<Cytoscape.Core>();
-  // const [cy, setCy] = useState<Cytoscape.Core | undefined>(undefined);
-  const [elements, setElements] = useState(props.elements);
+  const [elements] = useState(props.elements);
 
   useEffect(() => {
     const cy = cyRef.current;
@@ -107,9 +106,9 @@ export default function ServicesMapComponent(props: CytoscapeProps) {
 
   return (<div>
     <CytoscapeComponent
-      cy={(cy): void => {
+      cy={ (cy): void => {
         cyRef.current = cy;
-      }}
+      } }
       layout={ layout }
       elements={ elements }
       style={ props.style }
