@@ -197,7 +197,7 @@ const Home = () => {
               </Button>
             </div>
             <div>
-              <a href="https://archguard.org/docs/faq.html" target={ "_blank" }>
+              <a href="https://archguard.org/faq" target={ "_blank" }>
                 <Button type="link" style={ { color: "#ffffff" } } icon={ <QuestionCircleOutlined/> }>
                   FAQ
                 </Button>
