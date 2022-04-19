@@ -84,6 +84,10 @@ const SystemCard = (props: SystemCardProps) => {
     }
   };
 
+  function getDescription(systemInfo: SystemInfo) {
+    return `${ formatMessage({ id: 'LAST_SCAN_TIME' }) }: ${ moment(systemInfo.updatedTime).format('DD/MM/YYYY HH:mm') }`;
+  }
+
   return systemInfo ? (
     <Card hoverable className="multiple-system-card">
       <div className="multiple-system-card-content">
@@ -103,16 +107,16 @@ const SystemCard = (props: SystemCardProps) => {
         <div className="card-btn">{renderSystemButton(systemInfo)}</div>
       </div>
       <div className="multiple-system-card-title">
-        <Meta title={systemInfo.systemName} description={`${formatMessage({ id: 'LAST_SCAN_TIME'})}: ${moment(systemInfo.updatedTime).format('DD/MM/YYYY HH:mm')}`} />
+        <Meta title={systemInfo.systemName} description={getDescription(systemInfo)} />
       </div>
     </Card>
   ) : (
       <Card hoverable className="multiple-system-card" onClick={onCreate}>
         <div className="multiple-system-card-content add">
-          <PlusOutlined />
+          <PlusOutlined/>
         </div>
         <div className="multiple-system-card-title add">
-          <span>{formatMessage({ id: 'NEW_SYSTEM'})}</span>
+          <span>{ formatMessage({ id: 'NEW_SYSTEM' }) }</span>
         </div>
       </Card>
     );
