@@ -260,6 +260,8 @@ const Home = () => {
           <Tabs.TabPane tab={ formatMessage({ id: 'CHANGE_DETECT' }) } key="change-detect">
             <ChangeDetect/>
           </Tabs.TabPane>
+          <Tabs.TabPane tab={ formatMessage({ id: 'MESSAGE_QUEUE_ANALYSIS' }) } key="message-queue-analysis" disabled>
+          </Tabs.TabPane>
         </Tabs>
       </div>
       <Modal
