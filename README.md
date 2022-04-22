@@ -1,7 +1,11 @@
 # ArchGuard Frontend
 
 [![CI](https://github.com/archguard/archguard-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/archguard/archguard-frontend/actions/workflows/ci.yml)
-![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/archguard/archguard-frontend)
+[![GitHub release](https://img.shields.io/github/v/release/archguard/archguard-frontend?logo=git&logoColor=white)](https://github.com/archguard/archguard-frontend/releases)
+[![languages](https://img.shields.io/badge/language-typescript-blueviolet?logo=TypeScript&logoColor=white)](https://www.typescriptlang.org/)
+[![Node.js support](https://img.shields.io/badge/Node.js-16.x+-green?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![License](https://img.shields.io/github/license/archguard/archguard-frontend?color=4D7A97&logo=opensourceinitiative&logoColor=white)](https://opensource.org/licenses/MIT)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-ready--to--code-green?label=gitpod&logo=gitpod&logoColor=white)](https://gitpod.io/#https://github.com/archguard/archguard-frontend)
 
 ## Development
 
