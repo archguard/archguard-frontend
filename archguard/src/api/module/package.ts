@@ -1,5 +1,4 @@
 import axios from "../axios";
-import { storage } from "@/store/storage/sessionStorage";
 
 interface PackageDependenciesModel {
   module: string;

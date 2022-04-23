@@ -60,4 +60,5 @@ export default {
 
   'SYSTEM_OVERVIEW.API_DEMAND_LIST': 'API Demand List',
   'SYSTEM_OVERVIEW.API_RESOURCE_LIST': 'API Resource List',
+  'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY': 'Project Dependency',
 };

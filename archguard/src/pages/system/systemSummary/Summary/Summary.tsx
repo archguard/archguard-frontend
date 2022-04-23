@@ -14,6 +14,7 @@ import FileSizing from "@/pages/system/systemSummary/Summary/components/FileSizi
 import { queryUnstableFiles } from "@/api/module/gitFile";
 import { DonutChart } from "bizcharts";
 import ApiResourceTree from "@/pages/system/systemSummary/Summary/components/ApiResourceTree";
+import { queryProjectCompositionDependency } from "@/api/module/project";
 
 function Summary() {
   const { formatMessage } = useIntl();
@@ -22,6 +23,7 @@ function Summary() {
   const [unstableFiles, setUnstableFiles] = useState([]);
   const [showFileSizing, setShowFileSizing] = useState(false);
   const [showFileChangeSizing, setShowFileChangeSizing] = useState(false);
+  const [projectDependency, setProjectDependency] = useState([] as any);
 
   const { systemId } = useParams();
   storage.setSystemId(systemId)
@@ -41,6 +43,12 @@ function Summary() {
   useEffect(() => {
     queryContainerServices(systemId).then((res) => {
       setServices(res);
+    });
+  }, []);
+
+  useEffect(() => {
+    queryProjectCompositionDependency(systemId).then((res) => {
+      setProjectDependency(res);
     });
   }, []);
 
@@ -74,6 +82,14 @@ function Summary() {
     { title: formatMessage({ id: 'SYSTEM_OVERVIEW.PATH' }), dataIndex: 'path', key: 'path', },
     { title: formatMessage({ id: 'SYSTEM_OVERVIEW.CHANGES' }), dataIndex: 'changes', key: 'changes', },
     { title: formatMessage({ id: 'SYSTEM_OVERVIEW.LINES' }), dataIndex: 'lineCount', key: 'lineCount', },
+  ];
+
+  const projectDependencyColumns = [
+    { title: "Tools", dataIndex: 'packageManager', key: 'packageManager', },
+    { title: "dep group", dataIndex: 'depGroup', key: 'depGroup', },
+    { title: "dep artifact", dataIndex: 'depArtifact', key: 'depArtifact', },
+    { title: "dep scope", dataIndex: 'depScope', key: 'depScope', },
+    { title: "dep version", dataIndex: 'depVersion', key: 'depVersion', },
   ];
 
   function toggleFileSizing() {setShowFileSizing(!showFileSizing)}
@@ -140,6 +156,10 @@ function Summary() {
             { defaultPageSize: 5 }
           }/>
         </div>
+      </div>
+      <div>
+        <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY' }) }</h2>
+        <Table dataSource={ projectDependency } columns={ projectDependencyColumns }/>
       </div>
       <div className={ styles.physical }>
         <div className={ styles.demand }>
