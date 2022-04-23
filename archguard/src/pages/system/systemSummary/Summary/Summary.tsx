@@ -158,7 +158,7 @@ function Summary() {
         </div>
       </div>
       <div>
-        <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY' }) }</h2>
+        <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY' }) } (({ projectDependency.length }))</h2>
         <Table dataSource={ projectDependency } columns={ projectDependencyColumns }/>
       </div>
       <div className={ styles.physical }>
