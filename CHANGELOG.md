@@ -1,4 +1,59 @@
-# [](https://github.com/archguard/archguard-frontend/compare/v1.5.0...v) (2022-04-09)
+# [](https://github.com/archguard/archguard-frontend/compare/v1.6.2...v) (2022-04-23)
+
+
+
+## [1.6.2](https://github.com/archguard/archguard-frontend/compare/v1.6.0...v1.6.2) (2022-04-23)
+
+
+### Bug Fixes
+
+* **license:** finish last part ([7a3d67c](https://github.com/archguard/archguard-frontend/commit/7a3d67c5c6aaa8932cbec36b91b8a4f28b9e40de))
+* **license:** pickout sspl license code ([21877a7](https://github.com/archguard/archguard-frontend/commit/21877a7b6b581ae3231808c1ca00861d12a35249))
+* **license:** redraw engine ([6e74ef2](https://github.com/archguard/archguard-frontend/commit/6e74ef2cd698c85fb955e56509fc47103b3d3ce5))
+* **license:** rename files ([2a8c79c](https://github.com/archguard/archguard-frontend/commit/2a8c79c909bf3c413859722a2937371369c63012))
+* **license:** rename old elastic kibana code ([f220de5](https://github.com/archguard/archguard-frontend/commit/f220de5aa8a72ec491336d179d9b4aaebd57f03d))
+* remove timeout limit for axios ([8f288cd](https://github.com/archguard/archguard-frontend/commit/8f288cdba78d2a1712ab36d249eb40df6cbf59fd))
+* **sca:** disabled show chart by default and closed [#55](https://github.com/archguard/archguard-frontend/issues/55) ([451f005](https://github.com/archguard/archguard-frontend/commit/451f005ae02ab467cff6fc622be25f20a3666bad))
+
+
+### Features
+
+* **auth:** enable post auth type & value to backend for [#40](https://github.com/archguard/archguard-frontend/issues/40) ([8f48ff5](https://github.com/archguard/archguard-frontend/commit/8f48ff5cd073f495a24491217b4812e649442aba))
+* **auth:** holding code for archguard/archguard[#40](https://github.com/archguard/archguard-frontend/issues/40) ([39b3255](https://github.com/archguard/archguard-frontend/commit/39b3255a714f07a85a22bd1bfc8c7c41173737d1))
+* **auth:** init sshkey auth form ([ba2c0f8](https://github.com/archguard/archguard-frontend/commit/ba2c0f8559441f8e584ce81d99aa19a8b4678fc0))
+* **sca:** add sca to overview ([ef42ac2](https://github.com/archguard/archguard-frontend/commit/ef42ac2673584c75c45ca61392e3e85f341d77e7))
+* **sca:** count for sca ([ec7ab66](https://github.com/archguard/archguard-frontend/commit/ec7ab66524bbe70bf27e832a29c6dcd0edd117bb))
+
+
+
+# [1.6.0](https://github.com/archguard/archguard-frontend/compare/v1.5.1...v1.6.0) (2022-04-11)
+
+
+### Bug Fixes
+
+* **diff:** fix length issues ([8396f2a](https://github.com/archguard/archguard-frontend/commit/8396f2a5d50e9d4bda0ced0c5c32fd4050b3e7e2))
+* **diff:** merge for relations ([2d7e310](https://github.com/archguard/archguard-frontend/commit/2d7e310dc73a376ace874d37a75bc67b2c8a0b58))
+* **diff:** use change to detect element changes ([8499946](https://github.com/archguard/archguard-frontend/commit/849994601e2b7e9b32a244b806969d93113c329f))
+* fix change detect diff issues ([3fd4dea](https://github.com/archguard/archguard-frontend/commit/3fd4dead0238ee3314907b95208e2a0503870aaf))
+* **scanner:** fix translate issue ([295f912](https://github.com/archguard/archguard-frontend/commit/295f912e2c9d7ff5bc5a93ba1ed8818daad515ef))
+
+
+### Features
+
+* **change:** log for results ([2e16bbd](https://github.com/archguard/archguard-frontend/commit/2e16bbd0648976d570604c6957362b04a40ba130))
+* **diff:** add query ui for by commit ids ([af3d441](https://github.com/archguard/archguard-frontend/commit/af3d441af2b889091c4a5f1d74cc0a4b49004057))
+* **diff:** add sankey for history ([0f22bce](https://github.com/archguard/archguard-frontend/commit/0f22bceff7b5d24e0fe001d1d64dcc1dc7a7a7b7))
+* **diff:** add translate for diff ([a1b8ce5](https://github.com/archguard/archguard-frontend/commit/a1b8ce5e751e72841fe0b76ac6a27666f11a0b23))
+* **diff:** make diff changes ([c88a50b](https://github.com/archguard/archguard-frontend/commit/c88a50b0e7384de5eb8b2217a728be3be650c6a9))
+
+
+
+## [1.5.1](https://github.com/archguard/archguard-frontend/compare/v1.5.0...v1.5.1) (2022-04-10)
+
+
+### Features
+
+* add issue for logs ([f42821e](https://github.com/archguard/archguard-frontend/commit/f42821ed71157e98d01684d8932dded02f7cecde))
 
 
 
