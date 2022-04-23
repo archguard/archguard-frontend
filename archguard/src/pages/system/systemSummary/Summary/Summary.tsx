@@ -8,7 +8,7 @@ import { history, useIntl, useParams } from "umi";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerServices } from "@/api/module/containerService";
-import { Table } from 'antd';
+import { Switch, Table } from 'antd';
 import FileChangeSizing from "@/pages/system/systemSummary/Summary/components/FileChangeSizing";
 import FileSizing from "@/pages/system/systemSummary/Summary/components/FileSizing";
 import { queryUnstableFiles } from "@/api/module/gitFile";
@@ -20,6 +20,8 @@ function Summary() {
   const { data: overviewCount } = useOverviewCount();
   const [services, setServices] = useState({} as any);
   const [unstableFiles, setUnstableFiles] = useState([]);
+  const [showFileSizing, setShowFileSizing] = useState(false);
+  const [showFileChangeSizing, setShowFileChangeSizing] = useState(false);
 
   const { systemId } = useParams();
   storage.setSystemId(systemId)
@@ -74,6 +76,9 @@ function Summary() {
     { title: formatMessage({ id: 'SYSTEM_OVERVIEW.LINES' }), dataIndex: 'lineCount', key: 'lineCount', },
   ];
 
+  function toggleFileSizing() {setShowFileSizing(!showFileSizing)}
+  function toggleFileChangeSizing() {setShowFileChangeSizing(!showFileChangeSizing)}
+
   return (
     <div>
       <div className={ styles.header }>
@@ -120,11 +125,13 @@ function Summary() {
         <div className={ styles.changes }>
           <div className={ styles.graph }>
             <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.CHANGE_FREQUENCY_SIZE' }) }</h2>
-            <FileSizing systemId={ systemId }/>
+            <div>Show: <Switch onChange={toggleFileSizing} /></div>
+            { showFileSizing && <FileSizing systemId={ systemId }/> }
           </div>
           <div className={ styles.graph }>
             <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.CHANGE_FREQUENCY_SIZE_LINE_COUNT' }) }</h2>
-            <FileChangeSizing systemId={ systemId }/>
+            <div>Show: <Switch onChange={toggleFileChangeSizing} /></div>
+            { showFileChangeSizing && <FileChangeSizing systemId={ systemId }/> }
           </div>
         </div>
         <div>
