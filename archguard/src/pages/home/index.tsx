@@ -180,6 +180,10 @@ const Home = () => {
     setLocale(currentLanguage, false);
   };
 
+  const handleTabClick = (key: string) => {
+    console.log(key)
+  }
+
   return (
     <div className="multiple-system-container">
       <div className="multiple-system-header">
@@ -227,7 +231,7 @@ const Home = () => {
         ) }
       </div>
       <div className="multiple-system-selector">
-        <Tabs defaultActiveKey="my-system">
+        <Tabs defaultActiveKey="my-system" onChange={ handleTabClick }>
           <Tabs.TabPane tab={ formatMessage({ id: 'COMPONENT_ANALYSIS' }) } key="my-system">
             <Row gutter={ [12, 12] }>
               <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 }>

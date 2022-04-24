@@ -26,6 +26,7 @@ export default defineConfig({
   routes: [
     { path: "/", redirect: "/home" },
     { path: "/home", component: "@/pages/home" },
+    { path: "/services-map", component: "@/pages/servicesMap/ServicesMap" },
     {
       exact: false,
       path: "/:systemId",
