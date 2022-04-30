@@ -42,6 +42,7 @@ export default function ServicesMapComponent(props: CytoscapeProps) {
       applyCubicBezierStyles(event.cy.edges());
     });
     cy.nodes().on("expandcollapse.beforeexpand", () => {
+      // @ts-ignore
       cy.nodes().position().x += 100;
     });
   }, []);
