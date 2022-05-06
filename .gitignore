@@ -13,3 +13,5 @@ project/
 **/.DS_Store
 *.iml
 /node_modules
+yarn.lock
+package.json

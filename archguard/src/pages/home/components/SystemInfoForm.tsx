@@ -8,7 +8,6 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import "./SystemInfoForm.less";
 import BadSmellThresholdForm from '@/pages/system/systemEvolving/BadSmellThreshold/components/BadSmellThresholdForm';
 import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
-import TextArea from "antd/es/input/TextArea";
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
