@@ -53,15 +53,6 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
     const isIncluded = systemNames?.includes(systemName);
     return valueChanged && isIncluded;
   };
-  //
-  // const RepoAuthType: any = {
-  //   "SshKeyString": {
-  //     display: formatMessage({ id: "SshKeyString" })
-  //   },
-  //   "UsernameAndPassword": {
-  //     display: formatMessage({ id: "UsernameAndPassword" })
-  //   }
-  // }
 
   const systemInfoPage = (
     <div>
