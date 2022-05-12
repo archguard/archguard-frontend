@@ -1,10 +1,10 @@
 import React from "react";
-import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
+import FileEditor from "@/pages/interactiveAnalysis/coreEditor/FileEditor";
 
 
 function InteractiveAnalysis() {
   return (<div>
-    <CoreEditor />
+    <FileEditor />
   </div>)
 }
 

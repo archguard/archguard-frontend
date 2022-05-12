@@ -18,6 +18,7 @@ Node.js version: 16.x
   - [ ] graph dsl to graph
   - [ ] notebook to server
   - [ ] notebook return output to graph
+- [ ] rxjs for websocket
 
 ### Tech decision (framework)
 

@@ -1,9 +1,12 @@
 import React, { useCallback, useRef, useState } from "react";
+import { Button } from "antd";
 import Editor from "@monaco-editor/react";
+import { CaretRightOutlined } from "@ant-design/icons";
 
 interface BlockEditorProps {
   code: String,
   language: String,
+  run: Function,
 }
 
 function BlockEditor(props: BlockEditorProps) {
@@ -33,7 +36,12 @@ function BlockEditor(props: BlockEditorProps) {
     }
   });
 
+  const runCode = useCallback(() => {
+    props.run(code);
+  }, [code]);
+
   return (<div>
+    <Button type="primary" icon={<CaretRightOutlined />} onClick={ runCode } />
     <Editor
       height={ height }
       defaultLanguage={ props.language }

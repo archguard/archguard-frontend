@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import BlockEditor from "@/pages/interactiveAnalysis/coreEditor/BlockEditor";
 
-function CoreEditor() {
+function FileEditor() {
   const all = `
 # 架构
 
@@ -28,9 +28,14 @@ var layer = layered {
 
   // todo: parse markdown to dispatch block and graph
 
+  const runCode = useCallback((code) => {
+    console.log(code)
+  });
+
+
   return (<div>
-    <BlockEditor language={ "kotlin" } code={ testcode }/>
+    <BlockEditor language={ "kotlin" } code={ testcode } run={ runCode }/>
   </div>)
 }
 
-export default CoreEditor;
+export default FileEditor;
