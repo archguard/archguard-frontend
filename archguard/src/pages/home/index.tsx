@@ -21,6 +21,7 @@ import ServicesMap from "../servicesMap/ServicesMap";
 import CodeAnalysis from "@/pages/code";
 import DatabaseMap from '../data/DatabaseMap';
 import ChangeDetect from "@/pages/change/ChangeDetect";
+import InteractiveAnalysis from '../interactiveAnalysis/InteractiveAnalysis';
 
 interface UserProfile {
   name?: string;
@@ -251,6 +252,9 @@ const Home = () => {
                 </Col>
               )) }
             </Row>
+          </Tabs.TabPane>
+          <Tabs.TabPane tab={ formatMessage({ id: 'INTERACTIVE_ANALYSIS' }) } key="interactive-analysis">
+            <InteractiveAnalysis/>
           </Tabs.TabPane>
           <Tabs.TabPane tab={ formatMessage({ id: 'SERVICES_MAP' }) } key="services-map">
             <ServicesMap/>

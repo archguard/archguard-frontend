@@ -5,6 +5,7 @@ export default {
   MESSAGE_QUEUE_ANALYSIS: "消息系统地图",
   SERVICES_MAP_TIPS: "API 消费端：前端 Axios、UMI-Request，后端：Java Spring + RestTemplate、Kotlin Spring + RestTemplate。\\n API 生产端：支持 Java/Kotlin + Spring、C# + .Net。\\n 新的语言和框架支持，请移步：",
   COMPONENT_ANALYSIS: "系统分析",
+  INTERACTIVE_ANALYSIS: "交互式分析（Alpha）",
   CODE_ANALYSIS: "代码级分析",
   OTHER_SYSTEM: "其它系统",
   DATABASE_MAP: "数据库地图",
