@@ -1,11 +1,8 @@
 import React from "react";
-import { useIntl } from 'umi';
-import CoreEditor from './coreEditor/CoreEditor';
+import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
 
 
 function InteractiveAnalysis() {
-  const { formatMessage } = useIntl();
-
   return (<div>
     <CoreEditor />
   </div>)
