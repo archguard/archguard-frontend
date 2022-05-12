@@ -249,7 +249,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         form={form}
         layout="vertical"
         onFinish={onFinish}
-        initialValues={{ repoType: "GIT", language: "Jvm", repo: [""], branch: "master", badSmellThresholdSuiteId: 1 }}
+        initialValues={{ repoType: "GIT", language: "Java", repo: [""], branch: "master", badSmellThresholdSuiteId: 1 }}
         scrollToFirstError
       >
         <Steps current={current} style={{ padding: '10px 0' }}>
