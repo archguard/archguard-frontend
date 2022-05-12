@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 
 interface BlockEditorProps {
@@ -11,16 +11,27 @@ function BlockEditor(props: BlockEditorProps) {
   const [height, setHeight] = useState("20vh")
   const [code] = useState(props.code)
 
+  function adjustHeight(editor: monaco.editor.IStandaloneCodeEditor) {
+    const lineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight)
+    const lineCount = editor.getModel()?.getLineCount() || 1
+    let editorHeight = editor.getTopForLineNumber(lineCount + 1) + lineHeight
+
+    setHeight(editorHeight + "px")
+    console.log(editorHeight)
+    editor.layout()
+  }
+
   const handleEditorDidMount = useCallback((editor: Editor, monaco) => {
     editorRef.current = editor;
     if (!!editorRef.current) {
-      let editorHeight = editorRef.current.getTopForLineNumber(Number.MAX_SAFE_INTEGER)
-      setHeight(editorHeight + "px")
+      adjustHeight(editorRef.current);
     }
-  }, [editorRef, setHeight])
+  }, [editorRef, setHeight, code])
 
   const changeCode = useCallback((code) => {
-
+    if (!!editorRef.current) {
+      adjustHeight(editorRef.current);
+    }
   });
 
   return (<div>
