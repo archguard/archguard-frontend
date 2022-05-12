@@ -11,6 +11,14 @@
 
 Node.js version: 16.x
 
+## ArchGuard 3.0
+
+- [ ] custom Markdown parser
+- [ ] paragraph dispatch server
+  - [ ] graph dsl to graph
+  - [ ] notebook to server
+  - [ ] notebook return output to graph
+
 ### Tech decision (framework)
 
 - language：TypeScript
