@@ -192,30 +192,6 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
       >
         <Input placeholder="适用于无包概念的语言，如 TypeScript" />
       </Form.Item>
-      {/*<Form.Item*/}
-      {/*  name="repoAuthType"*/}
-      {/*  label={ formatMessage({ id: 'RepoAuthType' }) }*/}
-      {/*  validateTrigger={['onChange', 'onBlur']}*/}
-      {/*  initialValue={ 'UsernameAndPassword'}*/}
-      {/*  rules={[{ required: true, message: "请选择鉴权方式！" }]}*/}
-      {/*  required*/}
-      {/*  style={{ display: current === 0 ? 'initial' : 'none' }}*/}
-      {/*>*/}
-      {/*  <Select>*/}
-      {/*    { ["SshKeyString", "UsernameAndPassword"].map((value) => (*/}
-      {/*      <Select.Option value={ value } key={ value }>*/}
-      {/*        { RepoAuthType[value].display }*/}
-      {/*      </Select.Option>*/}
-      {/*    )) }*/}
-      {/*  </Select>*/}
-      {/*</Form.Item>*/}
-
-      {/*<Form.Item name="sshKey" label="SSH Key"*/}
-      {/*           required={ form.getFieldValue("repoAuthType") === "SshKeyString" }*/}
-      {/*           rules={[{ required: form.getFieldValue("repoAuthType") === "SshKeyString", message: "Required" }]}*/}
-      {/*           style={ { display: current === 0 ? 'initial' : 'none' } }>*/}
-      {/*  <TextArea placeholder="SSH Key" />*/}
-      {/*</Form.Item>*/}
 
       <Form.Item name="username" label="仓库用户名" style={{ display: current === 0 ? 'initial' : 'none' }}>
         <Input placeholder="请输入用户名" />
