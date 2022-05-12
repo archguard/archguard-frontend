@@ -1,13 +1,13 @@
 import React from "react";
-import useSystemList from "@/store/global-cache-state/useSystemList";
 import { useIntl } from 'umi';
+import CoreEditor from './coreEditor/CoreEditor';
 
 
 function InteractiveAnalysis() {
   const { formatMessage } = useIntl();
-  const [systemInfo] = useSystemList();
 
   return (<div>
+    <CoreEditor />
   </div>)
 }
 

@@ -5,6 +5,7 @@ export default defineConfig({
     type: "none",
     exclude: [],
   },
+  devtool: false,
   hash: true,
   antd: {},
   dva: false,
