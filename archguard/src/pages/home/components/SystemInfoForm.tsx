@@ -1,13 +1,13 @@
-import React, { forwardRef, useImperativeHandle, useEffect } from "react";
-import { Form, Input, Select, Button, Steps, message, Radio, Collapse } from "antd";
+import React, { forwardRef, useEffect, useImperativeHandle } from "react";
+import { Form, Input, Radio, Select, Steps } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { Store } from "antd/lib/form/interface";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined } from "@ant-design/icons";
 import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import "./SystemInfoForm.less";
 import BadSmellThresholdForm from '@/pages/system/systemEvolving/BadSmellThreshold/components/BadSmellThresholdForm';
-import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
+import { useIntl } from "@@/plugin-locale/localeExports";
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
