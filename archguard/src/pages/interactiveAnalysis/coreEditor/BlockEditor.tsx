@@ -17,8 +17,7 @@ function BlockEditor(props: BlockEditorProps) {
     let editorHeight = editor.getTopForLineNumber(lineCount + 1) + lineHeight
 
     setHeight(editorHeight + "px")
-    console.log(editorHeight)
-    editor.layout()
+    editor.layout({width: editor.getLayoutInfo().width, height: editorHeight})
   }
 
   const handleEditorDidMount = useCallback((editor: Editor, monaco) => {
