@@ -8,7 +8,7 @@ interface BlockEditorProps {
 
 function BlockEditor(props: BlockEditorProps) {
   const editorRef = useRef(null);
-  const [height, setHeight] = useState("20vh")
+  const [height, setHeight] = useState("100%")
   const [code] = useState(props.code)
 
   function adjustHeight(editor: monaco.editor.IStandaloneCodeEditor) {
@@ -17,7 +17,7 @@ function BlockEditor(props: BlockEditorProps) {
     let editorHeight = editor.getTopForLineNumber(lineCount + 1) + lineHeight
 
     setHeight(editorHeight + "px")
-    editor.layout({width: editor.getLayoutInfo().width, height: editorHeight})
+    editor.layout({ width: editor.getLayoutInfo().width, height: editorHeight })
   }
 
   const handleEditorDidMount = useCallback((editor: Editor, monaco) => {
@@ -40,6 +40,7 @@ function BlockEditor(props: BlockEditorProps) {
       value={ code }
       onChange={ changeCode }
       onMount={ handleEditorDidMount }
+      options={{ scrollBeyondLastLine: false, automaticLayout: true }}
     />
     <div>Block Result</div>
   </div>)
