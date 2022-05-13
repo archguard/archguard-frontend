@@ -1,4 +1,4 @@
-import XLSX from "xlsx";
+// import XLSX from "xlsx";
 import { createGlobalState, useEffectOnce } from "react-use";
 import { FormItemOption } from "./../models/form";
 
@@ -14,10 +14,10 @@ export const scrollToAnchor = (anchorName: string) => {
 };
 
 export const exportJsonToExcel = (data: any[], fileName: string) => {
-  const workSheet = XLSX.utils.json_to_sheet(data);
-  const workBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workBook, workSheet, "data");
-  XLSX.writeFile(workBook, fileName);
+  // const workSheet = XLSX.utils.json_to_sheet(data);
+  // const workBook = XLSX.utils.book_new();
+  // XLSX.utils.book_append_sheet(workBook, workSheet, "data");
+  // XLSX.writeFile(workBook, fileName);
 };
 
 interface CacheState<T> {

@@ -104,7 +104,8 @@ export default function CouplingList(props: CouplingListProps) {
           ? () => {
               return (
                 <div style={{ textAlign: "right" }}>
-                  <Button onClick={() => exportExcel()}>导出到Excel</Button>
+                  <Button disabled onClick={() =>
+                    exportExcel()}>导出到Excel</Button>
                 </div>
               );
             }

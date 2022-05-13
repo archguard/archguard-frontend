@@ -1,5 +1,4 @@
-import { Graph } from "@antv/g6";
-import { GraphOptions } from "@antv/g6/lib/types";
+import { Graph, GraphOptions } from "@antv/g6";
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import { useMeasure } from "react-use";
