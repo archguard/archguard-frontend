@@ -21,7 +21,7 @@ import CodeAnalysis from "@/pages/code";
 import DatabaseMap from '../data/DatabaseMap';
 import ChangeDetect from "@/pages/change/ChangeDetect";
 import InteractiveAnalysis from '../interactiveAnalysis/InteractiveAnalysis';
-import { useIntl, setLocale } from "umi";
+import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
 
 interface UserProfile {
   name?: string;

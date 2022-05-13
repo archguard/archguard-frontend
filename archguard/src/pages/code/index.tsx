@@ -3,7 +3,7 @@ import Dependence from "@/pages/dependence";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Select } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
-import { useIntl } from "umi";
+import { useIntl } from "@@/plugin-locale/localeExports";
 
 const CodeAnalysis = () => {
   const { formatMessage } = useIntl();

@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Button, Form, Input, Row, Select, Space } from 'antd';
-import { useIntl, useParams } from "umi";
+import { useParams } from "umi";
+import { useIntl } from "@@/plugin-locale/localeExports";
 
 import { storage } from "@/store/storage/sessionStorage";
 import { queryCommitByIds, queryHistory } from "@/api/module/gitFile";

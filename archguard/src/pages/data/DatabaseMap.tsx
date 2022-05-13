@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Select, Table } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
 import { queryDatamap } from "@/api/datamap/datamap";
-import { useIntl, useParams } from "umi";
+import { useParams } from "umi";
+import { useIntl } from "@@/plugin-locale/localeExports";
 import DatamapSankey from "@/pages/data/components/DatamapSankey";
 
 const DatabaseMap = () => {

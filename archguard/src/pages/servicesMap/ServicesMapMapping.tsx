@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import styles from "./ServicesMapMapping.less"
 import { Table } from "antd";
-import { useIntl } from "umi";
+import { useIntl } from "@@/plugin-locale/localeExports";
 
 interface ServicesMapMappingProps {
   datasource: any[],

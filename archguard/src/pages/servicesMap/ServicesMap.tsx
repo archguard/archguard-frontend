@@ -5,7 +5,7 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import { queryContainerByIds } from "@/api/module/containerService";
 import ServicesMapGraph from "@/pages/servicesMap/graph/ServicesMapGraph";
 import { urlMapping } from "@/pages/servicesMap/urlMapping";
-import { useIntl } from 'umi';
+import { useIntl } from "@@/plugin-locale/localeExports";
 
 function ServicesMap() {
   const { formatMessage } = useIntl();

@@ -1,7 +1,7 @@
 import ReactECharts from 'echarts-for-react';
 import { useEffect, useState } from "react";
 import React from 'react';
-import { useIntl } from "umi";
+import { useIntl } from "@@/plugin-locale/localeExports";
 
 interface DatamapSankeyProps {
   dataSource: any[]
