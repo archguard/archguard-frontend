@@ -3,7 +3,6 @@ import { Card, Button, Dropdown, Menu } from "antd";
 import Meta from "antd/lib/card/Meta";
 import { PlusOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { SystemInfo } from "@/api/addition/systemInfo";
-import moment from 'moment';
 import {useIntl} from "@@/plugin-locale/localeExports";
 
 interface SystemCardProps {
@@ -85,7 +84,7 @@ const SystemCard = (props: SystemCardProps) => {
   };
 
   function getDescription(systemInfo: SystemInfo) {
-    return `${ formatMessage({ id: 'LAST_SCAN_TIME' }) }: ${ moment(systemInfo.updatedTime).format('DD/MM/YYYY HH:mm') }`;
+    return `${ formatMessage({ id: 'LAST_SCAN_TIME' }) }: ${ systemInfo.updatedTime }`;
   }
 
   return systemInfo ? (
