@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { ConfigData } from "./ConfigForm/config";
 import { Form, Space, Button, Select, Card } from "antd";
 import { PlusOutlined, MinusCircleOutlined } from "@ant-design/icons";
-import { useMount } from "ahooks";
 import { queryPluginTypes } from "@/api/module/plugin";
+import { useMount } from "react-use";
 
 interface SelectOption {
   label: string;

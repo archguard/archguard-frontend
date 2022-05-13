@@ -1,11 +1,11 @@
 import React from "react";
 import { Menu } from "antd";
-import { useMount } from "ahooks";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import CloudSyncOutlined from "@ant-design/icons/CloudSyncOutlined";
 import FileTextOutlined from "@ant-design/icons/FileTextOutlined";
 import { storage } from "@/store/storage/sessionStorage";
 import { SettingOutlined } from "@ant-design/icons";
+import { useMount } from "react-use";
 
 export const BUILD_TARGET = process.env.BUILD_TARGET || "default";
 

@@ -6,7 +6,6 @@
     "@ant-design/icons": "^4.7.0",
     "@antv/g6": "^4.6.3",
     "@monaco-editor/react": "^4.4.5",
-    "ahooks": "^3.1.13",
     "antd": "^4.18.8",
     "axios": "^0.26.0",
     "bizcharts": "^4.0.14",
@@ -48,7 +47,6 @@
     "build": "umi build",
     "build-zh": "cross-env BUILD_TARGET=zh umi build",
     "test": "umi test",
-    "lint": "umi-lint ./src --eslint.ext='ts,tsx,js,jsx'",
     "precommit": "umi-lint --staged --eslint.ext='ts,tsx,js,jsx' --stylelint --prettier --fix"
   },
   "eslintConfig": {
