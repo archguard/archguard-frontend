@@ -78,12 +78,6 @@
     "babel-plugin-import": "^1.13.0",
     "cross-env": "^7.0.2",
     "eslint": "^8.9.0",
-    "eslint-config-umi": "^1.6.0",
-    "eslint-plugin-flowtype": "^8.0.3",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-jsx-a11y": "^6.5.1",
-    "eslint-plugin-react": "^7.28.0",
-    "eslint-plugin-react-hooks": "^4.3.0",
     "husky": "^4.2.5",
     "less": "^4.1.2",
     "less-loader": "^10.2.0",
@@ -94,7 +88,6 @@
     "tslib": "^2.3.1",
     "typescript": "^3.9.7",
     "umi": "^3.5.23",
-    "umi-lint": "^2.0.2",
     "webpack-bundle-analyzer": "^4.5.0"
   },
   "peerDependencies": {

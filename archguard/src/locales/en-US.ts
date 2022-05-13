@@ -4,6 +4,7 @@ export default {
   COMPONENT_ANALYSIS: "Component Analysis",
   MY_SYSTEM: "My Systems",
   SERVICES_MAP: "Container Analysis",
+  INTERACTIVE_ANALYSIS: "Interactive Analysis（Alpha）",
   MESSAGE_QUEUE_ANALYSIS: "Message Queue Analysis",
   SERVICES_MAP_TIPS: "API Consumer support: (frontend) Axios、UMI-Request，(backend)：Java Spring + RestTemplate、Kotlin Spring + RestTemplate。\\n API Producer support：Java/Kotlin + Spring、C# + .Net。https://groups.google.com/u/0/a/thoughtworks.com/g/osc?hl=en\\n New frameworks or languages, please move to：",
   CODE_ANALYSIS: "Code Analysis",
