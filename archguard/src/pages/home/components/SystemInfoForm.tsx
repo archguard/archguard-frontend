@@ -7,7 +7,6 @@ import { SystemInfo } from "@/api/addition/systemInfo";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import "./SystemInfoForm.less";
 import BadSmellThresholdForm from '@/pages/system/systemEvolving/BadSmellThreshold/components/BadSmellThresholdForm';
-import { useIntl } from "@@/plugin-locale/localeExports";
 
 interface SystemInfoFormProps {
   data?: SystemInfo;
@@ -16,7 +15,6 @@ interface SystemInfoFormProps {
   currentAction: string;
 }
 const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
-  const { formatMessage } = useIntl();
   const { data, onSubmit, current, currentAction } = props;
   const [form] = useForm();
   const [systemList] = useSystemList();

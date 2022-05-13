@@ -3,7 +3,7 @@ import { Card, Button, Dropdown, Menu } from "antd";
 import Meta from "antd/lib/card/Meta";
 import { PlusOutlined, EllipsisOutlined } from "@ant-design/icons";
 import { SystemInfo } from "@/api/addition/systemInfo";
-import {useIntl} from "@@/plugin-locale/localeExports";
+import { useIntl } from "umi";
 
 interface SystemCardProps {
   systemInfo?: SystemInfo;

@@ -16,12 +16,12 @@ import SystemCard from "./components/SystemCard";
 import SystemInfoForm from "./components/SystemInfoForm";
 import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "../help";
-import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
 import ServicesMap from "../servicesMap/ServicesMap";
 import CodeAnalysis from "@/pages/code";
 import DatabaseMap from '../data/DatabaseMap';
 import ChangeDetect from "@/pages/change/ChangeDetect";
 import InteractiveAnalysis from '../interactiveAnalysis/InteractiveAnalysis';
+import { useIntl, setLocale } from "umi";
 
 interface UserProfile {
   name?: string;
