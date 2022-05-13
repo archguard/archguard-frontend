@@ -196,10 +196,10 @@ export const positionNodes = (nodes: Node[], edges: Edge[], options: LayoutOptio
 
   同层级节点之间的连线需要特殊处理：
   比级edge两节点的层级，如果一样就设置为曲线，并设置曲线偏移
-  graph.edge((edge: any) => {
+  block.edge((edge: any) => {
     const { source, target } = edge;
-    const sourceNode = graph.findById(source);
-    const targetNode = graph.findById(target);
+    const sourceNode = block.findById(source);
+    const targetNode = block.findById(target);
     const sourceModel = sourceNode.getModel();
     const targetModel = targetNode.getModel();
     const edgeCfg = {
