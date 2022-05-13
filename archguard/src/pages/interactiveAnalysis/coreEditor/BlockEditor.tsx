@@ -6,13 +6,13 @@ import { CaretRightOutlined } from "@ant-design/icons";
 interface BlockEditorProps {
   code: String,
   language: String,
-  run: Function,
+  evalCode: Function,
 }
 
 function BlockEditor(props: BlockEditorProps) {
   const editorRef = useRef(null);
   const [height, setHeight] = useState("100%")
-  const [code] = useState(props.code)
+  const [code, setCode] = useState(props.code)
 
   function adjustHeight(editor: monaco.editor.IStandaloneCodeEditor) {
     const lineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight)
@@ -33,11 +33,12 @@ function BlockEditor(props: BlockEditorProps) {
   const changeCode = useCallback((code) => {
     if (!!editorRef.current) {
       adjustHeight(editorRef.current);
+      setCode(code)
     }
-  });
+  }, [setCode]);
 
   const runCode = useCallback(() => {
-    props.run(code);
+    props.evalCode(code);
   }, [code]);
 
   return (<div>

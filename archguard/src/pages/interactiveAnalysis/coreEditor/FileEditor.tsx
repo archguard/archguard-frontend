@@ -35,6 +35,7 @@ var layer = layered {
   const runCode = useCallback((code) => {
     subject.subscribe({
       next: (msg) => {
+        console.log(msg)
         setResult(msg)
       }, // Called whenever there is a message from the server.
       error: (err) => console.log(err), // Called if at any point WebSocket API signals some kind of error.
@@ -45,7 +46,7 @@ var layer = layered {
   }, setResult);
 
   return (<div>
-    <BlockEditor language={ "kotlin" } code={ testcode } run={ runCode }/>
+    <BlockEditor language={ "kotlin" } code={ testcode } evalCode={ runCode }/>
     <div>{ result }</div>
   </div>)
 }
