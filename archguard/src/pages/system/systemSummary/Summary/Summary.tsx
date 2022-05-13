@@ -13,9 +13,9 @@ import { Switch, Table } from 'antd';
 import FileChangeSizing from "@/pages/system/systemSummary/Summary/components/FileChangeSizing";
 import FileSizing from "@/pages/system/systemSummary/Summary/components/FileSizing";
 import { queryUnstableFiles } from "@/api/module/gitFile";
-import { DonutChart } from "bizcharts";
 import ApiResourceTree from "@/pages/system/systemSummary/Summary/components/ApiResourceTree";
 import { queryProjectCompositionDependency } from "@/api/module/project";
+import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
 
 function Summary() {
   const { formatMessage } = useIntl();
@@ -110,9 +110,6 @@ function Summary() {
       <div className={ styles.body }>
         <div className={ styles.detail }>
           <div className={ styles.overview }>
-            {/*<BaLabel value={ overviewCount?.repoCount } text="代码仓数"/>*/ }
-            <BaLabel value={ overviewCount?.moduleCount }
-                     text={ formatMessage({ id: 'SYSTEM_OVERVIEW.MODULE_COUNT' }) }/>
             <BaLabel value={ overviewCount?.contributorCount }
                      text={ formatMessage({ id: 'SYSTEM_OVERVIEW.CONTRIBUTORS' }) }/>
             <BuGrade text={ formatMessage({ id: 'SYSTEM_OVERVIEW.ARCH_LEVEL' }) }
@@ -124,17 +121,7 @@ function Summary() {
                  size={ 'middle' } pagination={
             { defaultPageSize: 5 }
           }/>
-          <DonutChart
-            data={ overviewCount?.lineCounts || [] }
-            autoFit
-            height={ 350 }
-            width={ 600 }
-            radius={ 0.8 }
-            padding="auto"
-            angleField="lineCount"
-            colorField="language"
-            pieStyle={ { stroke: "white", lineWidth: 5 } }
-          />
+          { overviewCount?.lineCounts && <LineCountChart  dataSource={ overviewCount?.lineCounts } /> }
         </div>
       </div>
       <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.UNSTABLE' }) }</h2>
