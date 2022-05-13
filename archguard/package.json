@@ -25,6 +25,7 @@
     "echarts-for-react": "^2.0.16",
     "elkjs": "0.7.1",
     "font-awesome": "^4.7.0",
+    "jmp": "^2.0.0",
     "markdown-navbar": "^1.4.2",
     "qs": "^6.10.3",
     "query-string": "^6.13.1",
