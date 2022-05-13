@@ -44,7 +44,6 @@ const menuList = configForTargets({
       children: [
         { key: "/analysis/metric", text: "指标分析" },
         { key: "/systemEvolving/MeasureIndicators", text: "指标看板", },
-        { key: "/systemEvolving/BadSmellOverview", text: "坏味道看板", },
       ],
     },
     {

@@ -2,7 +2,6 @@ import { Color } from "@/components/Business/Grade/Grade";
 import { useGet } from "@/hooks/useGet";
 import { badSmellWordingKeys, DashboardGroup, } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
 import { IndicatorLevel } from "@/pages/system/systemEvolving/MeasureIndicators/Components/Group";
-import { LEVEL_SCORE } from "@/pages/system/systemSummary/Summary/components/QualityEvaluation";
 import { storage } from "@/store/storage/sessionStorage";
 import axios from '../axios';
 
@@ -67,6 +66,13 @@ export const useOverviewCount = () => {
   const systemId = storage.getSystemId();
   return useGet<UseOverviewCount>(`/api/systems/${ systemId }/overview/system`);
 };
+
+export const LEVEL_SCORE = {
+  A: 1,
+  B: 2,
+  C: 3,
+  D: 4,
+} as const;
 
 export interface Overview {
   level: keyof typeof LEVEL_SCORE;

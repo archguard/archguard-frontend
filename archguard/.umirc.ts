@@ -93,10 +93,6 @@ export default defineConfig({
           path: "systemEvolving/BadSmellThreshold",
           component: "@/pages/system/systemEvolving/BadSmellThreshold/BadSmellThreshold",
         },
-        {
-          path: "systemEvolving/BadSmellOverview",
-          component: "@/pages/system/systemEvolving/BadSmellOverview/BadSmellOverview",
-        },
       ],
     },
   ],
