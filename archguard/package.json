@@ -37,8 +37,7 @@
     "react-use": "^15.3.2",
     "react-vuex-hook": "^5.0.3",
     "rxjs": "^7.5.5",
-    "uuid": "^8.3.2",
-    "zeromq": "^5.2.8"
+    "uuid": "^8.3.2"
   },
   "scripts": {
     "start": "umi dev",
