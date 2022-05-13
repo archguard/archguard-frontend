@@ -7,14 +7,17 @@ import mermaidWrapper from "@/pages/interactiveAnalysis/block/mermaidWrapper";
 
 function FileEditor() {
   const [result, setResult] = useState(null);
-  const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.2")
+  const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.3")
 
 import org.archguard.dsl.*
 var layer = layered {
     prefixId("org.archguard")
     component("controller") dependentOn component("service")
     组件("service") 依赖于 组件("repository")
-}`;
+}
+
+graph().show(layer)
+`;
 
   // todo: parse markdown to dispatch block and block
 
