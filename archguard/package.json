@@ -38,8 +38,10 @@
     "react-use": "^15.3.2",
     "react-vuex-hook": "^5.0.3",
     "rxjs": "^7.5.5",
+    "uuid": "^8.3.2",
     "web-worker": "1.2.0",
-    "xlsx": "^0.16.3"
+    "xlsx": "^0.16.3",
+    "zeromq": "^5.2.8"
   },
   "scripts": {
     "start": "umi dev",
@@ -60,6 +62,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.17.9",
     "@types/classnames": "^2.2.10",
     "@types/cytoscape-dagre": "^2.3.0",
     "@types/d3": "^7.1.0",

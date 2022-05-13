@@ -5,6 +5,8 @@ export default defineConfig({
     type: "none",
     exclude: [],
   },
+  // for Jupyter libs: zeromq, jmq,
+  extraBabelPlugins: ['@babel/plugin-transform-modules-commonjs'],
   devtool: false,
   hash: true,
   antd: {},
