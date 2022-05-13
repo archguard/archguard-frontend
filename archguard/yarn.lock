@@ -11281,10 +11281,13 @@ jest@^26.6.3:
     import-local "^3.0.2"
     jest-cli "^26.6.3"
 
-jmq@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/jmq/-/jmq-0.0.1.tgz#304fc3a1aac16c51aa1ead83edf65d44f00e6310"
-  integrity sha1-ME/DoarBbFGqHq2D7fZdRPAOYxA=
+jmp@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/jmp/-/jmp-2.0.0.tgz#4f2be3540e25a35b68183ec2d79c990884e0a9f0"
+  integrity sha512-VATfWVHErQJA2XMtmQjJQHHyQ/hxjHMmsy+egmwRk/RzFchQB4xjrR1iX496VZr+Hyhcr4zvL+IkkSlIYKx6Yw==
+  dependencies:
+    uuid "3"
+    zeromq "5"
 
 js-cookie@^2.2.1, js-cookie@^2.x.x:
   version "2.2.1"
@@ -18984,7 +18987,7 @@ utils-merge@1.0.1:
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@^3.3.2, uuid@^3.4.0:
+uuid@3, uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
@@ -19871,7 +19874,7 @@ yup@^0.27.0:
     synchronous-promise "^2.0.6"
     toposort "^2.0.2"
 
-zeromq@^5.2.8:
+zeromq@5, zeromq@^5.2.8:
   version "5.2.8"
   resolved "https://registry.yarnpkg.com/zeromq/-/zeromq-5.2.8.tgz#94b0b85e4152e98b8bb163f1db4a34280d44d9d0"
   integrity sha512-bXzsk7KOmgLSv1tC0Ms1VXBy90+Rz27ZYf27cLuldRYbpqYpuWJfxxHFhO710t22zgWBnmdUP0m3SKFpLI0u5g==

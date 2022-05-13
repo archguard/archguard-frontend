@@ -1,7 +1,7 @@
 import React from "react";
 import FileEditor from "@/pages/interactiveAnalysis/coreEditor/FileEditor";
 import crypto from "crypto";
-import jmp from "jmq";
+import jmp from "jmp";
 
 function InteractiveAnalysis() {
   var scheme = "sha256";
