@@ -27,6 +27,7 @@ var layer = layered {
       complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
     });
 
+    // todo: add context (with ServerlUrl) to object,
     subject.next({ code: code });
   }, setResult);
 
