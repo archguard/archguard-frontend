@@ -4,21 +4,6 @@ import { webSocket } from "rxjs/webSocket";
 
 function FileEditor() {
   const [result, setResult] = useState(null)
-  const all = `
-# 架构
-
-\`\`\`kotlin
-@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.2")
-
-import org.archguard.dsl.*
-var layer = layered {
-    prefixId("org.archguard")
-    component("controller") dependentOn component("service")
-    组件("service") 依赖于 组件("repository")
-}
-\`\`\`
-  `
-
   const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.2")
 
 import org.archguard.dsl.*
@@ -42,7 +27,7 @@ var layer = layered {
       complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
     });
 
-    subject.next(code);
+    subject.next({ code: code });
   }, setResult);
 
   return (<div>

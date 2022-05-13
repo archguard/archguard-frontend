@@ -51,7 +51,6 @@ function BlockEditor(props: BlockEditorProps) {
       onMount={ handleEditorDidMount }
       options={{ scrollBeyondLastLine: false, automaticLayout: true }}
     />
-    <div>Block Result</div>
   </div>)
 }
 
