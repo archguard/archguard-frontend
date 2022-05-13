@@ -1,7 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import BlockEditor from "@/pages/interactiveAnalysis/coreEditor/BlockEditor";
+import { webSocket } from "rxjs/webSocket";
 
 function FileEditor() {
+  const [result, setResult] = useState(null)
   const all = `
 # 架构
 
@@ -28,13 +30,23 @@ var layer = layered {
 
   // todo: parse markdown to dispatch block and graph
 
-  const runCode = useCallback((code) => {
-    console.log(code)
-  });
+  const subject = webSocket('ws://localhost:8848/');
 
+  const runCode = useCallback((code) => {
+    subject.subscribe({
+      next: (msg) => {
+        setResult(msg)
+      }, // Called whenever there is a message from the server.
+      error: (err) => console.log(err), // Called if at any point WebSocket API signals some kind of error.
+      complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
+    });
+
+    subject.next(code);
+  }, setResult);
 
   return (<div>
     <BlockEditor language={ "kotlin" } code={ testcode } run={ runCode }/>
+    <div>{ result }</div>
   </div>)
 }
 
