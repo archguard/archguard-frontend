@@ -18,7 +18,8 @@ Node.js version: 16.x
   - [ ] graph dsl to graph
   - [ ] notebook to server
   - [ ] notebook return output to graph
-- Connection
+- Connection 
+  - `zeromq` libs not working in browser, need to move to backend. 
   - [ ] websocket 
   - [ ] `enchannel` and `enchannel-zmq-backend`
 
