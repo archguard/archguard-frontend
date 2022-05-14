@@ -20,16 +20,18 @@ interface ReplResult {
 
 function FileEditor() {
   const [result, setResult] = useState({} as ReplResult);
-  const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.5")
+  const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.6")
 
-import org.archguard.dsl.*
-var layer = layered {
+val layer = layered {
     prefixId("org.archguard")
-    component("controller") dependentOn component("service")
-    组件("service") 依赖于 组件("repository")
+    component("controller") dependentOn component("application")
+    组件("application") 依赖于 组件("domain")
+    组件("controller") 依赖于 组件("domain")
+    组件("repository") 依赖于 组件("domain")
 }
 
-graph().show(layer.relations())
+val action = graph().show(layer.relations())
+action
 `;
 
   // todo: parse markdown to dispatch block and block
