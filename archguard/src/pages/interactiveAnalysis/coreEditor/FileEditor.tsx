@@ -53,7 +53,7 @@ graph().show(layer.relations())
   );
 
   function renderGraph(dataStr: string) {
-    let data = JSON.parse(dataStr)
+    let data = JSON.parse(dataStr);
 
     let def = "";
     for (let datum of data) {
@@ -62,7 +62,7 @@ graph().show(layer.relations())
 
     return (
       <>
-        { mermaidWrapper.mermaid({
+        {mermaidWrapper.mermaid({
           node: {
             key: "mermaid",
             definition: `graph TD;
@@ -73,13 +73,25 @@ graph().show(layer.relations())
     );
   }
 
+  const repos = `repos {
+    repo(name = "Backend", language = "Kotlin", scmUrl = "https://github.com/archguard/archguard")
+    repo(name = "Scanner", language = "Kotlin", scmUrl = "https://github.com/archguard/scanner")
+}
+`;
+
+  const lintSample = `linter('Backend').layer()`;
+
   return (
     <div>
+      <BlockEditor language={"kotlin"} code={repos} evalCode={() => {}} />
+
       <BlockEditor language={"kotlin"} code={testcode} evalCode={runCode} />
       <div>{JSON.stringify(result)}</div>
       {result.isArchdocApi && result.action.graphType == "archdoc" && (
         <div>{renderGraph(result.action.data)}</div>
       )}
+
+      <BlockEditor language={"kotlin"} code={lintSample} evalCode={() => {}} />
     </div>
   );
 }
