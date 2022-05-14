@@ -25,14 +25,17 @@ import org.archguard.dsl.*
 
 val layer = layered {
     prefixId("org.archguard")
-    component("controller") dependentOn component("application")
+    component("interface") dependentOn component("application")
+    组件("interface") 依赖于 组件("domain")
+    component("interface") dependentOn component("infrastructure")
+
     组件("application") 依赖于 组件("domain")
-    组件("controller") 依赖于 组件("domain")
-    组件("repository") 依赖于 组件("domain")
+    组件("application") 依赖于 组件("infrastructure")
+
+    组件("domain") 依赖于 组件("infrastructure")
 }
 
-val action = graph().show(layer.relations())
-action
+graph().show(layer.relations())
 `;
 
   // todo: parse markdown to dispatch block and block
