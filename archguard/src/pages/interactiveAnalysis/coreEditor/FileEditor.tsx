@@ -1,13 +1,26 @@
 import React, { useCallback, useState } from "react";
 import BlockEditor from "@/pages/interactiveAnalysis/coreEditor/BlockEditor";
 import { webSocket } from "rxjs/webSocket";
-import Mermaid from "@/pages/interactiveAnalysis/block/Mermaid";
-import mermaid from "@/pages/interactiveAnalysis/block/Mermaid";
 import mermaidWrapper from "@/pages/interactiveAnalysis/block/mermaidWrapper";
 
+interface ReactiveAction {
+  actionType: string;
+  className: string;
+  graphType: string;
+  data: string;
+}
+
+interface ReplResult {
+  resultValue: string;
+  isArchdocApi: boolean;
+  className: string;
+  actionData: string;
+  action: ReactiveAction;
+}
+
 function FileEditor() {
-  const [result, setResult] = useState(null);
-  const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.3")
+  const [result, setResult] = useState({} as ReplResult);
+  const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.5")
 
 import org.archguard.dsl.*
 var layer = layered {
@@ -16,7 +29,7 @@ var layer = layered {
     组件("service") 依赖于 组件("repository")
 }
 
-graph().show(layer)
+graph().show(layer.relations())
 `;
 
   // todo: parse markdown to dispatch block and block
@@ -27,9 +40,9 @@ graph().show(layer)
     (code) => {
       subject.subscribe({
         next: (msg) => {
-          console.log(msg);
-          setResult(msg);
-        }, // Called whenever there is a message from the server.
+          let result = msg as ReplResult;
+          setResult(result as any);
+        },
         error: (err) => console.log(err), // Called if at any point WebSocket API signals some kind of error.
         complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
       });
@@ -39,21 +52,34 @@ graph().show(layer)
     [setResult],
   );
 
-  return (
-    <div>
-      <BlockEditor language={"kotlin"} code={testcode} evalCode={runCode} />
-      <div>{result}</div>
-      <div>
-        {mermaidWrapper.mermaid({
+  function renderGraph(dataStr: string) {
+    let data = JSON.parse(dataStr)
+
+    let def = "";
+    for (let datum of data) {
+      def += datum.source + "-->" + datum.target + ";\n";
+    }
+
+    return (
+      <>
+        { mermaidWrapper.mermaid({
           node: {
             key: "mermaid",
             definition: `graph TD;
-    A-->B;
-    A-->C;
-    B-->D;`,
+   ${def}`,
           },
         })}
-      </div>
+      </>
+    );
+  }
+
+  return (
+    <div>
+      <BlockEditor language={"kotlin"} code={testcode} evalCode={runCode} />
+      <div>{JSON.stringify(result)}</div>
+      {result.isArchdocApi && result.action.graphType == "archdoc" && (
+        <div>{renderGraph(result.action.data)}</div>
+      )}
     </div>
   );
 }
