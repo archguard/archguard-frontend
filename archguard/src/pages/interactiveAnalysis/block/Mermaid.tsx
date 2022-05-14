@@ -10,7 +10,6 @@ function Mermaid (props: MermaidProps) {
   console.log(props)
   const id = `mermaid-${props._key}`
   const ref = React.useRef()
-  const [definition] = useState(props.definition)
   const theme = useState('default')
   // const [mode] = useColorMode()
   // const theme = mode === 'dark' ? 'dark' : 'default'
@@ -24,11 +23,11 @@ function Mermaid (props: MermaidProps) {
 
   useEffect(() => {
     if (ref.current) {
-      mermaid.mermaidAPI.render(id, definition, (result) => {
+      mermaid.mermaidAPI.render(id, props.definition, (result) => {
         ref.current.innerHTML = result
       })
     }
-  }, [theme, definition])
+  }, [theme, props.definition])
 
   return (
     <>
