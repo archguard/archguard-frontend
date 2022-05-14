@@ -21,6 +21,7 @@ interface ReplResult {
 function FileEditor() {
   const [result, setResult] = useState({} as ReplResult);
   const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.6")
+import org.archguard.dsl.*
 
 val layer = layered {
     prefixId("org.archguard")
@@ -88,7 +89,6 @@ action
       <BlockEditor language={"kotlin"} code={repos} evalCode={() => {}} />
 
       <BlockEditor language={"kotlin"} code={testcode} evalCode={runCode} />
-      <div>{JSON.stringify(result)}</div>
       {result.isArchdocApi && result.action.graphType == "archdoc" && (
         <div>{renderGraph(result.action.data)}</div>
       )}
