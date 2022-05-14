@@ -12,7 +12,6 @@
     "classnames": "^2.2.6",
     "copy-to-clipboard": "^3.3.1",
     "cytoscape": "3.21.0",
-    "cytoscape-cola": "^2.5.1",
     "cytoscape-dagre": "^2.4.0",
     "cytoscape-fcose": "^2.1.0",
     "d3": "^7.3.0",
@@ -29,9 +28,7 @@
     "react-highlight-words": "^0.16.0",
     "react-markdown": "^8.0.0",
     "react-router-dom": "^5.2.0",
-    "react-use": "^15.3.2",
-    "rxjs": "^7.5.5",
-    "uuid": "^8.3.2"
+    "react-use": "^15.3.2"
   },
   "scripts": {
     "start": "umi dev",
@@ -55,7 +52,6 @@
     "@types/cytoscape-dagre": "^2.3.0",
     "@types/d3": "^7.1.0",
     "@types/echarts": "^4.6.3",
-    "@types/jest": "^26.0.4",
     "@types/lodash": "^4.14.179",
     "@types/react": "^17.x",
     "@types/react-cytoscapejs": "^1.2.2",
@@ -72,8 +68,7 @@
     "prettier": "^2.0.5",
     "tslib": "^2.3.1",
     "typescript": "^3.9.7",
-    "umi": "^3.5.23",
-    "webpack-bundle-analyzer": "^4.5.0"
+    "umi": "^3.5.23"
   },
   "peerDependencies": {
     "@ant-design/icons": "^4.6.0",
