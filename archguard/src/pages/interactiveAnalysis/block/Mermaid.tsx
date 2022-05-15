@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import mermaid from "mermaid";
-import { Menu, Item, useContextMenu } from "react-contexify";
+import { Item, Menu, useContextMenu } from "react-contexify";
 import "react-contexify/dist/ReactContexify.css";
 import mermaidExport from "@/pages/interactiveAnalysis/block/mermaidExport";
 
