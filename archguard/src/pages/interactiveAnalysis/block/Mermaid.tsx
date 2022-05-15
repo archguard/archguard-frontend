@@ -16,7 +16,7 @@ function Mermaid(props: MermaidProps) {
     id: MENU_ID,
   });
 
-  const id = `mermaid-${props._key}`;
+  const id = `mermaid-${props.key}`;
   const ref = React.useRef();
   const theme = useState("default");
   // const [mode] = useColorMode()
@@ -46,7 +46,7 @@ function Mermaid(props: MermaidProps) {
     });
   }
 
-  const exportSvg = useCallback(({ event, props }) => {
+  const exportSvg = useCallback(({ event }) => {
     mermaidExport(ref.current)
 
     event.stopPropagation();
