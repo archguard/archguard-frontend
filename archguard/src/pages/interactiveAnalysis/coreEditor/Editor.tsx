@@ -4,11 +4,13 @@ import { EditorState } from 'prosemirror-state'
 import { EditorView } from 'prosemirror-view'
 
 import { schema } from './schema'
-import { plugins } from './plugins'
+import { createPlugins } from './createPlugins'
 
 import { nodeViews } from '../block'
 
 import './Editor.less'
+import { createDispatch, Dispatch, EventDispatcher } from "@/pages/interactiveAnalysis/nodeview/utils/event-dispatcher";
+import { PortalProviderAPI } from "@/pages/interactiveAnalysis/nodeview/react-portals";
 
 export class Editor extends React.Component<{}, {}> {
   editorRef: React.RefObject<HTMLDivElement>
@@ -16,13 +18,26 @@ export class Editor extends React.Component<{}, {}> {
   editorState: EditorState
   editorView?: EditorView
 
+  eventDispatcher: EventDispatcher
+  portalProviderAPI: PortalProviderAPI;
+
+  dispatch: Dispatch
+
   constructor(props: {}) {
     super(props)
+    this.editorRef = React.createRef()
+
+    this.eventDispatcher = new EventDispatcher()
+    this.portalProviderAPI = new PortalProviderAPI();
+    this.dispatch = createDispatch(this.eventDispatcher)
+
     this.editorState = EditorState.create({
       schema,
-      plugins: plugins(),
+      plugins: createPlugins(
+        this.eventDispatcher,
+        this.portalProviderAPI
+      ),
     })
-    this.editorRef = React.createRef()
   }
 
   createEditorView = (element: HTMLDivElement | null) => {
