@@ -6,11 +6,10 @@ import { EditorView } from 'prosemirror-view'
 import { schema } from './schema'
 import { createPlugins } from './createPlugins'
 
-import { nodeViews } from '../block'
-
 import './Editor.less'
 import { createDispatch, Dispatch, EventDispatcher } from "@/pages/interactiveAnalysis/nodeview/utils/event-dispatcher";
 import { PortalProviderAPI } from "@/pages/interactiveAnalysis/nodeview/react-portals";
+import { createNodeViews } from "@/pages/interactiveAnalysis/block";
 
 export class Editor extends React.Component<{}, {}> {
   editorRef: React.RefObject<HTMLDivElement>
@@ -43,7 +42,7 @@ export class Editor extends React.Component<{}, {}> {
   createEditorView = (element: HTMLDivElement | null) => {
     if (element != null) {
       this.editorView = new EditorView(element, {
-        nodeViews,
+        nodeViews: createNodeViews(this.eventDispatcher, this.portalProviderAPI),
         state: this.editorState,
       })
     }
