@@ -20,11 +20,41 @@ export const schema = new Schema({
       defining: true,
       selectable: false,
       attrs: {
-        class: { default: 'pm-blockquote' },
+        class: { default: 'pm-BlockQuote' },
       },
       parseDOM: [{ tag: 'blockquote' }],
       toDOM(node) {
         return ['blockquote', node.attrs, 0];
+      },
+    },
+    codeBlock: {
+      content: 'text*',
+      group: 'block',
+      code: true,
+      defining: true,
+      selectable: false,
+      attrs: {
+        class: { default: 'archguard-code-block' },
+      },
+      parseDOM: [
+        { tag: "pre", preserveWhitespace: "full" },
+        {
+          tag: ".code-block",
+          preserveWhitespace: "full",
+          contentElement: "code",
+          getAttrs: (dom: HTMLDivElement) => {
+            return {
+              language: dom.dataset.language,
+            };
+          },
+        },
+      ],
+      toDOM(node) {
+        return [
+          "div",
+          { class: "code-block", "data-language": node.attrs.language },
+          ["pre", ["code", { spellCheck: false }, 0]],
+        ];
       },
     },
     blockquote: {

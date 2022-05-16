@@ -12,6 +12,18 @@ export function createNewBlockQuote(state: EditorState, dispatch?: (tr: Transact
   return false
 }
 
+export function createNewCodeBlock(state: EditorState, dispatch?: (tr: Transaction) => void) {
+  const {$from, $to} = state.selection
+  const codeBlock = state.schema.nodes.codeBlock;
+  const empty = codeBlock.createAndFill()
+  const endOfBlock = $from.end()
+  if (empty && dispatch) {
+    const tr = state.tr.insert(endOfBlock + 1, empty)
+    dispatch(tr)
+  }
+  return false
+}
+
 export function createNewPmBlockQuote(state: EditorState, dispatch?: (tr: Transaction) => void) {
   const {$from, $to} = state.selection
   const blockquote = state.schema.nodes.pmBlockquote;

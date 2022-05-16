@@ -4,7 +4,7 @@ import { history } from 'prosemirror-history'
 import { keymap } from 'prosemirror-keymap'
 import { baseKeymap } from 'prosemirror-commands'
 
-import { createNewBlockQuote, createNewPmBlockQuote } from './actions'
+import { createNewBlockQuote, createNewCodeBlock, createNewPmBlockQuote } from "./actions";
 
 export const plugins = () => {
   const plugins: Plugin[] = []
@@ -14,6 +14,9 @@ export const plugins = () => {
   plugins.push(keymap({
     'Ctrl-Alt-b': createNewBlockQuote,
     'Ctrl-Alt-p': createNewPmBlockQuote,
+  }))
+  plugins.push(keymap({
+    'Ctrl-Alt-c': createNewCodeBlock,
   }))
 
   return plugins

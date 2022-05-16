@@ -13,5 +13,8 @@
     },
     "ecmaVersion": 2018,
     "sourceType": "module"
+  },
+  "rules": {
+    "no-undef": "off"
   }
 }
