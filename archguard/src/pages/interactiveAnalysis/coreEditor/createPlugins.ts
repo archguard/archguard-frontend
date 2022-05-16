@@ -1,4 +1,4 @@
-import { EditorState, Plugin, PluginKey, Transaction } from "prosemirror-state";
+import { EditorState, Plugin, PluginKey, Transaction, Selection } from "prosemirror-state";
 
 import { history } from "prosemirror-history";
 import { keymap } from "prosemirror-keymap";
@@ -8,6 +8,7 @@ import { createNewBlockQuote, createNewCodeBlock, createNewPmBlockQuote } from "
 import { EventDispatcher } from "@/pages/interactiveAnalysis/nodeview/utils/event-dispatcher";
 import { PortalProviderAPI } from "@/pages/interactiveAnalysis/nodeview/react-portals";
 import { blockQuoteNodeView } from "@/pages/interactiveAnalysis/block/BlockQuote/BlockQuoteView";
+import { findParentNodeOfType, findSelectedNodeOfType } from "prosemirror-utils";
 
 export const createPlugins = (
   eventDispatcher: EventDispatcher,
@@ -35,6 +36,21 @@ export const createPlugins = (
   return plugins;
 };
 
+export function findBlockQuote(
+  state: EditorState,
+  selection?: Selection<any> | null,
+) {
+  const { blockquote } = state.schema.nodes
+  return (
+    findSelectedNodeOfType(blockquote)(selection || state.selection) ||
+    findParentNodeOfType(blockquote)(selection || state.selection)
+  )
+}
+
+export interface BlockQuoteState {
+  blockQuoteActive: boolean
+}
+
 function blockQuoteBlockPlugin(
   eventDispatcher: EventDispatcher,
   portalProviderAPI: PortalProviderAPI,
@@ -48,11 +64,24 @@ function blockQuoteBlockPlugin(
       },
       apply(
         tr: Transaction<any>,
-        value: any,
+        pluginState: BlockQuoteState,
         oldState: EditorState<any>,
         newState: EditorState<any>,
       ): any {
-        return "";
+        if (tr.docChanged || tr.selectionSet) {
+          const blockQuoteActive = !!findBlockQuote(newState, newState.selection)
+          if (blockQuoteActive !== pluginState.blockQuoteActive) {
+            const nextPluginState = {
+              ...pluginState,
+              blockQuoteActive,
+              // blockQuoteDisabled,
+            }
+            eventDispatcher.emit("blockQuotePlugin", nextPluginState)
+            return nextPluginState
+          }
+        }
+
+        return pluginState
       },
     },
     key: new PluginKey("blockQuotePlugin"),
