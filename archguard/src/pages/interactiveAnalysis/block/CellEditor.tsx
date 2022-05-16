@@ -9,7 +9,7 @@ interface BlockEditorProps {
   evalCode: Function,
 }
 
-function BlockEditor(props: BlockEditorProps) {
+function CellEditor(props: BlockEditorProps) {
   const editorRef = useRef(null);
   const [height, setHeight] = useState("100%")
   const [code, setCode] = useState(props.code)
@@ -54,4 +54,4 @@ function BlockEditor(props: BlockEditorProps) {
   </div>)
 }
 
-export default BlockEditor;
+export default CellEditor;

@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
-import BlockEditor from "@/pages/interactiveAnalysis/coreEditor/BlockEditor";
+import CellEditor from "@/pages/interactiveAnalysis/block/CellEditor";
 import { webSocket } from "rxjs/webSocket";
-import mermaidWrapper from "@/pages/interactiveAnalysis/block/mermaidWrapper";
+import mermaidWrapper from "@/pages/interactiveAnalysis/block/graph/mermaidWrapper";
 
 interface ReactiveAction {
   actionType: string;
@@ -18,7 +18,7 @@ interface ReplResult {
   action: ReactiveAction;
 }
 
-function FileEditor() {
+function CoreEditor() {
   const [result, setResult] = useState({} as ReplResult);
   const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.6")
 import org.archguard.dsl.*
@@ -89,16 +89,16 @@ graph().show(layer.relations())
 
   return (
     <div>
-      <BlockEditor language={"kotlin"} code={repos} evalCode={() => {}} />
+      <CellEditor language={"kotlin"} code={repos} evalCode={() => {}} />
 
-      <BlockEditor language={"kotlin"} code={testcode} evalCode={runCode} />
+      <CellEditor language={"kotlin"} code={testcode} evalCode={runCode} />
       {result.isArchdocApi && result.action.graphType == "archdoc" && (
         <div>{renderGraph(result.action.data)}</div>
       )}
 
-      <BlockEditor language={"kotlin"} code={lintSample} evalCode={() => {}} />
+      <CellEditor language={"kotlin"} code={lintSample} evalCode={() => {}} />
     </div>
   );
 }
 
-export default FileEditor;
+export default CoreEditor;
