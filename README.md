@@ -13,7 +13,9 @@ Node.js version: 16.x
 
 ## ArchGuard 3.0
 
-- [ ] custom Markdown parser
+- [ ] custom Markdown parser 
+  - [ ] ProseMirror as **core** editor
+  - [ ] MonacoEditor as a **source code** editor
 - [ ] paragraph dispatch server
   - [ ] graph dsl to graph
   - [ ] notebook to server
