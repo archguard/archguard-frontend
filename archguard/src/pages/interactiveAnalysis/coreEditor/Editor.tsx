@@ -6,7 +6,7 @@ import { EditorView } from 'prosemirror-view'
 import { schema } from './schema'
 import { plugins } from './plugins'
 
-import { nodeViews } from './nodeviews'
+import { nodeViews } from '../block'
 
 import './Editor.less'
 

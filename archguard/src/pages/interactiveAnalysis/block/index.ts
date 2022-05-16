@@ -1,7 +1,7 @@
 import { Node } from 'prosemirror-model'
 import { EditorView, Decoration } from 'prosemirror-view'
 
-import { BlockQuoteView } from './BlockQuoteView'
+import { BlockQuoteView } from './blockquote/BlockQuoteView'
 
 export const nodeViews = {
   blockquote: (
