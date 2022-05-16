@@ -6,13 +6,13 @@ export class CellCodeEditor extends React.Component<{}, {}> {
 
   constructor(props: {}) {
     super(props);
-    this.hole = React.createRef();
+    // this.hole = React.createRef();
   }
 
   append(node: HTMLElement) {
-    if (this.hole) {
+    // if (this.hole) {
       // this.hole.current!.appendChild(node);
-    }
+    // }
   }
 
   render() {

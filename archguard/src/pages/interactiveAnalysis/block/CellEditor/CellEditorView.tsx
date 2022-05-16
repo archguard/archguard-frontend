@@ -32,23 +32,15 @@ export class CellEditorView implements NodeView {
     this.dom.classList.add('node__dom')
     this.contentDOM.classList.add('node__content-dom')
 
-    ReactDOM.render(
-      <CellCodeEditor ref={this.ref}/>,
-      this.dom,
-      this.putContentDomInRef
-    )
+    ReactDOM.render(<CellCodeEditor ref={this.ref}/>, this.dom, null)
   }
 
   // eslint-disable-next-line no-unused-vars
-  update(node: Node) {
-    return true
-  }
+  // update(node: Node) {
+  //   return true
+  // }
 
-  private putContentDomInRef = () => {
-    this.ref.current.append(this.contentDOM)
-  }
-
-  destroy() {
-    ReactDOM.unmountComponentAtNode(this.dom)
-  }
+  // destroy() {
+  //   ReactDOM.unmountComponentAtNode(this.dom)
+  // }
 }
