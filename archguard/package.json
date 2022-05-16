@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@archguard/editor": "file:../packages/editor",
+    "@archguard/editor": "*",
     "@ant-design/icons": "^4.6.0",
     "@antv/g6": "^4.6.3",
     "@monaco-editor/react": "^4.4.5",
