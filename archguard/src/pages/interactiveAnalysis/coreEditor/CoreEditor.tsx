@@ -2,7 +2,6 @@ import React, { useCallback, useState } from "react";
 import CellEditor from "@/pages/interactiveAnalysis/block/CellEditor";
 import { webSocket } from "rxjs/webSocket";
 import mermaidWrapper from "@/pages/interactiveAnalysis/block/graph/mermaidWrapper";
-import { Editor } from "@/pages/interactiveAnalysis/coreEditor/Editor";
 
 interface ReactiveAction {
   actionType: string;
@@ -90,7 +89,6 @@ graph().show(layer.relations())
 
   return (
     <div>
-      <Editor />
       <CellEditor language={"kotlin"} code={repos} evalCode={() => {}} />
 
       <CellEditor language={"kotlin"} code={testcode} evalCode={runCode} />
