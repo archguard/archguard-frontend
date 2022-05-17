@@ -1,7 +1,0 @@
-{
-  "name": "@archguard/frontend",
-  "workspaces": [
-    "archguard",
-    "packages/*"
-  ]
-}
