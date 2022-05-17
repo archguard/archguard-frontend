@@ -1,7 +1,9 @@
 import React, { useCallback, useState } from "react";
-import CellEditor from "@/pages/interactiveAnalysis/block/CellEditor";
 import { webSocket } from "rxjs/webSocket";
+import RichMarkdownEditor from "rich-markdown-editor";
 import mermaidWrapper from "@/pages/interactiveAnalysis/block/graph/mermaidWrapper";
+import { LivingCodeFenceExtension } from "@/pages/interactiveAnalysis/coreEditor/LivingCodeFenceExtension";
+import { LivingCodeBlockExtension } from "@/pages/interactiveAnalysis/coreEditor/LivingCodeBlockExtension";
 
 interface ReactiveAction {
   actionType: string;
@@ -20,26 +22,6 @@ interface ReplResult {
 
 function CoreEditor() {
   const [result, setResult] = useState({} as ReplResult);
-  const testcode = `@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.6")
-import org.archguard.dsl.*
-
-val layer = layered {
-    prefixId("org.archguard")
-    component("interface") dependentOn component("application")
-    组件("interface") 依赖于 组件("domain")
-    component("interface") dependentOn component("infrastructure")
-
-    组件("application") 依赖于 组件("domain")
-    组件("application") 依赖于 组件("infrastructure")
-
-    组件("domain") 依赖于 组件("infrastructure")
-}
-
-graph().show(layer.relations())
-`;
-
-  // todo: parse markdown to dispatch block and block
-
   const subject = webSocket("ws://localhost:8848/");
 
   const runCode = useCallback(
@@ -79,24 +61,52 @@ graph().show(layer.relations())
     );
   }
 
-  const repos = `repos {
+  const value = `
+## Backend DSL
+
+\`\`\`kotlin
+repos {
     repo(name = "Backend", language = "Kotlin", scmUrl = "https://github.com/archguard/archguard")
     repo(name = "Scanner", language = "Kotlin", scmUrl = "https://github.com/archguard/scanner")
 }
-`;
+\`\`\`
 
-  const lintSample = `linter('Backend').layer()`;
+## 架构 DSL
+
+\`\`\`kotlin
+@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.6")
+import org.archguard.dsl.*
+
+val layer = layered {
+    prefixId("org.archguard")
+    component("interface") dependentOn component("application")
+    组件("interface") 依赖于 组件("domain")
+    component("interface") dependentOn component("infrastructure")
+
+    组件("application") 依赖于 组件("domain")
+    组件("application") 依赖于 组件("infrastructure")
+
+    组件("domain") 依赖于 组件("infrastructure")
+}
+
+graph().show(layer.relations())
+\`\`\`
+
+## Scanner DSL
+
+\`\`\`kotlin
+linter('Backend').layer()
+\`\`\`
+
+  `
 
   return (
     <div>
-      <CellEditor language={"kotlin"} code={repos} evalCode={() => {}} />
-
-      <CellEditor language={"kotlin"} code={testcode} evalCode={runCode} />
-      {result.isArchdocApi && result.action.graphType == "archdoc" && (
-        <div>{renderGraph(result.action.data)}</div>
-      )}
-
-      <CellEditor language={"kotlin"} code={lintSample} evalCode={() => {}} />
+      <RichMarkdownEditor
+        disableExtensions={["code_block", "code_fence"]}
+        extensions={[new LivingCodeFenceExtension(), new LivingCodeBlockExtension()]}
+        value={value}
+        />
     </div>
   );
 }
