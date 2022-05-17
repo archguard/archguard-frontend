@@ -16,7 +16,7 @@ repos {
 }
 \`\`\`
 
-## 架构 DSL
+## Architecture DSL
 
 目标：设计系统架构，可视化架构设计等，生成系统的架构 DSL。
 
@@ -27,13 +27,11 @@ import org.archguard.dsl.*
 val layer = layered {
     prefixId("org.archguard")
     component("interface") dependentOn component("application")
-    组件("interface") 依赖于 组件("domain")
+    component("interface") dependentOn component("domain")
     component("interface") dependentOn component("infrastructure")
-
-    组件("application") 依赖于 组件("domain")
-    组件("application") 依赖于 组件("infrastructure")
-
-    组件("domain") 依赖于 组件("infrastructure")
+    component("application") dependentOn component("domain")
+    component("application") dependentOn component("infrastructure")
+    component("domain") dependentOn component("infrastructure")
 }
 
 graph().show(layer.relations())
