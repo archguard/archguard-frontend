@@ -3,7 +3,24 @@ import Editor from "@monaco-editor/react";
 import { IKeyboardEvent } from "monaco-editor";
 import { Button } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
-// import { LANGUAGES } from "rich-markdown-editor/dist/plugins/Prism";
+import mermaidWrapper from "@/pages/interactiveAnalysis/block/graph/mermaidWrapper";
+import { webSocket } from "rxjs/webSocket";
+
+
+interface ReactiveAction {
+  actionType: string;
+  className: string;
+  graphType: string;
+  data: string;
+}
+
+interface ReplResult {
+  resultValue: string;
+  isArchdocApi: boolean;
+  className: string;
+  actionData: string;
+  action: ReactiveAction;
+}
 
 interface BlockEditorProps {
   code: string;
@@ -43,6 +60,44 @@ function CellEditor(props: BlockEditorProps) {
   const [height, setHeight] = useState("100%");
   const [code, setCode] = useState(props.code);
   const [language, setLanguage] = useState(props.language);
+  const [result, setResult] = useState({} as ReplResult);
+  const subject = webSocket("ws://localhost:8848/");
+
+  const runCode = useCallback(() => {
+      subject.subscribe({
+        next: (msg) => {
+          let result = msg as ReplResult;
+          setResult(result as any);
+        },
+        error: (err) => console.log(err), // Called if at any point WebSocket API signals some kind of error.
+        complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
+      });
+
+      subject.next({ code: code });
+    },
+    [setResult, code],
+  );
+
+  function renderGraph(dataStr: string) {
+    let data = JSON.parse(dataStr);
+
+    let def = "";
+    for (let datum of data) {
+      def += datum.source + "-->" + datum.target + ";\n";
+    }
+
+    return (
+      <>
+        { mermaidWrapper.mermaid({
+          node: {
+            key: "mermaid",
+            definition: `graph TD;
+   ${def}`,
+          },
+        })}
+      </>
+    );
+  }
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -125,22 +180,37 @@ function CellEditor(props: BlockEditorProps) {
     );
   };
 
-  const runCode = useCallback(() => {
-    props.evalCode(code);
-  }, [code]);
+  function renderOutput() {
+    if (!result) return;
+
+    if (!result.isArchdocApi) {
+      return <>{JSON.stringify(result)}</>;
+    }
+
+    if (result.action && result.action["graphType"]) {
+      switch (result.action.graphType) {
+        case "archdoc":
+          return <div>{renderGraph(result.action.data)}</div>;
+      }
+    }
+
+    return <></>;
+  }
 
   return (
     <div>
-      {createLanguageSelect(language)}
-      <Button type="primary" icon={<CaretRightOutlined />} onClick={ runCode } />
+      { createLanguageSelect(language) }
+      <Button type="primary" icon={ <CaretRightOutlined /> } onClick={ runCode } />
       <Editor
-        height={height}
-        language={language}
-        value={code}
-        onChange={changeCode}
-        onMount={handleEditorDidMount}
-        options={{ scrollBeyondLastLine: false, automaticLayout: true }}
+        height={ height }
+        language={ language }
+        value={ code }
+        onChange={ changeCode }
+        onMount={ handleEditorDidMount }
+        options={ { scrollBeyondLastLine: false, automaticLayout: true } }
       />
+
+      { renderOutput() }
     </div>
   );
 }

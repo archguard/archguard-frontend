@@ -79,56 +79,15 @@ export class LivingCodeFenceExtension extends Node {
     const language = props.node.attrs?.language || DEFAULT_LANGUAGE;
     const value = props.node.textContent || "";
 
-    let result = null;
-    const subject = webSocket("ws://localhost:8848/");
-
-    const runCode = (code) => {
-      subject.subscribe({
-        next: (msg) => {
-          result = msg as ReplResult;
-        },
-        error: (err) => console.log(err), // Called if at any point WebSocket API signals some kind of error.
-        complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
-      });
-
-      subject.next({ code: code });
-    };
-
-    function renderGraph(dataStr: string) {
-      let data = JSON.parse(dataStr);
-
-      let def = "";
-      for (let datum of data) {
-        def += datum.source + "-->" + datum.target + ";\n";
-      }
-
-      return (
-        <>
-          {mermaidWrapper.mermaid({
-            node: {
-              key: "mermaid",
-              definition: `graph TD;
-   ${def}`,
-            },
-          })}
-        </>
-      );
-    }
-
     return (
-      <div onClick={this.handleSelect(props)}>
+      <div>
         <CellEditor
           language={language}
           code={value}
-          evalCode={runCode}
           removeSelf={this.deleteSelf(props)}
           codeChange={this.handleCodeChange}
           languageChange={this.handleLanguageChange}
         />
-
-        {result && result.isArchdocApi && result.action.graphType == "archdoc" && (
-          <div>{renderGraph(result.action.data)}</div>
-        )}
       </div>
     );
   };
