@@ -3,9 +3,9 @@ import Editor from "@monaco-editor/react";
 import { IKeyboardEvent } from "monaco-editor";
 import { Button } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
-import mermaidWrapper from "@/pages/interactiveAnalysis/block/graph/mermaidWrapper";
 import { webSocket } from "rxjs/webSocket";
-
+import { graphRender } from "@/pages/interactiveAnalysis/block/graphRender";
+import styles from "./CellEditor.less"
 
 interface ReactiveAction {
   actionType: string;
@@ -25,7 +25,6 @@ interface ReplResult {
 interface BlockEditorProps {
   code: string;
   language: string;
-  evalCode: any;
   codeChange: any;
   languageChange: any;
   removeSelf: any;
@@ -56,11 +55,11 @@ export const LANGUAGES = {
 };
 
 function CellEditor(props: BlockEditorProps) {
-  const editorRef = useRef(null);
+  const editorRef = useRef(null as any);
   const [height, setHeight] = useState("100%");
   const [code, setCode] = useState(props.code);
   const [language, setLanguage] = useState(props.language);
-  const [result, setResult] = useState({} as ReplResult);
+  const [result, setResult] = useState(null as ReplResult);
   const subject = webSocket("ws://localhost:8848/");
 
   const runCode = useCallback(() => {
@@ -78,32 +77,7 @@ function CellEditor(props: BlockEditorProps) {
     [setResult, code],
   );
 
-  function renderGraph(dataStr: string) {
-    let data = JSON.parse(dataStr);
-
-    let def = "";
-    for (let datum of data) {
-      def += datum.source + "-->" + datum.target + ";\n";
-    }
-
-    return (
-      <>
-        { mermaidWrapper.mermaid({
-          node: {
-            key: "mermaid",
-            definition: `graph TD;
-   ${def}`,
-          },
-        })}
-      </>
-    );
-  }
-
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   function adjustHeight(editor: monaco.editor.IStandaloneCodeEditor) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     const lineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight);
     const lineCount = editor.getModel()?.getLineCount() || 1;
     const editorHeight = editor.getTopForLineNumber(lineCount + 1) + lineHeight;
@@ -126,14 +100,9 @@ function CellEditor(props: BlockEditorProps) {
     });
   }
 
-  const handleEditorDidMount = useCallback(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    (editor: Editor) => {
+  const handleEditorDidMount = useCallback((editor: Editor) => {
       editorRef.current = editor;
-      if (!!editorRef.current) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+      if (editorRef.current) {
         adjustHeight(editorRef.current);
         initEditor(editor);
       }
@@ -141,11 +110,8 @@ function CellEditor(props: BlockEditorProps) {
     [editorRef, setHeight, code]
   );
 
-  const changeCode = useCallback(
-    code => {
-      if (!!editorRef.current) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+  const changeCode = useCallback(code => {
+      if (editorRef.current) {
         adjustHeight(editorRef.current);
         setCode(code);
         props.codeChange(code, editorRef.current);
@@ -153,10 +119,6 @@ function CellEditor(props: BlockEditorProps) {
     },
     [editorRef, setCode]
   );
-
-  useCallback(() => {
-    props.evalCode(code);
-  }, [code]);
 
   const handleLanguageChange = useCallback(
     event => {
@@ -170,7 +132,7 @@ function CellEditor(props: BlockEditorProps) {
 
   const createLanguageSelect = (value: string) => {
     return (
-      <select defaultValue={value} onChange={handleLanguageChange}>
+      <select className={ styles.languageSelect } defaultValue={value} onChange={handleLanguageChange}>
         {languageOptions.map(([key, label]) => (
           <option key={key} value={key === "none" ? "" : key}>
             {label}
@@ -190,7 +152,7 @@ function CellEditor(props: BlockEditorProps) {
     if (result.action && result.action["graphType"]) {
       switch (result.action.graphType) {
         case "archdoc":
-          return <div>{renderGraph(result.action.data)}</div>;
+          return <div>{graphRender(result.action.data)}</div>;
       }
     }
 
@@ -198,7 +160,7 @@ function CellEditor(props: BlockEditorProps) {
   }
 
   return (
-    <div>
+    <div className={ styles.cellEditor }>
       { createLanguageSelect(language) }
       <Button type="primary" icon={ <CaretRightOutlined /> } onClick={ runCode } />
       <Editor
