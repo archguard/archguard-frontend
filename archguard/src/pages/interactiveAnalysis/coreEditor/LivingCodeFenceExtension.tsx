@@ -2,29 +2,9 @@ import * as React from "react";
 import { textblockTypeInputRule } from "prosemirror-inputrules";
 import { NodeSelection, Selection } from "prosemirror-state";
 import Node from "rich-markdown-editor/dist/nodes/Node";
-import { useCallback, useState } from "react";
-import { webSocket } from "rxjs/webSocket";
-import mermaidWrapper from "@/pages/interactiveAnalysis/block/graph/mermaidWrapper";
 import CellEditor from "@/pages/interactiveAnalysis/coreEditor/CellEditor";
 
 const DEFAULT_LANGUAGE = "kotlin";
-
-
-interface ReactiveAction {
-  actionType: string;
-  className: string;
-  graphType: string;
-  data: string;
-}
-
-interface ReplResult {
-  resultValue: string;
-  isArchdocApi: boolean;
-  className: string;
-  actionData: string;
-  action: ReactiveAction;
-}
-
 export class LivingCodeFenceExtension extends Node {
   get name() {
     return "code_fence";
@@ -160,12 +140,4 @@ export class LivingCodeFenceExtension extends Node {
     };
   }
 
-  handleSelect = ({ getPos }) => event => {
-    event.preventDefault();
-
-    const { view } = this.editor;
-    const $pos = view.state.doc.resolve(getPos());
-    const transaction = view.state.tr.setSelection(new NodeSelection($pos));
-    view.dispatch(transaction);
-  };
 }
