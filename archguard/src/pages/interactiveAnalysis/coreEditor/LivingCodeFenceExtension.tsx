@@ -1,10 +1,29 @@
 import * as React from "react";
-import CellEditor from "./CellEditor";
 import { textblockTypeInputRule } from "prosemirror-inputrules";
 import { NodeSelection, Selection } from "prosemirror-state";
 import Node from "rich-markdown-editor/dist/nodes/Node";
+import { useCallback, useState } from "react";
+import { webSocket } from "rxjs/webSocket";
+import mermaidWrapper from "@/pages/interactiveAnalysis/block/graph/mermaidWrapper";
+import CellEditor from "@/pages/interactiveAnalysis/coreEditor/CellEditor";
 
 const DEFAULT_LANGUAGE = "kotlin";
+
+
+interface ReactiveAction {
+  actionType: string;
+  className: string;
+  graphType: string;
+  data: string;
+}
+
+interface ReplResult {
+  resultValue: string;
+  isArchdocApi: boolean;
+  className: string;
+  actionData: string;
+  action: ReactiveAction;
+}
 
 export class LivingCodeFenceExtension extends Node {
   get name() {
@@ -60,16 +79,56 @@ export class LivingCodeFenceExtension extends Node {
     const language = props.node.attrs?.language || DEFAULT_LANGUAGE;
     const value = props.node.textContent || "";
 
+    let result = null;
+    const subject = webSocket("ws://localhost:8848/");
+
+    const runCode = (code) => {
+      subject.subscribe({
+        next: (msg) => {
+          result = msg as ReplResult;
+        },
+        error: (err) => console.log(err), // Called if at any point WebSocket API signals some kind of error.
+        complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
+      });
+
+      subject.next({ code: code });
+    };
+
+    function renderGraph(dataStr: string) {
+      let data = JSON.parse(dataStr);
+
+      let def = "";
+      for (let datum of data) {
+        def += datum.source + "-->" + datum.target + ";\n";
+      }
+
+      return (
+        <>
+          {mermaidWrapper.mermaid({
+            node: {
+              key: "mermaid",
+              definition: `graph TD;
+   ${def}`,
+            },
+          })}
+        </>
+      );
+    }
+
     return (
       <div onClick={this.handleSelect(props)}>
         <CellEditor
           language={language}
           code={value}
-          evalCode={""}
+          evalCode={runCode}
           removeSelf={this.deleteSelf(props)}
           codeChange={this.handleCodeChange}
           languageChange={this.handleLanguageChange}
         />
+
+        {result && result.isArchdocApi && result.action.graphType == "archdoc" && (
+          <div>{renderGraph(result.action.data)}</div>
+        )}
       </div>
     );
   };

@@ -1,6 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { IKeyboardEvent } from "monaco-editor";
+import { Button } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
 // import { LANGUAGES } from "rich-markdown-editor/dist/plugins/Prism";
 
 interface BlockEditorProps {
@@ -123,9 +125,14 @@ function CellEditor(props: BlockEditorProps) {
     );
   };
 
+  const runCode = useCallback(() => {
+    props.evalCode(code);
+  }, [code]);
+
   return (
     <div>
       {createLanguageSelect(language)}
+      <Button type="primary" icon={<CaretRightOutlined />} onClick={ runCode } />
       <Editor
         height={height}
         language={language}
