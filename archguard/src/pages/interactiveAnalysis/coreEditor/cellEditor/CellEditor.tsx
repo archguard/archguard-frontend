@@ -40,6 +40,10 @@ interface BlockEditorProps {
   removeSelf: any;
 }
 
+interface CellContext {
+  id: string,
+  code: string,
+}
 
 function CellEditor(props: BlockEditorProps) {
   const editorRef = useRef(null as any);
@@ -134,9 +138,11 @@ function CellEditor(props: BlockEditorProps) {
   }
 
   return (
-    <div className={ styles.cellEditor }>
-      { createLanguageSelect(language) }
-      <Button type="primary" icon={ <CaretRightOutlined /> } onClick={ runCode } />
+    <div>
+      <div className={ styles.toolbar}>
+        <Button type="primary" icon={ <CaretRightOutlined /> } onClick={ runCode } />
+        { createLanguageSelect(language) }
+      </div>
       <Editor
         height={ height }
         language={ language }
