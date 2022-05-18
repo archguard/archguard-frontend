@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
 import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
-import { CaretRightOutlined, ForwardOutlined, SaveOutlined } from "@ant-design/icons";
+import { CaretRightOutlined, ExportOutlined, ForwardOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
+import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 
 function InteractiveAnalysis() {
   const value = `
@@ -55,11 +56,17 @@ linter("Backend").layer()
 
   }, []);
 
+  const onClickExport = useCallback(() => {
+    let content = value.replaceAll("\\\n", "\n");
+    exportDoc(content, "archdoc", "md")
+  }, [value]);
+
   return (<div>
     <div className={"toolbar"}>
       <Space direction="horizontal" size="middle">
         <Tooltip title="Save"><Button type="primary" icon={ <SaveOutlined /> } onClick={ save } /></Tooltip>
         <Tooltip title="Run all"><Button type="primary" icon={ <ForwardOutlined /> } onClick={ runAll } /></Tooltip>
+        <Tooltip title="Export"><Button type="primary" icon={ <ExportOutlined /> } onClick={ onClickExport } /></Tooltip>
       </Space>
     </div>
     <CoreEditor value={value} />
