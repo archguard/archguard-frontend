@@ -7,7 +7,7 @@ import { webSocket } from "rxjs/webSocket";
 import styles from "./CellEditor.less";
 import { ReplResult } from "@/types/archdoc";
 import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispatcher";
-import { addDslCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/dslCompletion";
+import { addDslCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/autoCompletion";
 
 export const LANGUAGES = {
   none: "None", // additional entry to disable highlighting

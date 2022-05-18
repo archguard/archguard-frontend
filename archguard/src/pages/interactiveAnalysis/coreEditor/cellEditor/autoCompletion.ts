@@ -1,5 +1,5 @@
 import { loader } from "@monaco-editor/react";
-import { CancellationToken, editor, languages, Position } from "monaco-editor";
+import { languages } from "monaco-editor";
 
 let hasLoaderDsl = false;
 
