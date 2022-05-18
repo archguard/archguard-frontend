@@ -22,13 +22,13 @@ const getBase64SVG = (svg?: HTMLElement, width?: number, height?: number): strin
   return toBase64(svgString);
 };
 
-const onDownloadSVG = (svg: HTMLElement) => {
+const downloadSvg = (svg: HTMLElement) => {
   simulateDownload(
     `archguard-${Date.now()}.png`,
     `data:image/svg+xml;base64,${getBase64SVG(svg)}`
   );
 };
 
-const mermaidExport = onDownloadSVG;
+const mermaidExport = downloadSvg;
 
 export default mermaidExport;

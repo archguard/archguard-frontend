@@ -1,7 +1,6 @@
 {
   "name": "@archguard/frontend",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.6.0",
     "@antv/g6": "^4.6.3",

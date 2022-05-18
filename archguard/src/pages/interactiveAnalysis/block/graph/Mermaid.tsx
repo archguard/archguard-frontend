@@ -4,7 +4,7 @@ import { Item, Menu, useContextMenu } from "react-contexify";
 import "react-contexify/dist/ReactContexify.css";
 import mermaidExport from "@/pages/interactiveAnalysis/block/graph/mermaidExport";
 
-const MENU_ID = "blahblah";
+const MENU_ID = "mermaid-menu";
 
 interface MermaidProps {
   definition: string;
@@ -17,7 +17,7 @@ function Mermaid(props: MermaidProps) {
   });
 
   const id = `mermaid-${props.key}`;
-  const ref = React.useRef();
+  const ref = React.useRef({} as any);
   const theme = useState("default");
   // const [mode] = useColorMode()
   // const theme = mode === 'dark' ? 'dark' : 'default'
@@ -26,7 +26,7 @@ function Mermaid(props: MermaidProps) {
     mermaid.initialize({
       startOnLoad: false,
       theme,
-    });
+    } as any);
   }, [theme]);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function Mermaid(props: MermaidProps) {
     }
   }, [theme, props.definition]);
 
-  function handleContextMenu(event: Event) {
+  function handleContextMenu(event: any) {
     event.preventDefault();
     show(event, {
       props: {
