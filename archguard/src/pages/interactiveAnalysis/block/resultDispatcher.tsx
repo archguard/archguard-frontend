@@ -6,13 +6,13 @@ export function ResultDispatcher(result: ReplResult) {
   if (!result) return;
 
   if (!result.isArchdocApi) {
-    return <>{ JSON.stringify(result) }</>;
+    return <>{JSON.stringify(result)}</>;
   }
 
   if (result.action && result.action["graphType"]) {
     switch (result.action.graphType) {
       case "archdoc":
-        return <div>{ graphRender(result.action.data) }</div>;
+        return <div>{graphRender(result.action.data)}</div>;
     }
   }
 

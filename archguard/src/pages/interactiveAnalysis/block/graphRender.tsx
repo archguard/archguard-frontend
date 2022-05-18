@@ -1,4 +1,4 @@
-import mermaidWrapper from "@/pages/interactiveAnalysis/block/graph/mermaidWrapper";
+import mermaidWrapper from "@/pages/interactiveAnalysis/block/mermaid/mermaidWrapper";
 import React from "react";
 
 export function graphRender(dataStr: string) {
@@ -11,13 +11,13 @@ export function graphRender(dataStr: string) {
 
   return (
     <>
-      { mermaidWrapper.mermaid({
+      {mermaidWrapper.mermaid({
         node: {
           key: "mermaid",
           definition: `graph TD;
-   ${ def }`
-        }
-      }) }
+   ${def}`,
+        },
+      })}
     </>
   );
 }

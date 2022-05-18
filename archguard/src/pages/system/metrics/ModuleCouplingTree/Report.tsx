@@ -1,8 +1,12 @@
 import { Metric, MetricProps } from "@/models/analysis";
 import React, { useMemo, useState } from "react";
-import CouplingList, { CouplingRecord } from "./coupling-list";
-import { queryAllModuleCoupling, queryClassCoupling, queryPackageCoupling, } from "@/api/module/metric";
 import { useMount } from "react-use";
+import CouplingList, { CouplingRecord } from "./coupling-list";
+import {
+  queryAllModuleCoupling,
+  queryClassCoupling,
+  queryPackageCoupling,
+} from "@/api/module/metric";
 import { LayerKeys, Profile, ProfileConfig, Quota } from "@/types/metrics";
 
 export interface ReportMapper {
