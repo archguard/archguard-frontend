@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { IKeyboardEvent } from "monaco-editor";
 import { Button, Tooltip } from "antd";
-import { CaretRightOutlined } from "@ant-design/icons";
+import { CaretRightOutlined, StopOutlined } from "@ant-design/icons";
 import { webSocket } from "rxjs/webSocket";
 import styles from "./CellEditor.less";
 import { ReplResult } from "@/types/archdoc";
@@ -54,19 +54,23 @@ function CellEditor(props: BlockEditorProps) {
   const [result, setResult] = useState(null as ReplResult);
   const subject = webSocket("ws://localhost:8848/");
 
+  const [isRunning, setIsRunning] = useState(false)
+
   const runCode = useCallback(() => {
       subject.subscribe({
         next: (msg) => {
           let result = msg as ReplResult;
           setResult(result as any);
+          setIsRunning(false);
         },
         error: (err) => console.log(err), // Called if at any point WebSocket API signals some kind of error.
         complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
       });
 
       subject.next({ code: code });
+      setIsRunning(true);
     },
-    [setResult, code],
+    [setResult, code, isRunning],
   );
 
   function adjustHeight(editor: monaco.editor.IStandaloneCodeEditor) {
@@ -143,9 +147,12 @@ function CellEditor(props: BlockEditorProps) {
   return (
     <div>
       <div className={ styles.toolbar}>
-        <Tooltip title="Run">
-          <Button type="primary" icon={ <CaretRightOutlined /> } onClick={ runCode } />
-        </Tooltip>
+        { !isRunning && <Tooltip title="Run">
+          <Button type="primary" icon={ <CaretRightOutlined /> } onClick={ runCode } disabled={isRunning}/>
+        </Tooltip> }
+        { isRunning && <Tooltip title="Stop">
+          <Button type="primary" icon={ <StopOutlined /> } disabled={true} />
+        </Tooltip> }
         { createLanguageSelect(language) }
       </div>
       <Editor

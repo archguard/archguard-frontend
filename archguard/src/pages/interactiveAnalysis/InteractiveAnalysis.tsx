@@ -48,7 +48,7 @@ linter("Backend").layer()
 
   `;
 
-  const runAll = useCallback(() => {
+  const runAllCell = useCallback(() => {
 
   }, []);
 
@@ -65,7 +65,7 @@ linter("Backend").layer()
     <div className={"toolbar"}>
       <Space direction="horizontal" size="middle">
         <Tooltip title="Save"><Button type="primary" icon={ <SaveOutlined /> } onClick={ save } /></Tooltip>
-        <Tooltip title="Run all"><Button type="primary" icon={ <ForwardOutlined /> } onClick={ runAll } /></Tooltip>
+        <Tooltip title="Run all"><Button type="primary" icon={ <ForwardOutlined /> } onClick={ runAllCell } /></Tooltip>
         <Tooltip title="Export"><Button type="primary" icon={ <ExportOutlined /> } onClick={ onClickExport } /></Tooltip>
       </Space>
     </div>

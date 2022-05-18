@@ -12,3 +12,8 @@ export interface ReplResult {
   actionData: string;
   action: ReactiveAction;
 }
+
+export interface CellItem {
+  id: string;
+  code: string;
+}
