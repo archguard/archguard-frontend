@@ -8,6 +8,7 @@ import styles from "./CellEditor.less";
 import { ReplResult } from "@/types/archdoc";
 import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispatcher";
 import { addDslCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/autoCompletion";
+import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 
 export const LANGUAGES = {
   none: "None", // additional entry to disable highlighting
@@ -39,6 +40,7 @@ interface BlockEditorProps {
   codeChange: any;
   languageChange: any;
   removeSelf: any;
+  websocket: WebSocketSubject<any>;
 }
 
 interface CellContext {
@@ -52,12 +54,11 @@ function CellEditor(props: BlockEditorProps) {
   const [code, setCode] = useState(props.code);
   const [language, setLanguage] = useState(props.language);
   const [result, setResult] = useState(null as ReplResult);
-  const subject = webSocket("ws://localhost:8848/");
 
   const [isRunning, setIsRunning] = useState(false)
 
   const runCode = useCallback(() => {
-      subject.subscribe({
+      props.websocket.subscribe({
         next: (msg) => {
           let result = msg as ReplResult;
           setResult(result as any);
@@ -67,7 +68,7 @@ function CellEditor(props: BlockEditorProps) {
         complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
       });
 
-      subject.next({ code: code });
+      props.websocket.next({ code: code });
       setIsRunning(true);
     },
     [setResult, code, isRunning],

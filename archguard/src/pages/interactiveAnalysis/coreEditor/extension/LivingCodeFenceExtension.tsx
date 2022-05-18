@@ -19,6 +19,9 @@ export class LivingCodeFenceExtension extends Node {
         code: {
           default: "",
         },
+        subject: {
+          default: null
+        }
       },
       content: "text*",
       marks: "",
@@ -37,11 +40,12 @@ export class LivingCodeFenceExtension extends Node {
             return {
               code: "",
               language: dom.dataset.language,
+              subject: this.subject
             };
           },
         },
       ],
-      toDOM: node => {
+      toDOM: (node) => {
         return [
           "div",
           { class: "simple-code", "data-language": node.attrs.language },
@@ -55,7 +59,7 @@ export class LivingCodeFenceExtension extends Node {
     return [];
   }
 
-  component = props => {
+  component = (props) => {
     const language = props.node.attrs?.language || DEFAULT_LANGUAGE;
     const value = props.node.textContent || "";
 
@@ -64,6 +68,7 @@ export class LivingCodeFenceExtension extends Node {
         <CellEditor
           language={language}
           code={value}
+          websocket={this.options.websocket}
           removeSelf={this.deleteSelf(props)}
           codeChange={this.handleCodeChange}
           languageChange={this.handleLanguageChange}
@@ -88,7 +93,7 @@ export class LivingCodeFenceExtension extends Node {
     return "fence";
   }
 
-  handleLanguageChange = event => {
+  handleLanguageChange = (event) => {
     const { view } = this.editor;
     const { tr } = view.state;
     const element = event.target;
@@ -135,8 +140,7 @@ export class LivingCodeFenceExtension extends Node {
   parseMarkdown() {
     return {
       block: "code_block",
-      getAttrs: tok => ({ language: tok.info }),
+      getAttrs: (tok) => ({ language: tok.info }),
     };
   }
-
 }
