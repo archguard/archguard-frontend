@@ -1,58 +1,50 @@
 import { loader } from "@monaco-editor/react";
+import { CancellationToken, editor, languages, Position } from "monaco-editor";
+
+let hasLoaderDsl = false;
 
 export function addDslCompletion() {
+  if (hasLoaderDsl) {
+    return;
+  }
+
+  hasLoaderDsl = true;
+
   loader.init().then((monaco) => {
-    function createDependencyProposals(range) {
-      // returning a static list of proposals, not even looking at the prefix (filtering is done by the Monaco editor),
-      // here you could do a server side lookup
+    function createDependencyProposals(range): languages.CompletionItem[] {
       return [
         {
-          label: '"lodash"',
+          label: '"repos"',
           kind: monaco.languages.CompletionItemKind.Function,
-          documentation: "The Lodash library exported as Node.js modules.",
-          insertText: '"lodash": "*"',
-          range: range,
-        },
-        {
-          label: '"express"',
-          kind: monaco.languages.CompletionItemKind.Function,
-          documentation: "Fast, unopinionated, minimalist web framework",
-          insertText: '"express": "*"',
-          range: range,
-        },
-        {
-          label: '"mkdirp"',
-          kind: monaco.languages.CompletionItemKind.Function,
-          documentation: "Recursively mkdir, like <code>mkdir -p</code>",
-          insertText: '"mkdirp": "*"',
-          range: range,
-        },
-        {
-          label: '"my-third-party-library"',
-          kind: monaco.languages.CompletionItemKind.Function,
-          documentation: "Describe your library here",
-          insertText: '"${1:my-third-party-library}": "${2:1.2.3}"',
+          documentation: "Describe repos",
+          insertText: "${1:repos}: ${2:{\n    }\n}",
           insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
           range: range,
         },
       ];
     }
 
-    monaco.languages.registerCompletionItemProvider("json", {
+    // todo: add document semantic tokens
+    // monaco.languages.registerDocumentSemanticTokensProvider("kotlin", {
+    //   getLegend(): languages.SemanticTokensLegend {
+    //     return undefined;
+    //   },
+    //   provideDocumentSemanticTokens(model: editor.ITextModel, lastResultId: string | null, token: CancellationToken): languages.ProviderResult<languages.SemanticTokens | languages.SemanticTokensEdits> {
+    //     return undefined;
+    //   },
+    //   releaseDocumentSemanticTokens(resultId: string | undefined): void {
+    //   }
+    // });
+
+    monaco.languages.registerCompletionItemProvider("kotlin", {
       provideCompletionItems: function (model, position) {
-        // find out if we are completing a property in the 'dependencies' object.
-        const textUntilPosition = model.getValueInRange({
+        model.getValueInRange({
           startLineNumber: 1,
           startColumn: 1,
           endLineNumber: position.lineNumber,
           endColumn: position.column,
         });
-        const match = textUntilPosition.match(
-          /"dependencies"\s*:\s*\{\s*("[^"]*"\s*:\s*"[^"]*"\s*,\s*)*([^"]*)?$/,
-        );
-        if (!match) {
-          return { suggestions: [] };
-        }
+
         const word = model.getWordUntilPosition(position);
         const range = {
           startLineNumber: position.lineNumber,
