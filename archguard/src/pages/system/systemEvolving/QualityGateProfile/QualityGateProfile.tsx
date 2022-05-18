@@ -4,7 +4,7 @@ import { Col, notification, Row } from "antd";
 import { createQualityGateProfile, deleteQualityGateProfile, updateQualityGateProfile, } from "@/api/module/profile";
 import * as _ from "lodash";
 import useQualityGate from "@/store/global-cache-state/useQualityGate";
-import { Profile } from "@/types/metrics/Metrics";
+import { Profile } from "@/types/metrics";
 
 const QualityGateProfile = () => {
   const [profileList, setProfileList] = useState<Profile[]>([]);

@@ -8,7 +8,7 @@ import { Form, Space, Button, Select, Input, Cascader } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useForm } from "antd/lib/form/Form";
 import { Store } from "antd/lib/form/interface";
-import { LayerKeys, ProfileConfig, Quota } from "@/types/metrics/Metrics";
+import { LayerKeys, ProfileConfig, Quota } from "@/types/metrics";
 
 const genOptions = (keys: string[]) =>
   keys.map((key) => {

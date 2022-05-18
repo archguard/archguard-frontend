@@ -4,7 +4,7 @@ import ProfileCardContent from "./ProfileCardContent";
 import "./ProfileCard.less";
 import { PlusOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 import { Store } from "antd/lib/form/interface";
-import { Profile, ProfileConfig } from "@/types/metrics/Metrics";
+import { Profile, ProfileConfig } from "@/types/metrics";
 
 interface ProfileCardProps {
   addProfile?(profile: Profile): void;

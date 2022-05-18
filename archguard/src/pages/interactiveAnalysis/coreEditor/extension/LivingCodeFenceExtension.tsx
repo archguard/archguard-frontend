@@ -2,7 +2,7 @@ import * as React from "react";
 import { textblockTypeInputRule } from "prosemirror-inputrules";
 import { NodeSelection, Selection } from "prosemirror-state";
 import Node from "rich-markdown-editor/dist/nodes/Node";
-import CellEditor from "@/pages/interactiveAnalysis/coreEditor/CellEditor";
+import CellEditor from "@/pages/interactiveAnalysis/coreEditor/cellEditor/CellEditor";
 
 const DEFAULT_LANGUAGE = "kotlin";
 export class LivingCodeFenceExtension extends Node {
@@ -124,7 +124,6 @@ export class LivingCodeFenceExtension extends Node {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   deleteSelf = ({ getPos }) => () => {
     const { view } = this.editor;
     const $pos = view.state.doc.resolve(getPos());

@@ -1,4 +1,9 @@
-import { Layer } from "@/pages/system/metrics/ModuleCouplingTree/Report";
+export enum Layer {
+  MODULE = "MODULE",
+  PACKAGE = "PACKAGE",
+  CLASS = "CLASS",
+  COUPLINGS = "COUPLINGS",
+}
 
 export type LayerKeys = keyof typeof Layer;
 export type Quota = {

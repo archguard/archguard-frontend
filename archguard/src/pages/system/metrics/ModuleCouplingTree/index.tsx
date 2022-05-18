@@ -4,7 +4,7 @@ import useCodeTree from "@/store/global-cache-state/useCodeTree";
 import { expandCodeTree } from "@/utils/utils";
 import { Select } from "antd";
 import useQualityGate from "@/store/global-cache-state/useQualityGate";
-import { Profile } from "@/types/metrics/Metrics";
+import { Profile } from "@/types/metrics";
 
 interface ModuleCouplingTableProps {
   systemId: number

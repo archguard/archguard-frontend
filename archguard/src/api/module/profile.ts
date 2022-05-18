@@ -1,5 +1,5 @@
 import axios from "../axios";
-import { Profile } from "@/types/metrics/Metrics";
+import { Profile } from "@/types/metrics";
 
 export function queryAllQualityGateProfile() {
   return axios<any>({

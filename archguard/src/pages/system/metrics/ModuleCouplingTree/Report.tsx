@@ -3,17 +3,10 @@ import React, { useMemo, useState } from "react";
 import CouplingList, { CouplingRecord } from "./coupling-list";
 import { queryAllModuleCoupling, queryClassCoupling, queryPackageCoupling, } from "@/api/module/metric";
 import { useMount } from "react-use";
-import { LayerKeys, Profile, ProfileConfig, Quota } from "@/types/metrics/Metrics";
+import { LayerKeys, Profile, ProfileConfig, Quota } from "@/types/metrics";
 
 export interface ReportMapper {
   [key: string]: { name: string; desc: string };
-}
-
-export enum Layer {
-  MODULE = "MODULE",
-  PACKAGE = "PACKAGE",
-  CLASS = "CLASS",
-  COUPLINGS = "COUPLINGS",
 }
 
 export const moduleMapping: ReportMapper = {

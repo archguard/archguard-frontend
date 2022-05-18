@@ -4,31 +4,9 @@ import { IKeyboardEvent } from "monaco-editor";
 import { Button } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { webSocket } from "rxjs/webSocket";
-import { graphRender } from "@/pages/interactiveAnalysis/block/graphRender";
-import styles from "./CellEditor.less"
-
-interface ReactiveAction {
-  actionType: string;
-  className: string;
-  graphType: string;
-  data: string;
-}
-
-interface ReplResult {
-  resultValue: string;
-  isArchdocApi: boolean;
-  className: string;
-  actionData: string;
-  action: ReactiveAction;
-}
-
-interface BlockEditorProps {
-  code: string;
-  language: string;
-  codeChange: any;
-  languageChange: any;
-  removeSelf: any;
-}
+import styles from "./CellEditor.less";
+import { ReplResult } from "@/types/archdoc";
+import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispatcher";
 
 export const LANGUAGES = {
   none: "None", // additional entry to disable highlighting
@@ -53,6 +31,15 @@ export const LANGUAGES = {
   typescript: "TypeScript",
   yaml: "YAML",
 };
+
+interface BlockEditorProps {
+  code: string;
+  language: string;
+  codeChange: any;
+  languageChange: any;
+  removeSelf: any;
+}
+
 
 function CellEditor(props: BlockEditorProps) {
   const editorRef = useRef(null as any);
@@ -143,20 +130,7 @@ function CellEditor(props: BlockEditorProps) {
   };
 
   function renderOutput() {
-    if (!result) return;
-
-    if (!result.isArchdocApi) {
-      return <>{JSON.stringify(result)}</>;
-    }
-
-    if (result.action && result.action["graphType"]) {
-      switch (result.action.graphType) {
-        case "archdoc":
-          return <div>{graphRender(result.action.data)}</div>;
-      }
-    }
-
-    return <></>;
+    return ResultDispatcher(result);
   }
 
   return (
