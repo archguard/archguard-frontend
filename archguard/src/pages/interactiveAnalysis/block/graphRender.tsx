@@ -1,7 +1,7 @@
 import mermaidWrapper from "@/pages/interactiveAnalysis/block/mermaid/mermaidWrapper";
 import React from "react";
 
-export function graphRender(dataStr: string) {
+function flowChart(dataStr: string) {
   let data = JSON.parse(dataStr);
 
   let def = "";
@@ -20,4 +20,9 @@ export function graphRender(dataStr: string) {
       })}
     </>
   );
+}
+
+export function graphRender(dataStr: string, uml: string) {
+  // todo: add uml support
+  return flowChart(dataStr);
 }

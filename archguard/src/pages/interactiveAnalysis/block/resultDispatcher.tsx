@@ -12,9 +12,9 @@ export function ResultDispatcher(result: ReplResult) {
   if (result.action && result.action["graphType"]) {
     switch (result.action.graphType) {
       case "uml":
-        return <div>{graphRender(result.action.data)}</div>;
+        return <div>{graphRender(result.action.data, "uml")}</div>;
       case "archdoc":
-        return <div>{graphRender(result.action.data)}</div>;
+        return <div>{graphRender(result.action.data, "flowchart")}</div>;
     }
   }
 
