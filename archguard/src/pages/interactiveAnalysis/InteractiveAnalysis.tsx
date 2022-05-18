@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
+import { CaretRightOutlined, ForwardOutlined, SaveOutlined } from "@ant-design/icons";
+import { Button, Space, Tooltip } from "antd";
 
 function InteractiveAnalysis() {
   const value = `
@@ -45,7 +47,21 @@ linter("Backend").layer()
 
   `;
 
+  const runAll = useCallback(() => {
+
+  }, []);
+
+  const save = useCallback(() => {
+
+  }, []);
+
   return (<div>
+    <div className={"toolbar"}>
+      <Space direction="horizontal" size="middle">
+        <Tooltip title="Save"><Button type="primary" icon={ <SaveOutlined /> } onClick={ save } /></Tooltip>
+        <Tooltip title="Run all"><Button type="primary" icon={ <ForwardOutlined /> } onClick={ runAll } /></Tooltip>
+      </Space>
+    </div>
     <CoreEditor value={value} />
   </div>)
 }

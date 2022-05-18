@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
 import { IKeyboardEvent } from "monaco-editor";
-import { Button } from "antd";
+import { Button, Tooltip } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { webSocket } from "rxjs/webSocket";
 import styles from "./CellEditor.less";
@@ -143,7 +143,9 @@ function CellEditor(props: BlockEditorProps) {
   return (
     <div>
       <div className={ styles.toolbar}>
-        <Button type="primary" icon={ <CaretRightOutlined /> } onClick={ runCode } />
+        <Tooltip title="Run">
+          <Button type="primary" icon={ <CaretRightOutlined /> } onClick={ runCode } />
+        </Tooltip>
         { createLanguageSelect(language) }
       </div>
       <Editor
