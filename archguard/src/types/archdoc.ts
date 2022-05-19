@@ -5,11 +5,18 @@ export interface ReactiveAction {
   data: string;
 }
 
+export enum MsgType {
+  None = "none",
+  ERROR = "error",
+  ARCHGUARD_GRAPH = "archguard_graph"
+}
+
 export interface ReplResult {
+  id: number;
   resultValue: string;
-  isArchdocApi: boolean;
   className: string;
-  actionData: string;
+  msgType: MsgType;
+  content: object;
   action: ReactiveAction;
 }
 

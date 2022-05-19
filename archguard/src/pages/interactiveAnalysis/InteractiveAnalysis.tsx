@@ -11,6 +11,8 @@ function InteractiveAnalysis() {
 目标：基于 ArchGuard Backend，提供 CRUD 封装的 API，如构建系统，查询依赖关系等。
 
 \`\`\`kotlin
+%use archguard
+
 repos {
     repo(name = "Backend", language = "Kotlin", scmUrl = "https://github.com/archguard/archguard")
     repo(name = "Scanner", language = "Kotlin", scmUrl = "https://github.com/archguard/scanner")
@@ -22,8 +24,7 @@ repos {
 目标：设计系统架构，可视化架构设计等，生成系统的架构 DSL。
 
 \`\`\`kotlin
-@file:DependsOn("org.archguard.scanner:doc-executor:2.0.0-alpha.6")
-import org.archguard.dsl.*
+%use archguard
 
 val layer = layered {
     prefixId("org.archguard")
@@ -43,6 +44,8 @@ graph().show(layer.relations())
 目标：结合 ArchGuard Scanner 中的能力，对系统进行 Scanner、Analyser、Linter 等。
 
 \`\`\`kotlin
+%use archguard
+
 linter("Backend").layer()
 \`\`\`
 
