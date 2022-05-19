@@ -1,27 +1,15 @@
 import React, { useCallback } from "react";
 import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
-import { CaretRightOutlined, ExportOutlined, ForwardOutlined, SaveOutlined } from "@ant-design/icons";
+import { ExportOutlined, ForwardOutlined, SaveOutlined } from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
 import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 
 function InteractiveAnalysis() {
   const value = `
-## ArchGuard DSL
 
-目标：基于 ArchGuard Backend，提供 CRUD 封装的 API，如构建系统，查询依赖关系等。
+## 目标架构：Architecture DSL
 
-\`\`\`kotlin
-%use archguard
-
-repos {
-    repo(name = "Backend", language = "Kotlin", scmUrl = "https://github.com/archguard/archguard")
-    repo(name = "Scanner", language = "Kotlin", scmUrl = "https://github.com/archguard/scanner")
-}
-\`\`\`
-
-## Architecture DSL
-
-目标：设计系统架构，可视化架构设计等，生成系统的架构 DSL。
+说明：设计系统架构，可视化架构设计等，生成系统的架构 DSL。
 
 \`\`\`kotlin
 %use archguard
@@ -39,9 +27,23 @@ val layer = layered {
 graph().show(layer.relations())
 \`\`\`
 
-## Analyser/Scanner/Linter DSL
 
-目标：结合 ArchGuard Scanner 中的能力，对系统进行 Scanner、Analyser、Linter 等。
+## 当前/现状架构：ArchGuard DSL
+
+说明：基于 ArchGuard Backend，提供 CRUD 封装的 API，如构建系统，查询依赖关系等。
+
+\`\`\`kotlin
+%use archguard
+
+repos {
+    repo(name = "Backend", language = "Kotlin", scmUrl = "https://github.com/archguard/archguard")
+    repo(name = "Scanner", language = "Kotlin", scmUrl = "https://github.com/archguard/scanner")
+}
+\`\`\`
+
+## 治理架构：Analyser/Scanner/Linter DSL
+
+说明：结合 ArchGuard Scanner 中的能力，对系统进行 Scanner、Analyser、Linter 等。
 
 \`\`\`kotlin
 %use archguard
