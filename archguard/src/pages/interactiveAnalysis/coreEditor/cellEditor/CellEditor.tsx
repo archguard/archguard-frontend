@@ -1,9 +1,8 @@
 import React, { useCallback, useRef, useState } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { Monaco } from "@monaco-editor/react";
 import { IKeyboardEvent } from "monaco-editor";
-import { Button, Tooltip } from "antd";
+import { Button, notification, Tooltip } from "antd";
 import { CaretRightOutlined, StopOutlined } from "@ant-design/icons";
-import { webSocket } from "rxjs/webSocket";
 import styles from "./CellEditor.less";
 import { ReplResult } from "@/types/archdoc";
 import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispatcher";
@@ -37,15 +36,10 @@ export const LANGUAGES = {
 interface BlockEditorProps {
   code: string;
   language: string;
-  codeChange: any;
-  languageChange: any;
+  codeChange: (code: string, editor: Monaco) => any;
+  languageChange: (event: any) => any;
   removeSelf: any;
   websocket: WebSocketSubject<any>;
-}
-
-interface CellContext {
-  id: string,
-  code: string,
 }
 
 function CellEditor(props: BlockEditorProps) {
@@ -58,21 +52,25 @@ function CellEditor(props: BlockEditorProps) {
   const [isRunning, setIsRunning] = useState(false)
 
   const runCode = useCallback(() => {
-      props.websocket.subscribe({
-        next: (msg) => {
-          let result = msg as ReplResult;
-          setResult(result as any);
-          setIsRunning(false);
-        },
-        error: (err) => console.log(err), // Called if at any point WebSocket API signals some kind of error.
-        complete: () => console.log("complete"), // Called when connection is closed (for whatever reason).
-      });
+    // todo: handle for language
+    props.websocket.subscribe({
+      next: (msg) => {
+        let result = msg as ReplResult;
+        setResult(result as any);
+        setIsRunning(false);
+      },
+      error: (err) => {
+        notification.error({
+          message: err,
+          duration: 0,
+        });
+      },
+      complete: () => console.log("complete"),
+    });
 
-      props.websocket.next({ code: code });
-      setIsRunning(true);
-    },
-    [setResult, code, isRunning],
-  );
+    props.websocket.next({ code: code });
+    setIsRunning(true);
+  }, [setResult, code, isRunning, language]);
 
   function adjustHeight(editor: monaco.editor.IStandaloneCodeEditor) {
     const lineHeight = editor.getOption(monaco.editor.EditorOption.lineHeight);
@@ -119,8 +117,7 @@ function CellEditor(props: BlockEditorProps) {
     [editorRef, setCode]
   );
 
-  const handleLanguageChange = useCallback(
-    event => {
+  const handleLanguageChange = useCallback((event) => {
       setLanguage(event.target.value);
       props.languageChange(event);
     },
@@ -128,7 +125,6 @@ function CellEditor(props: BlockEditorProps) {
   );
 
   const languageOptions = Object.entries(LANGUAGES);
-
   const createLanguageSelect = (value: string) => {
     return (
       <select className={ styles.languageSelect } defaultValue={value} onChange={handleLanguageChange}>

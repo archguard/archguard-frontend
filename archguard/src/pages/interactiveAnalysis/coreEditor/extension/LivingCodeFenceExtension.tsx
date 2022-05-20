@@ -3,6 +3,7 @@ import { textblockTypeInputRule } from "prosemirror-inputrules";
 import { NodeSelection, Selection } from "prosemirror-state";
 import Node from "rich-markdown-editor/dist/nodes/Node";
 import CellEditor from "@/pages/interactiveAnalysis/coreEditor/cellEditor/CellEditor";
+import { Monaco } from "@monaco-editor/react";
 
 const DEFAULT_LANGUAGE = "kotlin";
 export class LivingCodeFenceExtension extends Node {
@@ -112,7 +113,7 @@ export class LivingCodeFenceExtension extends Node {
     }
   };
 
-  handleCodeChange = (code: string, editor: any) => {
+  handleCodeChange = (code: string, editor: Monaco) => {
     const { view } = this.editor;
     const { tr } = view.state;
     const element = editor.getDomNode();
