@@ -20,6 +20,11 @@ export interface ReplResult {
   action: ReactiveAction;
 }
 
+export interface ErrorContent {
+  exception: string
+  message: string,
+}
+
 export interface CellItem {
   id: string;
   code: string;
