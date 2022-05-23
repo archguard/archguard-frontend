@@ -10,7 +10,7 @@ export function FlowChart(dataStr: string) {
   }
 
   return (
-    <>
+    <div>
       { mermaidWrapper.mermaid({
         node: {
           key: "mermaid",
@@ -18,6 +18,6 @@ export function FlowChart(dataStr: string) {
    ${ def }`
         }
       }) }
-    </>
+    </div>
   );
 }

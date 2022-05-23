@@ -16,7 +16,7 @@ function Mermaid(props: MermaidProps) {
     id: MENU_ID,
   });
 
-  const id = `mermaid-${props.key}`;
+  const id = `mermaid-${props.key || "1"}`;
   const ref = React.useRef({} as any);
   const theme = useState("default");
   // const [mode] = useColorMode()
