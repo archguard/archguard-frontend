@@ -1,5 +1,10 @@
+export enum ActionType {
+  CREATE_REPO = "create_repo",
+  GRAPH = "graph"
+}
+
 export interface ReactiveAction {
-  actionType: string;
+  actionType: ActionType;
   className: string;
   graphType: GraphType;
   data: string;

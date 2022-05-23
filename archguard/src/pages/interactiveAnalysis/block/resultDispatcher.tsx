@@ -1,6 +1,6 @@
-import { ErrorContent, MsgType, ReplResult } from "@/types/archdoc";
+import { ActionType, ErrorContent, MsgType, ReplResult } from "@/types/archdoc";
 import React from "react";
-import { Typography } from "antd";
+import { Button, Typography } from "antd";
 import { BlockTable } from "@/pages/interactiveAnalysis/block/components/BlockTable";
 import { GraphRender } from "@/pages/interactiveAnalysis/block/GraphRender";
 
@@ -23,16 +23,36 @@ export function ResultDispatcher(result: ReplResult) {
           </p>
         </>
       );
+
     case MsgType.None:
-      break;
+      return <>{JSON.stringify(result)}</>;
+
     case MsgType.ARCHGUARD_GRAPH:
       break;
   }
 
-  if (result.action && result.action["graphType"]) {
-    return <GraphRender result={result} />;
+  if (result.action) {
+    switch (result.action.actionType) {
+      case ActionType.CREATE_REPO:
+        // eslint-disable-next-line no-case-declarations
+        let tableData = JSON.parse(result.action.data);
+        // eslint-disable-next-line no-case-declarations
+        const clickRepos = (event: any) => {
+          console.log(tableData);
+        };
+
+        return (
+          <div>
+            <Button type="primary" onClick={clickRepos}>Create</Button>
+            <BlockTable data={tableData} />
+          </div>
+        );
+      case ActionType.GRAPH:
+        return <GraphRender result={result} />;
+    }
   }
 
+  // display array for objects
   if (result.className == "java.util.ArrayList") {
     let tableData = JSON.parse(result.resultValue);
     return (

@@ -85,7 +85,9 @@ function CellEditor(props: BlockEditorProps) {
   }
 
   function initEditor(editor) {
-    editor.focus();
+    // if had multiple editors will show multiple cursors,
+    // it will make user confuse
+    // editor.focus();
     editor.onKeyDown((e: IKeyboardEvent) => {
       if (e.code === "Backspace") {
         if (editor.getValue() === "") {
