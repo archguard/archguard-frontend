@@ -3,6 +3,7 @@ import React from "react";
 import { Button, Typography } from "antd";
 import { BlockTable } from "@/pages/interactiveAnalysis/block/components/BlockTable";
 import { GraphRender } from "@/pages/interactiveAnalysis/block/GraphRender";
+import { RepoAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
 
 const { Text } = Typography;
 
@@ -37,13 +38,15 @@ export function ResultDispatcher(result: ReplResult) {
         // eslint-disable-next-line no-case-declarations
         let tableData = JSON.parse(result.action.data);
         // eslint-disable-next-line no-case-declarations
-        const clickRepos = (event: any) => {
-          console.log(tableData);
+        const clickCreateRepos = (event: any) => {
+          RepoAction.create(tableData);
         };
 
         return (
           <div>
-            <Button type="primary" onClick={clickRepos}>Create</Button>
+            <Button type="primary" onClick={clickCreateRepos}>
+              Create
+            </Button>
             <BlockTable data={tableData} />
           </div>
         );
