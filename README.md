@@ -18,6 +18,7 @@ Node.js version: 16.x
   - [x] MonacoEditor as a **source code** editor
 - [ ] paragraph dispatch server
   - [ ] graph dsl to graph
+  - [x] model to table
   - [ ] multiple notebook run
   - [x] notebook to server
   - [x] notebook return output to graph
