@@ -23,7 +23,17 @@ val layer = layered {
     component("application") dependentOn component("infrastructure")
     component("domain") dependentOn component("infrastructure")
 }
+\`\`\`
 
+Table:
+
+\`\`\`kotlin
+layer.relations()
+\`\`\`
+
+Graph:
+
+\`\`\`kotlin
 diagram().show(layer.relations())
 \`\`\`
 
