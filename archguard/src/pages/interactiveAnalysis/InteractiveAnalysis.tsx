@@ -24,7 +24,7 @@ val layer = layered {
     component("domain") dependentOn component("infrastructure")
 }
 
-graph().show(layer.relations())
+diagram().show(layer.relations())
 \`\`\`
 
 
