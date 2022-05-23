@@ -1,14 +1,14 @@
 export interface ReactiveAction {
   actionType: string;
   className: string;
-  graphType: string;
+  graphType: GraphType;
   data: string;
 }
 
 export enum MsgType {
   None = "none",
   ERROR = "error",
-  ARCHGUARD_GRAPH = "archguard_graph"
+  ARCHGUARD_GRAPH = "archguard_graph",
 }
 
 export interface ReplResult {
@@ -21,11 +21,17 @@ export interface ReplResult {
 }
 
 export interface ErrorContent {
-  exception: string
-  message: string,
+  exception: string;
+  message: string;
 }
 
 export interface CellItem {
   id: string;
   code: string;
+}
+
+export enum GraphType {
+  UML = "uml",
+  FLOWCHART = "flowchart",
+  ARCHDOC = "archdoc",
 }
