@@ -2,6 +2,7 @@ import { ErrorContent, MsgType, ReplResult } from "@/types/archdoc";
 import { graphRender } from "@/pages/interactiveAnalysis/block/graphRender";
 import React from "react";
 import { Typography } from "antd";
+import { BlockTable } from "@/pages/interactiveAnalysis/block/BlockTable";
 
 const { Text } = Typography;
 
@@ -29,6 +30,14 @@ export function ResultDispatcher(result: ReplResult) {
       case "archdoc":
         return <div>{graphRender(result.action.data, "flowchart")}</div>;
     }
+  }
+
+  if (result.className == "java.util.ArrayList") {
+    let tableData = JSON.parse(result.resultValue);
+    return <>
+      <p>{JSON.stringify(result)}</p>
+      <BlockTable data={tableData} />
+    </>;
   }
 
   return <>{JSON.stringify(result)}</>;
