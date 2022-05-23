@@ -2,7 +2,7 @@ import { ErrorContent, MsgType, ReplResult } from "@/types/archdoc";
 import { graphRender } from "@/pages/interactiveAnalysis/block/graphRender";
 import React from "react";
 import { Typography } from "antd";
-import { BlockTable } from "@/pages/interactiveAnalysis/block/BlockTable";
+import { BlockTable } from "@/pages/interactiveAnalysis/block/components/BlockTable";
 
 const { Text } = Typography;
 
