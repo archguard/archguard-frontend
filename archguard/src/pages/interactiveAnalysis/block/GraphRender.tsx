@@ -23,8 +23,6 @@ export function GraphSelect(props: { change: any; value: any }) {
 }
 
 export function GraphRenderByType(props: { type: string; data: string }) {
-  const [type] = useState(props.type);
-
   switch (props.type) {
     case GraphType.ARCHDOC:
       return <div>{FlowChart(props.data)}</div>;

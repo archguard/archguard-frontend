@@ -140,7 +140,7 @@ function CellEditor(props: BlockEditorProps) {
   };
 
   function renderOutput() {
-    return ResultDispatcher(result);
+    return <>{result && <div className={styles.output}>{ResultDispatcher(result)}</div>}</>;
   }
 
   return (
