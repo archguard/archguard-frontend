@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { RepoAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
 import { Button } from "antd";
 import { BlockTable } from "@/pages/interactiveAnalysis/block/components/BlockTable";
+import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 
 export enum BackendActionType {
   CreateRepos,
@@ -25,7 +26,7 @@ export function BackendAction(props: BackendActionProps) {
         Create
       </Button>
       <BlockTable data={props.data} />
-      {result && <div>RESPONSE: {JSON.stringify(result)}</div>}
+      {result && <JsonView data={result} />}
     </div>
   );
 }

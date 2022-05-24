@@ -7,6 +7,7 @@ import {
   BackendAction,
   BackendActionType,
 } from "@/pages/interactiveAnalysis/block/components/BackendAction";
+import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 
 const { Text } = Typography;
 
@@ -50,8 +51,8 @@ export function ResultDispatcher(result: ReplResult) {
     let tableData = JSON.parse(result.resultValue);
     return (
       <>
-        {/*<p>{JSON.stringify(result)}</p>*/}
         <BlockTable data={tableData} />
+        <JsonView data={result}/>
       </>
     );
   }
