@@ -1,3 +1,5 @@
+import { createRepos } from "@/api/ascode/ascode";
+
 export interface Repo {
   name: string;
   language: string;
@@ -5,7 +7,7 @@ export interface Repo {
 }
 
 export const RepoAction = {
-  create(repos: Repo[]) {
-
+  create(repos: Repo[]): Promise<any> {
+    return createRepos(repos)
   },
 };

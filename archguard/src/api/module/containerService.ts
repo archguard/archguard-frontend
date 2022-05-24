@@ -18,10 +18,3 @@ export function queryContainerByIds(ids: string[]) {
     method: "GET"
   });
 }
-
-export function queryFlareData() {
-  return axios<any>({
-    url: `/api/container-service/flare/`,
-    method: "GET"
-  });
-}
