@@ -8,7 +8,7 @@ interface Repository {
 
 export function createRepos(repos: Repository[]) {
   return axios<any>({
-    url: `/api/ascode/`,
+    url: `/api/ascode/repos`,
     method: "PUT",
     data: repos
   });
