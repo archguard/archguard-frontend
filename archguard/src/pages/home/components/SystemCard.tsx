@@ -84,7 +84,8 @@ const SystemCard = (props: SystemCardProps) => {
   };
 
   function getDescription(systemInfo: SystemInfo) {
-    return `${ formatMessage({ id: 'LAST_SCAN_TIME' }) }: ${ systemInfo.updatedTime }`;
+    let time = new Date(systemInfo.updatedTime ).toISOString();
+    return `${ formatMessage({ id: 'LAST_SCAN_TIME' }) }: ${ time}`;
   }
 
   return systemInfo ? (
