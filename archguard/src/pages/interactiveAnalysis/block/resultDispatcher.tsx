@@ -1,9 +1,12 @@
 import { ActionType, ErrorContent, MsgType, ReplResult } from "@/types/archdoc";
 import React from "react";
-import { Button, Typography } from "antd";
+import { Typography } from "antd";
 import { BlockTable } from "@/pages/interactiveAnalysis/block/components/BlockTable";
 import { GraphRender } from "@/pages/interactiveAnalysis/block/GraphRender";
-import { RepoAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
+import {
+  BackendAction,
+  BackendActionType,
+} from "@/pages/interactiveAnalysis/block/components/BackendAction";
 
 const { Text } = Typography;
 
@@ -33,23 +36,10 @@ export function ResultDispatcher(result: ReplResult) {
   }
 
   if (result.action) {
+    const data = JSON.parse(result.action.data);
     switch (result.action.actionType) {
       case ActionType.CREATE_REPO:
-        // eslint-disable-next-line no-case-declarations
-        let tableData = JSON.parse(result.action.data);
-        // eslint-disable-next-line no-case-declarations
-        const clickCreateRepos = (event: any) => {
-          RepoAction.create(tableData);
-        };
-
-        return (
-          <div>
-            <Button type="primary" onClick={clickCreateRepos}>
-              Create
-            </Button>
-            <BlockTable data={tableData} />
-          </div>
-        );
+        return <BackendAction data={data} actionType={BackendActionType.CreateRepos} />;
       case ActionType.GRAPH:
         return <GraphRender result={result} />;
     }
@@ -60,7 +50,7 @@ export function ResultDispatcher(result: ReplResult) {
     let tableData = JSON.parse(result.resultValue);
     return (
       <>
-        <p>{JSON.stringify(result)}</p>
+        {/*<p>{JSON.stringify(result)}</p>*/}
         <BlockTable data={tableData} />
       </>
     );
