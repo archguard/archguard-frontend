@@ -8,6 +8,7 @@ import { ReplResult } from "@/types/archdoc";
 import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispatcher";
 import { addDslCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/autoCompletion";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
+import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
 
 export const LANGUAGES = {
   none: "None", // additional entry to disable highlighting
@@ -40,6 +41,7 @@ interface BlockEditorProps {
   languageChange: (event: any) => any;
   removeSelf: any;
   websocket: WebSocketSubject<any>;
+  context: InteractiveAnalysisContext;
 }
 
 function CellEditor(props: BlockEditorProps) {
@@ -140,7 +142,8 @@ function CellEditor(props: BlockEditorProps) {
   };
 
   function renderOutput() {
-    return <>{result && <div className={styles.output}>{ResultDispatcher(result)}</div>}</>;
+    if(!result) {return }
+    return <div className={styles.output}>{ResultDispatcher(result, props.context)}</div>;
   }
 
   return (

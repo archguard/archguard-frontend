@@ -72,6 +72,7 @@ export class LivingCodeFenceExtension extends Node {
           websocket={this.options.websocket}
           removeSelf={this.deleteSelf(props)}
           codeChange={this.handleCodeChange}
+          context={this.options.context}
           languageChange={this.handleLanguageChange}
         />
       </div>

@@ -1,11 +1,14 @@
 import React from "react";
 import RichMarkdownEditor from "rich-markdown-editor";
+import { webSocket } from "rxjs/webSocket";
+
 import { LivingCodeFenceExtension } from "@/pages/interactiveAnalysis/coreEditor/extension/LivingCodeFenceExtension";
 import { LivingCodeBlockExtension } from "@/pages/interactiveAnalysis/coreEditor/extension/LivingCodeBlockExtension";
-import { webSocket } from "rxjs/webSocket";
+import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
 
 interface CoreEditorProps {
   value: string;
+  context: InteractiveAnalysisContext;
 }
 
 function CoreEditor(props: CoreEditorProps) {
@@ -13,8 +16,8 @@ function CoreEditor(props: CoreEditorProps) {
   const subject = webSocket("ws://localhost:8848/");
 
   function initExtensions() {
-    let fenceExtension = new LivingCodeFenceExtension({ websocket: subject });
-    let blockExtension = new LivingCodeBlockExtension({ websocket: subject });
+    let fenceExtension = new LivingCodeFenceExtension({ websocket: subject, context: props.context });
+    let blockExtension = new LivingCodeBlockExtension({ websocket: subject, context: props.context });
 
     return [fenceExtension, blockExtension];
   }

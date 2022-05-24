@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { FlowChart } from "@/pages/interactiveAnalysis/block/graph/FlowChart";
 import { GraphType, ReplResult } from "@/types/archdoc";
 import { Select } from "antd";
+import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
 
 export function GraphSelect(props: { change: any; value: any }) {
   const changeGraph = useCallback(
@@ -33,7 +34,7 @@ export function GraphRenderByType(props: { type: string; data: string }) {
   return <div> unsupported GraphType: {props.type}</div>;
 }
 
-export function GraphRender(props: { result: ReplResult }) {
+export function GraphRender(props: { result: ReplResult; context: InteractiveAnalysisContext }) {
   const [result] = useState(props.result);
   const [graphType, setGraphType] = useState(result.action.graphType);
 

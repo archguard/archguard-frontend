@@ -8,10 +8,11 @@ import {
   BackendActionType,
 } from "@/pages/interactiveAnalysis/block/components/BackendAction";
 import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
+import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
 
 const { Text } = Typography;
 
-export function ResultDispatcher(result: ReplResult) {
+export function ResultDispatcher(result: ReplResult, context: InteractiveAnalysisContext) {
   if (!result) return;
 
   switch (result.msgType) {
@@ -42,7 +43,7 @@ export function ResultDispatcher(result: ReplResult) {
       case ActionType.CREATE_REPO:
         return <BackendAction data={data} actionType={BackendActionType.CreateRepos} />;
       case ActionType.GRAPH:
-        return <GraphRender result={result} />;
+        return <GraphRender result={result} context={context}/>;
     }
   }
 
