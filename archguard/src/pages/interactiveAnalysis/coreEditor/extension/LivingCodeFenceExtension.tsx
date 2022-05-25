@@ -40,8 +40,7 @@ export class LivingCodeFenceExtension extends Node {
           getAttrs: (dom: HTMLDivElement) => {
             return {
               code: "",
-              language: dom.dataset.language,
-              subject: this.subject
+              language: dom.dataset.language
             };
           },
         },
@@ -69,7 +68,6 @@ export class LivingCodeFenceExtension extends Node {
         <CellEditor
           language={language}
           code={value}
-          websocket={this.options.websocket}
           removeSelf={this.deleteSelf(props)}
           codeChange={this.handleCodeChange}
           context={this.options.context}

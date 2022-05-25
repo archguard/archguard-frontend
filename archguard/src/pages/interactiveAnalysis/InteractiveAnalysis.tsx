@@ -5,8 +5,11 @@ import { Button, Space, Tooltip } from "antd";
 import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 import {
   InteractiveAnalysisContext,
-  InteractiveAnalysisTheme
+  InteractiveAnalysisTheme,
 } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
+import { webSocket } from "rxjs/webSocket";
+import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
+import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 
 function InteractiveAnalysis() {
   const value = `
@@ -78,9 +81,14 @@ linter("Backend").layer()
     exportDoc(content, "archdoc", "md");
   }, [value]);
 
-  const context: InteractiveAnalysisContext =  {
-    theme: InteractiveAnalysisTheme.WHITE
-  }
+  // todo: refactor one socket server
+  const subject = webSocket("ws://localhost:8080/ascode");
+  const replService = new ReplService(subject as WebSocketSubject<any>);
+
+  const context: InteractiveAnalysisContext = {
+    theme: InteractiveAnalysisTheme.WHITE,
+    replService,
+  };
 
   return (
     <div>
@@ -97,7 +105,7 @@ linter("Backend").layer()
           </Tooltip>
         </Space>
       </div>
-      <CoreEditor value={value} context={context}/>
+      <CoreEditor value={value} context={context} />
     </div>
   );
 }

@@ -41,7 +41,6 @@ interface BlockEditorProps {
   codeChange: (code: string, editor: Monaco) => any;
   languageChange: (event: any) => any;
   removeSelf: any;
-  websocket: ReplService;
   context: InteractiveAnalysisContext;
 }
 
@@ -51,15 +50,13 @@ function CellEditor(props: BlockEditorProps) {
   const [code, setCode] = useState(props.code);
   const [language, setLanguage] = useState(props.language);
   const [result, setResult] = useState(null as ReplResult);
-
   const [isRunning, setIsRunning] = useState(false)
 
-  let { id, subject } = props.websocket.register();
+  let { id, subject } = props.context.replService.register();
 
   const runCode = useCallback(() => {
     subject.subscribe({
       next: (msg: ReplResult) => {
-        console.log("....")
         setResult(msg as any);
         setIsRunning(false);
       },
@@ -67,7 +64,7 @@ function CellEditor(props: BlockEditorProps) {
       complete: () => {},
     });
 
-    props.websocket.eval(code, id)
+    props.context.replService.eval(code, id)
 
     setIsRunning(true);
   }, [setResult, code, isRunning, language]);
