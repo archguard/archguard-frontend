@@ -5,6 +5,7 @@ import { ReplResult } from "@/types/archdoc";
 export class ReplService {
   private subject: WebSocketSubject<any>;
   private idSubjectMap: Map<number, Subject<any>> = new Map();
+  private codes: Map<number, string> = new Map();
   private indexId: number = 0;
 
   constructor(subject: WebSocketSubject<any>) {
@@ -37,5 +38,17 @@ export class ReplService {
 
   eval(code: string, id: number) {
     this.subject.next({ code: code, id: id });
+  }
+
+  saveCode(code: string, id: number) {
+    this.codes[id] = code;
+  }
+
+  runAll() {
+    const that = this;
+
+    for (let key in this.codes) {
+      this.subject.next({ code: this.codes[key], id: key });
+    }
   }
 }

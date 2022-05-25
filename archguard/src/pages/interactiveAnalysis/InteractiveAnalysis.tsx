@@ -72,16 +72,6 @@ linter("Backend").layer()
 
   `;
 
-  const runAllCell = useCallback(() => {}, []);
-
-  const save = useCallback(() => {}, []);
-
-  const onClickExport = useCallback(() => {
-    let content = value.replaceAll("\\\n", "\n");
-    exportDoc(content, "archdoc", "md");
-  }, [value]);
-
-  // todo: refactor one socket server
   const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
   const subject = webSocket(`ws://${host}/ascode`);
   const replService = new ReplService(subject as WebSocketSubject<any>);
@@ -91,13 +81,24 @@ linter("Backend").layer()
     replService,
   };
 
+  const runAllCell = useCallback(() => {
+    replService.runAll()
+  }, []);
+
+  const save = useCallback(() => {}, []);
+  const onClickExport = useCallback(() => {
+    let content = value.replaceAll("\\\n", "\n");
+    exportDoc(content, "archdoc", "md");
+  }, [value]);
+
+
   return (
     <div>
       <div className={"toolbar"}>
         <Space direction="horizontal" size="middle">
-          <Tooltip title="Save">
-            <Button type="primary" icon={<SaveOutlined />} onClick={save} />
-          </Tooltip>
+          {/*<Tooltip title="Save">*/}
+          {/*  <Button type="primary" icon={<SaveOutlined />} onClick={save} />*/}
+          {/*</Tooltip>*/}
           <Tooltip title="Run all">
             <Button type="primary" icon={<ForwardOutlined />} onClick={runAllCell} />
           </Tooltip>

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { IKeyboardEvent } from "monaco-editor";
 import { Button, notification, Tooltip } from "antd";
@@ -54,18 +54,23 @@ function CellEditor(props: BlockEditorProps) {
 
   let { id, subject } = props.context.replService.register();
 
+  useEffect(() => {
+    if (code != null) {
+      props.context.replService.saveCode(code, id);
+    }
+  }, [code])
+
+  subject.subscribe({
+    next: (msg: ReplResult) => {
+      setResult(msg as any);
+      setIsRunning(false);
+    },
+    error: () => {},
+    complete: () => {},
+  });
+
   const runCode = useCallback(() => {
-    subject.subscribe({
-      next: (msg: ReplResult) => {
-        setResult(msg as any);
-        setIsRunning(false);
-      },
-      error: () => {},
-      complete: () => {},
-    });
-
     props.context.replService.eval(code, id)
-
     setIsRunning(true);
   }, [setResult, code, isRunning, language]);
 
@@ -110,10 +115,12 @@ function CellEditor(props: BlockEditorProps) {
       if (editorRef.current) {
         adjustHeight(editorRef.current);
         setCode(code);
+
+        props.context.replService.saveCode(code, id);
         props.codeChange(code, editorRef.current);
       }
     },
-    [editorRef, setCode]
+    [editorRef, setCode, id]
   );
 
   const handleLanguageChange = useCallback((event) => {
