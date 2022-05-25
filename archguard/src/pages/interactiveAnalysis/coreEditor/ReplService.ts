@@ -20,7 +20,7 @@ export class ReplService {
         }
       },
       error: (err) => {
-        alert(err);
+        console.error(err);
       },
       complete: () => {},
     });
