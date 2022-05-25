@@ -1,6 +1,12 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
-import { ExportOutlined, ForwardOutlined, SaveOutlined } from "@ant-design/icons";
+import {
+  CaretRightOutlined,
+  ExportOutlined,
+  ForwardOutlined,
+  SaveOutlined,
+  StopOutlined,
+} from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
 import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 import {
@@ -11,8 +17,7 @@ import { webSocket } from "rxjs/webSocket";
 import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 
-function InteractiveAnalysis() {
-  const value = `
+const value = `
 
 ## 目标架构：Architecture DSL
 
@@ -72,6 +77,8 @@ linter("Backend").layer()
 
   `;
 
+function InteractiveAnalysis() {
+  const [isRunning, setIsRunning] = useState(false);
   const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
   const subject = webSocket(`ws://${host}/ascode`);
   const replService = new ReplService(subject as WebSocketSubject<any>);
@@ -82,26 +89,37 @@ linter("Backend").layer()
   };
 
   const runAllCell = useCallback(() => {
-    replService.runAll()
-  }, []);
+    setIsRunning(true);
 
-  const save = useCallback(() => {}, []);
+    let sub = replService.runAll();
+    sub.subscribe({
+      next() {
+        setIsRunning(false);
+      },
+      error() {},
+      complete() {},
+    });
+  }, [setIsRunning]);
+
   const onClickExport = useCallback(() => {
     let content = value.replaceAll("\\\n", "\n");
     exportDoc(content, "archdoc", "md");
   }, [value]);
 
-
   return (
     <div>
       <div className={"toolbar"}>
         <Space direction="horizontal" size="middle">
-          {/*<Tooltip title="Save">*/}
-          {/*  <Button type="primary" icon={<SaveOutlined />} onClick={save} />*/}
-          {/*</Tooltip>*/}
-          <Tooltip title="Run all">
-            <Button type="primary" icon={<ForwardOutlined />} onClick={runAllCell} />
-          </Tooltip>
+          {!isRunning && (
+            <Tooltip title="Run all">
+              <Button type="primary" icon={<ForwardOutlined />} onClick={runAllCell} disabled={isRunning} />
+            </Tooltip>
+          )}
+          {isRunning && (
+            <Tooltip title="Stop">
+              <Button type="primary" icon={<StopOutlined />} disabled={true} />
+            </Tooltip>
+          )}
           <Tooltip title="Export">
             <Button type="primary" icon={<ExportOutlined />} onClick={onClickExport} />
           </Tooltip>

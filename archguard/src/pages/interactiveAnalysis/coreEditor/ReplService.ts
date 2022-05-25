@@ -1,5 +1,5 @@
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
-import { Subject } from "rxjs";
+import { Subject, from } from "rxjs";
 import { ReplResult } from "@/types/archdoc";
 
 export class ReplService {
@@ -7,6 +7,10 @@ export class ReplService {
   private idSubjectMap: Map<number, Subject<any>> = new Map();
   private codes: Map<number, string> = new Map();
   private indexId: number = 0;
+  private runningCodeIds: number[];
+
+  private runAllSub = new Subject();
+  private isRunAll = false;
 
   constructor(subject: WebSocketSubject<any>) {
     this.subject = subject;
@@ -17,6 +21,15 @@ export class ReplService {
         if (that.idSubjectMap[msg.id] != null) {
           const sub: Subject<any> = that.idSubjectMap[msg.id];
           sub.next(msg);
+        }
+
+        that.runningCodeIds.forEach((item, index) => {
+          if (item == msg.id) that.runningCodeIds.splice(index, 1);
+        });
+
+        if (that.isRunAll && that.runningCodeIds.length == 0) {
+          that.isRunAll = false;
+          that.runAllSub.next("done");
         }
       },
       error: (err) => {
@@ -44,11 +57,14 @@ export class ReplService {
     this.codes[id] = code;
   }
 
-  runAll() {
-    const that = this;
-
-    for (let key in this.codes) {
-      this.subject.next({ code: this.codes[key], id: key });
+  runAll(): Subject<any> {
+    this.isRunAll = true;
+    this.runningCodeIds = [];
+    for (let id in this.codes) {
+      this.runningCodeIds.push(Number(id));
+      this.subject.next({ code: this.codes[id], id: id });
     }
+
+    return this.runAllSub;
   }
 }
