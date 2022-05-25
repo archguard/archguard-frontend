@@ -1,12 +1,6 @@
 import React, { useCallback, useState } from "react";
 import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
-import {
-  CaretRightOutlined,
-  ExportOutlined,
-  ForwardOutlined,
-  SaveOutlined,
-  StopOutlined,
-} from "@ant-design/icons";
+import { ExportOutlined, ForwardOutlined, StopOutlined } from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
 import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 import {
@@ -90,9 +84,7 @@ function InteractiveAnalysis() {
 
   const runAllCell = useCallback(() => {
     setIsRunning(true);
-
-    let sub = replService.runAll();
-    sub.subscribe({
+    replService.runAll().subscribe({
       next() {
         setIsRunning(false);
       },
