@@ -9,6 +9,7 @@ import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispat
 import { addDslCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/autoCompletion";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
+import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
 
 export const LANGUAGES = {
   none: "None", // additional entry to disable highlighting
@@ -40,7 +41,7 @@ interface BlockEditorProps {
   codeChange: (code: string, editor: Monaco) => any;
   languageChange: (event: any) => any;
   removeSelf: any;
-  websocket: WebSocketSubject<any>;
+  websocket: ReplService;
   context: InteractiveAnalysisContext;
 }
 
@@ -53,24 +54,21 @@ function CellEditor(props: BlockEditorProps) {
 
   const [isRunning, setIsRunning] = useState(false)
 
+  let { id, subject } = props.websocket.register();
+
   const runCode = useCallback(() => {
-    // todo: handle for language
-    props.websocket.subscribe({
-      next: (msg) => {
-        let result = msg as ReplResult;
-        setResult(result as any);
+    subject.subscribe({
+      next: (msg: ReplResult) => {
+        console.log("....")
+        setResult(msg as any);
         setIsRunning(false);
       },
-      error: (err) => {
-        notification.error({
-          message: err,
-          duration: 0,
-        });
-      },
-      complete: () => console.log("complete"),
+      error: () => {},
+      complete: () => {},
     });
 
-    props.websocket.next({ code: code });
+    props.websocket.eval(code, id)
+
     setIsRunning(true);
   }, [setResult, code, isRunning, language]);
 
