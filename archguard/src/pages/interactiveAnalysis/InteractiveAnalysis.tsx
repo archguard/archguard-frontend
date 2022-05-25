@@ -82,7 +82,8 @@ linter("Backend").layer()
   }, [value]);
 
   // todo: refactor one socket server
-  const subject = webSocket("ws://localhost:8080/ascode");
+  const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
+  const subject = webSocket(`ws://${host}/ascode`);
   const replService = new ReplService(subject as WebSocketSubject<any>);
 
   const context: InteractiveAnalysisContext = {
