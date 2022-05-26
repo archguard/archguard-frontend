@@ -63,6 +63,16 @@ context.repos.create()
 
 说明：结合 ArchGuard Scanner 中的能力，对系统进行 Scanner、Analyser、Linter 等。
 
+Scan 示例：
+
+\`\`\`kotlin
+%use archguard
+
+scan("Backend")
+\`\`\`
+
+Linter 示例（待实现）：
+
 \`\`\`kotlin
 %use archguard
 
