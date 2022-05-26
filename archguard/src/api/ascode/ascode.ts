@@ -13,3 +13,11 @@ export function createRepos(repos: Repository[]) {
     data: repos
   });
 }
+
+export function createScan(data) {
+  return axios<any>({
+    url: `/api/ascode/scan`,
+    method: "PUT",
+    data,
+  });
+}

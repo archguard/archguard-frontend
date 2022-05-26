@@ -4,9 +4,9 @@ import { Typography } from "antd";
 import { BlockTable } from "@/pages/interactiveAnalysis/block/components/BlockTable";
 import { GraphRender } from "@/pages/interactiveAnalysis/block/GraphRender";
 import {
-  BackendAction,
+  BackendActionView,
   BackendActionType,
-} from "@/pages/interactiveAnalysis/block/components/BackendAction";
+} from "@/pages/interactiveAnalysis/block/components/BackendActionView";
 import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
 
@@ -41,7 +41,9 @@ export function ResultDispatcher(result: ReplResult, context: InteractiveAnalysi
     const data = JSON.parse(result.action.data);
     switch (result.action.actionType) {
       case ActionType.CREATE_REPO:
-        return <BackendAction data={data} actionType={BackendActionType.CreateRepos} />;
+        return <BackendActionView data={data} actionType={BackendActionType.CreateRepos} />;
+      case ActionType.CREATE_SCAN:
+        return <BackendActionView data={data} actionType={BackendActionType.CreateScan} />;
       case ActionType.GRAPH:
         return <GraphRender result={result} context={context}/>;
     }

@@ -1,4 +1,4 @@
-import { createRepos } from "@/api/ascode/ascode";
+import { createRepos, createScan } from "@/api/ascode/ascode";
 
 export interface Repo {
   name: string;
@@ -6,8 +6,11 @@ export interface Repo {
   scmUrl: string;
 }
 
-export const RepoAction = {
-  create(repos: Repo[]): Promise<any> {
+export const BackendAction = {
+  createRepos(repos: Repo[]): Promise<any> {
     return createRepos(repos)
+  },
+  createScan(data: object): Promise<any> {
+    return createScan(data)
   },
 };

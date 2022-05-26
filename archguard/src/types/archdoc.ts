@@ -1,5 +1,6 @@
 export enum ActionType {
   CREATE_REPO = "create_repo",
+  CREATE_SCAN = "create_scan",
   GRAPH = "graph"
 }
 
