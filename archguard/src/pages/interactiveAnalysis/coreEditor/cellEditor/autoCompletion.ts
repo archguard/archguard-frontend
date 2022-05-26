@@ -30,6 +30,14 @@ export function addDslCompletion() {
           range: range,
         },
         {
+          label: '"scan"',
+          kind: monaco.languages.CompletionItemKind.Function,
+          documentation: "Describe create scan",
+          insertText: "scan(\"${1:Backend}\") {\n    languages(\"${2:Kotlin}\")\n    specs(\"${3:datamap}\", \"${4:apicalls}\")\n}",
+          insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+          range: range,
+        },
+        {
           label: '"github"',
           kind: monaco.languages.CompletionItemKind.Function,
           documentation: "Github link",
