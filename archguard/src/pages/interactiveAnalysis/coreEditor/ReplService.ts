@@ -23,13 +23,15 @@ export class ReplService {
           sub.next(msg);
         }
 
-        that.runningCodeIds.forEach((item, index) => {
-          if (item == msg.id) that.runningCodeIds.splice(index, 1);
-        });
+        if (that.runningCodeIds) {
+          that.runningCodeIds.forEach((item, index) => {
+            if (item == msg.id) that.runningCodeIds.splice(index, 1);
+          });
 
-        if (that.isRunAll && that.runningCodeIds.length == 0) {
-          that.isRunAll = false;
-          that.runAllSub.next("done");
+          if (that.isRunAll && that.runningCodeIds.length == 0) {
+            that.isRunAll = false;
+            that.runAllSub.next("done");
+          }
         }
       },
       error: (err) => {

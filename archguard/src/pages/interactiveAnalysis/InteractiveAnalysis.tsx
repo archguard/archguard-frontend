@@ -68,7 +68,7 @@ Scan 示例：
 \`\`\`kotlin
 %use archguard
 
-scan("Backend")
+scan("Backend").create()
 \`\`\`
 
 Linter 示例（待实现）：
