@@ -5,7 +5,7 @@ RUN apk add --update alpine-sdk python3
 COPY package*.json nginx.conf ./
 RUN yarn install
 COPY . .
-RUN npx browserslist@latest --update-db
+# RUN npx browserslist@latest --update-db
 RUN export NODE_OPTIONS=--max_old_space_size=8192 && yarn build
 CMD ["yarn", "run"]
 
