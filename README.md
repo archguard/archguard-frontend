@@ -19,7 +19,7 @@ Node.js version: 16.x
 - [ ] paragraph dispatch server
   - [ ] graph dsl to graph
   - [x] model to table
-  - [ ] multiple notebook run
+  - [X] multiple notebook run
   - [x] notebook to server
   - [x] notebook return output to graph
 - Connection 
@@ -34,6 +34,7 @@ Node.js version: 16.x
   - Cytoscape for **Class**, **Method** dependencies analysis
   - D3.js for custom layout in Dashboard
   - bizcharts for badsmell overview
+  - Mermaid for Graph DSL
 - lint：ESLint
 - build tool：yarn
 
