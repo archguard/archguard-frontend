@@ -4,7 +4,7 @@ import { IKeyboardEvent } from "monaco-editor";
 import { Button, notification, Tooltip } from "antd";
 import { CaretRightOutlined, StopOutlined } from "@ant-design/icons";
 import styles from "./CellEditor.less";
-import { ReplResult } from "@/types/archdoc";
+import { ReplResult } from "@/types/ascode";
 import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispatcher";
 import { addDslCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/autoCompletion";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";

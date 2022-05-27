@@ -41,3 +41,12 @@ export enum GraphType {
   FLOWCHART = "flowchart",
   ARCHDOC = "archdoc",
 }
+
+export interface ScanModel {
+  name: string;
+  branch: string;
+  features: string[];
+  languages: string[];
+  specs: string[];
+  types: string[];
+}

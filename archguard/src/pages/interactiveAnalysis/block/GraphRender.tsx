@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { FlowChart } from "@/pages/interactiveAnalysis/block/graph/FlowChart";
-import { GraphType, ReplResult } from "@/types/archdoc";
+import { GraphType, ReplResult } from "@/types/ascode";
 import { Select } from "antd";
 import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
 

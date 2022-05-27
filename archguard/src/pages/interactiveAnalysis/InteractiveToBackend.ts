@@ -1,4 +1,5 @@
 import { createRepos, createScan } from "@/api/ascode/ascode";
+import { ScanModel } from "@/types/ascode";
 
 export interface Repo {
   name: string;
@@ -10,7 +11,7 @@ export const BackendAction = {
   createRepos(repos: Repo[]): Promise<any> {
     return createRepos(repos)
   },
-  createScan(data: object): Promise<any> {
+  createScan(data: ScanModel): Promise<any> {
     return createScan(data)
   },
 };

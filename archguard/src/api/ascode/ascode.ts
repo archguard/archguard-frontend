@@ -1,4 +1,5 @@
 import axios from "../axios";
+import { ScanModel } from "@/types/ascode";
 
 interface Repository {
   name: string;
@@ -14,7 +15,7 @@ export function createRepos(repos: Repository[]) {
   });
 }
 
-export function createScan(data) {
+export function createScan(data: ScanModel) {
   return axios<any>({
     url: `/api/ascode/scan`,
     method: "PUT",

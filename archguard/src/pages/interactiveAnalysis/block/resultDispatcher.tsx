@@ -1,4 +1,4 @@
-import { ActionType, ErrorContent, MsgType, ReplResult } from "@/types/archdoc";
+import { ActionType, ErrorContent, MsgType, ReplResult } from "@/types/ascode";
 import React from "react";
 import { Typography } from "antd";
 import { BlockTable } from "@/pages/interactiveAnalysis/block/components/BlockTable";
