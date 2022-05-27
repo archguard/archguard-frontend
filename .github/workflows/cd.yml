@@ -39,7 +39,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: vendor.zip
+          file: archguard-frontend.zip
           tag: ${{ github.ref }}
 
       - name: Log in to Docker Hub
