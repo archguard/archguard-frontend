@@ -1,4 +1,4 @@
-import mermaidWrapper from "@/pages/interactiveAnalysis/block/mermaid/mermaidWrapper";
+import mermaidWrapper from "@/pages/interactiveAnalysis/block/graph/mermaid/mermaidWrapper";
 import React from "react";
 
 export function FlowChart(dataStr: string) {

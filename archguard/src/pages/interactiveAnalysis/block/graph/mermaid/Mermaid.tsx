@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import mermaid from "mermaid";
 import { Item, Menu, useContextMenu } from "react-contexify";
 import "react-contexify/dist/ReactContexify.css";
-import mermaidExport from "@/pages/interactiveAnalysis/block/mermaid/mermaidExport";
+import mermaidExport from "@/pages/interactiveAnalysis/block/graph/mermaid/mermaidExport";
 
 const MENU_ID = "mermaid-menu";
 

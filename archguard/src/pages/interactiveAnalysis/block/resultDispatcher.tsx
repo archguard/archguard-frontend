@@ -6,7 +6,7 @@ import { GraphRender } from "@/pages/interactiveAnalysis/block/GraphRender";
 import {
   BackendActionView,
   BackendActionType,
-} from "@/pages/interactiveAnalysis/block/components/BackendActionView";
+} from "@/pages/interactiveAnalysis/block/BackendActionView";
 import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
 
