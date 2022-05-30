@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
-import { ExportOutlined, ForwardOutlined, StopOutlined } from "@ant-design/icons";
+import { ExportOutlined, ForwardOutlined, SaveOutlined, StopOutlined } from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
 import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 import {
@@ -10,6 +10,7 @@ import {
 import { webSocket } from "rxjs/webSocket";
 import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
+import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
 
 const value = `
 
@@ -83,6 +84,7 @@ linter("Backend").layer()
 
 function InteractiveAnalysis() {
   const [isRunning, setIsRunning] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
   const subject = webSocket(`ws://${host}/ascode`);
   const replService = new ReplService(subject as WebSocketSubject<any>);
@@ -108,6 +110,14 @@ function InteractiveAnalysis() {
     exportDoc(content, "archdoc", "md");
   }, [value]);
 
+  const onClickSave = useCallback(() => {
+    setIsSaving(true)
+    console.log(value);
+    BackendAction.saveCode(value).then(r => {
+      setIsSaving(false)
+    });
+  }, [value, setIsSaving]);
+
   return (
     <div>
       <div className={"toolbar"}>
@@ -124,6 +134,9 @@ function InteractiveAnalysis() {
           )}
           <Tooltip title="Export">
             <Button type="primary" icon={<ExportOutlined />} onClick={onClickExport} />
+          </Tooltip>
+          <Tooltip title="Save">
+            <Button type="primary" icon={<SaveOutlined />} onClick={onClickSave} disabled={isSaving}/>
           </Tooltip>
         </Space>
       </div>

@@ -22,3 +22,13 @@ export function createScan(data: ScanModel) {
     data,
   });
 }
+
+export function saveCode(id: number, code: String) {
+  return axios<any>({
+    url: `/api/ascode/dsl-code/${id}`,
+    method: "PUT",
+    data: {
+      code: code
+    },
+  });
+}
