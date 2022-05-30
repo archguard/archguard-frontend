@@ -2,11 +2,21 @@ import { Monaco } from "@monaco-editor/react";
 
 export const dslCompletion = (monaco: Monaco, range) => [
   {
+    label: "\"archguard\"",
+    kind: monaco.languages.CompletionItemKind.Function,
+    documentation: "Use ArchGuard",
+    insertText: "%use archguard\n\n",
+    insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+    range: range
+  },
+  {
     label: "\"repos\"",
     kind: monaco.languages.CompletionItemKind.Function,
     documentation: "Describe repos",
     insertText:
-      "repos {\n    repo(name = \"${1:name}\", language = \"${2:java}\", scmUrl = \"${3:scmUrl}\")\n}",
+      `repos {
+    repo(name = "$\{1:name}", language = "$\{2:java}", scmUrl = "$\{3:scmUrl}")
+}`,
     insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
     range: range
   },
@@ -23,7 +33,10 @@ export const dslCompletion = (monaco: Monaco, range) => [
     kind: monaco.languages.CompletionItemKind.Function,
     documentation: "Describe create scan",
     insertText:
-      "scan(\"${1:Backend}\") {\n    languages(\"${2:Kotlin}\")\n    specs(\"${3:datamap}\", \"${4:apicalls}\")\n}",
+      `scan("$\{1:Backend}") {
+    languages("$\{2:Kotlin}")
+    specs("$\{3:datamap}", "$\{4:apicalls}")
+}`,
     insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
     range: range
   },
