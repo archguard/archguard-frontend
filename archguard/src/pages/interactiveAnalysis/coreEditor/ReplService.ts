@@ -23,7 +23,8 @@ export class ReplService {
           sub.next(msg);
         }
 
-        if (that.runningCodeIds) {
+        let isRunAll = that.runningCodeIds.length > 0;
+        if (isRunAll) {
           that.runningCodeIds.forEach((item, index) => {
             if (item == msg.id) that.runningCodeIds.splice(index, 1);
           });
