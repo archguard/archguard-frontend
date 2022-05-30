@@ -89,7 +89,7 @@ function InteractiveAnalysis() {
   const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
   const subject = webSocket(`ws://${host}/ascode`);
   const replService = new ReplService(subject as WebSocketSubject<any>);
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState('' as string);
 
   const context: InteractiveAnalysisContext = {
     theme: InteractiveAnalysisTheme.WHITE,
@@ -98,7 +98,9 @@ function InteractiveAnalysis() {
 
   useEffect(() => {
     BackendAction.loadCode().then((code) => {
-      // setValue(code.content);
+      setValue(code.content);
+    }).catch(() => {
+      setValue(defaultValue)
     }).finally(() => {
       console.log('done');
     })
@@ -128,7 +130,6 @@ function InteractiveAnalysis() {
   }, [value, setIsSaving]);
 
   const changeValue = useCallback((text: string) => {
-    console.log(text);
     setValue(text);
   }, [setValue]);
 
@@ -154,7 +155,7 @@ function InteractiveAnalysis() {
           </Tooltip>
         </Space>
       </div>
-      <CoreEditor value={value} context={context} onChange={changeValue}/>
+      { value.length > 0 && <CoreEditor value={value} context={context} onChange={changeValue}/> }
     </div>
   );
 }
