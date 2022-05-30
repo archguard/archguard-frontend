@@ -11,7 +11,6 @@ import { webSocket } from "rxjs/webSocket";
 import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
-import { useSetState } from "react-use";
 
 const defaultValue = `
 
@@ -88,12 +87,13 @@ function InteractiveAnalysis() {
   const [isSaving, setIsSaving] = useState(false);
   const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
   const subject = webSocket(`ws://${host}/ascode`);
-  const replService = new ReplService(subject as WebSocketSubject<any>);
   const [value, setValue] = useState('' as string);
+
+  const [replService] = useState(new ReplService(subject as WebSocketSubject<any>));
 
   const context: InteractiveAnalysisContext = {
     theme: InteractiveAnalysisTheme.WHITE,
-    replService,
+    replService: replService,
   };
 
   useEffect(() => {
@@ -106,7 +106,7 @@ function InteractiveAnalysis() {
     }).catch(() => {
       setValue(defaultValue);
     }).finally(() => {
-      console.log('done');
+
     })
   }, [setValue])
 
@@ -116,10 +116,14 @@ function InteractiveAnalysis() {
       next() {
         setIsRunning(false);
       },
-      error() {},
-      complete() {},
+      error(err) {
+        console.error(err)
+      },
+      complete() {
+        console.error('runAllCell: complete')
+      },
     });
-  }, [setIsRunning]);
+  }, [setIsRunning, replService]);
 
   const onClickExport = useCallback(() => {
     let content = value.replaceAll("\\\n", "\n");

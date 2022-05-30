@@ -7,9 +7,7 @@ import styles from "./CellEditor.less";
 import { ReplResult } from "@/types/ascode";
 import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispatcher";
 import { addAutoCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/autoCompletion";
-import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
-import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
 
 export const LANGUAGES = {
   none: "None", // additional entry to disable highlighting
@@ -55,6 +53,7 @@ function CellEditor(props: BlockEditorProps) {
   let { id, subject } = props.context.replService.register();
 
   useEffect(() => {
+    console.log(code);
     if (code != null) {
       props.context.replService.saveCode(code, id);
     }

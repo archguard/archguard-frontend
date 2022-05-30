@@ -1,5 +1,5 @@
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
-import { Subject, from } from "rxjs";
+import { Subject } from "rxjs";
 import { ReplResult } from "@/types/ascode";
 
 export class ReplService {
