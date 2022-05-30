@@ -123,14 +123,21 @@ function InteractiveAnalysis() {
   }, [value]);
 
   const onClickSave = useCallback(() => {
-    setIsSaving(true)
-    BackendAction.saveCode(value).then(r => {
-      setIsSaving(false)
+    setIsSaving(true);
+    BackendAction.saveCode(value).then((r) => {
+      setIsSaving(false);
     });
   }, [value, setIsSaving]);
 
   const changeValue = useCallback((text: string) => {
     setValue(text);
+  }, [setValue]);
+
+  const onSave = useCallback((text: string) => {
+    setIsSaving(true);
+    BackendAction.saveCode(value).then((r) => {
+      setIsSaving(false);
+    });
   }, [setValue]);
 
   return (
@@ -155,7 +162,7 @@ function InteractiveAnalysis() {
           </Tooltip>
         </Space>
       </div>
-      { value.length > 0 && <CoreEditor value={value} context={context} onChange={changeValue}/> }
+      { value.length > 0 && <CoreEditor value={value} context={context} onSave={onSave} onChange={changeValue}/> }
     </div>
   );
 }

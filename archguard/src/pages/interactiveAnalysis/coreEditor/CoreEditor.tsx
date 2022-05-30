@@ -9,6 +9,7 @@ interface CoreEditorProps {
   value: string;
   context: InteractiveAnalysisContext;
   onChange: (value: string) => any;
+  onSave: (value: string) => any;
 }
 
 function CoreEditor(props: CoreEditorProps) {
@@ -21,9 +22,21 @@ function CoreEditor(props: CoreEditorProps) {
     return [fenceExtension, blockExtension];
   }
 
-  const onChange = useCallback((value: () => string) => {
-    props.onChange(value());
-  }, [setValue]);
+  const onChange = useCallback(
+    (value: () => string) => {
+      let val = value();
+      props.onChange(val);
+      setValue(val);
+    },
+    [setValue],
+  );
+
+  const onSave = useCallback(
+    ({ done: boolean }) => {
+      props.onSave(value);
+    },
+    [value],
+  );
 
   return (
     <div>
@@ -31,7 +44,8 @@ function CoreEditor(props: CoreEditorProps) {
         disableExtensions={["code_block", "code_fence"]}
         extensions={initExtensions()}
         onChange={onChange}
-        value={value}
+        onSave={onSave}
+        defaultValue={value}
       />
     </div>
   );
