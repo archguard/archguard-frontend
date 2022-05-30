@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
 import { ExportOutlined, ForwardOutlined, SaveOutlined, StopOutlined } from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
@@ -11,8 +11,9 @@ import { webSocket } from "rxjs/webSocket";
 import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
+import { useSetState } from "react-use";
 
-const value = `
+const defaultValue = `
 
 ## 目标架构：Architecture DSL
 
@@ -88,11 +89,20 @@ function InteractiveAnalysis() {
   const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
   const subject = webSocket(`ws://${host}/ascode`);
   const replService = new ReplService(subject as WebSocketSubject<any>);
+  const [value, setValue] = useState(defaultValue);
 
   const context: InteractiveAnalysisContext = {
     theme: InteractiveAnalysisTheme.WHITE,
     replService,
   };
+
+  useEffect(() => {
+    BackendAction.loadCode().then((code) => {
+      // setValue(code.content);
+    }).finally(() => {
+      console.log('done');
+    })
+  }, [setValue])
 
   const runAllCell = useCallback(() => {
     setIsRunning(true);
@@ -112,11 +122,15 @@ function InteractiveAnalysis() {
 
   const onClickSave = useCallback(() => {
     setIsSaving(true)
-    console.log(value);
     BackendAction.saveCode(value).then(r => {
       setIsSaving(false)
     });
   }, [value, setIsSaving]);
+
+  const changeValue = useCallback((text: string) => {
+    console.log(text);
+    setValue(text);
+  }, [setValue]);
 
   return (
     <div>
@@ -140,7 +154,7 @@ function InteractiveAnalysis() {
           </Tooltip>
         </Space>
       </div>
-      <CoreEditor value={value} context={context} />
+      <CoreEditor value={value} context={context} onChange={changeValue}/>
     </div>
   );
 }

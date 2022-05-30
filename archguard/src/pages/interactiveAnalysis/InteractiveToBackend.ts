@@ -1,4 +1,4 @@
-import { createRepos, createScan, saveCode } from "@/api/ascode/ascode";
+import { createRepos, createScan, saveCode, getCode } from "@/api/ascode/ascode";
 import { ScanModel } from "@/types/ascode";
 
 export interface Repo {
@@ -16,5 +16,8 @@ export const BackendAction = {
   },
   saveCode(code: String): Promise<any> {
     return saveCode(1, code);
+  },
+  loadCode(): Promise<any> {
+    return getCode(1);
   },
 };

@@ -32,3 +32,10 @@ export function saveCode(id: number, code: String) {
     },
   });
 }
+
+export function getCode(id: number) {
+  return axios<any>({
+    url: `/api/ascode/dsl-code/${id}`,
+    method: "GET"
+  });
+}
