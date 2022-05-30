@@ -98,9 +98,13 @@ function InteractiveAnalysis() {
 
   useEffect(() => {
     BackendAction.loadCode().then((code) => {
-      setValue(code.content);
+      if (code.content && code.content.length > 0) {
+        setValue(code.content);
+      } else {
+        setValue(defaultValue);
+      }
     }).catch(() => {
-      setValue(defaultValue)
+      setValue(defaultValue);
     }).finally(() => {
       console.log('done');
     })
@@ -135,7 +139,7 @@ function InteractiveAnalysis() {
 
   const onSave = useCallback((text: string) => {
     setIsSaving(true);
-    BackendAction.saveCode(value).then((r) => {
+    BackendAction.saveCode(text).then((r) => {
       setIsSaving(false);
     });
   }, [setValue]);
