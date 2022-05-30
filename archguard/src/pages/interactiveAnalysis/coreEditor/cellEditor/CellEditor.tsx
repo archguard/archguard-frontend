@@ -6,7 +6,7 @@ import { CaretRightOutlined, StopOutlined } from "@ant-design/icons";
 import styles from "./CellEditor.less";
 import { ReplResult } from "@/types/ascode";
 import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispatcher";
-import { addDslCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/autoCompletion";
+import { addAutoCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/autoCompletion";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
 import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
@@ -98,7 +98,7 @@ function CellEditor(props: BlockEditorProps) {
       }
     });
 
-    addDslCompletion()
+    addAutoCompletion()
   }
 
   const handleEditorDidMount = useCallback((editor: Editor) => {
