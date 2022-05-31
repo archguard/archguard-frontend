@@ -1,7 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
 import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
-import { ExportOutlined, ForwardOutlined, SaveOutlined, StopOutlined, ImportOutlined } from "@ant-design/icons";
+import {
+  ExportOutlined,
+  ForwardOutlined,
+  ImportOutlined,
+  SaveOutlined,
+  StopOutlined,
+} from "@ant-design/icons";
 import { Button, Modal, Space, Tooltip } from "antd";
+import RichMarkdownEditor from "rich-markdown-editor";
+import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
+import { unified } from "unified";
+import copy from "copy-to-clipboard";
+
 import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 import {
   InteractiveAnalysisContext,
@@ -11,7 +23,6 @@ import { webSocket } from "rxjs/webSocket";
 import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
-import RichMarkdownEditor from "rich-markdown-editor";
 
 const defaultValue = `
 
@@ -82,6 +93,53 @@ linter("Backend").layer()
 \`\`\`
 
   `;
+
+function markdownToDsl(rootnode: Node) {
+  let repos = [];
+  if (rootnode["children"]) {
+    for (let child of rootnode["children"]) {
+      switch (child.type) {
+        case "table":
+          // eslint-disable-next-line no-case-declarations
+          const table = [];
+          for (let row of child["children"]) {
+            let newRow = [];
+            for (let cell of row["children"]) {
+              console.log(cell);
+              let text = "";
+              let firstEl = cell["children"][0];
+              switch (firstEl.type) {
+                case "text":
+                  text = firstEl.value;
+                  break;
+                case "link":
+                  text = firstEl.url;
+                  break;
+              }
+
+              newRow.push(text);
+            }
+            table.push(newRow);
+          }
+
+          // eslint-disable-next-line no-case-declarations
+          const header = table.shift();
+          for (let row of table) {
+            let repoEl = [];
+            for (let index in row) {
+              repoEl.push(`${header[index]}="${row[index]}"`);
+            }
+            repos.push("repo(" + repoEl.join(",") + ")");
+          }
+          break;
+        default:
+          console.log(rootnode.type);
+      }
+    }
+  }
+
+  return repos;
+}
 
 function InteractiveAnalysis() {
   const [isRunning, setIsRunning] = useState(false);
@@ -157,11 +215,24 @@ function InteractiveAnalysis() {
 
   const changeImportValue = useCallback((value: () => string) => {
     let val = value();
-    setImportText(val)
+    setImportText(val.replaceAll("\\\n", "\n"));
   }, []);
 
   const copyToDsl = useCallback(() =>{
     setVisible(false)
+
+    let rootnode = unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .parse(importText);
+
+    let repos = markdownToDsl(rootnode as Node);
+    let dsl = `repos {
+  ${repos.join("\n")}
+}`;
+
+    console.log(dsl)
+    copy(dsl)
 
   }, [importText, setVisible])
 

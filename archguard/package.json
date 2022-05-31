@@ -38,8 +38,11 @@
     "react-markdown": "^8.0.0",
     "react-router-dom": "^5.2.0",
     "react-use": "^15.3.2",
+    "remark-gfm": "^3.0.1",
+    "remark-parse": "^10.0.1",
     "rich-markdown-editor": "^11.21.3",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "unified": "^10.1.2"
   },
   "scripts": {
     "start": "umi dev",
@@ -64,6 +67,7 @@
     "@types/d3": "^7.1.0",
     "@types/echarts": "^4.6.3",
     "@types/lodash": "^4.14.179",
+    "@types/mdast": "^3.0.10",
     "@types/mermaid": "^8.2.9",
     "@types/react": "^17.x",
     "@types/react-cytoscapejs": "^1.2.2",
