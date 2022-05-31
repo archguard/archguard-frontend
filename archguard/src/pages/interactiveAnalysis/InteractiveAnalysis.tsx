@@ -9,11 +9,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Modal, Space, Tooltip } from "antd";
 import RichMarkdownEditor from "rich-markdown-editor";
-import remarkParse from "remark-parse";
-import remarkGfm from "remark-gfm";
-import { unified } from "unified";
 import copy from "copy-to-clipboard";
-import { Node } from "@types/unist"
 
 import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 import {
@@ -25,7 +21,12 @@ import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService"
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
 import styles from "./InteractiveAnalysis.less";
-import { markdownToDsl } from "@/pages/interactiveAnalysis/MarkdownToDsl";
+import { markdownToDsl } from "@/pages/interactiveAnalysis/helper/markdownToDsl";
+
+let sampleImportCode = `| name | scmUrl | language | branch |
+|-------|-------|---------|-------|
+| DDD Mono | https://github.com/archguard/ddd-monolithic-code-sample | Java | master |
+`;
 
 const defaultValue = `
 
@@ -177,14 +178,8 @@ function InteractiveAnalysis() {
   const copyToDsl = useCallback(() =>{
     setVisible(false)
 
-    let rootnode = unified()
-      .use(remarkParse)
-      .use(remarkGfm)
-      .parse(importText);
-
-    let repos = markdownToDsl(rootnode as Node);
     let dsl = `repos {
-  ${repos.join("\n")}
+  ${markdownToDsl(importText).join("\n")}
 }`;
 
     console.log(dsl)
@@ -245,10 +240,7 @@ function InteractiveAnalysis() {
       >
         <div className={styles.popupEditor}>
           <RichMarkdownEditor
-            defaultValue={`| name | scmUrl | language | branch |
-|-------|-------|---------|-------|
-| DDD Mono | https://github.com/archguard/ddd-monolithic-code-sample | Java | master |
-`}
+            defaultValue={sampleImportCode}
             onChange={changeImportValue}
           />
         </div>

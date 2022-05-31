@@ -1,10 +1,18 @@
-import { Node } from "@types/unist"
 import { Table } from "mdast";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkGfm from "remark-gfm";
 
-export function markdownToDsl(rootnode: Node) {
+// todo: add tests
+export function markdownToDsl(text: string) {
+  let rootNode = unified()
+    .use(remarkParse)
+    .use(remarkGfm)
+    .parse(text);
+
   let repos = [];
-  if (rootnode["children"]) {
-    for (let child of rootnode["children"]) {
+  if (rootNode["children"]) {
+    for (let child of rootNode["children"]) {
       switch (child.type) {
         case "table":
           // eslint-disable-next-line no-case-declarations
@@ -49,7 +57,7 @@ export function markdownToDsl(rootnode: Node) {
           }
           break;
         default:
-          console.log(rootnode.type);
+          console.log(rootNode.type);
       }
     }
   }
