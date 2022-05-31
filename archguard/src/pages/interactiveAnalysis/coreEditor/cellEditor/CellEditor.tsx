@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Editor, { Monaco } from "@monaco-editor/react";
 import { IKeyboardEvent } from "monaco-editor";
-import { Button, notification, Tooltip } from "antd";
+import { Button, Tooltip } from "antd";
 import { CaretRightOutlined, StopOutlined } from "@ant-design/icons";
 import styles from "./CellEditor.less";
 import { ReplResult } from "@/types/ascode";

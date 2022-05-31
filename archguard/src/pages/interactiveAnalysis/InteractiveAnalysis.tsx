@@ -23,6 +23,7 @@ import { webSocket } from "rxjs/webSocket";
 import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
+import styles from "./InteractiveAnalysis.less";
 
 const defaultValue = `
 
@@ -105,9 +106,16 @@ function markdownToDsl(rootnode: Node) {
           for (let row of child["children"]) {
             let newRow = [];
             for (let cell of row["children"]) {
-              console.log(cell);
               let text = "";
+              if (!cell["children"]) {
+                continue
+              }
+
               let firstEl = cell["children"][0];
+              if (!firstEl) {
+                continue;
+              }
+
               switch (firstEl.type) {
                 case "text":
                   text = firstEl.value;
@@ -242,7 +250,12 @@ function InteractiveAnalysis() {
         <Space direction="horizontal" size="middle">
           {!isRunning && (
             <Tooltip title="Run all">
-              <Button type="primary" icon={<ForwardOutlined />} onClick={runAllCell} disabled={isRunning} />
+              <Button
+                type="primary"
+                icon={<ForwardOutlined />}
+                onClick={runAllCell}
+                disabled={isRunning}
+              />
             </Tooltip>
           )}
           {isRunning && (
@@ -254,33 +267,43 @@ function InteractiveAnalysis() {
             <Button type="primary" icon={<ExportOutlined />} onClick={onClickExport} />
           </Tooltip>
           <Tooltip title="Save">
-            <Button type="primary" icon={<SaveOutlined />} onClick={onClickSave} disabled={isSaving}/>
+            <Button
+              type="primary"
+              icon={<SaveOutlined />}
+              onClick={onClickSave}
+              disabled={isSaving}
+            />
           </Tooltip>
           <Tooltip title="Multiple System Import">
             <Button type="primary" icon={<ImportOutlined />} onClick={onClickImport} />
           </Tooltip>
         </Space>
       </div>
-      { value.length > 0 && <CoreEditor value={value} context={context} onSave={onSave} onChange={changeValue}/> }
+      {value.length > 0 && (
+        <CoreEditor value={value} context={context} onSave={onSave} onChange={changeValue} />
+      )}
 
       <Modal
         title="Import systems"
         centered
         visible={visible}
+        maskClosable={false}
         onOk={copyToDsl}
         okText={"to DSL"}
         onCancel={() => setVisible(false)}
         width={1000}
         height={500}
+        zIndex={100}
       >
-        <RichMarkdownEditor
-          defaultValue={
-`| name | scmUrl | language | branch |
+        <div className={styles.popupEditor}>
+          <RichMarkdownEditor
+            defaultValue={`| name | scmUrl | language | branch |
 |-------|-------|---------|-------|
 | DDD Mono | https://github.com/archguard/ddd-monolithic-code-sample | Java | master |
 `}
-          onChange={changeImportValue}
-        />
+            onChange={changeImportValue}
+          />
+        </div>
       </Modal>
     </div>
   );
