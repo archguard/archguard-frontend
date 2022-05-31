@@ -53,7 +53,6 @@ function CellEditor(props: BlockEditorProps) {
   let { id, subject } = props.context.replService.register();
 
   useEffect(() => {
-    console.log(code);
     if (code != null) {
       props.context.replService.saveCode(code, id);
     }
