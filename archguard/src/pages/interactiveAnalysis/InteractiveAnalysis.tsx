@@ -13,6 +13,7 @@ import remarkParse from "remark-parse";
 import remarkGfm from "remark-gfm";
 import { unified } from "unified";
 import copy from "copy-to-clipboard";
+import { Node } from "@types/unist"
 
 import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 import {
@@ -24,6 +25,7 @@ import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService"
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
 import styles from "./InteractiveAnalysis.less";
+import { markdownToDsl } from "@/pages/interactiveAnalysis/MarkdownToDsl";
 
 const defaultValue = `
 
@@ -94,60 +96,6 @@ linter("Backend").layer()
 \`\`\`
 
   `;
-
-function markdownToDsl(rootnode: Node) {
-  let repos = [];
-  if (rootnode["children"]) {
-    for (let child of rootnode["children"]) {
-      switch (child.type) {
-        case "table":
-          // eslint-disable-next-line no-case-declarations
-          const table = [];
-          for (let row of child["children"]) {
-            let newRow = [];
-            for (let cell of row["children"]) {
-              let text = "";
-              if (!cell["children"]) {
-                continue
-              }
-
-              let firstEl = cell["children"][0];
-              if (!firstEl) {
-                continue;
-              }
-
-              switch (firstEl.type) {
-                case "text":
-                  text = firstEl.value;
-                  break;
-                case "link":
-                  text = firstEl.url;
-                  break;
-              }
-
-              newRow.push(text);
-            }
-            table.push(newRow);
-          }
-
-          // eslint-disable-next-line no-case-declarations
-          const header = table.shift();
-          for (let row of table) {
-            let repoEl = [];
-            for (let index in row) {
-              repoEl.push(`${header[index]}="${row[index]}"`);
-            }
-            repos.push("repo(" + repoEl.join(",") + ")");
-          }
-          break;
-        default:
-          console.log(rootnode.type);
-      }
-    }
-  }
-
-  return repos;
-}
 
 function InteractiveAnalysis() {
   const [isRunning, setIsRunning] = useState(false);
