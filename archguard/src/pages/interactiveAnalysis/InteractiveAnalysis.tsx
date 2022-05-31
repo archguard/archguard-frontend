@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
-import { ExportOutlined, ForwardOutlined, SaveOutlined, StopOutlined } from "@ant-design/icons";
-import { Button, Space, Tooltip } from "antd";
+import { ExportOutlined, ForwardOutlined, SaveOutlined, StopOutlined, ImportOutlined } from "@ant-design/icons";
+import { Button, Modal, Space, Tooltip } from "antd";
 import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
 import {
   InteractiveAnalysisContext,
@@ -11,6 +11,7 @@ import { webSocket } from "rxjs/webSocket";
 import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
+import RichMarkdownEditor from "rich-markdown-editor";
 
 const defaultValue = `
 
@@ -88,6 +89,8 @@ function InteractiveAnalysis() {
   const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
   const subject = webSocket(`ws://${host}/ascode`);
   const [value, setValue] = useState('' as string);
+  const [visible, setVisible] = useState(false);
+  const [importText, setImportText] = useState("");
 
   const [replService] = useState(new ReplService(subject as WebSocketSubject<any>));
 
@@ -148,6 +151,20 @@ function InteractiveAnalysis() {
     });
   }, [setValue]);
 
+  const onClickImport = useCallback(() => {
+    setVisible(true)
+  }, [setVisible]);
+
+  const changeImportValue = useCallback((value: () => string) => {
+    let val = value();
+    setImportText(val)
+  }, []);
+
+  const copyToDsl = useCallback(() =>{
+    setVisible(false)
+
+  }, [importText, setVisible])
+
   return (
     <div>
       <div className={"toolbar"}>
@@ -168,9 +185,32 @@ function InteractiveAnalysis() {
           <Tooltip title="Save">
             <Button type="primary" icon={<SaveOutlined />} onClick={onClickSave} disabled={isSaving}/>
           </Tooltip>
+          <Tooltip title="Multiple System Import">
+            <Button type="primary" icon={<ImportOutlined />} onClick={onClickImport} />
+          </Tooltip>
         </Space>
       </div>
       { value.length > 0 && <CoreEditor value={value} context={context} onSave={onSave} onChange={changeValue}/> }
+
+      <Modal
+        title="Import systems"
+        centered
+        visible={visible}
+        onOk={copyToDsl}
+        okText={"to DSL"}
+        onCancel={() => setVisible(false)}
+        width={1000}
+        height={500}
+      >
+        <RichMarkdownEditor
+          defaultValue={
+`| name | scmUrl | language | branch |
+|-------|-------|---------|-------|
+| DDD Mono | https://github.com/archguard/ddd-monolithic-code-sample | Java | master |
+`}
+          onChange={changeImportValue}
+        />
+      </Modal>
     </div>
   );
 }
