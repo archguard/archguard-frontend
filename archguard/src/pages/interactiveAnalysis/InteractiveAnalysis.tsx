@@ -182,9 +182,7 @@ function InteractiveAnalysis() {
   ${markdownToDsl(importText).join("\n")}
 }`;
 
-    console.log(dsl)
     copy(dsl)
-
   }, [importText, setVisible])
 
   return (
@@ -227,7 +225,7 @@ function InteractiveAnalysis() {
       )}
 
       <Modal
-        title="Import systems"
+        title="Import Systems (table Only)"
         centered
         visible={visible}
         maskClosable={false}
