@@ -22,6 +22,7 @@ import DatabaseMap from '../data/DatabaseMap';
 import ChangeDetect from "@/pages/change/ChangeDetect";
 import InteractiveAnalysis from '../interactiveAnalysis/InteractiveAnalysis';
 import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
+import newGithubIssueUrl from "new-github-issue-url";
 
 interface UserProfile {
   name?: string;
@@ -132,8 +133,29 @@ const Home = () => {
           .reduce((result: any, word) => {
             return result.length ? [...result, <br/>, word] : [word];
           }, []),
-        onCancel: () => {
-          window.open("https://github.com/archguard/archguard/issues/new?assignees=&labels=&template=bug_report.md&title=")
+        onCancel: async () => {
+          const url = newGithubIssueUrl({
+            user: 'archguard',
+            repo: 'archguard',
+            body: `
+**System info**
+
+- language: ${systemInfo.language}
+- codePath: ${systemInfo.codePath}
+- repoType: ${systemInfo.repoType}
+- badSmellThresholdSuiteId: ${systemInfo.badSmellThresholdSuiteId}
+
+**Log**
+\`\`\`
+${log}
+\`\`\`
+
+`,
+            template: 'bug_report.md',
+            title: 'Scan failure:'
+          });
+
+          await open(url);
         },
         centered: true
       });
