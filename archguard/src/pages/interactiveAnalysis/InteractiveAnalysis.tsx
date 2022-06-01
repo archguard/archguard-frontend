@@ -179,7 +179,7 @@ function InteractiveAnalysis() {
     setVisible(false)
 
     let dsl = `repos {
-  ${markdownToDsl(importText).join("\n")}
+    ${markdownToDsl(importText).join("\n    ")}
 }`;
 
     copy(dsl)
@@ -225,12 +225,12 @@ function InteractiveAnalysis() {
       )}
 
       <Modal
-        title="Import Systems (table Only)"
+        title="Import Systems (Table Only): Paste or Edit you data by table, then copy"
         centered
         visible={visible}
         maskClosable={false}
         onOk={copyToDsl}
-        okText={"to DSL"}
+        okText={"to DSL and Copy"}
         onCancel={() => setVisible(false)}
         width={1000}
         height={500}
