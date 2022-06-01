@@ -1,4 +1,123 @@
-# [](https://github.com/archguard/archguard-frontend/compare/v1.6.2...v) (2022-04-23)
+# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.13...v) (2022-06-01)
+
+
+### Bug Fixes
+
+* fix copy for dsl issues [#9](https://github.com/archguard/archguard-frontend/issues/9) ([404a740](https://github.com/archguard/archguard-frontend/commit/404a740287c627e064bf55b750a38267e8052577))
+* fix deps version error issue ([0946d79](https://github.com/archguard/archguard-frontend/commit/0946d792f091714e63cebe8b38439d1de0dcddc1))
+
+
+### Features
+
+* add convert to dsl [#9](https://github.com/archguard/archguard-frontend/issues/9) ([cf6becf](https://github.com/archguard/archguard-frontend/commit/cf6becfdd2aa9322eb801e6184a6899bb45bb0cf))
+* add handle for empty cell [#9](https://github.com/archguard/archguard-frontend/issues/9) ([6438c33](https://github.com/archguard/archguard-frontend/commit/6438c33e7888c0072d8a790c56c21581590492cd))
+* add import ui for [#9](https://github.com/archguard/archguard-frontend/issues/9) ([769d648](https://github.com/archguard/archguard-frontend/commit/769d648c28883b7b5cc6c632ba04d466c723a0ca))
+* add log handle for new issues ([f4de3ff](https://github.com/archguard/archguard-frontend/commit/f4de3ffdeb6b6410b10b4d76b7f956af1db90265))
+
+
+
+# [2.0.0-alpha.13](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.11...v2.0.0-alpha.13) (2022-05-30)
+
+
+### Bug Fixes
+
+* fix editor typos issues [#6](https://github.com/archguard/archguard-frontend/issues/6) ([f5990a8](https://github.com/archguard/archguard-frontend/commit/f5990a8eb5b48bcc3a1da0f2222896bd58a72604))
+* fix load data issues ([485a8b5](https://github.com/archguard/archguard-frontend/commit/485a8b5e1f5f48b5ee882a20e9efa9c46550208f))
+* fix run all issues for [#6](https://github.com/archguard/archguard-frontend/issues/6) ([77233ab](https://github.com/archguard/archguard-frontend/commit/77233abba0e86874abc5a735e99af93340a5d801))
+
+
+### Features
+
+* add auto complete for archguard [#6](https://github.com/archguard/archguard-frontend/issues/6) ([8596f31](https://github.com/archguard/archguard-frontend/commit/8596f319a7e4fbd380d2cc232b0c2fec64b43256))
+* add get code support [#6](https://github.com/archguard/archguard-frontend/issues/6) ([7178837](https://github.com/archguard/archguard-frontend/commit/71788373a2cb8b10676e54a23e436a17306b16d4))
+* add onsave events ([c5fad9b](https://github.com/archguard/archguard-frontend/commit/c5fad9b69f083b878de6a2807edfeda4ad511004))
+* init practises to project ([2952c72](https://github.com/archguard/archguard-frontend/commit/2952c72a170f15000d1d86244b6d2596d974f2fa))
+* init save code funcs ([9e055f0](https://github.com/archguard/archguard-frontend/commit/9e055f0423c754ed8a801764d47f3c44d839d7b5))
+
+
+
+# [2.0.0-alpha.11](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.10...v2.0.0-alpha.11) (2022-05-27)
+
+
+### Reverts
+
+* Revert "build: format nginx conf" ([38681f0](https://github.com/archguard/archguard-frontend/commit/38681f097bbc529ee2285421cd44203eedfc0efb))
+
+
+
+# [2.0.0-alpha.10](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.9...v2.0.0-alpha.10) (2022-05-27)
+
+
+
+# [2.0.0-alpha.9](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.8...v2.0.0-alpha.9) (2022-05-27)
+
+
+
+# [2.0.0-alpha.8](https://github.com/archguard/archguard-frontend/compare/v1.6.2...v2.0.0-alpha.8) (2022-05-27)
+
+
+### Bug Fixes
+
+* **archdoc:** fix code not pass to parent issues ([0924cf9](https://github.com/archguard/archguard-frontend/commit/0924cf9a370e485bf64084b67008295adeeea127))
+* disable alert ([80399ee](https://github.com/archguard/archguard-frontend/commit/80399eefab8a960f3bd27fc2544332d4106f7bca))
+* fix data issues ([e119c2d](https://github.com/archguard/archguard-frontend/commit/e119c2d1ff0a943647fe9198f080f5ada9476ad3))
+* fix deps isssues ([b9b90e7](https://github.com/archguard/archguard-frontend/commit/b9b90e760cb27864c343acb2285ec2cc89514167))
+* fix form typos ([a4c24c9](https://github.com/archguard/archguard-frontend/commit/a4c24c95fa920e056fc5279ea68885da140f39f8))
+* fix items issues ([f434c60](https://github.com/archguard/archguard-frontend/commit/f434c606d02e3c935ca0f192ab6df338d9309ab3))
+* fix lint ([89e6e91](https://github.com/archguard/archguard-frontend/commit/89e6e91c1b77d2681c99b3869db19ba37544f538))
+* fix lost deps ([6dc5280](https://github.com/archguard/archguard-frontend/commit/6dc5280a6729aa77c11ccf6a1016f0e9e3a026bb))
+* fix package issues ([d802383](https://github.com/archguard/archguard-frontend/commit/d80238302ac167f4954d265daf09f09324d9bb9f))
+* fix time display issues ([6a112ac](https://github.com/archguard/archguard-frontend/commit/6a112accf6a7f59dcc4e58d868f665edb63ef694))
+* fix typos ([da7c8e0](https://github.com/archguard/archguard-frontend/commit/da7c8e017b5ece04fcfbe8f95b83dc1a1aadfc92))
+* fix typos ([08d166e](https://github.com/archguard/archguard-frontend/commit/08d166ee747d4aa5685b50959289fe42e9dce2ed))
+* fix urls issues ([6b3c318](https://github.com/archguard/archguard-frontend/commit/6b3c3185394bce659836000c71f983344101715d))
+* **sca:** fix naming issues ([95752c5](https://github.com/archguard/archguard-frontend/commit/95752c58e0109161e62871c396ec4a8613d2cbb3))
+
+
+### Features
+
+* **aaac:** add errorContent handle  [#6](https://github.com/archguard/archguard-frontend/issues/6) ([5489694](https://github.com/archguard/archguard-frontend/commit/54896949ceaceb9bc5f33637495eae1f564bccfd))
+* **aaac:** add handle for msg type [#6](https://github.com/archguard/archguard-frontend/issues/6) ([09ecdb4](https://github.com/archguard/archguard-frontend/commit/09ecdb4c0833f1b81f9c66e43a5c19a6cf439676))
+* add backend action for create scan [#6](https://github.com/archguard/archguard-frontend/issues/6) ([f831781](https://github.com/archguard/archguard-frontend/commit/f8317811e4a7ba57e1ed6b34a396594a10213538))
+* add basic auto complete sample [#8](https://github.com/archguard/archguard-frontend/issues/8) ([f36136c](https://github.com/archguard/archguard-frontend/commit/f36136c3c6f074724b0ac607f7ae1ea00c025cc6))
+* add export svg support ([d05b546](https://github.com/archguard/archguard-frontend/commit/d05b546b54188943bddf0a065454a6eb02753ae8))
+* add run all functions for [#6](https://github.com/archguard/archguard-frontend/issues/6) ([d990f73](https://github.com/archguard/archguard-frontend/commit/d990f73c7ba361e9c7a84d837553703339fd62e0))
+* add scan model type to dsl [#6](https://github.com/archguard/archguard-frontend/issues/6) ([56022d7](https://github.com/archguard/archguard-frontend/commit/56022d7541d9116d8b7d4afae84e0722c33a48b9))
+* add status for runAll [#6](https://github.com/archguard/archguard-frontend/issues/6) ([a05aa11](https://github.com/archguard/archguard-frontend/commit/a05aa11dd2d73a49987a9561f16271aa7a423725))
+* add support for count ([4883108](https://github.com/archguard/archguard-frontend/commit/48831081a3bb2dd22c7a43d38a7d135ed3cd193b))
+* **archdoc:** add export support for [#6](https://github.com/archguard/archguard-frontend/issues/6) ([5a5d6cc](https://github.com/archguard/archguard-frontend/commit/5a5d6cca8e7fb05b9185c368a8ff70ee08603149))
+* **archdoc:** add pause support [#6](https://github.com/archguard/archguard-frontend/issues/6) ([aa8654f](https://github.com/archguard/archguard-frontend/commit/aa8654fa636325a1ad6c813c5b81b13b75acfce5))
+* **archdoc:** add samples ([3118755](https://github.com/archguard/archguard-frontend/commit/3118755e3521017614b3dfebcff09e74465c546c))
+* **archdoc:** add save & runall ui for [#6](https://github.com/archguard/archguard-frontend/issues/6) ([559c9a0](https://github.com/archguard/archguard-frontend/commit/559c9a079307dfdf5550a0e3fcc2c21c6a651daa))
+* **archdoc:** init mermaid graph ([053fedd](https://github.com/archguard/archguard-frontend/commit/053fedd95209381c3bf7e66d61781bab594f8a7c))
+* **archdoc:** make sample works ([704eabb](https://github.com/archguard/archguard-frontend/commit/704eabbc216050386e55d2a132243ca729212782))
+* **archdoc:** make websocket works ([609d32e](https://github.com/archguard/archguard-frontend/commit/609d32e2b7c8daf224581263bf08d0792cdec825))
+* disable jvm for scanner ([dd139db](https://github.com/archguard/archguard-frontend/commit/dd139dbb33010cb202089e321ce4b05e2af8f6f3))
+* **editor:** add create repos api [#6](https://github.com/archguard/archguard-frontend/issues/6) ([d14af84](https://github.com/archguard/archguard-frontend/commit/d14af843ca01699fd819504f5c01a67bc0f3d242))
+* **editor:** add json view for response [#6](https://github.com/archguard/archguard-frontend/issues/6) ([0550489](https://github.com/archguard/archguard-frontend/commit/055048902fe7ffa6e00ad2ae299b68e489751b70))
+* **editor:** add nodeview [#6](https://github.com/archguard/archguard-frontend/issues/6) ([e448a01](https://github.com/archguard/archguard-frontend/commit/e448a01a4c506f422c5ab4a522ae47c008b0ff5c))
+* **editor:** add styles for border types [#6](https://github.com/archguard/archguard-frontend/issues/6) ([9a7183f](https://github.com/archguard/archguard-frontend/commit/9a7183f756b3fe456a245999a809b2b2b2d097dc))
+* **editor:** add support for handle graph type [#6](https://github.com/archguard/archguard-frontend/issues/6) ([a38a95b](https://github.com/archguard/archguard-frontend/commit/a38a95b670338241c8dbdc77ba2fdb16d5fa12d0))
+* **editor:** enable creat repos context [#6](https://github.com/archguard/archguard-frontend/issues/6) ([aeef102](https://github.com/archguard/archguard-frontend/commit/aeef10298f2c589a901a26b9285c2cde1c9fff75))
+* **editor:** enable select others chart [#6](https://github.com/archguard/archguard-frontend/issues/6) ([9325b74](https://github.com/archguard/archguard-frontend/commit/9325b74fb3e2276f0c2b86f3a3b388388d8cc82c))
+* **editor:** init basic celleditor [#6](https://github.com/archguard/archguard-frontend/issues/6) ([36b937d](https://github.com/archguard/archguard-frontend/commit/36b937d77abbfe003393563534e5e0a4da9dbf37))
+* **editor:** init context for editor [#6](https://github.com/archguard/archguard-frontend/issues/6) ([9591698](https://github.com/archguard/archguard-frontend/commit/95916986b291d9663463114d7ba19f1077b00cb4))
+* **editor:** init minial promsemirror editor for [#6](https://github.com/archguard/archguard-frontend/issues/6) ([8d3d185](https://github.com/archguard/archguard-frontend/commit/8d3d1854549c71d039b1d67640b07fb0b724f267))
+* **editor:** make features works && closed [#6](https://github.com/archguard/archguard-frontend/issues/6) ([d6c576a](https://github.com/archguard/archguard-frontend/commit/d6c576a4a3dcc93b5c8b19606ec96d2366fd5f74))
+* **editor:** make new ui works for [#6](https://github.com/archguard/archguard-frontend/issues/6) ([1940641](https://github.com/archguard/archguard-frontend/commit/1940641edcfc74232e7521d96fdd7a68be023fb1))
+* **editor:** make table for response for [#6](https://github.com/archguard/archguard-frontend/issues/6) ([21de314](https://github.com/archguard/archguard-frontend/commit/21de314322f0f75efafb408b8f7a5c41c819df9e))
+* **editor:** reinit project from https://github.com/TeemuKoivisto/prosemirror-react-typescript-example for [#6](https://github.com/archguard/archguard-frontend/issues/6) ([952bc06](https://github.com/archguard/archguard-frontend/commit/952bc06bb40103b46a955d5920a5335f2fec4986))
+* **editor:** try custom nodeview plugin [#6](https://github.com/archguard/archguard-frontend/issues/6) ([3046fd0](https://github.com/archguard/archguard-frontend/commit/3046fd052104ca0de1e782efa865b075cea251aa))
+* enable completion for frontend [#6](https://github.com/archguard/archguard-frontend/issues/6) ([f821067](https://github.com/archguard/archguard-frontend/commit/f821067265e4ed169f633176ac979e08b36b0beb))
+* extract repl service for [#6](https://github.com/archguard/archguard-frontend/issues/6) ([8daa4b4](https://github.com/archguard/archguard-frontend/commit/8daa4b498d9217f4ab228f60cee747b729e0155e))
+* make ProseMirror as Editor [#6](https://github.com/archguard/archguard-frontend/issues/6) ([0998936](https://github.com/archguard/archguard-frontend/commit/0998936b681ae844103431c94a71c15aab96b586))
+* **notebook:** change block editor patterns ([091d886](https://github.com/archguard/archguard-frontend/commit/091d886c2aab4c9198b53771aaea1f5316efac76))
+* **notebook:** init editor ([314be75](https://github.com/archguard/archguard-frontend/commit/314be75a7a69d52386fe4630cc7449e3d671f660))
+* **notebook:** init tabs ([eaaa16c](https://github.com/archguard/archguard-frontend/commit/eaaa16cf0a59a815acf650f54102179f06539b09))
+* **notebook:** try fix monaco editor height ([70a17eb](https://github.com/archguard/archguard-frontend/commit/70a17eb2695dcbebd84f78df12333dc2e8bcd362))
+* **notebook:** try set monaco editor api ([70bd9db](https://github.com/archguard/archguard-frontend/commit/70bd9db1b4c7312da450a9cbc1b656c36b16ffb4))
+* **notebook:** try to create connection ([e890149](https://github.com/archguard/archguard-frontend/commit/e8901490168c2e67e1150b5fe3159405a8ac761f))
+* **notebook:** update sample code ([273bd08](https://github.com/archguard/archguard-frontend/commit/273bd08757ec9d3f9411cacb50952913d4ee6f02))
 
 
 
