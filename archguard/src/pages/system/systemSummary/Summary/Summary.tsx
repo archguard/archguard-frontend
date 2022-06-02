@@ -16,6 +16,7 @@ import { queryUnstableFiles } from "@/api/module/gitFile";
 import ApiResourceTree from "@/pages/system/systemSummary/Summary/components/ApiResourceTree";
 import { queryProjectCompositionDependency } from "@/api/module/project";
 import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
+import { getAllIssue } from "@/api/module/issue";
 
 function Summary() {
   const { formatMessage } = useIntl();
@@ -25,6 +26,7 @@ function Summary() {
   const [showFileSizing, setShowFileSizing] = useState(false);
   const [showFileChangeSizing, setShowFileChangeSizing] = useState(false);
   const [projectDependency, setProjectDependency] = useState([] as any);
+  const [issues, setIssues] = useState([] as any);
 
   const { systemId } = useParams();
   storage.setSystemId(systemId)
@@ -52,6 +54,12 @@ function Summary() {
       setProjectDependency(res);
     });
   }, []);
+
+  useEffect(() => {
+    getAllIssue(systemId).then((res) => {
+      setIssues(res);
+    });
+  }, [setIssues]);
 
   useEffect(() => {
     queryUnstableFiles(systemId).then((res) => {
@@ -91,6 +99,17 @@ function Summary() {
     { title: "dep artifact", dataIndex: 'depArtifact', key: 'depArtifact', },
     { title: "dep scope", dataIndex: 'depScope', key: 'depScope', },
     { title: "dep version", dataIndex: 'depVersion', key: 'depVersion', },
+  ];
+
+  const issueColumns = [
+    { title: "detail", dataIndex: 'detail', key: 'detail', },
+    { title: "ruleId", dataIndex: 'ruleId', key: 'ruleId', },
+    { title: "name", dataIndex: 'name', key: 'name', },
+    { title: "ruleType", dataIndex: 'ruleType', key: 'ruleType', },
+    { title: "severity", dataIndex: 'severity', key: 'severity', },
+    { title: "fullName", dataIndex: 'fullName', key: 'fullName', },
+    { title: "source", dataIndex: 'source', key: 'source', },
+    { title: "position", dataIndex: 'position', key: 'position', },
   ];
 
   function toggleFileSizing() {setShowFileSizing(!showFileSizing)}
@@ -161,6 +180,10 @@ function Summary() {
             <ApiResourceTree dataSource={ services["resources"] }/>
           </div>
         }
+      </div>
+      <div>
+        <h2>Issues ({ issues.length })</h2>
+        <Table dataSource={ issues } columns={ issueColumns }/>
       </div>
     </div>
   );
