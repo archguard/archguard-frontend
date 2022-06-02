@@ -11,6 +11,13 @@ interface Issue {
   source: string;
 }
 
+interface IssuePosition {
+  startLine: number;
+  startColumn: number;
+  endLine: number;
+  endColumn: number;
+}
+
 export function getAllIssue(id: number) {
   return axios<Issue[]>({
     url: `/api/systems/${id}/issue`,
