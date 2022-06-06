@@ -15,7 +15,7 @@ export function queryModule(systemId: number) {
 export function deleteModule(parameter: { id: string }, systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
-    url: `/logic-modules/${parameter.id}`,
+    url: `/logic-module/${parameter.id}`,
     method: "DELETE",
   });
 }
@@ -23,7 +23,7 @@ export function deleteModule(parameter: { id: string }, systemId: number) {
 export function updateModule(parameter: Module, systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
-    url: `/logic-modules/${parameter.id}`,
+    url: `/logic-module/${parameter.id}`,
     method: "PUT",
     data: parameter,
   });
@@ -49,7 +49,7 @@ export function queryModuleOptions(systemId: number) {
 export function autoDefineModule(systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
-    url: "/logic-modules/auto-define",
+    url: "/logic-module/auto-define",
     method: "POST",
   });
 }
@@ -57,7 +57,7 @@ export function autoDefineModule(systemId: number) {
 export function queryModuleDependencies(parameter: {}, systemId: number) {
   return axios<methodDependency[]>({
     baseURL: `/api/systems/${systemId}`,
-    url: "/logic-modules/dependencies",
+    url: "/logic-module/dependencies",
     method: "GET",
     params: parameter,
   });
@@ -68,7 +68,7 @@ export function queryModuleCoupling() {
 
   return axios<ReportMapper[]>({
     baseURL: `/api/systems/${systemId}`,
-    url: "/logic-modules/metrics",
+    url: "/logic-module/metrics",
     method: "GET",
   });
 }
@@ -76,7 +76,7 @@ export function queryModuleCoupling() {
 export function hideAllModules(systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
-    url: "/logic-modules/hide-all",
+    url: "/logic-module/hide-all",
     method: "POST",
   });
 }
@@ -84,7 +84,7 @@ export function hideAllModules(systemId: number) {
 export function showAllModules(systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
-    url: "/logic-modules/show-all",
+    url: "/logic-module/show-all",
     method: "POST",
   });
 }
@@ -92,7 +92,7 @@ export function showAllModules(systemId: number) {
 export function reverseAllModules(systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
-    url: "/logic-modules/reverse-all",
+    url: "/logic-module/reverse-all",
     method: "POST",
   });
 }
@@ -115,7 +115,7 @@ export function queryAllModuleDependence(systemId: number) {
     edges: { a: string; b: string; num: number }[];
   }>({
     baseURL: `/api/systems/${systemId}`,
-    url: "/logic-modules/dependencies/graph",
+    url: "/logic-module/dependencies/graph",
     method: "GET",
   });
 }
