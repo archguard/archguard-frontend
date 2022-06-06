@@ -7,7 +7,7 @@ import { Module } from "@/types/module";
 export function queryModule(systemId: number) {
   return axios<Module[]>({
     baseURL: `/api/systems/${systemId}`,
-    url: "/logic-modules",
+    url: "/logic-module",
     method: "GET",
   });
 }
@@ -32,7 +32,7 @@ export function updateModule(parameter: Module, systemId: number) {
 export function createModule(parameter: {}, systemId: number) {
   return axios<any>({
     baseURL: `/api/systems/${systemId}`,
-    url: "/logic-modules",
+    url: "/logic-module",
     method: "POST",
     data: parameter,
   });
