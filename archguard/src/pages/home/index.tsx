@@ -204,7 +204,7 @@ ${log}
   };
 
   const handleTabClick = (key: string) => {
-    console.log(key)
+    // console.log(key)
   }
 
   return (
