@@ -68,6 +68,7 @@ const Dfms = () => {
 
   return (
     <div>
+      <p>《整洁架构之道》 D 指标：组件所能处于最优的位置是线的两端。</p>
       <Radio.Group
         style={{ marginBottom: "12px" }}
         value={currentKey}

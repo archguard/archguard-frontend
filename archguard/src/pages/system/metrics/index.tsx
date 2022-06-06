@@ -17,7 +17,7 @@ const Metrics = () => {
         <Tabs.TabPane tab="模块耦合度分析" key="coupling">
           <ModuleCouplingTree systemId={parseInt(systemId)}/>
         </Tabs.TabPane>
-        <Tabs.TabPane tab="DFMS" key="dfms">
+        <Tabs.TabPane tab="DFMS（离主序列线的距离）" key="dfms">
           <Dfms />
         </Tabs.TabPane>
       </Tabs>
