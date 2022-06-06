@@ -70,7 +70,6 @@ diagram().show(layer.relations())
 
 repos {
     repo(name = "Backend", language = "Kotlin", scmUrl = "https://github.com/archguard/archguard")
-    repo(name = "Scanner", language = "Kotlin", scmUrl = "https://github.com/archguard/scanner")
 }
 
 context.repos.create()

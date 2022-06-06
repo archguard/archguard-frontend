@@ -47,9 +47,9 @@ function ServicesMap() {
         return result.length ? [...result, <br/>, word] : [word];
       }, [])  }
 
-      <a href="https://github.com/archguard/scanner"
+      <a href="https://github.com/archguard/archguard"
          target={ "_blank" }
-         rel="noreferrer">https://github.com/archguard/scanner</a>
+         rel="noreferrer">https://github.com/archguard/archguard</a>
     </p>
 
     { systemInfo?.value &&

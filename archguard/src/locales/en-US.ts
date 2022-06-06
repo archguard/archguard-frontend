@@ -6,7 +6,7 @@ export default {
   SERVICES_MAP: "Container Analysis",
   INTERACTIVE_ANALYSIS: "Interactive Analysis（Alpha）",
   MESSAGE_QUEUE_ANALYSIS: "Message Queue Analysis",
-  SERVICES_MAP_TIPS: "API Consumer support: (frontend) Axios、UMI-Request，(backend)：Java Spring + RestTemplate、Kotlin Spring + RestTemplate。\\n API Producer support：Java/Kotlin + Spring、C# + .Net。https://groups.google.com/u/0/a/thoughtworks.com/g/osc?hl=en\\n New frameworks or languages, please move to：",
+  SERVICES_MAP_TIPS: "API Consumer support: (frontend) Axios、UMI-Request，(backend)：Java Spring + RestTemplate、Kotlin Spring + RestTemplate。\\n API Producer support：Java/Kotlin + Spring、C# + .Net。\\n New frameworks or languages, please move to：",
   CODE_ANALYSIS: "Code Analysis",
   DATABASE_MAP: "Database Map",
   DATABASE_MAP_TIPS: "supported: Java/Kotlin with JPA/JDBI/MyBatis",
