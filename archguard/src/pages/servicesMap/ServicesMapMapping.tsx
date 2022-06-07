@@ -102,17 +102,23 @@ const ServicesMapMapping = (props: ServicesMapMappingProps) => {
 ${ (outgoingCount(d)) } outgoing →
 ${ (incomingCount(d)) } incoming ←`);
 
-    svg.append("g")
+    svg
+      .append("g")
       .attr("fill-opacity", 0.75)
       .selectAll("path")
       .data(chords)
       .join("path")
       .style("mix-blend-mode", "multiply")
-      .attr("fill", (d: any) => color(names[d.target.index]))
+      .attr("fill", (d: any) => {
+        if (d.source.index == d.target.index) {
+          return "#e60000";
+        }
+        return color(names[d.target.index]);
+      })
       // @ts-ignore
       .attr("d", ribbon)
       .append("title")
-      .text(d => `${ names[d.source.index] } → ${ names[d.target.index] } ${ d.source.value }`);
+      .text((d) => `${names[d.source.index]} → ${names[d.target.index]} ${d.source.value}`);
   }, [data]);
 
   return <div className={ styles.service }>
