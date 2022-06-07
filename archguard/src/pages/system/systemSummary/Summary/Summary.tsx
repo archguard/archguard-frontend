@@ -17,6 +17,12 @@ import ApiResourceTree from "@/pages/system/systemSummary/Summary/components/Api
 import { queryProjectCompositionDependency } from "@/api/module/project";
 import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
 import { getAllIssue, IssuePosition } from "@/api/module/issue";
+import {
+  ClockCircleOutlined,
+  DownCircleOutlined,
+  ExclamationCircleOutlined,
+  UpCircleOutlined
+} from "@ant-design/icons";
 
 function Summary() {
   const { formatMessage } = useIntl();
@@ -108,11 +114,30 @@ function Summary() {
   );
   const issueColumns = [
     { title: "name", dataIndex: "name", key: "name" },
-    { title: "detail", dataIndex: "detail", key: "detail", width: 300, render: breakRender, },
-    { title: "ruleId", dataIndex: "ruleId", key: "ruleId", width: 300, render: breakRender, },
-    { title: "ruleType", dataIndex: "ruleType", key: "ruleType", width: 200, render: breakRender, },
-    { title: "severity", dataIndex: "severity", width: 50, key: "severity", render: breakRender, },
-    { title: "fullName", dataIndex: "fullName", key: "fullName", width: 200, render: breakRender, },
+    { title: "detail", dataIndex: "detail", key: "detail", width: 300, render: breakRender },
+    { title: "ruleId", dataIndex: "ruleId", key: "ruleId", width: 300, render: breakRender },
+    { title: "ruleType", dataIndex: "ruleType", key: "ruleType", width: 200, render: breakRender },
+    {
+      title: "severity",
+      dataIndex: "severity",
+      width: 50,
+      key: "severity",
+      render: (text, record) => {
+        switch (text) {
+          case "HINT":
+            return <ClockCircleOutlined style={{ fontSize: '24px', color: '#08c' }} />;
+          case "WARN":
+            return <UpCircleOutlined style={{ fontSize: '24px', color: '#c0c0c0' }} />;
+          case "INFO":
+            return <DownCircleOutlined style={{ fontSize: '24px', color: '#0f0' }} />;
+          case "BLOCKER":
+            return <ExclamationCircleOutlined style={{ fontSize: '24px', color: '#f00' }} />;
+          default:
+            return "";
+        }
+      }
+    },
+    { title: "fullName", dataIndex: "fullName", key: "fullName", width: 200, render: breakRender },
     { title: "source", dataIndex: "source", key: "source", render: breakRender },
     {
       title: "position",
@@ -120,10 +145,10 @@ function Summary() {
       key: "position",
       width: 50,
       render: (text, record) => {
-        if (!text || text == '{}') return '';
+        if (!text || text == "{}") return "";
 
-        var pos: IssuePosition = JSON.parse(text)
-        return `${pos.startLine}:${pos.startColumn}-${pos.endLine}:${pos.endColumn}`
+        var pos: IssuePosition = JSON.parse(text);
+        return `${pos.startLine}:${pos.startColumn}-${pos.endLine}:${pos.endColumn}`;
       },
     },
   ];
