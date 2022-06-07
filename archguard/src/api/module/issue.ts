@@ -11,7 +11,7 @@ interface Issue {
   source: string;
 }
 
-interface IssuePosition {
+export interface IssuePosition {
   startLine: number;
   startColumn: number;
   endLine: number;

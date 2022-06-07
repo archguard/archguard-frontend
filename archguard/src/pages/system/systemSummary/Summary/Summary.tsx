@@ -16,7 +16,7 @@ import { queryUnstableFiles } from "@/api/module/gitFile";
 import ApiResourceTree from "@/pages/system/systemSummary/Summary/components/ApiResourceTree";
 import { queryProjectCompositionDependency } from "@/api/module/project";
 import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
-import { getAllIssue } from "@/api/module/issue";
+import { getAllIssue, IssuePosition } from "@/api/module/issue";
 
 function Summary() {
   const { formatMessage } = useIntl();
@@ -102,14 +102,23 @@ function Summary() {
   ];
 
   const issueColumns = [
-    { title: "detail", dataIndex: 'detail', key: 'detail', },
-    // { title: "ruleId", dataIndex: 'ruleId', key: 'ruleId', },
-    { title: "name", dataIndex: 'name', key: 'name', },
-    { title: "ruleType", dataIndex: 'ruleType', key: 'ruleType', },
-    { title: "severity", dataIndex: 'severity', key: 'severity', },
-    // { title: "fullName", dataIndex: 'fullName', key: 'fullName', },
-    { title: "source", dataIndex: 'source', key: 'source', },
-    { title: "position", dataIndex: 'position', key: 'position', },
+    { title: "name", dataIndex: "name", key: "name" },
+    { title: "detail", dataIndex: "detail", key: "detail", width: 200 },
+    { title: "ruleId", dataIndex: "ruleId", key: "ruleId", width: 100 },
+    { title: "ruleType", dataIndex: "ruleType", key: "ruleType" },
+    { title: "severity", dataIndex: "severity", key: "severity" },
+    { title: "fullName", dataIndex: "fullName", key: "fullName", width: 150 },
+    { title: "source", dataIndex: "source", key: "source" },
+    {
+      title: "position",
+      dataIndex: "position",
+      key: "position",
+      width: 50,
+      render: (text, record) => {
+        var pos: IssuePosition = JSON.parse(text)
+        return `${pos.startLine}:${pos.startColumn}-${pos.endLine}:${pos.endColumn}`
+      },
+    },
   ];
 
   function toggleFileSizing() {setShowFileSizing(!showFileSizing)}
@@ -183,7 +192,7 @@ function Summary() {
       </div>
       <div>
         <h2>Issues ({ issues.length })</h2>
-        <Table dataSource={ issues } columns={ issueColumns }/>
+        <Table tableLayout={"auto"} dataSource={ issues } columns={ issueColumns } />
       </div>
     </div>
   );
