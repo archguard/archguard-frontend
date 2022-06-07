@@ -128,7 +128,7 @@ export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, Is
     tableConfigs: [
       {
         dataUrl: `/api/systems/${systemId}/test-bad-smell/multi-assert-test-methods`,
-        title: () => "包含繁杂Assert判断（如超过12个assert)的测试用例列表",
+        title: () => "包含繁杂Assert判断（如超过 5 个assert)的测试用例列表",
         columns: [
           {
             title: "模块",
@@ -163,7 +163,7 @@ export const TEST_EVALUATION_CONFIG: Record<keyof typeof TEST_EVALUATION_TAB, Is
     tableConfigs: [
       {
         dataUrl: `/api/systems/${systemId}/test-bad-smell/redundant-print-test-methods`,
-        title: () => "包含了过多调用打印信息(超过12个print语句)的测试用例",
+        title: () => "包含了过多调用打印信息(超过 1 个print语句)的测试用例",
         columns: [
           {
             title: "模块",

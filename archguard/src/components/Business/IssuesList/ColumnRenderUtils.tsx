@@ -78,12 +78,6 @@ const classColumnRenderAsLink = (text: string, record: IssuesListRowData) => {
   );
 };
 
-const codeBasePage = (text: string, record: IssuesListRowData) => {
-  return (
-    <a href="https://github.com/archguard/code-analysis-frontend" target="_blank">{text}</a>
-  )
-};
-
 const methodColumnRenderAsLink = (text: string, record: IssuesListRowData) => {
   return (
     <Tooltip title={getFullPath(record)}>
