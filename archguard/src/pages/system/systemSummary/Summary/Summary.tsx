@@ -101,20 +101,27 @@ function Summary() {
     { title: "dep version", dataIndex: 'depVersion', key: 'depVersion', },
   ];
 
+  let breakRender = (text, record) => (
+    <div style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}>
+      {text}
+    </div>
+  );
   const issueColumns = [
     { title: "name", dataIndex: "name", key: "name" },
-    { title: "detail", dataIndex: "detail", key: "detail", width: 200 },
-    { title: "ruleId", dataIndex: "ruleId", key: "ruleId", width: 100 },
-    { title: "ruleType", dataIndex: "ruleType", key: "ruleType" },
-    { title: "severity", dataIndex: "severity", key: "severity" },
-    { title: "fullName", dataIndex: "fullName", key: "fullName", width: 150 },
-    { title: "source", dataIndex: "source", key: "source" },
+    { title: "detail", dataIndex: "detail", key: "detail", width: 300, render: breakRender, },
+    { title: "ruleId", dataIndex: "ruleId", key: "ruleId", width: 300, render: breakRender, },
+    { title: "ruleType", dataIndex: "ruleType", key: "ruleType", width: 200, render: breakRender, },
+    { title: "severity", dataIndex: "severity", width: 50, key: "severity", render: breakRender, },
+    { title: "fullName", dataIndex: "fullName", key: "fullName", width: 200, render: breakRender, },
+    { title: "source", dataIndex: "source", key: "source", render: breakRender },
     {
       title: "position",
       dataIndex: "position",
       key: "position",
       width: 50,
       render: (text, record) => {
+        if (!text || text == '{}') return '';
+
         var pos: IssuePosition = JSON.parse(text)
         return `${pos.startLine}:${pos.startColumn}-${pos.endLine}:${pos.endColumn}`
       },
