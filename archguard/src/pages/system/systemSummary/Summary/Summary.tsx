@@ -209,6 +209,10 @@ function Summary() {
         <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY' }) } ({ projectDependency.length })</h2>
         <Table dataSource={ projectDependency } columns={ projectDependencyColumns }/>
       </div>
+      <div>
+        <h2>Issues ({ issues.length })</h2>
+        <Table tableLayout={"auto"} dataSource={ issues } columns={ issueColumns } />
+      </div>
       <div className={ styles.physical }>
         <div className={ styles.demand }>
           <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.API_DEMAND_LIST' }) } ({ services["demands"]?.length })</h2>
@@ -221,10 +225,6 @@ function Summary() {
             <ApiResourceTree dataSource={ services["resources"] }/>
           </div>
         }
-      </div>
-      <div>
-        <h2>Issues ({ issues.length })</h2>
-        <Table tableLayout={"auto"} dataSource={ issues } columns={ issueColumns } />
       </div>
     </div>
   );
