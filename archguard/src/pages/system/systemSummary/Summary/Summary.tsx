@@ -103,11 +103,11 @@ function Summary() {
 
   const issueColumns = [
     { title: "detail", dataIndex: 'detail', key: 'detail', },
-    { title: "ruleId", dataIndex: 'ruleId', key: 'ruleId', },
+    // { title: "ruleId", dataIndex: 'ruleId', key: 'ruleId', },
     { title: "name", dataIndex: 'name', key: 'name', },
     { title: "ruleType", dataIndex: 'ruleType', key: 'ruleType', },
     { title: "severity", dataIndex: 'severity', key: 'severity', },
-    { title: "fullName", dataIndex: 'fullName', key: 'fullName', },
+    // { title: "fullName", dataIndex: 'fullName', key: 'fullName', },
     { title: "source", dataIndex: 'source', key: 'source', },
     { title: "position", dataIndex: 'position', key: 'position', },
   ];
