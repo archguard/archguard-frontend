@@ -70,7 +70,7 @@ export default function ServicesMapComponent(props: CytoscapeProps) {
       style: {
         label: "data(label)",
         "font-size": "12",
-        color: "black",
+        color: "#686868",
         "text-halign": "center",
         "text-valign": "center",
       },
@@ -79,9 +79,9 @@ export default function ServicesMapComponent(props: CytoscapeProps) {
       selector: 'edge',
       style: {
         'curve-style': 'unbundled-bezier',
-        'line-color': 'black',
+        'line-color': '#686868',
         'overlay-opacity': 0,
-        'target-arrow-color': 'black',
+        'target-arrow-color': '#686868',
         'target-arrow-shape': 'triangle',
         width: getWidth
       },
@@ -90,14 +90,14 @@ export default function ServicesMapComponent(props: CytoscapeProps) {
       selector: 'edge[bidirectional]',
       style: {
         'source-arrow-shape': 'triangle',
-        'source-arrow-color': 'black',
+        'source-arrow-color': '#686868',
         'target-arrow-shape': 'triangle',
         // @ts-expect-error
         'source-distance-from-node': 20,
         'target-distance-from-node': 20,
       },
     },
-  ];
+  ] as any;
 
   const layout = {
     name: "breadthfirst",
