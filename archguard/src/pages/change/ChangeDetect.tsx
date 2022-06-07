@@ -65,7 +65,8 @@ const ChangeDetect = () => {
           <Space direction="vertical" size="middle">
 
             <Select
-              style={ { width: 150, color: "#000" } }
+              dropdownMatchSelectWidth={true}
+              style={ { width: 350, color: "#000" } }
               bordered={ true }
               showArrow={ true }
               placeholder={ formatMessage({ id: 'SELECT_SYSTEM' }) }

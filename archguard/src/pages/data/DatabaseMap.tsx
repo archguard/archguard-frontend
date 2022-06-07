@@ -44,7 +44,7 @@ const DatabaseMap = () => {
         <>
           <p>{ formatMessage({ id: 'DATABASE_MAP_TIPS' }) }</p>
           <Select
-            style={ { width: 150, color: "#000" } }
+            style={ { width: 350, color: "#000" } }
             bordered={ true }
             showArrow={ true }
             placeholder={ formatMessage({ id: 'SELECT_SYSTEM' }) }
