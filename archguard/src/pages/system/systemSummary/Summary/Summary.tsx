@@ -115,6 +115,7 @@ function Summary() {
   const issueColumns = [
     { title: "name", dataIndex: "name", key: "name" },
     { title: "detail", dataIndex: "detail", key: "detail", width: 300, render: breakRender },
+    { title: "fullName", dataIndex: "fullName", key: "fullName", width: 200, render: breakRender },
     { title: "ruleId", dataIndex: "ruleId", key: "ruleId", width: 300, render: breakRender },
     { title: "ruleType", dataIndex: "ruleType", key: "ruleType", width: 200, render: breakRender },
     {
@@ -137,7 +138,6 @@ function Summary() {
         }
       }
     },
-    { title: "fullName", dataIndex: "fullName", key: "fullName", width: 200, render: breakRender },
     { title: "source", dataIndex: "source", key: "source", render: breakRender },
     {
       title: "position",
