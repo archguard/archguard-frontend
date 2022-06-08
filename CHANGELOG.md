@@ -1,4 +1,32 @@
-# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.13...v) (2022-06-01)
+# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.19...v) (2022-06-08)
+
+
+
+# [2.0.0-alpha.19](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.17...v2.0.0-alpha.19) (2022-06-07)
+
+
+### Features
+
+* **rule:** add render for pos ([90c92d7](https://github.com/archguard/archguard-frontend/commit/90c92d78f84deda10193849ead245191ad5d8348))
+
+
+
+# [2.0.0-alpha.17](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.16...v2.0.0-alpha.17) (2022-06-06)
+
+
+### Bug Fixes
+
+* fix urls issues ([7d35568](https://github.com/archguard/archguard-frontend/commit/7d35568ef31038dff3acc3b01d136710a8c84139))
+* remove unused code ([0b0fb6f](https://github.com/archguard/archguard-frontend/commit/0b0fb6fd8f659d344f3aa9d056319b2e6da33633))
+
+
+### Features
+
+* **rule:** add issues to home ([049f3ce](https://github.com/archguard/archguard-frontend/commit/049f3ce971924445f8beabc2c235a623609975ba))
+
+
+
+# [2.0.0-alpha.16](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.13...v2.0.0-alpha.16) (2022-06-01)
 
 
 ### Bug Fixes
