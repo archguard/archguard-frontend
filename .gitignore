@@ -14,3 +14,4 @@ project/
 *.iml
 /node_modules
 yarn.lock
+dependencies
