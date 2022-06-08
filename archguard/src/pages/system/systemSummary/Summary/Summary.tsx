@@ -75,18 +75,30 @@ function Summary() {
     });
   }, []);
 
+  const sortFunc = (type: String) => (a, b) => a[type].length - b[type].length;
+
   const demandColumns = [
-    { title: 'Source Method', dataIndex: 'sourceMethod', key: 'sourceMethod', },
-    { title: 'URI', dataIndex: 'targetUrl', key: 'targetUrl', },
-    { title: 'HTTP Method', dataIndex: 'targetHttpMethod', key: 'targetHttpMethod', },
+    {
+      title: "Source Method",
+      dataIndex: "sourceMethod",
+      key: "sourceMethod",
+      sorter: sortFunc("sourceMethod"),
+    },
+    { title: "URI", dataIndex: "targetUrl", key: "targetUrl", sorter: sortFunc("targetUrl") },
+    {
+      title: "HTTP Method",
+      dataIndex: "targetHttpMethod",
+      key: "targetHttpMethod",
+      sorter: sortFunc("targetHttpMethod")
+    },
   ];
 
-  const resourceColumns = [
-    { title: 'Package Name', dataIndex: 'packageName', key: 'packageName', },
-    { title: 'className', dataIndex: 'className', key: 'className', },
-    { title: 'methodName', dataIndex: 'methodName', key: 'methodName', },
-    { title: 'sourceHttpMethod', dataIndex: 'sourceHttpMethod', key: 'sourceHttpMethod', },
-    { title: 'sourceUrl', dataIndex: 'sourceUrl', key: 'sourceUrl', },
+  const supplyColumns = [
+    { title: 'package', dataIndex: 'packageName', key: 'packageName', sorter: sortFunc("packageName")},
+    { title: 'class', dataIndex: 'className', key: 'className', sorter: sortFunc("className") },
+    { title: 'method', dataIndex: 'methodName', key: 'methodName',sorter: sortFunc("methodName") },
+    { title: 'Http Method', dataIndex: 'sourceHttpMethod', key: 'sourceHttpMethod',sorter: sortFunc("sourceHttpMethod") },
+    { title: 'sourceUrl', dataIndex: 'sourceUrl', key: 'sourceUrl', sorter: sortFunc("sourceUrl") },
   ];
 
   const lineCountColumns = [
@@ -169,7 +181,7 @@ function Summary() {
         { services["resources"]?.length &&
           <div className={ styles.resource }>
             <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.API_RESOURCE_LIST' }) } ({ services["resources"]?.length })</h2>
-            <Table dataSource={ services["resources"] } columns={ resourceColumns }/>
+            <Table dataSource={ services["resources"] } columns={ supplyColumns }/>
             <ApiResourceTree dataSource={ services["resources"] }/>
           </div>
         }
