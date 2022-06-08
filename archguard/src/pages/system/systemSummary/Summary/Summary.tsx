@@ -100,11 +100,39 @@ function Summary() {
   ];
 
   const projectDependencyColumns = [
-    { title: "Tools", dataIndex: 'packageManager', key: 'packageManager', },
-    { title: "dep group", dataIndex: 'depGroup', key: 'depGroup', },
-    { title: "dep artifact", dataIndex: 'depArtifact', key: 'depArtifact', },
-    { title: "dep scope", dataIndex: 'depScope', key: 'depScope', },
-    { title: "dep version", dataIndex: 'depVersion', key: 'depVersion', },
+    { title: "Tools", dataIndex: "packageManager", key: "packageManager" },
+    { title: "Group", dataIndex: "depGroup", key: "depGroup" },
+    { title: "dep artifact", dataIndex: "depArtifact", key: "depArtifact" },
+    {
+      title: "Scope",
+      dataIndex: "depScope",
+      key: "depScope",
+      filters: [
+        {
+          text: 'NORMAL',
+          value: 'NORMAL',
+        },
+        {
+          text: 'RUNTIME',
+          value: 'RUNTIME',
+        },
+        {
+          text: 'TEST',
+          value: 'TEST',
+        },
+        {
+          text: 'OPTIONAL',
+          value: 'OPTIONAL',
+        },
+        {
+          text: 'DEV',
+          value: 'DEV',
+        }
+      ],
+      onFilter: (value: string, record) => record.depScope.indexOf(value) === 0,
+      sorter: (a, b) => a.depScope.length - b.depScope.length,
+    },
+    { title: "Version", dataIndex: "depVersion", key: "depVersion" },
   ];
 
   let breakRender = (text, record) => (
