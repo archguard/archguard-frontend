@@ -1,5 +1,6 @@
 import ReactECharts from "echarts-for-react";
 import React, { useEffect, useState } from "react";
+import { LineCount } from "@/api/module/codeLine";
 
 interface LineCountChartProps {
   dataSource: LineCount[];
@@ -62,7 +63,7 @@ function LineCountChart(props: LineCountChartProps) {
   }, [dataSource, setOptions]);
 
   return (
-    options && <ReactECharts option={ options } style={ { height: "350px", width: "600px" } } />
+    options && <ReactECharts option={ options } style={ { height: "350px", width: "720px" } } />
   );
 }
 
