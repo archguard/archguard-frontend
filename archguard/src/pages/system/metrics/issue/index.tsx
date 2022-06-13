@@ -9,22 +9,27 @@ const Issue = () => {
   const [issues, setIssues] = useState([] as any);
   const [testIssues, setTestIssues] = useState([] as any);
   const [sqlIssues, setSqlIssues] = useState([] as any);
+  const [httpApiIssues, setHttpApiIssues] = useState([] as any);
 
   useEffect(() => {
     getAllIssue(systemId).then((res) => {
       setTestIssues(res.filter((val) => val.ruleType === "TEST_CODE_SMELL"))
       setSqlIssues(res.filter((val) => val.ruleType === "SQL_SMELL"))
+      setHttpApiIssues(res.filter((val) => val.ruleType === "HTTP_API_SMELL"))
     });
-  }, [setIssues, setTestIssues, setSqlIssues]);
+  }, [setIssues, setTestIssues, setSqlIssues, setHttpApiIssues]);
 
   return (
     <div>
       <Tabs activeKey={type}>
         <Tabs.TabPane tab="Test Smell" key="test">
-          <Table tableLayout={"auto"} dataSource={testIssues} columns={issueColumns} />
+          <Table tableLayout={"auto"} dataSource={ testIssues } columns={issueColumns} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="SQL Smell" key="sql">
-          <Table tableLayout={"auto"} dataSource={sqlIssues} columns={issueColumns} />
+          <Table tableLayout={"auto"} dataSource={ sqlIssues } columns={issueColumns} />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="HTTP API Smell" key="http-api">
+          <Table tableLayout={"auto"} dataSource={ httpApiIssues } columns={issueColumns} />
         </Tabs.TabPane>
       </Tabs>
     </div>

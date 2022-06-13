@@ -14,37 +14,6 @@ export const breakRender = (text, record) => (
 );
 
 export const issueColumns = [
-  { title: "name", dataIndex: "name", key: "name" },
-  { title: "detail", dataIndex: "detail", key: "detail", width: 300, render: breakRender },
-  { title: "fullName", dataIndex: "fullName", key: "fullName", width: 200, render: breakRender },
-  { title: "ruleId", dataIndex: "ruleId", key: "ruleId", width: 300, render: breakRender },
-  {
-    title: "ruleType",
-    dataIndex: "ruleType",
-    key: "ruleType",
-    width: 200,
-    filters: [
-      {
-        text: "TEST_CODE_SMELL",
-        value: "TEST_CODE_SMELL",
-      },
-      {
-        text: "HTTP_API_SMELL",
-        value: "HTTP_API_SMELL",
-      },
-      {
-        text: "SQL_SMELL",
-        value: "SQL_SMELL",
-      },
-      {
-        text: "LAYER",
-        value: "LAYER",
-      },
-    ],
-    onFilter: (value: string, record) => record.ruleType.indexOf(value) === 0,
-    sorter: (a, b) => a.ruleType.length - b.ruleType.length,
-    render: breakRender,
-  },
   {
     title: "severity",
     dataIndex: "severity",
@@ -85,6 +54,10 @@ export const issueColumns = [
       }
     },
   },
+  { title: "name", dataIndex: "name", key: "name" },
+  { title: "detail", dataIndex: "detail", key: "detail", width: 300, render: breakRender },
+  { title: "fullName", dataIndex: "fullName", key: "fullName", width: 200, render: breakRender },
+  { title: "ruleId", dataIndex: "ruleId", key: "ruleId", width: 300, render: breakRender },
   { title: "source", dataIndex: "source", key: "source", render: breakRender },
   {
     title: "position",

@@ -35,7 +35,7 @@ const menuList = configForTargets({
       icon: <BarChartOutlined />,
       children: [
         { key: "/analysis/dependence", text: "依赖分析" },
-        { key: "/systemEvolving/issue", text: "问题分析" },
+        { key: "/systemEvolving/metrics/issue", text: "问题分析" },
       ],
     },
     {
