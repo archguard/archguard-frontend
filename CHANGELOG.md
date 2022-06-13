@@ -1,4 +1,16 @@
-# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.19...v) (2022-06-08)
+# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.21...v) (2022-06-13)
+
+
+
+# [2.0.0-alpha.21](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.2...v2.0.0-alpha.21) (2022-06-13)
+
+
+### Features
+
+* add filter for dep scope ([7284706](https://github.com/archguard/archguard-frontend/commit/7284706a07d5cb328367c6b21ab5fcf83b7dd6fa))
+* add filter for rules ([c45a1b6](https://github.com/archguard/archguard-frontend/commit/c45a1b6dc9d4e6bc5b49b31629e8c4a6a337c5f6))
+* **api:** add demand and supply ([00d7835](https://github.com/archguard/archguard-frontend/commit/00d7835e9ef3486cf776f4fef81f0c21a7de7e86))
+* **rule:** split issue page ([c6325a0](https://github.com/archguard/archguard-frontend/commit/c6325a0e222499b3cc08647b8cb9ac1b86a63245))
 
 
 
