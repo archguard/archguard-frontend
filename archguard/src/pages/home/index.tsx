@@ -210,6 +210,7 @@ ${log}
       <div className="multiple-system-header">
         <div className="header-logo">
           <img src={ require("@/assets/images/logo.png") } alt="logo" />
+          <span className="slogan">守护架构，放权代码</span>
         </div>
         <div className="header-user">
           <div>
