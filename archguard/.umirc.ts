@@ -6,13 +6,13 @@ export default defineConfig({
     exclude: [],
   },
   // for Jupyter libs: zeromq, jmq,
-  extraBabelPlugins: ['@babel/plugin-transform-modules-commonjs'],
+  extraBabelPlugins: ["@babel/plugin-transform-modules-commonjs"],
   devtool: false,
   hash: true,
   antd: {},
   dva: false,
   locale: {
-    default: 'zh-CN'
+    default: "zh-CN",
   },
   devServer: { port: 8081 },
   define: {
@@ -27,19 +27,28 @@ export default defineConfig({
     },
   },
   analyze: {
-    analyzerMode: 'server',
+    analyzerMode: "server",
     analyzerPort: 8888,
     openAnalyzer: true,
     // generate stats file while ANALYZE_DUMP exist
     generateStatsFile: false,
-    statsFilename: 'stats.json',
-    logLevel: 'info',
-    defaultSizes: 'parsed', // stat  // gzip
+    statsFilename: "stats.json",
+    logLevel: "info",
+    defaultSizes: "parsed", // stat  // gzip
   },
   routes: [
     { path: "/", redirect: "/home" },
     { path: "/home", component: "@/pages/home" },
-    { path: "/services-map", component: "@/pages/servicesMap/ServicesMap" },
+    {
+      path: "/",
+      component: "@/components/Business/Layouts/default/DefaultLayout",
+      routes: [
+        {
+          path: "visual/services-map",
+          component: "@/pages/servicesMap/ServicesMap",
+        },
+      ],
+    },
     {
       exact: false,
       path: "/:systemId",

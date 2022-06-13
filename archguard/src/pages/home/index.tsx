@@ -1,14 +1,15 @@
 import "./index.less";
-import React, { useState, useRef, useEffect } from "react";
-import { Tabs, Row, Col, Modal, notification, Button } from "antd";
-import { useMount, useInterval } from "react-use";
-import { QuestionCircleOutlined, UpOutlined, GlobalOutlined } from "@ant-design/icons";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Col, Modal, notification, Row, Tabs } from "antd";
+import { useInterval, useMount } from "react-use";
+import { GlobalOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { cancelScanDependence, scanDependence } from "@/api/scanner/dependenceScanner";
 import {
-  SystemInfo,
   createSystemInfo,
+  deleteSystem,
+  SystemInfo,
   updateSystemInfo,
-  deleteSystem, viewSystemLog,
+  viewSystemLog,
 } from "@/api/addition/systemInfo";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
@@ -18,16 +19,11 @@ import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "../help";
 import ServicesMap from "../servicesMap/ServicesMap";
 import CodeAnalysis from "@/pages/code";
-import DatabaseMap from '../data/DatabaseMap';
+import DatabaseMap from "../data/DatabaseMap";
 import ChangeDetect from "@/pages/change/ChangeDetect";
-import InteractiveAnalysis from '../interactiveAnalysis/InteractiveAnalysis';
+import InteractiveAnalysis from "../interactiveAnalysis/InteractiveAnalysis";
 import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
 import newGithubIssueUrl from "new-github-issue-url";
-
-interface UserProfile {
-  name?: string;
-  account?: string;
-}
 
 const DEFAULT_LOAD_DATA_INTERVAL = 1000 * 60 * 5;
 
