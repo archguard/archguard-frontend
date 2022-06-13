@@ -16,14 +16,7 @@ import { queryUnstableFiles } from "@/api/module/gitFile";
 import ApiResourceTree from "@/pages/system/systemSummary/Summary/components/ApiResourceTree";
 import { queryProjectCompositionDependency } from "@/api/module/project";
 import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
-import { getAllIssue, IssuePosition } from "@/api/module/issue";
-import {
-  ClockCircleOutlined,
-  DownCircleOutlined,
-  ExclamationCircleOutlined,
-  UpCircleOutlined
-} from "@ant-design/icons";
-import { issueColumns } from "@/pages/system/systemSummary/Summary/columns/issueColumns";
+import { getAllIssue } from "@/api/module/issue";
 import { projectDependencyColumns } from "@/pages/system/systemSummary/Summary/columns/projectDependencyColumns";
 
 function Summary() {
@@ -34,7 +27,6 @@ function Summary() {
   const [showFileSizing, setShowFileSizing] = useState(false);
   const [showFileChangeSizing, setShowFileChangeSizing] = useState(false);
   const [projectDependency, setProjectDependency] = useState([] as any);
-  const [issues, setIssues] = useState([] as any);
 
   const { systemId } = useParams();
   storage.setSystemId(systemId)
@@ -62,12 +54,6 @@ function Summary() {
       setProjectDependency(res);
     });
   }, []);
-
-  useEffect(() => {
-    getAllIssue(systemId).then((res) => {
-      setIssues(res);
-    });
-  }, [setIssues]);
 
   useEffect(() => {
     queryUnstableFiles(systemId).then((res) => {
@@ -168,10 +154,6 @@ function Summary() {
       <div>
         <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY' }) } ({ projectDependency.length })</h2>
         <Table dataSource={ projectDependency } columns={ projectDependencyColumns }/>
-      </div>
-      <div>
-        <h2>Issues ({ issues.length })</h2>
-        <Table tableLayout={"auto"} dataSource={ issues } columns={ issueColumns } />
       </div>
       <div className={ styles.physical }>
         <div className={ styles.demand }>
