@@ -19,7 +19,7 @@ const DatabaseMap = () => {
   const onSystemChange = useCallback((index: number) => {
     setIsInChanging(false)
     let system = systemInfo?.value!.filter((item) => item.id === index)[0]
-    if (!!system) {
+    if (system) {
       storage.setSystemId(system.id);
       storage.setSystemLanguage(system.language);
 
@@ -32,12 +32,16 @@ const DatabaseMap = () => {
     }
   }, [setIsInChanging, setDbRecords]);
 
+  const sortFunc = (type: string) => {
+    return (a, b) => a[type].length - b[type].length;
+  }
+
   const unmapColumns = [
-    { title: 'packageName', dataIndex: 'packageName' },
-    { title: 'className', dataIndex: 'className' },
-    { title: 'functionName', dataIndex: 'functionName', },
-    { title: 'tables', dataIndex: 'tables', },
-  ]
+    { title: "packageName", dataIndex: "packageName", sorter: sortFunc("packageName") },
+    { title: "className", dataIndex: "className", sorter: sortFunc("className") },
+    { title: "functionName", dataIndex: "functionName", sorter: sortFunc("functionName") },
+    { title: "tables", dataIndex: "tables", sorter: sortFunc("tables") },
+  ];
 
   return (
     <div>
