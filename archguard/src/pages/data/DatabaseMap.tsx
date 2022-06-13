@@ -6,6 +6,7 @@ import { queryDatamap } from "@/api/datamap/datamap";
 import { useParams } from "umi";
 import { useIntl } from "@@/plugin-locale/localeExports";
 import DatamapSankey from "@/pages/data/components/DatamapSankey";
+import { newLineMessage } from "@/utils/newLineMessage";
 
 const DatabaseMap = () => {
   const { formatMessage } = useIntl();
@@ -42,10 +43,11 @@ const DatabaseMap = () => {
     <div>
       { systemInfo?.value &&
         <>
-          <p>{ formatMessage({ id: 'DATABASE_MAP_TIPS' }) }</p>
-          <a href="https://github.com/archguard/archguard"
-             target={ "_blank" }
-             rel="noreferrer">https://github.com/archguard/archguard</a>
+          <p>{newLineMessage(formatMessage, "DATABASE_MAP_TIPS")}
+            <a href="https://github.com/archguard/archguard"
+               target={ "_blank" }
+               rel="noreferrer">https://github.com/archguard/archguard</a>
+          </p>
           <Select
             style={ { width: 350, color: "#000" } }
             bordered={ true }
