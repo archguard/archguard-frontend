@@ -34,7 +34,6 @@ const DEFAULT_LOAD_DATA_INTERVAL = 1000 * 60 * 5;
 const Home = () => {
   const { formatMessage } = useIntl();
   const ref = useRef<any>({});
-  const [user, setUser] = useState<UserProfile>();
   const [systemList, loadSystemList] = useSystemList();
   const [systemInfoList, setSystemInfoList] = useState<SystemInfo[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
@@ -46,7 +45,6 @@ const Home = () => {
 
   useMount(() => {
     storage.clear();
-    setUser({ name: "ArchGuard", account: "admin" });
   });
 
   useEffect(() => {
@@ -211,47 +209,37 @@ ${log}
     <div className="multiple-system-container">
       <div className="multiple-system-header">
         <div className="header-logo">
-          <img src={ require("@/assets/images/logo.png") } alt="logo"/>
+          <img src={ require("@/assets/images/logo.png") } alt="logo" />
         </div>
-        { user && (
-          <div className="header-user">
-            <div>
-              <Button
-                icon={ <GlobalOutlined/> }
-                onClick={ () => setLanguage() }
-              >
-                { formatMessage({ id: 'SWITCH_LANGUAGE' }) }
-              </Button>
-            </div>
-            <div>
-              <a href="https://archguard.org/faq" target={ "_blank" }>
-                <Button type="link" style={ { color: "#ffffff" } } icon={ <QuestionCircleOutlined/> }>
-                  FAQ
-                </Button>
-              </a>
-            </div>
-            <div>
-              { getFeature(FEATURES.INSIDE_FEATURE) && (
-                <Button
-                  type="link"
-                  style={ { color: "#ffffff" } }
-                  icon={ <QuestionCircleOutlined/> }
-                  onClick={ () => setHelpModalVisible(true) }
-                >
-                  { formatMessage({ id: 'OPERATION_DOCUMENT' }) }
-                </Button>
-              ) }
-            </div>
-
-            <div className="user-info">
-              <img src={ require("@/assets/images/userProfile.png") }></img>
-              <span className="user-name">
-                { user.name } / { user.account }
-              </span>
-              <UpOutlined className="user-icon"/>
-            </div>
+        <div className="header-user">
+          <div>
+            <Button
+              icon={ <GlobalOutlined /> }
+              onClick={ () => setLanguage() }
+            >
+              { formatMessage({ id: "SWITCH_LANGUAGE" }) }
+            </Button>
           </div>
-        ) }
+          <div>
+            <a href="https://archguard.org/faq" target={ "_blank" }>
+              <Button type="link" style={ { color: "#ffffff" } } icon={ <QuestionCircleOutlined /> }>
+                FAQ
+              </Button>
+            </a>
+          </div>
+          <div>
+            { getFeature(FEATURES.INSIDE_FEATURE) && (
+              <Button
+                type="link"
+                style={ { color: "#ffffff" } }
+                icon={ <QuestionCircleOutlined /> }
+                onClick={ () => setHelpModalVisible(true) }
+              >
+                { formatMessage({ id: "OPERATION_DOCUMENT" }) }
+              </Button>
+            ) }
+          </div>
+        </div>
       </div>
       <div className="multiple-system-selector">
         <Tabs defaultActiveKey="my-system" onChange={ handleTabClick }>
