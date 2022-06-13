@@ -43,6 +43,7 @@ const menuList = configForTargets({
       icon: <CloudSyncOutlined />,
       children: [
         { key: "/analysis/metric", text: "指标分析" },
+        { key: "/systemEvolving/issue", text: "问题分析" },
         { key: "/systemEvolving/MeasureIndicators", text: "指标看板", },
       ],
     },
