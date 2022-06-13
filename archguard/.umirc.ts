@@ -78,8 +78,12 @@ export default defineConfig({
           component: "@/pages/system/metrics",
         },
         {
-          path: "systemEvolving/metrics/issue",
-          component: "@/pages/system/metrics/issue",
+          path: "systemAnalysis/Issue",
+          component: "@/pages/system/systemAnalysis/Issue",
+        },
+        {
+          path: "systemAnalysis/ApiAnalysis",
+          component: "@/pages/system/systemAnalysis/ApiAnalysis/ApiAnalysis",
         },
         {
           path: "systemEvolving",

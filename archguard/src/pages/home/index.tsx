@@ -126,7 +126,7 @@ const Home = () => {
       Modal.confirm({
         type: "info",
         title: "日志",
-        cancelText: "创建 issue",
+        cancelText: "创建 Issue",
         style: { whiteSpace: "pre" },
         width: "80%",
         content: log.split(/\\n/)

@@ -8,21 +8,17 @@ import { history, useParams } from "umi";
 import { useIntl } from "@@/plugin-locale/localeExports";
 import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
-import { queryContainerServices } from "@/api/module/containerService";
 import { Switch, Table } from 'antd';
 import FileChangeSizing from "@/pages/system/systemSummary/Summary/components/FileChangeSizing";
 import FileSizing from "@/pages/system/systemSummary/Summary/components/FileSizing";
 import { queryUnstableFiles } from "@/api/module/gitFile";
-import ApiResourceTree from "@/pages/system/systemSummary/Summary/components/ApiResourceTree";
 import { queryProjectCompositionDependency } from "@/api/module/project";
 import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
-import { getAllIssue } from "@/api/module/issue";
 import { projectDependencyColumns } from "@/pages/system/systemSummary/Summary/columns/projectDependencyColumns";
 
 function Summary() {
   const { formatMessage } = useIntl();
   const { data: overviewCount } = useOverviewCount();
-  const [services, setServices] = useState({} as any);
   const [unstableFiles, setUnstableFiles] = useState([]);
   const [showFileSizing, setShowFileSizing] = useState(false);
   const [showFileChangeSizing, setShowFileChangeSizing] = useState(false);
@@ -44,12 +40,6 @@ function Summary() {
   }, [systemList]);
 
   useEffect(() => {
-    queryContainerServices(systemId).then((res) => {
-      setServices(res);
-    });
-  }, []);
-
-  useEffect(() => {
     queryProjectCompositionDependency(systemId).then((res) => {
       setProjectDependency(res);
     });
@@ -60,32 +50,6 @@ function Summary() {
       setUnstableFiles(res as any);
     });
   }, []);
-
-  const sortFunc = (type: String) => (a, b) => a[type].length - b[type].length;
-
-  const demandColumns = [
-    {
-      title: "Source Method",
-      dataIndex: "sourceMethod",
-      key: "sourceMethod",
-      sorter: sortFunc("sourceMethod"),
-    },
-    { title: "URI", dataIndex: "targetUrl", key: "targetUrl", sorter: sortFunc("targetUrl") },
-    {
-      title: "HTTP Method",
-      dataIndex: "targetHttpMethod",
-      key: "targetHttpMethod",
-      sorter: sortFunc("targetHttpMethod")
-    },
-  ];
-
-  const supplyColumns = [
-    { title: 'package', dataIndex: 'packageName', key: 'packageName', sorter: sortFunc("packageName")},
-    { title: 'class', dataIndex: 'className', key: 'className', sorter: sortFunc("className") },
-    { title: 'method', dataIndex: 'methodName', key: 'methodName',sorter: sortFunc("methodName") },
-    { title: 'Http Method', dataIndex: 'sourceHttpMethod', key: 'sourceHttpMethod',sorter: sortFunc("sourceHttpMethod") },
-    { title: 'sourceUrl', dataIndex: 'sourceUrl', key: 'sourceUrl', sorter: sortFunc("sourceUrl") },
-  ];
 
   const lineCountColumns = [
     { title: formatMessage({ id: 'SYSTEM_OVERVIEW.LANGUAGE' }), dataIndex: 'language', key: 'language', },
@@ -154,19 +118,6 @@ function Summary() {
       <div>
         <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY' }) } ({ projectDependency.length })</h2>
         <Table dataSource={ projectDependency } columns={ projectDependencyColumns }/>
-      </div>
-      <div className={ styles.physical }>
-        <div className={ styles.demand }>
-          <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.API_DEMAND_LIST' }) } ({ services["demands"]?.length })</h2>
-          <Table dataSource={ services["demands"] } columns={ demandColumns }/>
-        </div>
-        { services["resources"]?.length &&
-          <div className={ styles.resource }>
-            <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.API_RESOURCE_LIST' }) } ({ services["resources"]?.length })</h2>
-            <Table dataSource={ services["resources"] } columns={ supplyColumns }/>
-            <ApiResourceTree dataSource={ services["resources"] }/>
-          </div>
-        }
       </div>
     </div>
   );
