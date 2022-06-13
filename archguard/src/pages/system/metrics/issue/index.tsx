@@ -6,31 +6,37 @@ import { issueColumns } from "@/pages/system/systemSummary/Summary/columns/issue
 
 const Issue = () => {
   const { systemId, type } = useParams();
-  const [issues, setIssues] = useState([] as any);
-  const [testIssues, setTestIssues] = useState([] as any);
-  const [sqlIssues, setSqlIssues] = useState([] as any);
-  const [httpApiIssues, setHttpApiIssues] = useState([] as any);
+  const [issues, setIssues] = useState({ } as any);
 
   useEffect(() => {
     getAllIssue(systemId).then((res) => {
-      setTestIssues(res.filter((val) => val.ruleType === "TEST_CODE_SMELL"))
-      setSqlIssues(res.filter((val) => val.ruleType === "SQL_SMELL"))
-      setHttpApiIssues(res.filter((val) => val.ruleType === "HTTP_API_SMELL"))
+      const issueMap = {};
+      for (let issue of res) {
+        if (!issueMap[issue.ruleType]) {
+          issueMap[issue.ruleType] = [];
+        }
+
+        issueMap[issue.ruleType].push(issue);
+      }
+
+      setIssues(issueMap);
     });
-  }, [setIssues, setTestIssues, setSqlIssues, setHttpApiIssues]);
+  }, [setIssues]);
+
+  const simpleName = (name: String) => {
+    return name.replaceAll("_", " ")
+  };
 
   return (
     <div>
       <Tabs activeKey={type}>
-        <Tabs.TabPane tab="Test Smell" key="test">
-          <Table tableLayout={"auto"} dataSource={ testIssues } columns={issueColumns} />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="SQL Smell" key="sql">
-          <Table tableLayout={"auto"} dataSource={ sqlIssues } columns={issueColumns} />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="HTTP API Smell" key="http-api">
-          <Table tableLayout={"auto"} dataSource={ httpApiIssues } columns={issueColumns} />
-        </Tabs.TabPane>
+        {Object.keys(issues).map(function (key, index) {
+            return (
+              <Tabs.TabPane tab={simpleName(key)} key={ index }>
+                <Table tableLayout={"auto"} dataSource={issues[key] as any} columns={issueColumns} />
+              </Tabs.TabPane>
+            );
+          })}
       </Tabs>
     </div>
   );
