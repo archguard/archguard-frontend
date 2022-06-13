@@ -79,7 +79,7 @@ export default defineConfig({
         },
         {
           path: "systemAnalysis/Issue",
-          component: "@/pages/system/systemAnalysis/Issue",
+          component: "@/pages/system/systemAnalysis/Issue/Issue",
         },
         {
           path: "systemAnalysis/ApiAnalysis",
