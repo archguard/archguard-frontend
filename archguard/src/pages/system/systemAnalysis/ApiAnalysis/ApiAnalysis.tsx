@@ -66,7 +66,7 @@ const ApiAnalysis = () => {
           </h2>
           <Table dataSource={services["demands"]} columns={demandColumns} />
         </div>
-        {services["resources"]?.length && (
+        {services["resources"]?.length > 0 && (
           <div className={styles.resource}>
             <h2>
               {formatMessage({ id: "SYSTEM_OVERVIEW.API_RESOURCE_LIST" })} (

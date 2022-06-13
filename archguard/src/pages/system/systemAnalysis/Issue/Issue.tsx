@@ -38,6 +38,7 @@ const Issue = () => {
             );
           })}
       </Tabs>
+      { Object.keys(issues).length === 0 && <div>No Found issue</div>}
     </div>
   );
 };
