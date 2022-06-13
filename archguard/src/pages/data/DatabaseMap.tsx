@@ -43,6 +43,9 @@ const DatabaseMap = () => {
       { systemInfo?.value &&
         <>
           <p>{ formatMessage({ id: 'DATABASE_MAP_TIPS' }) }</p>
+          <a href="https://github.com/archguard/archguard"
+             target={ "_blank" }
+             rel="noreferrer">https://github.com/archguard/archguard</a>
           <Select
             style={ { width: 350, color: "#000" } }
             bordered={ true }

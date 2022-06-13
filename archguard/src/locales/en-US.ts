@@ -9,7 +9,7 @@ export default {
   SERVICES_MAP_TIPS: "API Consumer support: (frontend) Axios、UMI-Request，(backend)：Java Spring + RestTemplate、Kotlin Spring + RestTemplate。\\n API Producer support：Java/Kotlin + Spring、C# + .Net。\\n New frameworks or languages, please move to：",
   CODE_ANALYSIS: "Code Analysis",
   DATABASE_MAP: "Database Map",
-  DATABASE_MAP_TIPS: "supported: Java/Kotlin with JPA/JDBI/MyBatis",
+  DATABASE_MAP_TIPS: "supported: Java/Kotlin with JPA/JDBI/MyBatis\\n New frameworks or languages, please move to：",
   DATAMAP_DEP_CALL_MAP: "Database dependency map",
   CHANGE_DETECT: "Change Analysis",
   SELECT_SYSTEM: "Select system",
