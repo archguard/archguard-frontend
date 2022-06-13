@@ -6,6 +6,7 @@ import FileTextOutlined from "@ant-design/icons/FileTextOutlined";
 import { storage } from "@/store/storage/sessionStorage";
 import { SettingOutlined } from "@ant-design/icons";
 import { useMount } from "react-use";
+import { useParams } from "umi";
 
 export const BUILD_TARGET = process.env.BUILD_TARGET || "default";
 
@@ -66,14 +67,7 @@ const menuList = configForTargets({
 });
 
 export default function PageSider(props: any) {
-  const systemId = storage.getSystemId();
-
-  useMount(() => {
-    if (systemId === null) {
-      const id = props.location.pathname.split("/")[1];
-      storage.setSystemId(id);
-    }
-  });
+  const { systemId } = useParams();
 
   const renderMenuItem = (item: any) => {
     if (!item) return;
@@ -109,7 +103,7 @@ export default function PageSider(props: any) {
         theme="light"
         mode="inline"
         onClick={(e) => props.history.push(e.key)}
-        defaultOpenKeys={[props.location.pathname]}
+        defaultOpenKeys={['systemEvaluation', 'analysis', 'systemEvolving']}
         selectedKeys={[props.location.pathname]}
       >
         {menuList.map((item: any) => {
