@@ -1,5 +1,6 @@
 import { CompositionDependency } from "@/api/module/project";
 import { uniqBy } from "lodash";
+import { SystemInfo } from "@/api/addition/systemInfo";
 
 // todo: save images for online
 const javaDepsImageMap = {
@@ -15,7 +16,18 @@ const jvmImportants = {
   "org.jdbi": "https://archguard.github.io/logo/stacks/jdbi.png",
 };
 
-export function summaryStacks(deps: CompositionDependency[]) {
+export interface StackIcon {
+  name: string,
+  img: string
+}
+
+export interface StackSummary {
+  all: string[],
+  important: any,
+  icons: StackIcon[]
+}
+
+export function summaryStacks(deps: CompositionDependency[], system: SystemInfo): StackSummary {
   const result = {};
   const importantDeps = {};
   const icons = [];

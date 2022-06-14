@@ -16,7 +16,7 @@ import { queryProjectCompositionDependency } from "@/api/module/project";
 import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
 import { projectDependencyColumns } from "@/pages/system/systemSummary/Summary/columns/projectDependencyColumns";
 import { summaryStacks } from "@/pages/system/systemSummary/summaryStacks";
-import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
+import { SystemInfo } from "@/api/addition/systemInfo";
 
 function Summary() {
   const { formatMessage } = useIntl();
@@ -26,6 +26,7 @@ function Summary() {
   const [showFileChangeSizing, setShowFileChangeSizing] = useState(false);
   const [projectDependency, setProjectDependency] = useState([] as any);
   const [stacks, setStacks] = useState(null as any);
+  const [system, setSystem] = useState(null as any);
 
   const { systemId } = useParams();
   storage.setSystemId(systemId)
@@ -33,21 +34,22 @@ function Summary() {
   const [systemList] = useSystemList();
   const [systemName, setSystemName] = useState<string>("");
 
-  const getSystemName = (): string => {
-    const list = systemList?.value || [];
-    return list.find((system) => system.id === parseInt(systemId))?.systemName || "";
-  };
-
   useEffect(() => {
-    setSystemName(getSystemName());
-  }, [systemList]);
+    const list = systemList?.value || [];
+    let optSystem = list.find((system) => system.id === parseInt(systemId));
+    if (optSystem) {
+      setSystem(optSystem);
+    }
+    const systemName = optSystem?.systemName || "";
+    setSystemName(systemName);
+  }, [systemList, setSystem]);
 
   useEffect(() => {
     queryProjectCompositionDependency(systemId).then((res) => {
       setProjectDependency(res);
-      setStacks(summaryStacks(res))
+      setStacks(summaryStacks(res, system as SystemInfo))
     });
-  }, [setStacks]);
+  }, [setStacks, system]);
 
   useEffect(() => {
     queryUnstableFiles(systemId).then((res) => {
