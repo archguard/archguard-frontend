@@ -41,7 +41,7 @@ export default defineConfig({
     { path: "/home", redirect: "/analysis/home" },
     {
       path: "/workbench",
-      component: "@/components/Business/Layouts/june/JuneLayout",
+      component: "@/components/Business/Layouts/main/MainLayout",
       routes: [
         {
           path: "home",
@@ -51,7 +51,7 @@ export default defineConfig({
     },
     {
       path: "/analysis",
-      component: "@/components/Business/Layouts/june/JuneLayout",
+      component: "@/components/Business/Layouts/main/MainLayout",
       routes: [
         {
           path: "home",
@@ -70,7 +70,7 @@ export default defineConfig({
     {
       exact: false,
       path: "/visual",
-      component: "@/components/Business/Layouts/june/JuneLayout",
+      component: "@/components/Business/Layouts/main/MainLayout",
       routes: [
         {
           path: "services-map",
@@ -89,7 +89,7 @@ export default defineConfig({
     {
       exact: false,
       path: "/:systemId",
-      component: "@/components/Business/Layouts/PageLayout",
+      component: "@/components/Business/Layouts/subSystem/SubSystemLayout",
       routes: [
         {
           path: "analysis/dependence",

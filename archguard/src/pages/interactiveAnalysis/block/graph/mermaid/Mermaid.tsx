@@ -20,7 +20,7 @@ function Mermaid(props: MermaidProps) {
   const ref = React.useRef({} as any);
   const theme = useState("default");
   // const [mode] = useColorMode()
-  // const theme = mode === 'dark' ? 'dark' : 'june'
+  // const theme = mode === 'dark' ? 'dark' : 'main'
 
   useEffect(() => {
     mermaid.initialize({

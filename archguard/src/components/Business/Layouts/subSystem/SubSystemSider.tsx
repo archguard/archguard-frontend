@@ -66,7 +66,7 @@ const menuList = configForTargets({
   ],
 });
 
-export default function PageSider(props: any) {
+export default function SubSystemSider(props: any) {
   const { systemId } = useParams();
 
   const renderMenuItem = (item: any) => {

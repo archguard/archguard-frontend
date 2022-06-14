@@ -5,9 +5,9 @@ import {
   GlobalOutlined,
   QuestionCircleOutlined
 } from "@ant-design/icons";
-import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
+import { FEATURES, getFeature } from "@/components/Business/Layouts/subSystem/SubSystemHeader";
 import Help from "@/pages/help";
-import "./JuneLayout.less";
+import "./MainLayout.less";
 import "antd/dist/antd.less";
 
 const HomeMenus = [
@@ -20,7 +20,7 @@ const HomeMenus = [
   { key: "/visual/message-map", text: "消息地图" },
 ]
 
-export default function JuneHeader(props: any) {
+export default function MainHeader(props: any) {
   const { formatMessage } = useIntl();
   const [currentLanguage, setCurrentLanguage] = useState("zh-CN");
   const [helpModalVisible, setHelpModalVisible] = useState(false);

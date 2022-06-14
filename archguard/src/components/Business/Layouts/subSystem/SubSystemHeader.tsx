@@ -37,7 +37,7 @@ export function getFeature(name: FeatureType) {
   return featureEnabled !== undefined ? featureEnabled : true;
 }
 
-export default function PageHeader(props: any) {
+export default function SubSystemHeader(props: any) {
   const [systemInfo] = useSystemList();
   const currentSystemId = Number(storage.getSystemId());
 
