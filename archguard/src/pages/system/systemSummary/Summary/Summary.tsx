@@ -15,6 +15,8 @@ import { queryUnstableFiles } from "@/api/module/gitFile";
 import { queryProjectCompositionDependency } from "@/api/module/project";
 import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
 import { projectDependencyColumns } from "@/pages/system/systemSummary/Summary/columns/projectDependencyColumns";
+import { summaryStacks } from "@/pages/system/systemSummary/summaryStacks";
+import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 
 function Summary() {
   const { formatMessage } = useIntl();
@@ -23,6 +25,7 @@ function Summary() {
   const [showFileSizing, setShowFileSizing] = useState(false);
   const [showFileChangeSizing, setShowFileChangeSizing] = useState(false);
   const [projectDependency, setProjectDependency] = useState([] as any);
+  const [stacks, setStacks] = useState(null as any);
 
   const { systemId } = useParams();
   storage.setSystemId(systemId)
@@ -42,8 +45,9 @@ function Summary() {
   useEffect(() => {
     queryProjectCompositionDependency(systemId).then((res) => {
       setProjectDependency(res);
+      setStacks(summaryStacks(res))
     });
-  }, []);
+  }, [setStacks]);
 
   useEffect(() => {
     queryUnstableFiles(systemId).then((res) => {
@@ -118,6 +122,10 @@ function Summary() {
       <div>
         <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY' }) } ({ projectDependency.length })</h2>
         <Table dataSource={ projectDependency } columns={ projectDependencyColumns }/>
+      </div>
+      <div>
+        { stacks && stacks.heavy && <p><JsonView data={stacks.heavy}/></p>}
+        { stacks && stacks.all && <p><JsonView data={stacks.all} /></p>}
       </div>
     </div>
   );

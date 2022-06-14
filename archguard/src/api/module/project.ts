@@ -1,6 +1,6 @@
 import axios from "../axios";
 
-interface CompositionDependency {
+export interface CompositionDependency {
   id: string;
   systemId: string;
   name: string;
