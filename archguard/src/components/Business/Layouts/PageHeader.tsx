@@ -66,8 +66,6 @@ export default function PageHeader(props: any) {
           style={{
             marginLeft: "24px",
             color: "#ffffff",
-            fontStyle: "italic",
-            fontSize: "20px",
             fontWeight: 800,
             cursor: "pointer",
           }}
@@ -75,7 +73,7 @@ export default function PageHeader(props: any) {
             history.push("/home");
           }}
         >
-          ArchGuard
+          Home
         </span>
         <span style={{marginLeft: 15, color: "white", userSelect: "none"}}>丨</span>
         <Select

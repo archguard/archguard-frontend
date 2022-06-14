@@ -1,6 +1,6 @@
 import React from "react";
 
-export function MessageMap() {
+export default function MessageMap() {
   return (
     <div>
       <h2>Coming soon..</h2>
