@@ -1,14 +1,15 @@
 import React from "react";
 import { Layout } from "antd";
-import DefaultHeader from "@/components/Business/Layouts/default/DefaultHeader";
-import "./DefaultLayout.less"
+import JuneHeader from "@/components/Business/Layouts/june/JuneHeader";
+import "./JuneLayout.less"
+import PageSider from "@/components/Business/Layouts/PageSider";
 
-const { Header, Content } = Layout;
+const { Header, Sider, Content } = Layout;
 
-export default function DefaultLayout(props: any) {
+export default function JuneLayout(props: any) {
   return (
     <Layout className="multiple-system-container">
-      <DefaultHeader />
+      <JuneHeader />
 
       <Layout style={{ backgroundColor: "transparent" }}>
         <Layout style={{ overflow: "auto", backgroundColor: "transparent" }}>

@@ -4,9 +4,10 @@ import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
 import { GlobalOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "@/pages/help";
-import "./DefaultLayout.less";
+import "./JuneLayout.less";
+import "antd/dist/antd.less";
 
-export default function DefaultHeader(props: any) {
+export default function JuneHeader(props: any) {
   const { formatMessage } = useIntl();
   const [currentLanguage, setCurrentLanguage] = useState("zh-CN");
   const [helpModalVisible, setHelpModalVisible] = useState(false);
@@ -24,7 +25,7 @@ export default function DefaultHeader(props: any) {
   return (
     <div className="multiple-system-header">
       <div className="header-logo">
-        <img src={require("@/assets/images/logo.png")} alt="logo" />
+        <img src={require("@/assets/images/logo-small.png")} alt="logo" />
         <span className="slogan">守护架构，放权代码</span>
       </div>
       <div className="header-user">

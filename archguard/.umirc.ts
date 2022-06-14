@@ -40,11 +40,12 @@ export default defineConfig({
     { path: "/", redirect: "/home" },
     { path: "/home", component: "@/pages/home" },
     {
-      path: "/",
-      component: "@/components/Business/Layouts/default/DefaultLayout",
+      exact: false,
+      path: "/visual",
+      component: "@/components/Business/Layouts/june/JuneLayout",
       routes: [
         {
-          path: "visual/services-map",
+          path: "services-map",
           component: "@/pages/servicesMap/ServicesMap",
         },
       ],
