@@ -14,12 +14,30 @@ const jvmImportants = {
   "org.flywaydb": "https://archguard.github.io/logo/stacks/flyway.jpg",
   "org.apache.dubbo": "https://archguard.github.io/logo/stacks/dubbo.jpg",
   "org.jdbi": "https://archguard.github.io/logo/stacks/jdbi.png",
+  "org.antlr": "https://archguard.github.io/logo/stacks/antlr.jpg",
+  "io.mockk": "https://archguard.github.io/logo/stacks/mockk.png",
+  "org.eclipse.jgit": "https://archguard.github.io/logo/stacks/jgit.png",
+  "dom4j": "https://archguard.github.io/logo/stacks/dom4j.png",
+  "mysql": "https://archguard.github.io/logo/stacks/mysql.png",
+  "com.h2database": "https://archguard.github.io/logo/stacks/h2.png",
+  "org.junit.platform": "https://archguard.github.io/logo/stacks/junit.png",
 };
 
 const npmImportants = {
   "react": "https://archguard.github.io/logo/stacks/react.png",
   "antd": "https://archguard.github.io/logo/stacks/ant-design.png",
   "d3": "https://archguard.github.io/logo/stacks/d3.jpg",
+  "cytoscape": "https://archguard.github.io/logo/stacks/cytoscape.png",
+  "mermaid": "https://archguard.github.io/logo/stacks/mermaid.png",
+  "prosemirror": "https://archguard.github.io/logo/stacks/prosemirror.png",
+  "styled-components": "https://archguard.github.io/logo/stacks/styled-components.png",
+  "bizcharts": "https://archguard.github.io/logo/stacks/bizcharts.jpg",
+  "jest": "https://archguard.github.io/logo/stacks/jest.png",
+  "umi": "https://archguard.github.io/logo/stacks/umi.png",
+  "typescript": "https://archguard.github.io/logo/stacks/typescript.png",
+  "lodash": "https://archguard.github.io/logo/stacks/lodash.png",
+  "eslint": "https://archguard.github.io/logo/stacks/eslint.jpg",
+  "unified": "https://archguard.github.io/logo/stacks/unified.png",
 };
 
 export interface StackIcon {
