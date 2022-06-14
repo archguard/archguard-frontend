@@ -6,13 +6,13 @@ import { useIntl } from "@@/plugin-locale/localeExports";
 
 import { storage } from "@/store/storage/sessionStorage";
 import { queryCommitByIds, queryHistory } from "@/api/module/gitFile";
-import RelationMap from "@/pages/change/RelationMap";
+import RelationMap from "@/pages/changeDiff/RelationMap";
 
-const ChangeDetect = () => {
+const ChangeDiff = () => {
   const { formatMessage } = useIntl();
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
-  // @ts-ignore
+ª  // @ts-ignore
   const [systemId, setSystemId] = useState(useParams().systemId);
   const [commits, setCommits] = useState(null)
   const [relations, setRelations] = useState([])
@@ -126,4 +126,4 @@ const ChangeDetect = () => {
   )
 }
 
-export default ChangeDetect
+export default ChangeDiff

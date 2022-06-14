@@ -41,7 +41,7 @@ const FileChangeSizing = (props: FileChangeSizingProps) => {
     let count = rootNode.value / data.length * 6;
     let averageCount = count > 20 ? count : 20;
 
-    // todo: change layout see in: https://bl.ocks.org/veltman/522135ac8dcf20a2e96cadfc595e07e4
+    // todo: changeDiff layout see in: https://bl.ocks.org/veltman/522135ac8dcf20a2e96cadfc595e07e4
     const treemap = voronoiTreemap().clip([
       [0, 0],
       [0, svgHeight],

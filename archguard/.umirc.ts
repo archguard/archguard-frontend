@@ -37,18 +37,8 @@ export default defineConfig({
     defaultSizes: "parsed", // stat  // gzip
   },
   routes: [
-    { path: "/", redirect: "/system/home" },
-    { path: "/home", redirect: "/system/home" },
-    {
-      path: "/system",
-      component: "@/components/Business/Layouts/june/JuneLayout",
-      routes: [
-        {
-          path: "home",
-          component: "@/pages/home",
-        },
-      ],
-    },
+    { path: "/", redirect: "/analysis/home" },
+    { path: "/home", redirect: "/analysis/home" },
     {
       path: "/workbench",
       component: "@/components/Business/Layouts/june/JuneLayout",
@@ -64,8 +54,16 @@ export default defineConfig({
       component: "@/components/Business/Layouts/june/JuneLayout",
       routes: [
         {
+          path: "home",
+          component: "@/pages/home",
+        },
+        {
           path: "code-analysis",
           component: "@/pages/code",
+        },
+        {
+          path: "change-diff",
+          component: "@/pages/changeDiff/ChangeDiff",
         },
       ],
     },

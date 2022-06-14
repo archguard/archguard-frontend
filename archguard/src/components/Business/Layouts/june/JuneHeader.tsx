@@ -11,12 +11,13 @@ import "./JuneLayout.less";
 import "antd/dist/antd.less";
 
 const HomeMenus = [
-  { key: "/workbench/home", text: "交互分析（Alpha）" },
-  { key: "/system/home", text: "子系统分析" },
+  { key: "/workbench/home", text: "工作台（Alpha）" },
+  { key: "/analysis/home", text: "子系统分析" },
   { key: "/analysis/code-analysis", text: "代码分析" },
+  { key: "/analysis/change-diff", text: "变更影响分析" },
   { key: "/visual/database-map", text: "数据库地图" },
   { key: "/visual/services-map", text: "服务地图" },
-  { key: "/visual/message-map", text: "消息系统地图" },
+  { key: "/visual/message-map", text: "消息地图" },
 ]
 
 export default function JuneHeader(props: any) {

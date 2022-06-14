@@ -39,7 +39,7 @@ export function queryUnstableFiles(systemId: String) {
   });
 }
 
-export function queryCommitByIds(systemId: String, since: String, until: String) {
+export function queryCommitByIds(systemId: any, since: String, until: String) {
   return axios<any[]>({
     url: `/api/systems/${systemId}/diff/influence/commit`,
     params: {
