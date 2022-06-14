@@ -1,28 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { Layout } from "antd";
 import "antd/dist/antd.less";
-import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
-import "./DefaultLayout.less";
+import DefaultHeader from "@/components/Business/Layouts/default/DefaultHeader";
+import "./DefaultLayout.less"
 
 const { Header, Content } = Layout;
 
 export default function DefaultLayout(props: any) {
-  const { formatMessage } = useIntl();
-  const [currentLanguage, setCurrentLanguage] = useState('zh-CN');
-  const [helpModalVisible, setHelpModalVisible] = useState(false);
-
-  const setLanguage = () => {
-    if (currentLanguage === "zh-CN") {
-      setCurrentLanguage("en-US")
-    } else {
-      setCurrentLanguage("zh-CN")
-    }
-
-    setLocale(currentLanguage, false);
-  };
-
   return (
-    <Layout style={{ height: "100%" }}>
+    <Layout className="multiple-system-container">
+      <DefaultHeader />
+
       <Layout>
         <Layout style={{ overflow: "auto" }}>
           <Content style={{ padding: "32px", minHeight: "auto", backgroundColor: "#fff" }}>
