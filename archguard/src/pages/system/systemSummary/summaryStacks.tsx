@@ -16,18 +16,24 @@ const jvmImportants = {
   "org.jdbi": "https://archguard.github.io/logo/stacks/jdbi.png",
 };
 
+const npmImportants = {
+  "react": "https://archguard.github.io/logo/stacks/react.png",
+  "antd": "https://archguard.github.io/logo/stacks/ant-design.png",
+  "d3": "https://archguard.github.io/logo/stacks/d3.jpg",
+};
+
 export interface StackIcon {
-  name: string,
-  img: string
+  name: string;
+  img: string;
 }
 
 export interface StackSummary {
-  all: string[],
-  important: any,
-  icons: StackIcon[]
+  all: string[];
+  important: any;
+  icons: StackIcon[];
 }
 
-export function summaryStacks(deps: CompositionDependency[], system: SystemInfo): StackSummary {
+function sumJvm(deps: CompositionDependency[]) {
   const result = {};
   const importantDeps = {};
   const icons = [];
@@ -67,4 +73,55 @@ export function summaryStacks(deps: CompositionDependency[], system: SystemInfo)
     important: importantDeps,
     icons: uniqIcons,
   };
+}
+
+function sumNpm(deps: CompositionDependency[]) {
+  const result = {}
+  const importantDeps = {};
+  const icons = [];
+  const importants = Object.keys(npmImportants);
+
+  for (let dep of deps) {
+    result[dep.depArtifact] = true;
+
+    if (importants.includes(dep.depArtifact)) {
+      icons.push({
+        name: dep.depArtifact,
+        img: npmImportants[dep.depArtifact],
+      });
+    }
+  }
+
+  console.info("heavy: " + JSON.stringify(importantDeps));
+  let uniqIcons = uniqBy(icons, (e) => e.name);
+
+  return {
+    all: Object.keys(result),
+    important: importantDeps,
+    icons: uniqIcons,
+  };
+}
+
+export function summaryStacks(deps: CompositionDependency[], system: SystemInfo): StackSummary {
+  let language = system.language.toLowerCase();
+  let summary: StackSummary;
+  switch (language) {
+    case "java":
+      summary = sumJvm(deps);
+      break;
+    case "kotlin":
+      summary = sumJvm(deps);
+      break;
+    case "typescript":
+      summary = sumNpm(deps);
+      break;
+    case "javascript":
+      summary = sumNpm(deps);
+      break;
+    default:
+      summary = sumJvm(deps);
+      break;
+  }
+
+  return summary;
 }

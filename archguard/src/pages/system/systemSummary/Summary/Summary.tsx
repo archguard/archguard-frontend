@@ -16,7 +16,7 @@ import { queryProjectCompositionDependency } from "@/api/module/project";
 import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
 import { projectDependencyColumns } from "@/pages/system/systemSummary/Summary/columns/projectDependencyColumns";
 import { summaryStacks } from "@/pages/system/systemSummary/summaryStacks";
-import { SystemInfo } from "@/api/addition/systemInfo";
+import { querySystemInfoById, SystemInfo } from "@/api/addition/systemInfo";
 
 function Summary() {
   const { formatMessage } = useIntl();
@@ -37,19 +37,20 @@ function Summary() {
   useEffect(() => {
     const list = systemList?.value || [];
     let optSystem = list.find((system) => system.id === parseInt(systemId));
-    if (optSystem) {
-      setSystem(optSystem);
-    }
     const systemName = optSystem?.systemName || "";
     setSystemName(systemName);
   }, [systemList, setSystem]);
 
   useEffect(() => {
-    queryProjectCompositionDependency(systemId).then((res) => {
-      setProjectDependency(res);
-      setStacks(summaryStacks(res, system as SystemInfo))
-    });
-  }, [setStacks, system]);
+    querySystemInfoById(systemId).then((systemInfo) => {
+      setSystem(systemInfo)
+
+      queryProjectCompositionDependency(systemId).then((res) => {
+        setProjectDependency(res);
+        setStacks(summaryStacks(res, systemInfo))
+      });
+    })
+  }, [setStacks, setSystem, systemId]);
 
   useEffect(() => {
     queryUnstableFiles(systemId).then((res) => {

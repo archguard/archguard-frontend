@@ -24,6 +24,12 @@ export function querySystemInfo() {
     method: "GET",
   });
 }
+export function querySystemInfoById(systemId: number) {
+  return axios<SystemInfo>({
+    url: `/api/system-info/${systemId}`,
+    method: "GET",
+  });
+}
 
 export function updateSystemInfo(parameter: any) {
   return axios<void>({
