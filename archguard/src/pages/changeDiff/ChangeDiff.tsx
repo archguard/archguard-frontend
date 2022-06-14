@@ -12,7 +12,7 @@ const ChangeDiff = () => {
   const { formatMessage } = useIntl();
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
-ª  // @ts-ignore
+  // @ts-ignore
   const [systemId, setSystemId] = useState(useParams().systemId);
   const [commits, setCommits] = useState(null)
   const [relations, setRelations] = useState([])
