@@ -79,8 +79,8 @@ export default defineConfig({
           component: "@/pages/servicesMap/ServicesMap",
         },
         {
-          path: "data-map",
-          component: "@/pages/data/DatabaseMap",
+          path: "database-map",
+          component: "@/pages/databaseMap/DatabaseMap",
         },
         {
           path: "message-map",

@@ -5,7 +5,7 @@ import { storage } from "@/store/storage/sessionStorage";
 import { queryDatamap } from "@/api/datamap/datamap";
 import { useParams } from "umi";
 import { useIntl } from "@@/plugin-locale/localeExports";
-import DatamapSankey from "@/pages/data/components/DatamapSankey";
+import DatamapSankey from "@/pages/databaseMap/components/DatamapSankey";
 import { newLineMessage } from "@/utils/newLineMessage";
 
 const DatabaseMap = () => {
