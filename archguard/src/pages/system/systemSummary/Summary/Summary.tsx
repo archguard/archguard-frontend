@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Summary.less";
+import "./Summary.less";
 import { BaButton } from "@/components/Basic/Button/Button";
 import { BaLabel } from "@/components/Basic/Label/Label";
 import { BuGrade } from "@/components/Business/Grade/Grade";
@@ -72,25 +72,25 @@ function Summary() {
 
   return (
     <div>
-      <div className={ styles.header }>
-        <div className={ styles.title }>
-          <div className={ styles.name }>{ systemName }</div>
+      <div className="header">
+        <div className="title">
+          <div className="name">{ systemName }</div>
         </div>
         <BaButton onClick={ () => history.push(`/${ storage.getSystemId() }/systemEvolving/MeasureIndicators`) }>
           { formatMessage({ id: 'SYSTEM_OVERVIEW.VIEW_METRIC_DASHBOARD' }) }
         </BaButton>
       </div>
-      <div className={ styles.body }>
-        <div className={ styles.detail }>
-          <div className={ styles.overview }>
+      <div className="body">
+        <div className="detail">
+          <div className="overview">
             <BaLabel value={ overviewCount?.contributorCount }
                      text={ formatMessage({ id: 'SYSTEM_OVERVIEW.CONTRIBUTORS' }) }/>
             <BuGrade text={ formatMessage({ id: 'SYSTEM_OVERVIEW.ARCH_LEVEL' }) }
                      grade={ overviewCount?.qualityLevel }/>
           </div>
         </div>
-        <div className={ styles.changes }>
-          <Table className={ styles.codeChart } dataSource={ overviewCount?.lineCounts } columns={ lineCountColumns }
+        <div className="changes">
+          <Table className="code-chart" dataSource={ overviewCount?.lineCounts } columns={ lineCountColumns }
                  size={ 'middle' } pagination={
             { defaultPageSize: 5 }
           }/>
@@ -98,14 +98,14 @@ function Summary() {
         </div>
       </div>
       <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.UNSTABLE' }) }</h2>
-      <div className={ styles.physical }>
-        <div className={ styles.changes }>
-          <div className={ styles.graph }>
+      <div className="physical">
+        <div className="changes">
+          <div className="graph">
             <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.CHANGE_FREQUENCY_SIZE' }) }</h2>
             <div>Show: <Switch onChange={toggleFileSizing} /></div>
             { showFileSizing && <FileSizing systemId={ systemId }/> }
           </div>
-          <div className={ styles.graph }>
+          <div className="graph">
             <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.CHANGE_FREQUENCY_SIZE_LINE_COUNT' }) }</h2>
             <div>Show: <Switch onChange={toggleFileChangeSizing} /></div>
             { showFileChangeSizing && <FileChangeSizing systemId={ systemId }/> }
@@ -121,10 +121,10 @@ function Summary() {
       <div>
         { stacks && stacks.icons && <div className="stack-icons">{
           stacks.icons.map((item: string, index: number) =>
-            <span>
-              <img width={"60px"} height={"60px"} src={item.img} key={index}  alt={"text"}/>
-              <span>{item.name}</span>
-            </span>)
+            <div className="stack-item">
+              <img src={item.img} key={index}  alt={"text"}/>
+              <p>{item.name}</p>
+            </div>)
         }</div>
         }
       </div>

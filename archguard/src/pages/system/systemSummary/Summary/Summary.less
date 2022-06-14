@@ -43,7 +43,7 @@
   flex-direction: row;
 }
 
-.codeChart {
+.code-chart {
   width: 600px;
 }
 
@@ -56,7 +56,18 @@
 }
 
 .stack-icons {
-  width: 40px;
-  height: 40px;
-  padding: 10px;
+  width: 100%;
+  display: flex;
+
+  .stack-item {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    word-wrap: break-word;
+
+    img {
+      width: 60px;
+      height: 60px;
+    }
+  }
 }
