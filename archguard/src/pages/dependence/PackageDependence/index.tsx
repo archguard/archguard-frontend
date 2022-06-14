@@ -68,7 +68,7 @@ const PackageDependence = (props: PackageDependenceProps) => {
           </Button>
         </Col>
       </Row>
-      <FullscreenContainer style={{ height: 600, border: "1px solid #f4f4f4" }}>
+      <FullscreenContainer style={{ height: 800, border: "1px solid #f4f4f4" }}>
         <PackageGraph ref={graph} data={currentGraphData} />
       </FullscreenContainer>
     </div>

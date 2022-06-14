@@ -112,7 +112,7 @@ export default function Graph(props: GraphProps) {
   return (
     <FullscreenContainer
       style={{
-        height: 600,
+        height: 800,
         border: "1px solid #f4f4f4",
         display: data && data.nodes ? undefined : "none",
       }}
