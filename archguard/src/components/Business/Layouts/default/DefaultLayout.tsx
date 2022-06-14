@@ -1,6 +1,5 @@
 import React from "react";
 import { Layout } from "antd";
-import "antd/dist/antd.less";
 import DefaultHeader from "@/components/Business/Layouts/default/DefaultHeader";
 import "./DefaultLayout.less"
 
@@ -11,9 +10,9 @@ export default function DefaultLayout(props: any) {
     <Layout className="multiple-system-container">
       <DefaultHeader />
 
-      <Layout>
-        <Layout style={{ overflow: "auto" }}>
-          <Content style={{ padding: "32px", minHeight: "auto", backgroundColor: "#fff" }}>
+      <Layout style={{ backgroundColor: "transparent" }}>
+        <Layout style={{ overflow: "auto", backgroundColor: "transparent" }}>
+          <Content style={{ padding: "32px", minHeight: "auto", backgroundColor: "transparent" }}>
             {props.children}
           </Content>
         </Layout>
