@@ -97,7 +97,7 @@ function Summary() {
           { overviewCount?.lineCounts && <LineCountChart  dataSource={ overviewCount?.lineCounts } /> }
         </div>
       </div>
-      <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.UNSTABLE' }) }</h2>
+      <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.STABLE' }) }</h2>
       <div className="physical">
         <div className="changes">
           <div className="graph">
@@ -119,22 +119,18 @@ function Summary() {
         </div>
       </div>
       <div>
-        { stacks && stacks.icons && <div className="stack-icons">{
-          stacks.icons.map((item: string, index: number) =>
-            <div className="stack-item">
-              <img src={item.img} key={index}  alt={"text"}/>
-              <p>{item.name}</p>
-            </div>)
-        }</div>
-        }
-      </div>
-      <div>
         <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY' }) } ({ projectDependency.length })</h2>
+        <div>
+          { stacks && stacks.icons && <div className="stack-icons">{
+            stacks.icons.map((item: string, index: number) =>
+              <div className="stack-item">
+                <img src={item.img} key={index}  alt={"text"}/>
+                <p>{item.name}</p>
+              </div>)
+          }</div>
+          }
+        </div>
         <Table dataSource={ projectDependency } columns={ projectDependencyColumns }/>
-      </div>
-      <div>
-        { stacks && stacks.important && <p><JsonView data={stacks.important}/></p>}
-        { stacks && stacks.all && <p><JsonView data={stacks.all} /></p>}
       </div>
     </div>
   );

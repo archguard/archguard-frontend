@@ -54,7 +54,7 @@ export default {
   'SYSTEM_OVERVIEW.CHANGES': 'Changes',
   'SYSTEM_OVERVIEW.LINES': 'Lines',
 
-  'SYSTEM_OVERVIEW.UNSTABLE': 'Unstable',
+  'SYSTEM_OVERVIEW.STABLE': 'Stable',
   'SYSTEM_OVERVIEW.CHANGE_FREQUENCY_SIZE': 'Change frequency',
   'SYSTEM_OVERVIEW.CHANGE_FREQUENCY_SIZE_LINE_COUNT': 'Change frequency - Line size (by Colors)',
   'SYSTEM_OVERVIEW.UNSTABLE_TOP_50_FILE': 'Unstable (Top 50 Lines * Top 50 Changes)',
