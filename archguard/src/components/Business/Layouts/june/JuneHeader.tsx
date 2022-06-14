@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Menu, Modal } from "antd";
+import { Button, Menu, MenuProps, Modal } from "antd";
 import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
 import {
   GlobalOutlined,
@@ -11,11 +11,11 @@ import "./JuneLayout.less";
 import "antd/dist/antd.less";
 
 const HomeMenus = [
-  { key: "/system/home", text: "系统分析" },
-  { key: "/analysis/code-analysis", text: "代码分析" },
   { key: "/workbench/home", text: "交互分析（Alpha）" },
-  { key: "/visual/services-map", text: "服务地图" },
+  { key: "/system/home", text: "子系统分析" },
+  { key: "/analysis/code-analysis", text: "代码分析" },
   { key: "/visual/data-map", text: "数据库地图" },
+  { key: "/visual/services-map", text: "服务地图" },
   { key: "/visual/message-map", text: "消息系统地图" },
 ]
 
@@ -34,6 +34,10 @@ export default function JuneHeader(props: any) {
     setLocale(currentLanguage, false);
   };
 
+  const onClick: MenuProps['onClick'] = e => {
+    props.history.push(e.key);
+  };
+
   return (
     <div className="multiple-system-header">
       <div className="header-logo">
@@ -41,9 +45,9 @@ export default function JuneHeader(props: any) {
         <span className="slogan">守护架构，放权代码</span>
       </div>
       <div className="header-menu">
-        <Menu mode="horizontal" onClick={(e) => props.history.push(e.key)}>
+        <Menu mode="horizontal" onClick={onClick} selectedKeys={[props.location.pathname]}>
           {HomeMenus.map((item: any) => (
-            <Menu.Item key={`${item.key}`}>
+            <Menu.Item key={`${item.key}`} >
               <span className="nav-text">{item.text}</span>
             </Menu.Item>
           ))}

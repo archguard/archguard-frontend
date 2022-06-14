@@ -2,14 +2,13 @@ import React from "react";
 import { Layout } from "antd";
 import JuneHeader from "@/components/Business/Layouts/june/JuneHeader";
 import "./JuneLayout.less"
-import PageSider from "@/components/Business/Layouts/PageSider";
 
-const { Header, Sider, Content } = Layout;
+const { Content } = Layout;
 
 export default function JuneLayout(props: any) {
   return (
-    <Layout className="multiple-system-container">
-      <JuneHeader history={props.history}/>
+    <Layout className="multiple-system-container" >
+      <JuneHeader history={props.history} location={props.location}/>
 
       <Layout style={{ backgroundColor: "transparent", overflow: "auto", background: "none" }}>
         <Layout style={{ overflow: "auto", backgroundColor: "transparent", background: "none" }}>

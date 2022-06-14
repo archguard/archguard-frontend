@@ -181,7 +181,7 @@ ${log}
   };
 
   return (
-    <div className="multiple-system-container">
+    <div>
       <div className="multiple-system-selector">
         <Row gutter={ [12, 12] }>
           <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 }>
