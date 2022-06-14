@@ -97,16 +97,6 @@ function Summary() {
           { overviewCount?.lineCounts && <LineCountChart  dataSource={ overviewCount?.lineCounts } /> }
         </div>
       </div>
-      <div>
-        { stacks && stacks.icons && <div className="stack-icons">{
-          stacks.icons.map((item: string, index: number) =>
-            <span>
-              <img width={"60px"} height={"60px"} src={item.img} key={index}  alt={"text"}/>
-              <span>{item.name}</span>
-            </span>)
-        }</div>
-        }
-      </div>
       <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.UNSTABLE' }) }</h2>
       <div className={ styles.physical }>
         <div className={ styles.changes }>
@@ -127,6 +117,16 @@ function Summary() {
             { defaultPageSize: 5 }
           }/>
         </div>
+      </div>
+      <div>
+        { stacks && stacks.icons && <div className="stack-icons">{
+          stacks.icons.map((item: string, index: number) =>
+            <span>
+              <img width={"60px"} height={"60px"} src={item.img} key={index}  alt={"text"}/>
+              <span>{item.name}</span>
+            </span>)
+        }</div>
+        }
       </div>
       <div>
         <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.PROJECT_DEPENDENCY' }) } ({ projectDependency.length })</h2>

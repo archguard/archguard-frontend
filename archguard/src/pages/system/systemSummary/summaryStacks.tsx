@@ -1,6 +1,7 @@
 import { CompositionDependency } from "@/api/module/project";
 import { uniqBy } from "lodash";
 
+// todo: save images for online
 const javaDepsImageMap = {
   spring: "https://archguard.github.io/logo/stacks/spring-boot.png",
   jdbi: "https://archguard.github.io/logo/stacks/jdbi.png",
