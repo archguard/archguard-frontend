@@ -9,6 +9,7 @@ import { FEATURES, getFeature } from "@/components/Business/Layouts/subSystem/Su
 import Help from "@/pages/help";
 import "./MainLayout.less";
 import "antd/dist/antd.less";
+const pkg = require('../../../../../package.json');
 
 const HomeMenus = [
   { key: "/workbench/home", text: "工作台（Alpha）" },
@@ -24,6 +25,8 @@ export default function MainHeader(props: any) {
   const { formatMessage } = useIntl();
   const [currentLanguage, setCurrentLanguage] = useState("zh-CN");
   const [helpModalVisible, setHelpModalVisible] = useState(false);
+
+  const version = pkg.version;
 
   const setLanguage = () => {
     if (currentLanguage === "zh-CN") {
@@ -43,7 +46,7 @@ export default function MainHeader(props: any) {
     <div className="multiple-system-header">
       <div className="header-logo">
         <img src={require("@/assets/images/logo-small.png")} alt="logo" />
-        <span className="slogan">守护架构，放权代码</span>
+        <span className="slogan">守护架构，放权代码 </span>
       </div>
       <div className="header-menu">
         <Menu mode="horizontal" onClick={onClick} selectedKeys={[props.location.pathname]}>
@@ -75,7 +78,7 @@ export default function MainHeader(props: any) {
               icon={<QuestionCircleOutlined />}
               onClick={() => setHelpModalVisible(true)}
             >
-              {formatMessage({ id: "OPERATION_DOCUMENT" })}
+              {formatMessage({ id: "OPERATION_DOCUMENT" })} {version}
             </Button>
           )}
         </div>

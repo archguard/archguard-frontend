@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-// import { SettingFilled } from "@ant-design/icons";
+import React from "react";
 import "./SystemEvolving.less";
 
 export default function SystemEvolving() {
-  // const [configVisible, setConfigVisible] = useState(false);
-
   return (
     <div>
       <div className="evolve-page">
