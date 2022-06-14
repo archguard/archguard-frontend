@@ -80,7 +80,6 @@ function Summary() {
           { formatMessage({ id: 'SYSTEM_OVERVIEW.VIEW_METRIC_DASHBOARD' }) }
         </BaButton>
       </div>
-
       <div className={ styles.body }>
         <div className={ styles.detail }>
           <div className={ styles.overview }>
@@ -97,6 +96,16 @@ function Summary() {
           }/>
           { overviewCount?.lineCounts && <LineCountChart  dataSource={ overviewCount?.lineCounts } /> }
         </div>
+      </div>
+      <div>
+        { stacks && stacks.icons && <div className="stack-icons">{
+          stacks.icons.map((item: string, index: number) =>
+            <span>
+              <img width={"60px"} height={"60px"} src={item.img} key={index}  alt={"text"}/>
+              <span>{item.name}</span>
+            </span>)
+        }</div>
+        }
       </div>
       <h2>{ formatMessage({ id: 'SYSTEM_OVERVIEW.UNSTABLE' }) }</h2>
       <div className={ styles.physical }>
@@ -124,7 +133,7 @@ function Summary() {
         <Table dataSource={ projectDependency } columns={ projectDependencyColumns }/>
       </div>
       <div>
-        { stacks && stacks.heavy && <p><JsonView data={stacks.heavy}/></p>}
+        { stacks && stacks.important && <p><JsonView data={stacks.important}/></p>}
         { stacks && stacks.all && <p><JsonView data={stacks.all} /></p>}
       </div>
     </div>
