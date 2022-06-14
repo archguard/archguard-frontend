@@ -14,7 +14,7 @@ import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SystemCard from "./components/SystemCard";
 import SystemInfoForm from "./components/SystemInfoForm";
-import Help from "../help";
+import Help from "../../help";
 import { useIntl } from "@@/plugin-locale/localeExports";
 import newGithubIssueUrl from "new-github-issue-url";
 

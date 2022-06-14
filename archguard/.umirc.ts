@@ -55,11 +55,11 @@ export default defineConfig({
       routes: [
         {
           path: "home",
-          component: "@/pages/home",
+          component: "@/pages/system/home",
         },
         {
           path: "code-analysis",
-          component: "@/pages/code",
+          component: "@/pages/codeAnalysis/CodeAnalysis",
         },
         {
           path: "change-diff",
