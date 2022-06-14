@@ -40,6 +40,36 @@ export default defineConfig({
     { path: "/", redirect: "/home" },
     { path: "/home", component: "@/pages/home" },
     {
+      path: "/system",
+      component: "@/components/Business/Layouts/june/JuneLayout",
+      routes: [
+        {
+          path: "home",
+          component: "@/pages/home",
+        },
+      ],
+    },
+    {
+      path: "/workbench",
+      component: "@/components/Business/Layouts/june/JuneLayout",
+      routes: [
+        {
+          path: "home",
+          component: "@/pages/interactiveAnalysis/InteractiveAnalysis",
+        },
+      ],
+    },
+    {
+      path: "/analysis",
+      component: "@/components/Business/Layouts/june/JuneLayout",
+      routes: [
+        {
+          path: "code-analysis",
+          component: "@/pages/code",
+        },
+      ],
+    },
+    {
       exact: false,
       path: "/visual",
       component: "@/components/Business/Layouts/june/JuneLayout",
@@ -47,6 +77,14 @@ export default defineConfig({
         {
           path: "services-map",
           component: "@/pages/servicesMap/ServicesMap",
+        },
+        {
+          path: "data-map",
+          component: "@/pages/data/DatabaseMap",
+        },
+        {
+          path: "message-map",
+          component: "@/pages/messageMap/MessageMap",
         },
       ],
     },

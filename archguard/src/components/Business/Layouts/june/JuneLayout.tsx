@@ -9,11 +9,11 @@ const { Header, Sider, Content } = Layout;
 export default function JuneLayout(props: any) {
   return (
     <Layout className="multiple-system-container">
-      <JuneHeader />
+      <JuneHeader history={props.history}/>
 
-      <Layout style={{ backgroundColor: "transparent" }}>
-        <Layout style={{ overflow: "auto", backgroundColor: "transparent" }}>
-          <Content style={{ padding: "32px", minHeight: "auto", backgroundColor: "transparent" }}>
+      <Layout style={{ backgroundColor: "transparent", overflow: "auto", background: "none" }}>
+        <Layout style={{ overflow: "auto", backgroundColor: "transparent", background: "none" }}>
+          <Content style={{ marginTop: "60px", padding: "32px", minHeight: "auto", backgroundColor: "transparent" }}>
             {props.children}
           </Content>
         </Layout>
