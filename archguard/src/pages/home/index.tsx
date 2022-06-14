@@ -1,8 +1,7 @@
 import "./index.less";
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Col, Modal, notification, Row, Tabs } from "antd";
+import { Button, Col, Modal, notification, Row } from "antd";
 import { useInterval, useMount } from "react-use";
-import { GlobalOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { cancelScanDependence, scanDependence } from "@/api/scanner/dependenceScanner";
 import {
   createSystemInfo,
@@ -15,14 +14,8 @@ import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SystemCard from "./components/SystemCard";
 import SystemInfoForm from "./components/SystemInfoForm";
-import { FEATURES, getFeature } from "@/components/Business/Layouts/PageHeader";
 import Help from "../help";
-import ServicesMap from "../servicesMap/ServicesMap";
-import CodeAnalysis from "@/pages/code";
-import DatabaseMap from "../data/DatabaseMap";
-import ChangeDetect from "@/pages/change/ChangeDetect";
-import InteractiveAnalysis from "../interactiveAnalysis/InteractiveAnalysis";
-import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
+import { useIntl } from "@@/plugin-locale/localeExports";
 import newGithubIssueUrl from "new-github-issue-url";
 
 const DEFAULT_LOAD_DATA_INTERVAL = 1000 * 60 * 5;
@@ -187,97 +180,27 @@ ${log}
     setCurrent(current - 1);
   };
 
-  const setLanguage = () => {
-    if (currentLanguage === "zh-CN") {
-      setCurrentLanguage("en-US")
-    } else {
-      setCurrentLanguage("zh-CN")
-    }
-
-    setLocale(currentLanguage, false);
-  };
-
-  const handleTabClick = (key: string) => {
-    // console.log(key)
-  }
-
   return (
     <div className="multiple-system-container">
-      <div className="multiple-system-header">
-        <div className="header-logo">
-          <img src={ require("@/assets/images/logo-small.png") } alt="logo" />
-          <span className="slogan">守护架构，放权代码</span>
-        </div>
-        <div className="header-user">
-          <div>
-            <Button
-              icon={ <GlobalOutlined /> }
-              onClick={ () => setLanguage() }
-            >
-              { formatMessage({ id: "SWITCH_LANGUAGE" }) }
-            </Button>
-          </div>
-          <div>
-            <a href="https://archguard.org/faq" target={ "_blank" }>
-              <Button type="link" style={ { color: "#ffffff" } } icon={ <QuestionCircleOutlined /> }>
-                FAQ
-              </Button>
-            </a>
-          </div>
-          <div>
-            { getFeature(FEATURES.INSIDE_FEATURE) && (
-              <Button
-                type="link"
-                style={ { color: "#ffffff" } }
-                icon={ <QuestionCircleOutlined /> }
-                onClick={ () => setHelpModalVisible(true) }
-              >
-                { formatMessage({ id: "OPERATION_DOCUMENT" }) }
-              </Button>
-            ) }
-          </div>
-        </div>
-      </div>
       <div className="multiple-system-selector">
-        <Tabs defaultActiveKey="my-system" onChange={ handleTabClick }>
-          <Tabs.TabPane tab={ formatMessage({ id: 'COMPONENT_ANALYSIS' }) } key="my-system">
-            <Row gutter={ [12, 12] }>
-              <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 }>
-                <SystemCard onCreate={ onCreateClick }/>
-              </Col>
-              { systemInfoList.map((systemInfo) => (
-                <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 } key={ systemInfo.id }>
-                  <SystemCard
-                    systemInfo={ systemInfo }
-                    onCreate={ () => routeToHome(systemInfo) }
-                    onScanning={ () => onScanning(systemInfo.id) }
-                    onEdit={ () => onEditClick(systemInfo) }
-                    onCancel={ () => onCancelClick(systemInfo) }
-                    onRemove={ () => onRemoveClick(systemInfo) }
-                    viewLog={ () => onViewLog(systemInfo) }
-                  />
-                </Col>
-              )) }
-            </Row>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab={ formatMessage({ id: 'INTERACTIVE_ANALYSIS' }) } key="interactive-analysis">
-            <InteractiveAnalysis/>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab={ formatMessage({ id: 'SERVICES_MAP' }) } key="services-map">
-            <ServicesMap/>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab={ formatMessage({ id: 'CODE_ANALYSIS' }) } key="code-analysis">
-            <CodeAnalysis/>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab={ formatMessage({ id: 'DATABASE_MAP' }) } key="database-map">
-            <DatabaseMap/>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab={ formatMessage({ id: 'CHANGE_DETECT' }) } key="change-detect">
-            <ChangeDetect/>
-          </Tabs.TabPane>
-          <Tabs.TabPane tab={ formatMessage({ id: 'MESSAGE_QUEUE_ANALYSIS' }) } key="message-queue-analysis" disabled>
-          </Tabs.TabPane>
-        </Tabs>
+        <Row gutter={ [12, 12] }>
+          <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 }>
+            <SystemCard onCreate={ onCreateClick }/>
+          </Col>
+          { systemInfoList.map((systemInfo) => (
+            <Col xs={ 24 } sm={ 12 } md={ 8 } lg={ 6 } xxl={ 4 } key={ systemInfo.id }>
+              <SystemCard
+                systemInfo={ systemInfo }
+                onCreate={ () => routeToHome(systemInfo) }
+                onScanning={ () => onScanning(systemInfo.id) }
+                onEdit={ () => onEditClick(systemInfo) }
+                onCancel={ () => onCancelClick(systemInfo) }
+                onRemove={ () => onRemoveClick(systemInfo) }
+                viewLog={ () => onViewLog(systemInfo) }
+              />
+            </Col>
+          )) }
+        </Row>
       </div>
       <Modal
         centered

@@ -37,8 +37,8 @@ export default defineConfig({
     defaultSizes: "parsed", // stat  // gzip
   },
   routes: [
-    { path: "/", redirect: "/home" },
-    { path: "/home", component: "@/pages/home" },
+    { path: "/", redirect: "/system/home" },
+    { path: "/home", redirect: "/system/home" },
     {
       path: "/system",
       component: "@/components/Business/Layouts/june/JuneLayout",
