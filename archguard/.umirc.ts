@@ -50,6 +50,16 @@ export default defineConfig({
       ],
     },
     {
+      path: "/insights",
+      component: "@/components/Business/Layouts/main/MainLayout",
+      routes: [
+        {
+          path: "home",
+          component: "@/pages/insights/Insights",
+        },
+      ],
+    },
+    {
       path: "/analysis",
       component: "@/components/Business/Layouts/main/MainLayout",
       routes: [
