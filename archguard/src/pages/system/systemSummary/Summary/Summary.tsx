@@ -15,8 +15,8 @@ import { queryUnstableFiles } from "@/api/module/gitFile";
 import { queryProjectCompositionDependency } from "@/api/module/project";
 import LineCountChart from "@/pages/system/systemSummary/Summary/components/LineCountChart";
 import { projectDependencyColumns } from "@/pages/system/systemSummary/Summary/columns/projectDependencyColumns";
-import { summaryStacks } from "@/pages/system/systemSummary/summaryStacks";
-import { querySystemInfoById, SystemInfo } from "@/api/addition/systemInfo";
+import { summaryStacks } from "@/pages/system/systemSummary/Summary/stacks/summaryStacks";
+import { querySystemInfoById } from "@/api/addition/systemInfo";
 
 function Summary() {
   const { formatMessage } = useIntl();
