@@ -52,39 +52,63 @@ const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   fixedOverflowWidgets: true,
 };
 
-
 function Insights() {
   const editorRef = useRef(null as any);
   const [height, setHeight] = useState("100%");
 
-  const changeCode = useCallback(code => {
+  const changeCode = useCallback(
+    (code) => {
       if (editorRef.current) {
         // adjustHeight(editorRef.current);
       }
     },
-    [editorRef]
+    [editorRef],
   );
 
-  const handleEditorDidMount = useCallback((editor: Editor) => {
+  const handleEditorDidMount = useCallback(
+    (editor: Editor) => {
       editorRef.current = editor;
       if (editorRef.current) {
         initEditor(editor);
       }
     },
-    [editorRef, setHeight]
+    [editorRef, setHeight],
   );
 
   function initEditor(editor) {
     loader.init().then((monaco) => {
+      // disable `F1` for command palette
+      editor.addCommand(monaco.KeyCode.F1, () => {});
+      // disable `CTRL` + `F` for search
       editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyF, () => {});
-      // editor.addCommand(monaco.KeyCode.Enter, () => {
-      // State: https://github.com/microsoft/vscode/blob/1.56.0/src/vs/editor/contrib/suggest/suggestWidget.ts#L50
-      // todo: handle for suggest
-      // const StateOpen = 3
-      // if (editor._contentWidgets['editor.widget.suggestWidget'].widget.state !== StateOpen) {
-      // }
-      // editor.trigger('', 'acceptSelectedSuggestion')
-      // })
+
+      editor.addCommand(monaco.KeyCode.Enter, () => {
+        // State: https://github.com/microsoft/vscode/blob/1.56.0/src/vs/editor/contrib/suggest/suggestWidget.ts#L50
+        const StateOpen = 3;
+        if (editor._contentWidgets["editor.widget.suggestWidget"].widget.state !== StateOpen) {
+          // todo: handle for custom suggest
+        }
+        editor.trigger("", "acceptSelectedSuggestion");
+      });
+
+      // deal with user paste
+      // see: https://github.com/microsoft/monaco-editor/issues/2009#issue-63987720
+      editor.onDidPaste((e) => {
+        // multiple rows will be merged to single row
+        if (e.range.endLineNumber <= 1) {
+          return;
+        }
+
+        let newContent = "";
+        const textModel = editor.getModel();
+        const lineCount = textModel.getLineCount();
+        // remove all line breaks
+        for (let i = 0; i < lineCount; i += 1) {
+          newContent += textModel.getLineContent(i + 1);
+        }
+        textModel.setValue(newContent);
+        editor.setPosition({ column: newContent.length + 1, lineNumber: 1 });
+      });
     });
   }
 
@@ -105,4 +129,4 @@ function Insights() {
   );
 }
 
-export default Insights
+export default Insights;
