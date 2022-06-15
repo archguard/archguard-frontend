@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import Editor from "@monaco-editor/react";
-import * as monaco from "monaco-editor";
+import { loader } from "@monaco-editor/react";
 
 const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   fontSize: 18,
@@ -75,7 +75,17 @@ function Insights() {
   );
 
   function initEditor(editor) {
-
+    loader.init().then((monaco) => {
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyF, () => {});
+      // editor.addCommand(monaco.KeyCode.Enter, () => {
+      // State: https://github.com/microsoft/vscode/blob/1.56.0/src/vs/editor/contrib/suggest/suggestWidget.ts#L50
+      // todo: handle for suggest
+      // const StateOpen = 3
+      // if (editor._contentWidgets['editor.widget.suggestWidget'].widget.state !== StateOpen) {
+      // }
+      // editor.trigger('', 'acceptSelectedSuggestion')
+      // })
+    });
   }
 
   return (
