@@ -1,8 +1,6 @@
-import Editor, { loader, Monaco } from "@monaco-editor/react";
+import Editor, { loader } from "@monaco-editor/react";
 import React, { useCallback, useRef, useState } from "react";
-import { languages } from "monaco-editor";
-import { dslCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/completions/dslCompletion";
-import { practisesCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/completions/practisesCompletion";
+import { addSearchSuggestion } from "@/pages/insights/compiletion/searchSuggestion";
 
 const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineHeight: 16,
@@ -54,72 +52,9 @@ const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   fixedOverflowWidgets: true,
   // config for registerCompletionItemProvider
   // quickSuggestions: false,
-  cursorStyle: 'line',
+  cursorStyle: "line",
   cursorWidth: 1,
 };
-
-
-const State: languages.IState =  {
-  clone: () => ({ ...State }),
-  equals: () => false,
-}
-
-function createCompletion(monaco: Monaco) {
-  function createDependencyProposals(range): languages.CompletionItem[] {
-    let completions = dslCompletion(monaco, range);
-
-    completions.push({
-      label: "type",
-      kind: monaco.languages.CompletionItemKind.Issue,
-      description: 'Treat the search pattern as case-sensitive.',
-      documentation: "custom type",
-      negatable: true,
-      singular: true,
-      insertText: "type:",
-      insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-      range: range
-    })
-
-    return completions;
-  }
-
-  monaco.languages.register({ id: "insights" })
-  // todo: defineTheme
-  monaco.languages.setTokensProvider("insights", {
-    getInitialState: () => State,
-    tokenize: (line: string, state: languages.IState) => {
-      return {
-        endState: State,
-        tokens: [{
-          startIndex: 0,
-          scopes: 'type'
-        }],
-      }
-    }
-  });
-
-  monaco.languages.registerCompletionItemProvider("insights", {
-    provideCompletionItems: function (model, position) {
-      model.getValueInRange({
-        startLineNumber: 1,
-        startColumn: 1,
-        endLineNumber: position.lineNumber,
-        endColumn: position.column,
-      });
-
-      const word = model.getWordUntilPosition(position);
-      const range = {
-        startLineNumber: position.lineNumber,
-        endLineNumber: position.lineNumber,
-        startColumn: word.startColumn,
-        endColumn: word.endColumn,
-      };
-      return {
-        suggestions: createDependencyProposals(range),
-      };
-    }
-  });
-}
 
 function SmartSuggest(props: any) {
   const editorRef = useRef(null as any);
@@ -174,7 +109,7 @@ function SmartSuggest(props: any) {
         editor.setPosition({ column: newContent.length + 1, lineNumber: 1 });
       });
 
-      createCompletion(monaco)
+      addSearchSuggestion(monaco)
     });
   }
 
