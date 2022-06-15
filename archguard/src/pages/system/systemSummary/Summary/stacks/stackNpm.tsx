@@ -15,7 +15,7 @@ const npmImportants = {
   typescript: "https://archguard.github.io/logo/stacks/typescript.png",
   lodash: "https://archguard.github.io/logo/stacks/lodash.png",
   eslint: "https://archguard.github.io/logo/stacks/eslint.jpg",
-  unified: "https://archguard.github.io/logo/stacks/unified.png"
+  unified: "https://archguard.github.io/logo/stacks/unified.png",
 };
 
 export function stackNpm(deps: CompositionDependency[]) {
@@ -30,7 +30,7 @@ export function stackNpm(deps: CompositionDependency[]) {
     if (importants.includes(dep.depArtifact)) {
       icons.push({
         name: dep.depArtifact,
-        img: npmImportants[dep.depArtifact]
+        img: npmImportants[dep.depArtifact],
       });
     }
   }
@@ -40,6 +40,6 @@ export function stackNpm(deps: CompositionDependency[]) {
   return {
     all: Object.keys(result),
     important: importantDeps,
-    icons: uniqIcons
+    icons: uniqIcons,
   };
 }

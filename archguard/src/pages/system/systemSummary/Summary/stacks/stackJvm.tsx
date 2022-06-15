@@ -1,13 +1,14 @@
-// todo: save images for online
 import { CompositionDependency } from "@/api/module/project";
 import { uniqBy } from "lodash";
 
+// todo: save images for online
 const javaDepsImageMap = {
   spring: "https://archguard.github.io/logo/stacks/spring-boot.png",
   jdbi: "https://archguard.github.io/logo/stacks/jdbi.png",
   kotlin: "https://archguard.github.io/logo/stacks/kotlin.png",
-  grpc: "https://archguard.github.io/logo/stacks/grpc.png"
+  grpc: "https://archguard.github.io/logo/stacks/grpc.png",
 };
+
 const jvmImportants = {
   "org.flywaydb": "https://archguard.github.io/logo/stacks/flyway.jpg",
   "org.apache.dubbo": "https://archguard.github.io/logo/stacks/dubbo.jpg",
@@ -15,13 +16,13 @@ const jvmImportants = {
   "org.antlr": "https://archguard.github.io/logo/stacks/antlr.jpg",
   "io.mockk": "https://archguard.github.io/logo/stacks/mockk.png",
   "org.eclipse.jgit": "https://archguard.github.io/logo/stacks/jgit.png",
-  "dom4j": "https://archguard.github.io/logo/stacks/dom4j.png",
-  "mysql": "https://archguard.github.io/logo/stacks/mysql.png",
+  dom4j: "https://archguard.github.io/logo/stacks/dom4j.png",
+  mysql: "https://archguard.github.io/logo/stacks/mysql.png",
   "com.h2database": "https://archguard.github.io/logo/stacks/h2.png",
-  "org.junit.platform": "https://archguard.github.io/logo/stacks/junit.png"
+  "org.junit.platform": "https://archguard.github.io/logo/stacks/junit.png",
 };
 
-export function sumJvm(deps: CompositionDependency[]) {
+export function stackJvm(deps: CompositionDependency[]) {
   const result = {};
   const importantDeps = {};
   const icons = [];
@@ -40,7 +41,7 @@ export function sumJvm(deps: CompositionDependency[]) {
       if (javaDepsImageMap[head]) {
         icons.push({
           name: head,
-          img: javaDepsImageMap[head]
+          img: javaDepsImageMap[head],
         });
       }
     }
@@ -48,7 +49,7 @@ export function sumJvm(deps: CompositionDependency[]) {
     if (importants.includes(dep.depGroup)) {
       icons.push({
         name: dep.depGroup,
-        img: jvmImportants[dep.depGroup]
+        img: jvmImportants[dep.depGroup],
       });
     }
   }
@@ -58,6 +59,6 @@ export function sumJvm(deps: CompositionDependency[]) {
   return {
     all: Object.keys(result),
     important: importantDeps,
-    icons: uniqIcons
+    icons: uniqIcons,
   };
 }

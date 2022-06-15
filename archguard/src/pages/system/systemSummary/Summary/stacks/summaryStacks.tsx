@@ -1,7 +1,7 @@
 import { CompositionDependency } from "@/api/module/project";
 import { SystemInfo } from "@/api/addition/systemInfo";
 import { stackNpm } from "@/pages/system/systemSummary/Summary/stacks/stackNpm";
-import { sumJvm } from "@/pages/system/systemSummary/Summary/stacks/stackJvm";
+import { stackJvm } from "@/pages/system/systemSummary/Summary/stacks/stackJvm";
 
 export interface StackIcon {
   name: string;
@@ -19,10 +19,10 @@ export function summaryStacks(deps: CompositionDependency[], system: SystemInfo)
   let summary: StackSummary;
   switch (language) {
     case "java":
-      summary = sumJvm(deps);
+      summary = stackJvm(deps);
       break;
     case "kotlin":
-      summary = sumJvm(deps);
+      summary = stackJvm(deps);
       break;
     case "typescript":
       summary = stackNpm(deps);
@@ -31,7 +31,7 @@ export function summaryStacks(deps: CompositionDependency[], system: SystemInfo)
       summary = stackNpm(deps);
       break;
     default:
-      summary = sumJvm(deps);
+      summary = stackJvm(deps);
       break;
   }
 
