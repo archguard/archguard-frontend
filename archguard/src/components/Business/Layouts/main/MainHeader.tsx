@@ -78,9 +78,10 @@ export default function MainHeader(props: any) {
               icon={<QuestionCircleOutlined />}
               onClick={() => setHelpModalVisible(true)}
             >
-              {formatMessage({ id: "OPERATION_DOCUMENT" })} {version}
+              {formatMessage({ id: "OPERATION_DOCUMENT" })}
             </Button>
           )}
+          {version}
         </div>
       </div>
 
