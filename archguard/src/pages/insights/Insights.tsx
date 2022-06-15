@@ -5,7 +5,7 @@ function Insights() {
   return (
     <div>
       <div>Insights</div>
-      <div style={{ height: "22px" }}>
+      <div style={{ height: "120px" }}>
         <SmartSuggest />
       </div>
     </div>
