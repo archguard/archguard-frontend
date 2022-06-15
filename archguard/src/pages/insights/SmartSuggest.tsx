@@ -52,8 +52,8 @@ const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   automaticLayout: true,
   // if monaco is inside a table, hover tips or completion may casue table body scroll
   fixedOverflowWidgets: true,
-  // Display the cursor as a 1px line.
-  quickSuggestions: false,
+  // config for registerCompletionItemProvider
+  // quickSuggestions: false,
   cursorStyle: 'line',
   cursorWidth: 1,
 };
@@ -67,7 +67,19 @@ const State: languages.IState =  {
 function createCompletion(monaco: Monaco) {
   function createDependencyProposals(range): languages.CompletionItem[] {
     let completions = dslCompletion(monaco, range);
-    completions = completions.concat(practisesCompletion(monaco, range))
+
+    completions.push({
+      label: "type",
+      kind: monaco.languages.CompletionItemKind.Issue,
+      description: 'Treat the search pattern as case-sensitive.',
+      documentation: "custom type",
+      negatable: true,
+      singular: true,
+      insertText: "type:",
+      insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+      range: range
+    })
+
     return completions;
   }
 
