@@ -2,7 +2,9 @@ import Editor, { loader } from "@monaco-editor/react";
 import React, { useCallback, useRef, useState } from "react";
 
 const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
-  fontSize: 18,
+  lineHeight: 16,
+  // Match the query input's height for suggestion items line height.
+  suggestLineHeight: 34,
   lineNumbers: "off",
   wordWrap: "off",
   lineNumbersMinChars: 0,
@@ -31,7 +33,6 @@ const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   links: false,
   // avoid highlight hover word
   occurrencesHighlight: false,
-  cursorStyle: "line-thin",
   // hide current row highlight grey border
   // see: https://microsoft.github.io/monaco-editor/api/interfaces/monaco.editor.ieditoroptions.html#renderlinehighlight
   renderLineHighlight: "none",
@@ -39,7 +40,6 @@ const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   // default selection is rounded
   roundedSelection: false,
   hover: {
-    // unit: ms
     // default: 300
     delay: 100,
   },
@@ -49,6 +49,10 @@ const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   automaticLayout: true,
   // if monaco is inside a table, hover tips or completion may casue table body scroll
   fixedOverflowWidgets: true,
+  // Display the cursor as a 1px line.
+  quickSuggestions: false,
+  cursorStyle: 'line',
+  cursorWidth: 1,
 };
 
 function SmartSuggest(props: any) {
@@ -81,17 +85,12 @@ function SmartSuggest(props: any) {
       // disable `CTRL` + `F` for search
       editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyF, () => {});
 
+      // add handle for press enter
       editor.addCommand(monaco.KeyCode.Enter, () => {
-        // State: https://github.com/microsoft/vscode/blob/1.56.0/src/vs/editor/contrib/suggest/suggestWidget.ts#L50
-        const StateOpen = 3;
-        if (editor._contentWidgets["editor.widget.suggestWidget"].widget.state !== StateOpen) {
-          // todo: handle for custom suggest
-        }
         editor.trigger("", "acceptSelectedSuggestion");
       });
 
-      // deal with user paste
-      // see: https://github.com/microsoft/monaco-editor/issues/2009#issue-63987720
+      // handle for paste
       editor.onDidPaste((e) => {
         // multiple rows will be merged to single row
         if (e.range.endLineNumber <= 1) {
