@@ -11,20 +11,16 @@ export function addSearchSuggestion(monaco: Monaco) {
     // todo: need fetch suggestions by API and types
     let completions = [];
 
-    // by archguard search type
-    completions.push({
-      label: "type",
-      kind: monaco.languages.CompletionItemKind.Issue,
-      documentation: "custom type",
-      singular: true,
-      insertText: "type",
+    completions = ['diff', 'commit', 'symbol', 'repo', 'path', 'file'].map((value) => ({
+      label: value,
+      kind: monaco.languages.CompletionItemKind.Value,
+      insertText: value,
+      filterText: value,
       insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
       range: range
-    });
+    }))
 
     // by connection to type
-
-
     return completions;
   }
 
