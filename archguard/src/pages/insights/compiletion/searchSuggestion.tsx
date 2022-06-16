@@ -6,6 +6,10 @@ const State: languages.IState = {
   equals: () => false
 };
 
+function textLiteral(line: string) {
+  // todo: after design DSL
+}
+
 export function addSearchSuggestion(monaco: Monaco) {
   function createSuggestion(range): languages.CompletionItem[] {
     // todo: need fetch suggestions by API and types
@@ -28,8 +32,10 @@ export function addSearchSuggestion(monaco: Monaco) {
   // todo: defineTheme
   monaco.languages.setTokensProvider("insights", {
     getInitialState: () => State,
-    tokenize: (line: string, state: languages.IState) => {
+    tokenize: (line: string) => {
       // todo: decorate token
+      textLiteral(line)
+
       return {
         endState: State,
         tokens: [{
