@@ -65,7 +65,7 @@ export default defineConfig({
       routes: [
         {
           path: "home",
-          component: "@/pages/system/home",
+          component: "@/pages/system/home/Home",
         },
         {
           path: "code-analysis",

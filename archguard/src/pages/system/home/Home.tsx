@@ -1,4 +1,4 @@
-import "./index.less";
+import "./home.less";
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Col, Modal, notification, Row } from "antd";
 import { useInterval, useMount } from "react-use";
