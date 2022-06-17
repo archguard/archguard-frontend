@@ -6,9 +6,11 @@ import {
   QuestionCircleOutlined
 } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/components/Layouts/subSystem/SubSystemHeader";
-import Help from "@/pages/help";
+import Help from "@/components/Layouts/main/help/Help";
+
 import "./MainLayout.less";
 import "antd/dist/antd.less";
+
 const pkg = require('../../../../package.json');
 
 const HomeMenus = [
