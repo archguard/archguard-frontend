@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout } from "antd";
-import MainHeader from "@/components/Business/Layouts/main/MainHeader";
+import MainHeader from "@/components/Layouts/main/MainHeader";
 import "./MainLayout.less"
 
 const { Content } = Layout;

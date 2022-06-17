@@ -5,11 +5,11 @@ import {
   GlobalOutlined,
   QuestionCircleOutlined
 } from "@ant-design/icons";
-import { FEATURES, getFeature } from "@/components/Business/Layouts/subSystem/SubSystemHeader";
+import { FEATURES, getFeature } from "@/components/Layouts/subSystem/SubSystemHeader";
 import Help from "@/pages/help";
 import "./MainLayout.less";
 import "antd/dist/antd.less";
-const pkg = require('../../../../../package.json');
+const pkg = require('../../../../package.json');
 
 const HomeMenus = [
   { key: "/workbench/home", text: "工作台（Alpha）" },
