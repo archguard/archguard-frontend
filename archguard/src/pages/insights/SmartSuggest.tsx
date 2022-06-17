@@ -1,6 +1,6 @@
 import Editor, { loader } from "@monaco-editor/react";
 import React, { useCallback, useRef, useState } from "react";
-import { addSearchSuggestion } from "@/pages/insights/compiletion/searchSuggestion";
+import { addSearchSuggestion } from "@/pages/insights/completion/searchSuggestion";
 
 const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineHeight: 16,
