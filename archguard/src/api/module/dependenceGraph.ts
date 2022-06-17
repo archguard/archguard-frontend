@@ -1,5 +1,5 @@
 import axios from "../axios";
-import { JMethod } from '@/models/java';
+import { JMethod } from '@/types/java';
 import { storage } from "@/store/storage/sessionStorage";
 
 export function queryMethodDependence(className: string, dependenceType: string, parameter: any, systemId: number) {

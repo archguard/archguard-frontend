@@ -2,7 +2,7 @@ import { queryModule, queryModuleDependencies } from "@/api/module/module";
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
 import columns, { methodDependency } from "./columns";
-import { FormItemOption } from '@/models/form';
+import { FormItemOption } from '@/types/form';
 import ModuleDependenceArgsForm from './ModuleDependenceArgsForm'
 import CollapsibleCard from '@/components/Business/CollapsibleCard';
 import { Module } from "@/types/module";

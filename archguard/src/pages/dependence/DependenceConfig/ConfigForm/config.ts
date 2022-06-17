@@ -1,4 +1,4 @@
-import { FormItemModel } from '@/models/form';
+import { FormItemModel } from '@/types/form';
 
 export interface ConfigType {
   type: string;

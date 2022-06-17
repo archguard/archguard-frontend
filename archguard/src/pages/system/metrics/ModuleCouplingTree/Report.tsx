@@ -1,4 +1,4 @@
-import { Metric, MetricProps } from "@/models/analysis";
+import { Metric, MetricProps } from "@/types/analysis";
 import React, { useMemo, useState } from "react";
 import { useMount } from "react-use";
 import CouplingList, { CouplingRecord } from "./coupling-list";

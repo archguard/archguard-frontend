@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Form, Row, Col, Select, Button, Input, Cascader } from "antd";
-import { FormItemOption } from "@/models/form";
+import { FormItemOption } from "@/types/form";
 import useCodeTree from "@/store/global-cache-state/useCodeTree";
 import createCacheState, {
   transformCodeTreeToModuleOptions,

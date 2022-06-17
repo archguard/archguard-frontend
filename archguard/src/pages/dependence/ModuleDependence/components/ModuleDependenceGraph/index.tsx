@@ -6,8 +6,8 @@ import { queryAllModuleDependence } from "@/api/module/module";
 import useModuleCoupling from "../../globalStates/useModuleCoupling";
 import useSelectedNode from "../../globalStates/useSelectedNode";
 import { buildModuleDependenceTree, generateNodeEdges } from "../../../utils";
-import { GraphData } from "@/models/graph";
-import { SourceCodeItem } from "@/models/java";
+import { GraphData } from "@/types/graph";
+import { SourceCodeItem } from "@/types/java";
 import CollapsibleCard from "@/components/Business/CollapsibleCard";
 import { Measurements } from "@/types/measurements";
 

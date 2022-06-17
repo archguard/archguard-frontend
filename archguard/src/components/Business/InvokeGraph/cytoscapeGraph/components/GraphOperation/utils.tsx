@@ -1,6 +1,6 @@
 import { forEach, remove, some } from "lodash";
-import { TreeNode, Edge, GraphData } from "@/models/graph";
-import { SourceCodeItem } from "@/models/java";
+import { TreeNode, Edge, GraphData } from "@/types/graph";
+import { SourceCodeItem } from "@/types/java";
 
 function dfs(
   node: string,

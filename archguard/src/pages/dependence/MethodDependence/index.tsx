@@ -2,8 +2,8 @@ import { queryMethodDependence } from "@/api/module/dependenceGraph";
 import InvokeGraph from "@/components/Business/InvokeGraph";
 import React, { useEffect, useState } from "react";
 import { buildMethodTree, generateNodeEdges } from "../utils";
-import { JMethod } from "../../../models/java";
-import { GraphData } from "../../../models/graph";
+import { JMethod } from "../../../types/java";
+import { GraphData } from "../../../types/graph";
 import MethodDependenceArgsForm from './MethodDependenceArgsForm'
 import useUrlQuery from '@/hooks/useUrlQuery';
 

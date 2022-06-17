@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { useList } from "react-use";
 import "./index.less";
-import { FormItemOption } from '@/models/form';
+import { FormItemOption } from '@/types/form';
 import EditableTag from '@/components/Business/EditableTag';
 
 interface MembersInputProps {

@@ -1,6 +1,6 @@
 import { every, filter, findIndex, forEach, reduce } from "lodash";
-import { JModule, JMethod, JClass, SourceCodeItem } from "@/models/java";
-import { TreeNode, Node, Edge, GraphData, GraphTree } from "@/models/graph";
+import { JModule, JMethod, JClass, SourceCodeItem } from "@/types/java";
+import { TreeNode, Node, Edge, GraphData, GraphTree } from "@/types/graph";
 
 const createJMethodNode = (jMethod: JMethod): TreeNode<JMethod> => {
   const { id, name, module, clazz } = jMethod;

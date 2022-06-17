@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Row, Col, Select, Button } from 'antd'
-import { FormItemOption } from '@/models/form'
+import { FormItemOption } from '@/types/form'
 
 interface ModuleDependenceArgsFormProps {
   options: FormItemOption[];

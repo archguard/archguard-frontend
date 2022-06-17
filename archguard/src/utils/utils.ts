@@ -1,6 +1,6 @@
 // import XLSX from "xlsx";
 import { createGlobalState, useEffectOnce } from "react-use";
-import { FormItemOption } from "./../models/form";
+import { FormItemOption } from "../types/form";
 
 export const scrollToAnchor = (anchorName: string) => {
   if (anchorName) {

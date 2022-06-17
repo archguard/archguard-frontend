@@ -14,8 +14,8 @@ import { findLoopPaths } from "./utils";
 import { Core } from "cytoscape";
 import { NodeLabel } from "../../Graph";
 import { SelectValue } from "antd/lib/select";
-import { GraphData } from "@/models/graph";
-import { SourceCodeItem } from "@/models/java";
+import { GraphData } from "@/types/graph";
+import { SourceCodeItem } from "@/types/java";
 import { Measurements } from "@/types/measurements";
 
 interface GraphOperationProps {

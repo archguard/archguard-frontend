@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Space, Input, Button, Select } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import './index.less'
-import { FormItemModel } from '@/models/form'
+import { FormItemModel } from '@/types/form'
 import { ConfigData } from './config'
 
 interface FieldData {

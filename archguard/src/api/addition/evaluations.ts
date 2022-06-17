@@ -1,4 +1,4 @@
-import { SystemEvaluationHistoryType } from "@/models/system-evaluation";
+import { SystemEvaluationHistoryType } from "@/types/system-evaluation";
 import axios from "../axios";
 
 export function queryEvaluationList() {
