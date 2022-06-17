@@ -16,7 +16,7 @@ export default function Help() {
   return (
     <div>
       <MarkdownNavbar source={doc} />
-      <ReactMarkdown children={doc}/>
+      <ReactMarkdown children={doc} />
     </div>
   );
 }
