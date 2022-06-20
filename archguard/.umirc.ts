@@ -1,6 +1,7 @@
 import { defineConfig } from "umi";
 
 export default defineConfig({
+  title: "ArchGuard - 守护架构，放权代码",
   nodeModulesTransform: {
     type: "none",
     exclude: [],
@@ -46,6 +47,7 @@ export default defineConfig({
         {
           path: "home",
           component: "@/pages/interactiveAnalysis/InteractiveAnalysis",
+          title: 'ArchGuard - 架构工作台'
         },
       ],
     },
@@ -66,10 +68,12 @@ export default defineConfig({
         {
           path: "home",
           component: "@/pages/system/home/Home",
+          title: 'ArchGuard - 子系统分析'
         },
         {
           path: "code-analysis",
           component: "@/pages/codeAnalysis/CodeAnalysis",
+          title: 'ArchGuard - 代码分析'
         },
         {
           path: "change-diff",
@@ -100,6 +104,7 @@ export default defineConfig({
       exact: false,
       path: "/:systemId",
       component: "@/components/Layouts/subSystem/SubSystemLayout",
+      title: "ArchGuard - 子系统分析",
       routes: [
         {
           path: "analysis/dependence",
