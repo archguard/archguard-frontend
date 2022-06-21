@@ -1,9 +1,9 @@
 import Editor, { loader } from "@monaco-editor/react";
 import React, { useCallback, useRef, useState } from "react";
-import { addSearchSuggestion } from "@/pages/insights/completion/searchSuggestion";
+import { addSearchSuggestion } from "@/pages/insights/searchbar/searchSuggestion";
 
 const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
-  lineHeight: 16,
+  lineHeight: 28,
   // Match the query input's height for suggestion items line height.
   suggestLineHeight: 34,
   lineNumbers: "off",

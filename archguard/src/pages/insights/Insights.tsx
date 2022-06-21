@@ -1,7 +1,8 @@
 import React, { useCallback } from "react";
-import SmartSuggest from "@/pages/insights/SmartSuggest";
 import { Button, Form, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
+import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
+import "./Insights.less";
 
 function Insights() {
   const { Option } = Select;
@@ -24,17 +25,14 @@ function Insights() {
     wrapperCol: { span: 14 },
   };
 
-
   const onSystemChange = useCallback((index: number) => {
     let system = systemInfo?.value!.filter((item) => item.id === index)[0]
     console.log(system);
-
   }, []);
 
   return (
     <div>
-      <div>Insights</div>
-      <div>
+      <div className="search-form">
         <Form
           name="validate_other"
           wrapperCol={{ span: 14 }}
@@ -79,15 +77,16 @@ function Insights() {
             <Option value="api">api</Option>
           </Select>
 
+          <div style={{ height: "32px", width: "800px"}}>
+            <SmartSuggest />
+          </div>
+
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
             <Button type="primary" htmlType="submit">
               Search
             </Button>
           </Form.Item>
         </Form>
-      </div>
-      <div style={{ height: "22px" }}>
-        <SmartSuggest />
       </div>
     </div>
   );
