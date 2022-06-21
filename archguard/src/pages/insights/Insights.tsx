@@ -1,12 +1,19 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Button, Form, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
+import { scaInsight } from "@/api/insights/scaInsight";
 
 function Insights() {
   const { Option } = Select;
   const [systemInfo] = useSystemList();
+
+  useEffect(() => {
+    scaInsight().then((data) => {
+      console.log(data);
+    })
+  })
 
   const onChange = (value: string) => {
     console.log(`selected ${value}`);
