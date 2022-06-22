@@ -3,9 +3,8 @@ import { Button, Form, Input, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
-import { scaInsight } from "@/api/insights/scaInsight";
+import { customInsight, scaInsight } from "@/api/insights/scaInsight";
 import {
-  ChartCard,
   ChartItem,
   INDICATOR_LEVEL_COLOR
 } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
@@ -44,8 +43,12 @@ function Insights() {
   );
 
   const createInsight = useCallback((values: any) => {
-    console.log(values);
-  }, [])
+    customInsight({
+      systemId: systemId, expression: searchText, name: values.name
+    }).then(r => {
+      console.log(r)
+    })
+  }, [systemId, searchText])
 
   return (
     <div>

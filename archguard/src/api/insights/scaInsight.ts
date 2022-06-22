@@ -7,3 +7,11 @@ export function scaInsight(data: any) {
     data: data
   });
 }
+
+export function customInsight(data: any) {
+  return axios({
+    url: `/api/insights/custom`,
+    method: "POST",
+    data: data
+  });
+}

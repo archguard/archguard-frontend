@@ -79,7 +79,7 @@ export function ChartItem(props: ChartItemProps) {
   };
 
   return (
-    <div>
+    <div className={styles.chart}>
       <Chart scale={scale} height={150} width={300} data={graphData} padding={[10, 20, 40, 30]} autoFit>
         <Area color={color} position={`${ChartField.x}*${ChartField.y}`} />
         <Axis name={`${ChartField.x}`} label={{ offset: 25, rotate: 45 }} />
