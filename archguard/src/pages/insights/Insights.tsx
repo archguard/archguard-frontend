@@ -1,10 +1,14 @@
 import React, { useCallback, useState } from "react";
-import { Button, Form, Select } from "antd";
+import { Button, Form, Input, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
 import { scaInsight } from "@/api/insights/scaInsight";
-import { ChartItem, INDICATOR_LEVEL_COLOR } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
+import {
+  ChartCard,
+  ChartItem,
+  INDICATOR_LEVEL_COLOR
+} from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
 import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 import { BaCard } from "@/components/Basic/Card/Card";
 
@@ -38,6 +42,10 @@ function Insights() {
     },
     [setSearchText],
   );
+
+  const createInsight = useCallback((values: any) => {
+    console.log(values);
+  }, [])
 
   return (
     <div>
@@ -98,11 +106,29 @@ function Insights() {
             },
           ];
           return (
-            <div>
-              <BaCard>
+            <div key={"insight" + i} className="insight-result">
+              <BaCard className="insight-chart">
                 <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={graphData} />
               </BaCard>
 
+              <Form
+                className="insight-form"
+                name="create_insight"
+                wrapperCol={{ span: 14 }}
+                labelCol={{ span: 6 }}
+                onFinish={createInsight}
+                layout="inline"
+              >
+                <Form.Item label="Name" name="name">
+                  <Input />
+                </Form.Item>
+
+                <Form.Item>
+                  <Button type="primary" htmlType="submit">
+                    Create
+                  </Button>
+                </Form.Item>
+              </Form>
               <JsonView data={card} />
             </div>
           );
