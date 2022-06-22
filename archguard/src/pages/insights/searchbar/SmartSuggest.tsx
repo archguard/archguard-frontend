@@ -59,6 +59,7 @@ const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
 function SmartSuggest(props: any) {
   const editorRef = useRef(null as any);
   const [height, setHeight] = useState("100%");
+  let defaultCode = "field:name == /.*dubbo/ field:version > 1.12.3";
 
   const changeCode = useCallback(
     (code) => {
@@ -112,13 +113,15 @@ function SmartSuggest(props: any) {
       });
 
       addSearchSuggestion(monaco)
+
+      props.onChange(defaultCode);
     });
   }
 
   return <Editor
     height="100%"
     language={"insights"}
-    value={"field:name == /.*dubbo/ field:version > 1.12.3"}
+    value={defaultCode}
     onChange={changeCode}
     onMount={handleEditorDidMount}
     options={oneLineOption}

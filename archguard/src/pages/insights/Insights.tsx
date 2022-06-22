@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, Form, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
@@ -16,6 +16,7 @@ function Insights() {
 
   const onFinish = useCallback(
     (values: any) => {
+      console.log(searchText);
       scaInsight({ systemId: systemId, expression: searchText }).then((data) => {
         setResult(data);
       });
