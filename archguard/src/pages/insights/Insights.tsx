@@ -4,6 +4,8 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
 import { scaInsight } from "@/api/insights/scaInsight";
+import { ChartItem, INDICATOR_LEVEL_COLOR } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
+import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 import { BaCard } from "@/components/Basic/Card/Card";
 
 function Insights() {
@@ -88,10 +90,22 @@ function Insights() {
         </Form>
       </div>
       <div className="result-container">
-        {JSON.stringify(result)}
         {cards?.map((card, i) => {
-          console.log(card);
-          return <BaCard>{card.length}</BaCard>;
+          const graphData = [
+            {
+              date: new Date().toDateString(),
+              value: card.length,
+            },
+          ];
+          return (
+            <div>
+              <BaCard>
+                <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={graphData} />
+              </BaCard>
+
+              <JsonView data={card} />
+            </div>
+          );
         })}
       </div>
     </div>

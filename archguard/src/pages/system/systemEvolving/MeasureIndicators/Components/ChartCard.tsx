@@ -63,7 +63,7 @@ interface ChartItemProps extends Pick<GroupDataItem, "graphData"> {
   color: INDICATOR_LEVEL_COLOR.fail | INDICATOR_LEVEL_COLOR.pass;
 }
 
-function ChartItem(props: ChartItemProps) {
+export function ChartItem(props: ChartItemProps) {
   const { graphData, color } = props;
   const scale = {
     [ChartField.y]: {
