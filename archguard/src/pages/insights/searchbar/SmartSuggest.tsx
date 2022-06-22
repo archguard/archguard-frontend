@@ -65,6 +65,8 @@ function SmartSuggest(props: any) {
       if (editorRef.current) {
         // adjustHeight(editorRef.current);
       }
+
+      props.onChange(code);
     },
     [editorRef],
   );
@@ -116,7 +118,7 @@ function SmartSuggest(props: any) {
   return <Editor
     height="100%"
     language={"insights"}
-    value={"context: all"}
+    value={"field:name == /.*dubbo/ field:version > 1.12.3"}
     onChange={changeCode}
     onMount={handleEditorDidMount}
     options={oneLineOption}

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Form, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
@@ -8,34 +8,28 @@ import { scaInsight } from "@/api/insights/scaInsight";
 function Insights() {
   const { Option } = Select;
   const [systemInfo] = useSystemList();
+  const [systemId, setSystemId] = useState(-1);
+  const [result, setResult] = useState(null as any)
+  const [searchText, setSearchText] = useState("")
 
-  useEffect(() => {
-    scaInsight().then((data) => {
-      console.log(data);
-    })
-  })
+  const onChange = (value: string) => {};
 
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
+  const onFinish = useCallback(
+    (values: any) => {
+      scaInsight({ systemId: systemId, expression: searchText }).then((data) => {
+        setResult(data);
+      });
+    },
+    [searchText, systemId],
+  );
 
-  const onSearch = (value: string) => {
-    console.log('search:', value);
-  };
+  const onSystemChange = useCallback((value) => {
+    setSystemId(value)
+  }, [setSystemId]);
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-  };
-
-  const formItemLayout = {
-    labelCol: { span: 6 },
-    wrapperCol: { span: 14 },
-  };
-
-  const onSystemChange = useCallback((index: number) => {
-    let system = systemInfo?.value!.filter((item) => item.id === index)[0]
-    console.log(system);
-  }, []);
+  const changeSearchInput = useCallback((text: string) => {
+    setSearchText(text)
+  }, [setSearchText]);
 
   return (
     <div>
@@ -45,17 +39,13 @@ function Insights() {
           wrapperCol={{ span: 14 }}
           labelCol={{ span: 6 }}
           onFinish={onFinish}
-          layout="inline"
-          initialValues={{
-            'input-number': 3,
-            'checkbox-group': ['A', 'B'],
-            rate: 3.5,
-          }}
-        >
+          layout="inline">
+
           <Select
             showSearch
             placeholder="Select a System"
-            onChange={ (index) => onSystemChange(index) }>
+            defaultActiveFirstOption={true}
+            onChange={ (value) => onSystemChange(value) }>
 
             { systemInfo?.value!.map((system, index) => (
               <Select.Option
@@ -72,29 +62,25 @@ function Insights() {
             name="type"
             showSearch
             placeholder="Select a type"
-            optionFilterProp="children"
-            onChange={onChange}
-            onSearch={onSearch}
-            filterOption={(input, option) =>
-              (option!.children as unknown as string).toLowerCase().includes(input.toLowerCase())
-            }
-          >
+            defaultActiveFirstOption={true}
+            onChange={onChange}>
+
             <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
             <Option value="sourcecode">Source Code</Option>
-            <Option value="api">api</Option>
+            <Option value="api">API</Option>
           </Select>
 
           <div style={{ height: "32px", width: "800px"}}>
-            <SmartSuggest />
+            <SmartSuggest onChange={changeSearchInput}/>
           </div>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <Button type="primary" htmlType="submit">
-              Search
-            </Button>
+            <Button type="primary" htmlType="submit">Query</Button>
           </Form.Item>
         </Form>
       </div>
+
+      { JSON.stringify(result) }
     </div>
   );
 }
