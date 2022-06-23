@@ -148,7 +148,7 @@ function Insights() {
       </div>
       <div className="history-container">
         {Object.keys(histories).map((key, i) => {
-          return <div key={"insight-history" + i} className="insight-result">
+          return <div key={"insight-history" + i} className="insight-history-result">
             <BaCard className="insight-chart">
               <div>{key}</div>
               <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={histories[key]} />
