@@ -1,9 +1,9 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Form, Input, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
-import { customInsight, scaInsight } from "@/api/insights/scaInsight";
+import { customInsight, listInsights, scaInsight } from "@/api/insights/scaInsight";
 import {
   ChartItem,
   INDICATOR_LEVEL_COLOR
@@ -49,6 +49,48 @@ function Insights() {
       console.log(r)
     })
   }, [systemId, searchText])
+
+  useEffect(() => {
+    listInsights().then((data) => {
+      console.log(data)
+    });
+  })
+
+  function createResult(card, i: number) {
+    const graphData = [
+      {
+        date: new Date().toDateString(),
+        value: card.length,
+      },
+    ];
+    return (
+      <div key={"insight" + i} className="insight-result">
+        <BaCard className="insight-chart">
+          <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={graphData} />
+        </BaCard>
+
+        <Form
+          className="insight-form"
+          name="create_insight"
+          wrapperCol={{ span: 14 }}
+          labelCol={{ span: 6 }}
+          onFinish={createInsight}
+          layout="inline"
+        >
+          <Form.Item label="Name" name="name">
+            <Input />
+          </Form.Item>
+
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Create
+            </Button>
+          </Form.Item>
+        </Form>
+        <JsonView data={card} />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -102,39 +144,7 @@ function Insights() {
       </div>
       <div className="result-container">
         {cards?.map((card, i) => {
-          const graphData = [
-            {
-              date: new Date().toDateString(),
-              value: card.length,
-            },
-          ];
-          return (
-            <div key={"insight" + i} className="insight-result">
-              <BaCard className="insight-chart">
-                <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={graphData} />
-              </BaCard>
-
-              <Form
-                className="insight-form"
-                name="create_insight"
-                wrapperCol={{ span: 14 }}
-                labelCol={{ span: 6 }}
-                onFinish={createInsight}
-                layout="inline"
-              >
-                <Form.Item label="Name" name="name">
-                  <Input />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button type="primary" htmlType="submit">
-                    Create
-                  </Button>
-                </Form.Item>
-              </Form>
-              <JsonView data={card} />
-            </div>
-          );
+          return createResult(card, i);
         })}
       </div>
     </div>

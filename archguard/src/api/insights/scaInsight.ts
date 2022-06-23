@@ -15,3 +15,10 @@ export function customInsight(data: any) {
     data: data
   });
 }
+
+export function listInsights() {
+  return axios({
+    url: `/api/insights/custom`,
+    method: "GET",
+  });
+}
