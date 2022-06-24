@@ -1,13 +1,17 @@
 import { BaCard } from "@/components/Basic/Card/Card";
-import { ChartItem, INDICATOR_LEVEL_COLOR } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
+import {
+  ChartItem,
+  INDICATOR_LEVEL_COLOR,
+} from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
 import { Button, Form, Input } from "antd";
 import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 import React from "react";
+import { PlusOutlined } from "@ant-design/icons";
 
 interface QueryChartProps {
-  card: any,
-  index: number,
-  createInsight: (values: any) => void,
+  card: any;
+  index: number;
+  createInsight: (values: any) => void;
 }
 
 function InsightQueryChart(props: QueryChartProps) {
@@ -32,14 +36,21 @@ function InsightQueryChart(props: QueryChartProps) {
         onFinish={props.createInsight}
         layout="inline"
       >
-        <Form.Item label="Name" name="name">
-          <Input />
+        <Form.Item
+          name="name"
+          rules={[
+            {
+              required: true,
+              pattern: /^[a-zA-Z0-9]+$/,
+              message: "alphanumeric only",
+            },
+          ]}
+        >
+          <Input style={{ width: "200px" }} placeholder="Name" />
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Create
-          </Button>
+          <Button icon={<PlusOutlined />} type="primary" htmlType="submit" />
         </Form.Item>
       </Form>
       <JsonView data={props.card} />
