@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, Space } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
@@ -100,6 +100,10 @@ function Insights() {
     );
   }
 
+  const deleteInsight = useCallback((key: string) => {
+
+  }, []);
+
   const updateInsight = useCallback((key: string) => {
     getByName(key).then((data) => {
       customInsight({
@@ -161,6 +165,7 @@ function Insights() {
           </Form.Item>
         </Form>
       </div>
+      <h2>Subscribed Insight</h2>
       <div className="history-container">
         {Object.keys(histories).map((key, i) => {
           return <div key={"insight-history" + i} className="insight-history-result">
@@ -168,11 +173,17 @@ function Insights() {
               <div>{key}</div>
               <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={histories[key]} />
             </BaCard>
-            <Button onClick={() => updateInsight(key)}>Update</Button>
+            <div className="insight-operation">
+              <Space>
+                <Button type="primary" onClick={() => updateInsight(key)}>Update</Button>
+                <Button danger onClick={() => deleteInsight(key)}>Delete</Button>
+              </Space>
+            </div>
           </div>;
         })}
       </div>
 
+      <h2>Temporary Insight</h2>
       <div className="result-container">
         {cards?.map((card, i) => {
           return createResult(card, i);
