@@ -8,9 +8,9 @@ export interface CustomInsight {
   schedule: string;
 }
 
-export function scaInsight(data: any) {
+export function snapshotInsight(data: any) {
   return axios({
-    url: `/api/insights/sca`,
+    url: `/api/insights/snapshot`,
     method: "POST",
     data: data,
   });

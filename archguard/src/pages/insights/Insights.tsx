@@ -3,12 +3,11 @@ import { Button, Form, Input, Select, Space } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
-import { customInsight, deleteInsightByName, getByName, listInsights, scaInsight } from "@/api/insights/scaInsight";
+import { customInsight, deleteInsightByName, getByName, listInsights, snapshotInsight } from "@/api/insights/Insight";
 import {
   ChartItem,
   INDICATOR_LEVEL_COLOR
 } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
-import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 import { BaCard } from "@/components/Basic/Card/Card";
 import { groupBy } from "lodash";
 import InsightQueryChart from "@/pages/insights/InsightQueryChart";
@@ -21,9 +20,9 @@ function Insights() {
   const [cards, setCards] = useState([]);
   const [histories, setHistories] = useState({ });
 
-  const onChange = (value: string) => {};
-  const onFinish = useCallback(() => {
-    scaInsight({ systemId: systemId, expression: searchText }).then((data) => {
+  const onFinish = useCallback((values: any) => {
+    console.log(values);
+    snapshotInsight({ systemId: systemId, expression: searchText }).then((data) => {
       setCards((prevCards) => [...prevCards, data]);
     });
   }, [searchText, systemId, setCards]);
@@ -102,6 +101,7 @@ function Insights() {
           layout="inline"
         >
           <Select
+            name="system"
             showSearch
             placeholder="Select a System"
             defaultActiveFirstOption={true}
@@ -121,14 +121,13 @@ function Insights() {
 
           <Select
             name="type"
+            label={"Type"}
             showSearch
             placeholder="Select a type"
             defaultActiveFirstOption={true}
-            onChange={onChange}
           >
             <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
-            {/*<Option value="sourcecode">Source Code</Option>*/}
-            {/*<Option value="api">API</Option>*/}
+            <Option value="api">API</Option>
           </Select>
 
           <div style={{ height: "32px", width: "800px" }}>
