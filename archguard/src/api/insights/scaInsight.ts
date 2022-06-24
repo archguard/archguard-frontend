@@ -1,5 +1,13 @@
 import axios from "@/api/axios";
 
+export interface CustomInsight {
+  id: number;
+  systemId: number;
+  name: string;
+  expression: string;
+  schedule: string;
+}
+
 export function scaInsight(data: any) {
   return axios({
     url: `/api/insights/sca`,
@@ -24,7 +32,7 @@ export function listInsights() {
 }
 
 export function getByName(name: string) {
-  return axios({
+  return axios<CustomInsight>({
     url: `/api/insights/custom-insight/${name}`,
     method: "GET",
   });

@@ -98,7 +98,11 @@ function Insights() {
 
   const updateInsight = useCallback((key: string) => {
     getByName(key).then((data) => {
-
+      customInsight({
+        systemId: data.systemId, expression: data.expression, name: data.name
+      }).then(r => {
+        console.log(r)
+      })
     });
   }, [])
 
