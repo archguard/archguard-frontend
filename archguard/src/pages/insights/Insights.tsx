@@ -11,6 +11,7 @@ import {
 import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 import { BaCard } from "@/components/Basic/Card/Card";
 import { groupBy } from "lodash";
+import InsightQueryChart from "@/pages/insights/InsightQueryChart";
 
 function Insights() {
   const { Option } = Select;
@@ -65,42 +66,6 @@ function Insights() {
   useEffect(() => {
     refreshInsights();
   }, [refreshInsights]);
-
-  function createResult(card, i: number) {
-    const graphData = [
-      {
-        date: new Date().toDateString(),
-        value: card.length,
-      },
-    ];
-    return (
-      <div key={"insight" + i} className="insight-result">
-        <BaCard className="insight-chart">
-          <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={graphData} />
-        </BaCard>
-
-        <Form
-          className="insight-form"
-          name="create_insight"
-          wrapperCol={{ span: 14 }}
-          labelCol={{ span: 6 }}
-          onFinish={createInsight}
-          layout="inline"
-        >
-          <Form.Item label="Name" name="name">
-            <Input />
-          </Form.Item>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Create
-            </Button>
-          </Form.Item>
-        </Form>
-        <JsonView data={card} />
-      </div>
-    );
-  }
 
   const deleteInsight = useCallback(
     (key: string) => {
@@ -197,9 +162,9 @@ function Insights() {
 
       <h2>Temporary Insight</h2>
       <div className="result-container">
-        {cards?.map((card, i) => {
-          return createResult(card, i);
-        })}
+        {cards?.map((card, i) =>
+          <InsightQueryChart card={card} index={i} createInsight={createInsight} />
+        )}
       </div>
     </div>
   );
