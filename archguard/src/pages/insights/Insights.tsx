@@ -12,7 +12,6 @@ import {
 import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
 import { BaCard } from "@/components/Basic/Card/Card";
 import { groupBy } from "lodash";
-import { BaTipsIcon } from "@/components/Basic/TipsIcon/TipsIcon";
 
 function Insights() {
   const { Option } = Select;
@@ -24,7 +23,6 @@ function Insights() {
   const [histories, setHistories] = useState({ });
 
   const onChange = (value: string) => {};
-
   const onFinish = useCallback(() => {
     scaInsight({ systemId: systemId, expression: searchText }).then((data) => {
       setResult(data);
@@ -34,10 +32,13 @@ function Insights() {
 
   const onSystemChange = useCallback(
     (value) => {
-      if (value == "all") {
-        setSystemId(null);
-      } else {
-        setSystemId(value);
+      switch (value) {
+        case "all":
+          setSystemId(null);
+          break;
+        default:
+          setSystemId(value);
+          break;
       }
     },
     [setSystemId],
@@ -54,7 +55,7 @@ function Insights() {
     customInsight({
       systemId: systemId, expression: searchText, name: values.name
     }).then(r => {
-      console.log(r)
+      // console.log(r)
     })
   }, [systemId, searchText])
 
@@ -150,8 +151,8 @@ function Insights() {
             onChange={onChange}
           >
             <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
-            <Option value="sourcecode">Source Code</Option>
-            <Option value="api">API</Option>
+            {/*<Option value="sourcecode">Source Code</Option>*/}
+            {/*<Option value="api">API</Option>*/}
           </Select>
 
           <div style={{ height: "32px", width: "800px" }}>
