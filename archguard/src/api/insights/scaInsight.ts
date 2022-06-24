@@ -10,7 +10,7 @@ export function scaInsight(data: any) {
 
 export function customInsight(data: any) {
   return axios({
-    url: `/api/insights/custom`,
+    url: `/api/insights/custom-insight`,
     method: "POST",
     data: data
   });
@@ -18,7 +18,7 @@ export function customInsight(data: any) {
 
 export function listInsights() {
   return axios({
-    url: `/api/insights/custom`,
+    url: `/api/insights/`,
     method: "GET",
   });
 }
