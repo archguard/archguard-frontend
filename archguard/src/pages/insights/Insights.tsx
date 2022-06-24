@@ -34,7 +34,11 @@ function Insights() {
 
   const onSystemChange = useCallback(
     (value) => {
-      setSystemId(value);
+      if (value == "all") {
+        setSystemId(null);
+      } else {
+        setSystemId(value);
+      }
     },
     [setSystemId],
   );
@@ -122,6 +126,7 @@ function Insights() {
             defaultActiveFirstOption={true}
             onChange={(value) => onSystemChange(value)}
           >
+            <Select.Option value={'all'} key={`all`}>All</Select.Option>
             {systemInfo?.value!.map((system, index) => (
               <Select.Option
                 disabled={system.scanned !== "SCANNED"}
