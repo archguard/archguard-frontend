@@ -37,3 +37,10 @@ export function getByName(name: string) {
     method: "GET",
   });
 }
+
+export function deleteInsightByName(name: string) {
+  return axios<CustomInsight>({
+    url: `/api/insights/custom-insight/${name}`,
+    method: "DELETE",
+  });
+}

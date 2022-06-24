@@ -3,7 +3,7 @@ import { Button, Form, Input, Select, Space } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
-import { customInsight, getByName, listInsights, scaInsight } from "@/api/insights/scaInsight";
+import { customInsight, deleteInsightByName, getByName, listInsights, scaInsight } from "@/api/insights/scaInsight";
 import {
   ChartItem,
   INDICATOR_LEVEL_COLOR
@@ -54,15 +54,19 @@ function Insights() {
     customInsight({
       systemId: systemId, expression: searchText, name: values.name
     }).then(r => {
-      // console.log(r)
+      refreshInsights();
     })
-  }, [systemId, searchText])
+  }, [systemId, searchText, refreshInsights])
 
-  useEffect(() => {
+  const refreshInsights = useCallback(() => {
     listInsights().then((data) => {
-      setHistories(groupBy(data, "name"))
+      setHistories(groupBy(data, "name"));
     });
   }, [setHistories])
+
+  useEffect(() => {
+    refreshInsights();
+  }, [refreshInsights]);
 
   function createResult(card, i: number) {
     const graphData = [
@@ -100,22 +104,29 @@ function Insights() {
     );
   }
 
-  const deleteInsight = useCallback((key: string) => {
+  const deleteInsight = useCallback(
+    (key: string) => {
+      deleteInsightByName(key).then((r) => {
+        refreshInsights();
+      });
+    },
+    [refreshInsights],
+  );
 
-  }, []);
-
-  const updateInsight = useCallback((key: string) => {
-    getByName(key).then((data) => {
-      customInsight({
-        systemId: data.systemId, expression: data.expression, name: data.name
-      }).then(r => {
-        // refresh insights
-        listInsights().then((data) => {
-          setHistories(groupBy(data, "name"))
+  const updateInsight = useCallback(
+    (key: string) => {
+      getByName(key).then((data) => {
+        customInsight({
+          systemId: data.systemId,
+          expression: data.expression,
+          name: data.name,
+        }).then((r) => {
+          refreshInsights();
         });
-      })
-    });
-  }, [setHistories])
+      });
+    },
+    [refreshInsights],
+  );
 
   return (
     <div>
