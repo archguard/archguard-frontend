@@ -5,7 +5,6 @@ import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
 import { customInsight, getByName, listInsights, scaInsight } from "@/api/insights/scaInsight";
 import {
-  badSmellWording,
   ChartItem,
   INDICATOR_LEVEL_COLOR
 } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
@@ -110,10 +109,13 @@ function Insights() {
       customInsight({
         systemId: data.systemId, expression: data.expression, name: data.name
       }).then(r => {
-        console.log(r)
+        // refresh insights
+        listInsights().then((data) => {
+          setHistories(groupBy(data, "name"))
+        });
       })
     });
-  }, [])
+  }, [setHistories])
 
   return (
     <div>
@@ -175,7 +177,7 @@ function Insights() {
               <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={histories[key]} />
             </BaCard>
             <div className="insight-operation">
-              <Space>
+              <Space align={"center"}>
                 <Button type="primary" onClick={() => updateInsight(key)}>Update</Button>
                 <Button danger onClick={() => deleteInsight(key)}>Delete</Button>
               </Space>
