@@ -13,6 +13,7 @@ import { groupBy } from "lodash";
 import InsightQueryChart from "@/pages/insights/InsightQueryChart";
 
 function Insights() {
+  const [form] = Form.useForm();
   const { Option } = Select;
   const [systemInfo] = useSystemList();
   const [systemId, setSystemId] = useState(-1);
@@ -21,8 +22,7 @@ function Insights() {
   const [histories, setHistories] = useState({ });
 
   const onFinish = useCallback((values: any) => {
-    console.log(values);
-    snapshotInsight({ systemId: systemId, expression: searchText }).then((data) => {
+    snapshotInsight({ systemId: systemId, expression: searchText, type: values['insightType'] }).then((data) => {
       setCards((prevCards) => [...prevCards, data]);
     });
   }, [searchText, systemId, setCards]);
@@ -93,45 +93,36 @@ function Insights() {
   return (
     <div>
       <div className="search-form">
-        <Form
-          name="validate_other"
-          wrapperCol={{ span: 14 }}
-          labelCol={{ span: 6 }}
-          onFinish={onFinish}
-          layout="inline"
-        >
-          <Select
-            name="system"
-            showSearch
-            placeholder="Select a System"
-            defaultActiveFirstOption={true}
-            onChange={(value) => onSystemChange(value)}
-          >
-            <Select.Option value={'all'} key={`all`}>All</Select.Option>
-            {systemInfo?.value!.map((system, index) => (
-              <Select.Option
-                disabled={system.scanned !== "SCANNED"}
-                value={system.id}
-                key={`${system.systemName}_${index}`}
-              >
-                {system.systemName}
+        <Form form={form} name="insight_form" onFinish={onFinish} layout="inline">
+          <Form.Item name="insightSystem">
+            <Select
+              showSearch
+              placeholder="Select a System"
+              onChange={(value) => onSystemChange(value)}
+            >
+              <Select.Option value={"all"} key={`all`}>
+                All
               </Select.Option>
-            ))}
-          </Select>
-
-          <Select
-            name="type"
-            label={"Type"}
-            showSearch
-            placeholder="Select a type"
-            defaultActiveFirstOption={true}
-          >
-            <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
-            <Option value="api">API</Option>
-          </Select>
+              {systemInfo?.value!.map((system, index) => (
+                <Select.Option
+                  disabled={system.scanned !== "SCANNED"}
+                  value={system.id}
+                  key={`${system.systemName}_${index}`}
+                >
+                  {system.systemName}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item name="insightType">
+            <Select placeholder="Select a type" showSearch>
+              <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
+              <Option value="api">API</Option>
+            </Select>
+          </Form.Item>
 
           <div style={{ height: "32px", width: "800px" }}>
-            <SmartSuggest onChange={changeSearchInput} />
+            <SmartSuggest name="insightSystem" onChange={changeSearchInput} />
           </div>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
@@ -141,29 +132,36 @@ function Insights() {
           </Form.Item>
         </Form>
       </div>
+
       <h2>Subscribed Insight</h2>
       <div className="history-container">
         {Object.keys(histories).map((key, i) => {
-          return <div key={"insight-history" + i} className="insight-history-result">
-            <BaCard className="insight-chart">
-              <div>{key}</div>
-              <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={histories[key]} />
-            </BaCard>
-            <div className="insight-operation">
-              <Space align={"center"}>
-                <Button type="primary" onClick={() => updateInsight(key)}>Update</Button>
-                <Button danger onClick={() => deleteInsight(key)}>Delete</Button>
-              </Space>
+          return (
+            <div key={"insight-history" + i} className="insight-history-result">
+              <BaCard className="insight-chart">
+                <div>{key}</div>
+                <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={histories[key]} />
+              </BaCard>
+              <div className="insight-operation">
+                <Space align={"center"}>
+                  <Button type="primary" onClick={() => updateInsight(key)}>
+                    Update
+                  </Button>
+                  <Button danger onClick={() => deleteInsight(key)}>
+                    Delete
+                  </Button>
+                </Space>
+              </div>
             </div>
-          </div>;
+          );
         })}
       </div>
 
       <h2>Temporary Insight</h2>
       <div className="result-container">
-        {cards?.map((card, i) =>
-          <InsightQueryChart card={card} index={i} createInsight={createInsight} />
-        )}
+        {cards?.map((card, i) => (
+          <InsightQueryChart key={i} card={card} index={i} createInsight={createInsight} />
+        ))}
       </div>
     </div>
   );
