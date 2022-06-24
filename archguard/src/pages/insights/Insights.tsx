@@ -3,7 +3,7 @@ import { Button, Form, Input, Select } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
-import { customInsight, listInsights, scaInsight } from "@/api/insights/scaInsight";
+import { customInsight, getByName, listInsights, scaInsight } from "@/api/insights/scaInsight";
 import {
   badSmellWording,
   ChartItem,
@@ -96,6 +96,12 @@ function Insights() {
     );
   }
 
+  const updateInsight = useCallback((key: string) => {
+    getByName(key).then((data) => {
+
+    });
+  }, [])
+
   return (
     <div>
       <div className="search-form">
@@ -153,6 +159,7 @@ function Insights() {
               <div>{key}</div>
               <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={histories[key]} />
             </BaCard>
+            <Button onClick={() => updateInsight(key)}>Update</Button>
           </div>;
         })}
       </div>
