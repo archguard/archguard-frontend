@@ -16,7 +16,6 @@ function Insights() {
   const { Option } = Select;
   const [systemInfo] = useSystemList();
   const [systemId, setSystemId] = useState(-1);
-  const [result, setResult] = useState(null as any);
   const [searchText, setSearchText] = useState("");
   const [cards, setCards] = useState([]);
   const [histories, setHistories] = useState({ });
@@ -24,7 +23,6 @@ function Insights() {
   const onChange = (value: string) => {};
   const onFinish = useCallback(() => {
     scaInsight({ systemId: systemId, expression: searchText }).then((data) => {
-      setResult(data);
       setCards((prevCards) => [...prevCards, data]);
     });
   }, [searchText, systemId, setCards]);
@@ -50,6 +48,12 @@ function Insights() {
     [setSearchText],
   );
 
+  const refreshInsights = useCallback(() => {
+    listInsights().then((data) => {
+      setHistories(groupBy(data, "name"));
+    });
+  }, [setHistories])
+
   const createInsight = useCallback((values: any) => {
     customInsight({
       systemId: systemId, expression: searchText, name: values.name
@@ -57,12 +61,6 @@ function Insights() {
       refreshInsights();
     })
   }, [systemId, searchText, refreshInsights])
-
-  const refreshInsights = useCallback(() => {
-    listInsights().then((data) => {
-      setHistories(groupBy(data, "name"));
-    });
-  }, [setHistories])
 
   useEffect(() => {
     refreshInsights();
