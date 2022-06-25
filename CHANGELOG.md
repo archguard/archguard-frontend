@@ -1,4 +1,52 @@
-# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.21...v) (2022-06-13)
+# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.22...v) (2022-06-25)
+
+
+### Bug Fixes
+
+* fix version in error position ([d1052ab](https://github.com/archguard/archguard-frontend/commit/d1052ab0dcc98a646d79dbfb7382acb0d0ad0210))
+* **insights:** disable for sourcecode & api [#12](https://github.com/archguard/archguard-frontend/issues/12) ([a975e62](https://github.com/archguard/archguard-frontend/commit/a975e621d1b9883f35d3f2a1d2dc0d342c78e7d0))
+* **insights:** fix INSIGHTS styles issues [#12](https://github.com/archguard/archguard-frontend/issues/12) ([6335c67](https://github.com/archguard/archguard-frontend/commit/6335c672fc165c40f597c9f93dc0e0980cdeba50))
+* **insights:** make history bying results [#12](https://github.com/archguard/archguard-frontend/issues/12) ([ab56a99](https://github.com/archguard/archguard-frontend/commit/ab56a99efa54ad0aeb69d79cd8a68dd2e020c30c))
+
+
+### Features
+
+* add frontend logos support ([60eaa85](https://github.com/archguard/archguard-frontend/commit/60eaa85e623cccc80d47d4cf9c7bda324d2efec1))
+* add insights ([c8e97e2](https://github.com/archguard/archguard-frontend/commit/c8e97e29edd5a11a8cc27a200c11e147dff23814))
+* init stacks by summary ([d220b40](https://github.com/archguard/archguard-frontend/commit/d220b4019d57a1c548129fa6a8731a9b6073ed74))
+* **insights:** add basic compiletion provider [#10](https://github.com/archguard/archguard-frontend/issues/10) ([068b4be](https://github.com/archguard/archguard-frontend/commit/068b4be2d93b4745d7336dae50036865585e7963))
+* **insights:** add basic sca request [#12](https://github.com/archguard/archguard-frontend/issues/12) ([fecae19](https://github.com/archguard/archguard-frontend/commit/fecae199ea0397ea7a08a9fe7a7228399aaaf53a))
+* **insights:** add handle for paste ([c3dee7e](https://github.com/archguard/archguard-frontend/commit/c3dee7ec63db211b3c9d1bdec8c343c6479c25ee))
+* **insights:** add handle with insights update after query [#12](https://github.com/archguard/archguard-frontend/issues/12) ([5dfb24c](https://github.com/archguard/archguard-frontend/commit/5dfb24c33a77881ef7d85a80c12f1e23ecac6a5b))
+* **insights:** add histories for support [#12](https://github.com/archguard/archguard-frontend/issues/12) ([a5929de](https://github.com/archguard/archguard-frontend/commit/a5929de0fed112064e36ba3640f274b29b88c2aa))
+* **insights:** add support for handle all [#12](https://github.com/archguard/archguard-frontend/issues/12) ([76fe7f6](https://github.com/archguard/archguard-frontend/commit/76fe7f68266f741e34c4d01ecd279e8f67192262))
+* **insights:** change views [#12](https://github.com/archguard/archguard-frontend/issues/12) ([9fa8aac](https://github.com/archguard/archguard-frontend/commit/9fa8aac3f8ea43e83a1be46cfebd237aa3d47e52))
+* **insights:** disable search ([5243bec](https://github.com/archguard/archguard-frontend/commit/5243bec98fb19f38bf8c5e306e393474bd1ac664))
+* **insights:** init create insight [#12](https://github.com/archguard/archguard-frontend/issues/12) ([be9e7fe](https://github.com/archguard/archguard-frontend/commit/be9e7fef0ebb2b09f7d17dbfd9098d780a9f015b))
+* **insights:** init insights form [#12](https://github.com/archguard/archguard-frontend/issues/12) ([0fd5ac7](https://github.com/archguard/archguard-frontend/commit/0fd5ac7c909e5c4d01b945876fd60cd0d9aa4d45))
+* **insights:** init insights form [#95](https://github.com/archguard/archguard-frontend/issues/95) ([3445583](https://github.com/archguard/archguard-frontend/commit/3445583b9be2c24d447724083b8e4f2769047365))
+* **insights:** make filter by condition works [#95](https://github.com/archguard/archguard-frontend/issues/95) ([338c92a](https://github.com/archguard/archguard-frontend/commit/338c92a7a538895f25caa6419c671d0cbff39c0a))
+* **insights:** refresh insights after update [#12](https://github.com/archguard/archguard-frontend/issues/12) ([c276ad8](https://github.com/archguard/archguard-frontend/commit/c276ad82e47dad2574d5fcfc6a3aebcbba0f3dfe))
+* **insights:** test for custom type [#10](https://github.com/archguard/archguard-frontend/issues/10) ([3b4afa4](https://github.com/archguard/archguard-frontend/commit/3b4afa465a4e29d9abaea48441b3a0b69506340d))
+* **insights:** tips for insights [#12](https://github.com/archguard/archguard-frontend/issues/12) ([189980f](https://github.com/archguard/archguard-frontend/commit/189980f8161ef5759bd1ccba224466bcebe536ea))
+* **insights:** update config for [#10](https://github.com/archguard/archguard-frontend/issues/10) ([80a6bd7](https://github.com/archguard/archguard-frontend/commit/80a6bd721e5556163e2383e8bf3e5e14c0cc4207))
+* **rules:** add stacks for projects ([847d422](https://github.com/archguard/archguard-frontend/commit/847d422e42c6ce8338336dc9f4cf3045ffee4e75))
+
+
+
+# [2.0.0-alpha.22](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.21...v2.0.0-alpha.22) (2022-06-14)
+
+
+### Bug Fixes
+
+* fix typos ([74d1763](https://github.com/archguard/archguard-frontend/commit/74d1763c3814742071a136872aebb745a7e2fe21))
+* fix url issues for new layout ([83e1415](https://github.com/archguard/archguard-frontend/commit/83e1415de931b58fc24d8e1611fb8ed86d0c2a10))
+
+
+### Features
+
+* add styles support for datamap ([f9dec8c](https://github.com/archguard/archguard-frontend/commit/f9dec8cb5d292b8024276cc6e30550c1c2358d97))
+* add version to home ([a3bae79](https://github.com/archguard/archguard-frontend/commit/a3bae79445dbd3a27cf3d1e42ab5831cc715d3b5))
 
 
 
