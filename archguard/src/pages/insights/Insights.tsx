@@ -117,7 +117,7 @@ function Insights() {
           <Form.Item name="insightType">
             <Select placeholder="Select a type" showSearch>
               <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
-              <Option value="api">API</Option>
+              {/*<Option value="api">API</Option>*/}
             </Select>
           </Form.Item>
 
