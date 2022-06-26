@@ -1,20 +1,21 @@
 import React, { useCallback, useState } from "react";
-import Dependence from "@/pages/dependence";
+import Dependence from "@/pages/dependence/Dependence";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Select } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
 import { useIntl } from "@@/plugin-locale/localeExports";
+import { useParams } from "umi";
 
 const CodeAnalysis = () => {
   const { formatMessage } = useIntl();
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
-  const [systemId, setSystemId] = useState(0);
+  const [systemId, setSystemId] = useState(useParams().systemId);
 
   const onSystemChange = useCallback((index: number) => {
     setIsInChanging(false)
     let system = systemInfo?.value!.filter((item) => item.id === index)[0]
-    if (!!system) {
+    if (system) {
       storage.setSystemId(system.id);
       storage.setSystemLanguage(system.language);
 

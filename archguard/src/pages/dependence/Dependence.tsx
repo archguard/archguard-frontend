@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useHistory, useParams } from "umi";
 import ClassDependence from "./ClassDependence";
 import DependenceConfig from "./DependenceConfig";
-import "./index.css";
+import "./Dependence.css";
 import MethodDependence from "./MethodDependence";
 import ModuleDependence from "./ModuleDependence";
 import PackageDependence from "./PackageDependence";

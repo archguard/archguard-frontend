@@ -107,8 +107,8 @@ export default defineConfig({
       title: "ArchGuard - 子系统分析",
       routes: [
         {
-          path: "analysis/dependence",
-          component: "@/pages/dependence",
+          path: "analysis/dependence/Dependence",
+          component: "@/pages/dependence/Dependence",
         },
         {
           path: "systemSummary/Summary",
