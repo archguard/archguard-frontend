@@ -45,7 +45,10 @@ function ServicesMap() {
 
   return (
     <div>
-      <p>{newLineMessage(formatMessage, "SERVICES_MAP_TIPS")}
+      <p>
+        { formatMessage({ id: "SERVICES_MAP_TIPS_FE" }) }<br />
+        { formatMessage({ id: "SERVICES_MAP_TIPS_BE" }) }<br />
+        { formatMessage({ id: "ADD_NEW_FRAMEWORK" }) }
         <a href="https://github.com/archguard/archguard" target={"_blank"} rel="noreferrer">
           https://github.com/archguard/archguard
         </a>

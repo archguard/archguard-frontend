@@ -6,7 +6,6 @@ import { queryDatamap } from "@/api/datamap/datamap";
 import { useParams } from "umi";
 import { useIntl } from "@@/plugin-locale/localeExports";
 import DatamapSankey from "@/pages/databaseMap/components/DatamapSankey";
-import { newLineMessage } from "@/utils/newLineMessage";
 import { ColumnsType } from "antd/lib/table/interface";
 
 const DatabaseMap = () => {
@@ -47,13 +46,16 @@ const DatabaseMap = () => {
   return (
     <div>
       {systemInfo?.value && (
-        <>
-          <p>
-            {newLineMessage(formatMessage, "DATABASE_MAP_TIPS")}
-            <a href="https://github.com/archguard/archguard" target={"_blank"} rel="noreferrer">
-              https://github.com/archguard/archguard
-            </a>
-          </p>
+        <div>
+          <div>
+            <p>
+              {formatMessage({ id: "DATABASE_MAP_TIPS" })} <br />
+              {formatMessage({ id: "ADD_NEW_FRAMEWORK" })}
+              <a href="https://github.com/archguard/archguard" target={"_blank"} rel="noreferrer">
+                https://github.com/archguard/archguard
+              </a>
+            </p>
+          </div>
           <Select
             style={{ width: 350, color: "#000" }}
             bordered={true}
@@ -71,7 +73,7 @@ const DatabaseMap = () => {
           />
           {isInChanging && systemId && <DatamapSankey dataSource={dbRecords} />}
           {isInChanging && systemId && <Table dataSource={dbRecords} columns={unmapColumns} />}
-        </>
+        </div>
       )}
     </div>
   );
