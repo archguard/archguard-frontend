@@ -41,7 +41,7 @@ function InsightQueryChart(props: QueryChartProps) {
           rules={[
             {
               required: true,
-              pattern: /^[a-zA-Z0-9]+$/,
+              pattern: /^[a-zA-Z\d]+$/,
               message: "alphanumeric only",
             },
           ]}

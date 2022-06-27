@@ -56,10 +56,14 @@ const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   cursorWidth: 1,
 };
 
-function SmartSuggest(props: any) {
+export interface SmartSuggestProps {
+  code: string;
+  onChange: (code: string) => void;
+}
+
+function SmartSuggest(props: SmartSuggestProps) {
   const editorRef = useRef(null as any);
   const [height, setHeight] = useState("100%");
-  let defaultCode = "field:name == /.*dubbo/ field:version > 1.12.3";
 
   const changeCode = useCallback(
     (code) => {
@@ -113,15 +117,12 @@ function SmartSuggest(props: any) {
       });
 
       addSearchSuggestion(monaco)
-
-      props.onChange(defaultCode);
     });
   }
 
-  return <Editor
-    height="100%"
+  return <Editor height="100%"
     language={"insights"}
-    value={defaultCode}
+    value={props.code}
     onChange={changeCode}
     onMount={handleEditorDidMount}
     options={oneLineOption}

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Form, Input, Select, Space } from "antd";
+import { Button, Form, Select, Space} from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
@@ -17,7 +17,7 @@ function Insights() {
   const { Option } = Select;
   const [systemInfo] = useSystemList();
   const [systemId, setSystemId] = useState(-1);
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState("field:name == /.*dubbo/ field:version > 1.12.3");
   const [cards, setCards] = useState([]);
   const [histories, setHistories] = useState({ });
 
@@ -26,6 +26,21 @@ function Insights() {
       setCards((prevCards) => [...prevCards, data]);
     });
   }, [searchText, systemId, setCards]);
+
+  const changeType = useCallback((type: any) => {
+    let text = "field:name == /.*dubbo/ field:version > 1.12.3";
+    switch (type) {
+      case "api":
+        text = "field:name == /.*dubbo/ field:version > 1.12.3";
+        break;
+      case "case":
+        break;
+      default:
+        text = "field:name == /.*dubbo/ field:version > 1.12.3";
+    }
+
+    setSearchText(text);
+  }, [setSearchText]);
 
   const onSystemChange = useCallback(
     (value) => {
@@ -99,6 +114,7 @@ function Insights() {
               showSearch
               placeholder="Select a System"
               onChange={(value) => onSystemChange(value)}
+              style={{ width: "200px"}}
             >
               <Select.Option value={"all"} key={`all`}>
                 All
@@ -115,14 +131,14 @@ function Insights() {
             </Select>
           </Form.Item>
           <Form.Item name="insightType">
-            <Select placeholder="Select a type" showSearch>
+            <Select placeholder="Select a type" showSearch onChange={changeType} style={{ width: "200px"}}>
               <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
-              {/*<Option value="api">API</Option>*/}
+              <Option value="api">API</Option>
             </Select>
           </Form.Item>
 
           <div style={{ height: "32px", width: "800px" }}>
-            <SmartSuggest name="insightSystem" onChange={changeSearchInput} />
+            <SmartSuggest onChange={changeSearchInput} code={searchText}/>
           </div>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
@@ -131,6 +147,7 @@ function Insights() {
             </Button>
           </Form.Item>
         </Form>
+
       </div>
 
       <h2>Subscribed Insight</h2>
