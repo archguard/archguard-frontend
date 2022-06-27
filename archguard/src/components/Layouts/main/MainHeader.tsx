@@ -20,6 +20,7 @@ const HomeMenus = [
   { key: "/analysis/change-diff", text: "变更影响分析" },
   { key: "/visual/database-map", text: "数据库地图" },
   { key: "/visual/services-map", text: "服务地图" },
+  { key: "/insights/home", text: "架构洞察" },
   { key: "/visual/message-map", text: "消息地图" },
 ]
 

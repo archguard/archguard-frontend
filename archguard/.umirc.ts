@@ -58,6 +58,7 @@ export default defineConfig({
         {
           path: "home",
           component: "@/pages/insights/Insights",
+          title: 'ArchGuard Insight - 架构洞察'
         },
       ],
     },
