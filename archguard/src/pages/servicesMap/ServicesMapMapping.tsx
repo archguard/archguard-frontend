@@ -121,13 +121,15 @@ ${ (incomingCount(d)) } incoming ←`);
       .text((d) => `${names[d.source.index]} → ${names[d.target.index]} ${d.source.value}`);
   }, [data]);
 
-  return <div className={ styles.service }>
-    <svg ref={ svgRef } width={ width } height={ height }/>
-    <div>
-      <h2>{ formatMessage({ id: 'UNMATCH_URL'}) }</h2>
-      <Table dataSource={ unmapUrls } columns={ unmapColumns }/>
+  return (
+    <div className={styles.service}>
+      <svg ref={svgRef} width={width} height={height} />
+      <div>
+        <h2>{formatMessage({ id: "UNMATCH_URL" })}</h2>
+        <Table dataSource={unmapUrls} columns={unmapColumns} />
+      </div>
     </div>
-  </div>;
+  );
 };
 
 export default ServicesMapMapping;

@@ -7,7 +7,7 @@ export default defineConfig({
     exclude: [],
   },
   // for Jupyter libs: zeromq, jmq,
-  extraBabelPlugins: ["@babel/plugin-transform-modules-commonjs"],
+  // extraBabelPlugins: ["@babel/plugin-transform-modules-commonjs"],
   devtool: false,
   hash: true,
   antd: {},
@@ -47,7 +47,7 @@ export default defineConfig({
         {
           path: "home",
           component: "@/pages/interactiveAnalysis/InteractiveAnalysis",
-          title: 'ArchGuard - 架构工作台'
+          title: 'ArchGuard - Workbench (ALPHA)',
         },
       ],
     },
@@ -58,7 +58,7 @@ export default defineConfig({
         {
           path: "home",
           component: "@/pages/insights/Insights",
-          title: 'ArchGuard Insight - 架构洞察'
+          title: 'ArchGuard Insight - Architecture Insight'
         },
       ],
     },
@@ -69,12 +69,12 @@ export default defineConfig({
         {
           path: "home",
           component: "@/pages/system/home/Home",
-          title: 'ArchGuard - 子系统分析'
+          title: 'ArchGuard - Subsystem Analysis',
         },
         {
           path: "code-analysis",
           component: "@/pages/codeAnalysis/CodeAnalysis",
-          title: 'ArchGuard - 代码分析'
+          title: 'ArchGuard - Code Analysis'
         },
         {
           path: "change-diff",
@@ -105,7 +105,7 @@ export default defineConfig({
       exact: false,
       path: "/:systemId",
       component: "@/components/Layouts/subSystem/SubSystemLayout",
-      title: "ArchGuard - 子系统分析",
+      title: "ArchGuard - Subsystem Analysis",
       routes: [
         {
           path: "analysis/dependence/Dependence",

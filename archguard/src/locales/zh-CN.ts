@@ -1,5 +1,14 @@
 export default {
   SWITCH_LANGUAGE: "English",
+  MENU_INSIGHT: "洞  见",
+  MENU_WORKBENCH: "工作台（Alpha）",
+  MENU_SUB_SYSTEM: "子系统分析",
+  MENU_CODE_ANALYSIS: "代码分析",
+  MENU_CHANGE_DIFF: "变更影响分析",
+  MENU_DATABASE_MAP: "数据库地图",
+  MENU_SERVICES_MAP: "服务地图",
+  MENU_MESSAGE_MAP: "消息地图",
+
   MY_SYSTEM: "我的系统",
   SERVICES_MAP: "服务地图（HTTP API 分析）",
   MESSAGE_QUEUE_ANALYSIS: "消息系统地图",

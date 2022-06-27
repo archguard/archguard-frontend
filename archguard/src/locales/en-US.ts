@@ -1,5 +1,14 @@
 export default {
   SWITCH_LANGUAGE: "中文",
+  MENU_INSIGHT: "Insight",
+  MENU_WORKBENCH: "Workbench",
+  MENU_SUB_SYSTEM: "Sub-System",
+  MENU_CODE_ANALYSIS: "Code Analysis",
+  MENU_CHANGE_DIFF: "Change Diff",
+  MENU_DATABASE_MAP: "Database Map",
+  MENU_SERVICES_MAP: "Services Map",
+  MENU_MESSAGE_MAP: "Message Map",
+
   OTHER_SYSTEM: "Other Systems",
   COMPONENT_ANALYSIS: "Component Analysis",
   MY_SYSTEM: "My Systems",

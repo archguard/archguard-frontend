@@ -13,17 +13,6 @@ import "antd/dist/antd.less";
 
 const pkg = require('../../../../package.json');
 
-const HomeMenus: MenuProps['items'] = [
-  { key: "/workbench/home", label: "工作台（Alpha）" },
-  { key: "/analysis/home", label: "子系统分析" },
-  { key: "/insights/home", label: "洞 见" },
-  { key: "/analysis/code-analysis", label: "代码分析" },
-  { key: "/analysis/change-diff", label: "变更影响分析" },
-  { key: "/visual/database-map", label: "数据库地图" },
-  { key: "/visual/services-map", label: "服务地图" },
-  { key: "/visual/message-map", label: "消息地图", disabled: true },
-]
-
 export default function MainHeader(props: any) {
   const { formatMessage } = useIntl();
   const [currentLanguage, setCurrentLanguage] = useState("zh-CN");
@@ -41,6 +30,17 @@ export default function MainHeader(props: any) {
     setLocale(currentLanguage, false);
   };
 
+  const HomeMenus: MenuProps['items'] = [
+    { key: "/workbench/home", label: formatMessage({ id: "MENU_WORKBENCH" }) },
+    { key: "/analysis/home", label: formatMessage({ id: "MENU_SUB_SYSTEM" }) },
+    { key: "/insights/home", label: formatMessage({ id: "MENU_INSIGHT" }) },
+    { key: "/analysis/code-analysis", label: formatMessage({ id: "MENU_CODE_ANALYSIS" }) },
+    { key: "/analysis/change-diff", label: formatMessage({ id: "MENU_CHANGE_DIFF" })},
+    { key: "/visual/database-map", label: formatMessage({ id: "MENU_DATABASE_MAP" }) },
+    { key: "/visual/services-map", label: formatMessage({ id: "MENU_SERVICES_MAP" }) },
+    { key: "/visual/message-map", label: formatMessage({ id: "MENU_MESSAGE_MAP" }), disabled: true },
+  ]
+
   const onClick: MenuProps['onClick'] = e => {
     props.history.push(e.key);
   };
@@ -49,7 +49,7 @@ export default function MainHeader(props: any) {
     <div className="multiple-system-header">
       <div className="header-logo">
         <img src={require("@/assets/images/logo-small.png")} alt="logo" />
-        <span className="slogan">守护架构，放权代码 </span>
+        <span className="slogan">守护架构，放权代码</span>
       </div>
       <div className="header-menu">
         <Menu mode="horizontal" onClick={onClick} selectedKeys={[props.location.pathname]} items={HomeMenus} />
