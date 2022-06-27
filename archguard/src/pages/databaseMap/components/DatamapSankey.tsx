@@ -71,8 +71,6 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
       })
     }
 
-    console.log(data)
-
     setOptions({
       // @ts-ignore
       title: {

@@ -7,6 +7,7 @@ import { useParams } from "umi";
 import { useIntl } from "@@/plugin-locale/localeExports";
 import DatamapSankey from "@/pages/databaseMap/components/DatamapSankey";
 import { newLineMessage } from "@/utils/newLineMessage";
+import { ColumnsType } from "antd/lib/table/interface";
 
 const DatabaseMap = () => {
   const { formatMessage } = useIntl();
@@ -36,11 +37,11 @@ const DatabaseMap = () => {
     return (a, b) => a[type].length - b[type].length;
   }
 
-  const unmapColumns = [
-    { title: "packageName", dataIndex: "packageName", sorter: sortFunc("packageName") },
-    { title: "className", dataIndex: "className", sorter: sortFunc("className") },
-    { title: "functionName", dataIndex: "functionName", sorter: sortFunc("functionName") },
-    { title: "tables", dataIndex: "tables", sorter: sortFunc("tables") },
+  const unmapColumns: ColumnsType['columns'] = [
+    { title: "packageName", key: "packageName", dataIndex: "packageName",  sorter: sortFunc("packageName") },
+    { title: "className", key: "className", dataIndex: "className", sorter: sortFunc("className") },
+    { title: "functionName", key: "functionName", dataIndex: "functionName", sorter: sortFunc("functionName") },
+    { title: "tables", key: "tables", dataIndex: "tables", sorter: sortFunc("tables") },
   ];
 
   return (
@@ -59,15 +60,15 @@ const DatabaseMap = () => {
             placeholder={ formatMessage({ id: 'SELECT_SYSTEM' }) }
             onChange={ (index) => onSystemChange(index) }
           >
-            { systemInfo?.value!.map((system, index) => (
+            { systemInfo?.value!.map((system, index) =>
               <Select.Option
                 disabled={ system.scanned !== "SCANNED" }
                 value={ system.id }
-                key={ `${ system.systemName }_${ index }` }
+                key={ `system_${ system.id }` }
               >
                 { system.systemName }
               </Select.Option>
-            )) }
+            ) }
           </Select>
           { isInChanging && systemId && <DatamapSankey dataSource={ dbRecords }/> }
           { isInChanging && systemId && <Table dataSource={ dbRecords } columns={ unmapColumns }/> }
