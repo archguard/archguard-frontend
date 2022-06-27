@@ -12,12 +12,14 @@ import { BaCard } from "@/components/Basic/Card/Card";
 import { groupBy } from "lodash";
 import InsightQueryChart from "@/pages/insights/InsightQueryChart";
 
+let defaultSearchText = "field:dep_name == /.*dubbo/ field:dep_version > 1.12.3";
+
 function Insights() {
   const [form] = Form.useForm();
   const { Option } = Select;
   const [systemInfo] = useSystemList();
   const [systemId, setSystemId] = useState(-1);
-  const [searchText, setSearchText] = useState("field:name == /.*dubbo/ field:version > 1.12.3");
+  const [searchText, setSearchText] = useState(defaultSearchText);
   const [cards, setCards] = useState([]);
   const [histories, setHistories] = useState({ });
 
@@ -28,15 +30,15 @@ function Insights() {
   }, [searchText, systemId, setCards]);
 
   const changeType = useCallback((type: any) => {
-    let text = "field:name == /.*dubbo/ field:version > 1.12.3";
+    let text = defaultSearchText;
     switch (type) {
       case "api":
-        text = "field:name == /.*dubbo/ field:version > 1.12.3";
+        text = "";
         break;
       case "case":
         break;
       default:
-        text = "field:name == /.*dubbo/ field:version > 1.12.3";
+        text = defaultSearchText;
     }
 
     setSearchText(text);
