@@ -7,6 +7,7 @@ import ServicesMapGraph from "@/pages/servicesMap/graph/ServicesMapGraph";
 import { urlMapping } from "@/pages/servicesMap/urlMapping";
 import { useIntl } from "@@/plugin-locale/localeExports";
 import { newLineMessage } from "@/utils/newLineMessage";
+import { graphLayoutOptions } from "@/components/Business/InvokeGraph/cytoscapeGraph/components/GraphOperation/config";
 
 function ServicesMap() {
   const { formatMessage } = useIntl();
@@ -44,9 +45,7 @@ function ServicesMap() {
 
   return (
     <div>
-      <p>
-        {newLineMessage(formatMessage, "SERVICES_MAP_TIPS")}
-
+      <p>{newLineMessage(formatMessage, "SERVICES_MAP_TIPS")}
         <a href="https://github.com/archguard/archguard" target={"_blank"} rel="noreferrer">
           https://github.com/archguard/archguard
         </a>
@@ -55,21 +54,20 @@ function ServicesMap() {
       {systemInfo?.value && (
         <>
           <Row gutter={24} key="dependence-module">
-            <Col span={8}>
+            <Col span={8} key="col-1">
               <Select
                 mode="multiple"
                 style={{ width: "100%" }}
                 placeholder={formatMessage({ id: "SELECT_SYSTEM" })}
                 onChange={handleChange}
-              >
-                {systemInfo?.value!.map((system, index) => (
-                  <Select.Option value={system.id} key={`${system.systemName}_${index}`}>
-                    {system.systemName}
-                  </Select.Option>
-                ))}
-              </Select>
+                options={systemInfo?.value!.map((item) => ({
+                  label: item.systemName,
+                  key: `system-${item.id}`,
+                  value: item.id,
+                })) as any[]}
+              />
             </Col>
-            <Col span={4}>
+            <Col span={4} key="col-2">
               <Button
                 type="primary"
                 onClick={() => createMapping()}

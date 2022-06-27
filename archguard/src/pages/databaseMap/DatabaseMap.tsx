@@ -46,36 +46,35 @@ const DatabaseMap = () => {
 
   return (
     <div>
-      { systemInfo?.value &&
+      {systemInfo?.value && (
         <>
-          <p>{newLineMessage(formatMessage, "DATABASE_MAP_TIPS")}
-            <a href="https://github.com/archguard/archguard"
-               target={ "_blank" }
-               rel="noreferrer">https://github.com/archguard/archguard</a>
+          <p>
+            {newLineMessage(formatMessage, "DATABASE_MAP_TIPS")}
+            <a href="https://github.com/archguard/archguard" target={"_blank"} rel="noreferrer">
+              https://github.com/archguard/archguard
+            </a>
           </p>
           <Select
-            style={ { width: 350, color: "#000" } }
-            bordered={ true }
-            showArrow={ true }
-            placeholder={ formatMessage({ id: 'SELECT_SYSTEM' }) }
-            onChange={ (index) => onSystemChange(index) }
-          >
-            { systemInfo?.value!.map((system, index) =>
-              <Select.Option
-                disabled={ system.scanned !== "SCANNED" }
-                value={ system.id }
-                key={ `system_${ system.id }` }
-              >
-                { system.systemName }
-              </Select.Option>
-            ) }
-          </Select>
-          { isInChanging && systemId && <DatamapSankey dataSource={ dbRecords }/> }
-          { isInChanging && systemId && <Table dataSource={ dbRecords } columns={ unmapColumns }/> }
+            style={{ width: 350, color: "#000" }}
+            bordered={true}
+            showArrow={true}
+            placeholder={formatMessage({ id: "SELECT_SYSTEM" })}
+            onChange={(index) => onSystemChange(index)}
+            options={
+              systemInfo?.value!.map((item) => ({
+                disabled: item.scanned !== "SCANNED",
+                key: `system-${item.id}`,
+                label: item.systemName,
+                value: item.id,
+              })) as any[]
+            }
+          />
+          {isInChanging && systemId && <DatamapSankey dataSource={dbRecords} />}
+          {isInChanging && systemId && <Table dataSource={dbRecords} columns={unmapColumns} />}
         </>
-      }
+      )}
     </div>
-  )
+  );
 }
 
 export default DatabaseMap

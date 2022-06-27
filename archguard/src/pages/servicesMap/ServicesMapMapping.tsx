@@ -20,9 +20,9 @@ const ServicesMapMapping = (props: ServicesMapMappingProps) => {
   const outerRadius = innerRadius + 10
 
   const unmapColumns = [
-    { title: 'service', dataIndex: 'service' },
-    { title: 'originUrl', dataIndex: 'originUrl' },
-    { title: 'process url', dataIndex: 'url', },
+    { title: 'service', dataIndex: 'service', key: 'service' },
+    { title: 'originUrl', dataIndex: 'originUrl', key: 'originUrl' },
+    { title: 'process url', dataIndex: 'url', key: 'url' },
   ]
 
   useEffect(() => {
