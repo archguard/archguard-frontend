@@ -13,15 +13,15 @@ import "antd/dist/antd.less";
 
 const pkg = require('../../../../package.json');
 
-const HomeMenus = [
-  { key: "/workbench/home", text: "工作台（Alpha）" },
-  { key: "/analysis/home", text: "子系统分析" },
-  { key: "/analysis/code-analysis", text: "代码分析" },
-  { key: "/analysis/change-diff", text: "变更影响分析" },
-  { key: "/visual/database-map", text: "数据库地图" },
-  { key: "/visual/services-map", text: "服务地图" },
-  { key: "/insights/home", text: "架构洞察" },
-  { key: "/visual/message-map", text: "消息地图" },
+const HomeMenus: MenuProps['items'] = [
+  { key: "/workbench/home", label: "工作台（Alpha）" },
+  { key: "/analysis/home", label: "子系统分析" },
+  { key: "/insights/home", label: "洞 见" },
+  { key: "/analysis/code-analysis", label: "代码分析" },
+  { key: "/analysis/change-diff", label: "变更影响分析" },
+  { key: "/visual/database-map", label: "数据库地图" },
+  { key: "/visual/services-map", label: "服务地图" },
+  { key: "/visual/message-map", label: "消息地图", disabled: true },
 ]
 
 export default function MainHeader(props: any) {
@@ -52,13 +52,7 @@ export default function MainHeader(props: any) {
         <span className="slogan">守护架构，放权代码 </span>
       </div>
       <div className="header-menu">
-        <Menu mode="horizontal" onClick={onClick} selectedKeys={[props.location.pathname]}>
-          {HomeMenus.map((item: any) => (
-            <Menu.Item key={`${item.key}`} >
-              <span className="nav-text">{item.text}</span>
-            </Menu.Item>
-          ))}
-        </Menu>
+        <Menu mode="horizontal" onClick={onClick} selectedKeys={[props.location.pathname]} items={HomeMenus} />
       </div>
       <div className="header-user">
         <div>
