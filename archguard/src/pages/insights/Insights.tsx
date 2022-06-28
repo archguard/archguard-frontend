@@ -135,7 +135,7 @@ function Insights() {
           <Form.Item name="insightType">
             <Select placeholder="Select a type" showSearch onChange={changeType} style={{ width: "200px"}}>
               <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
-              <Option value="api">API</Option>
+              {/*<Option value="api">API</Option>*/}
             </Select>
           </Form.Item>
 
