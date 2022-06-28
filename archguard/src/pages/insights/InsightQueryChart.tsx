@@ -10,7 +10,7 @@ import { PlusOutlined } from "@ant-design/icons";
 
 interface InsightModel {
   size: number;
-  items: any[];
+  content: any[];
 }
 
 interface QueryChartProps {
@@ -58,7 +58,7 @@ function InsightQueryChart(props: QueryChartProps) {
           <Button icon={<PlusOutlined />} type="primary" htmlType="submit" />
         </Form.Item>
       </Form>
-      <JsonView data={props.card} />
+      <JsonView data={props.card.content} />
     </div>
   );
 }
