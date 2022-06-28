@@ -1,11 +1,12 @@
 import axios from "@/api/axios";
 
 export interface CustomInsight {
-  id: number;
+  id?: number;
   systemId: number;
-  name: string;
+  name?: string;
   expression: string;
-  schedule: string;
+  type: string;
+  schedule?: string;
 }
 
 export function snapshotInsight(data: any) {
@@ -16,7 +17,7 @@ export function snapshotInsight(data: any) {
   });
 }
 
-export function customInsight(data: any) {
+export function customInsight(data: CustomInsight) {
   return axios({
     url: `/api/insights/custom-insight`,
     method: "POST",

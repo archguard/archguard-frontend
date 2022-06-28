@@ -22,6 +22,7 @@ function Insights() {
   const [searchText, setSearchText] = useState(defaultSearchText);
   const [cards, setCards] = useState([]);
   const [histories, setHistories] = useState({ });
+  const [selectType, setSelectType] = useState("sca");
 
   const onFinish = useCallback((values: any) => {
     snapshotInsight({ systemId: systemId, expression: searchText, type: values['insightType'] }).then((data) => {
@@ -30,19 +31,24 @@ function Insights() {
   }, [searchText, systemId, setCards]);
 
   const changeType = useCallback((type: any) => {
-    let text = defaultSearchText;
+    setSelectType(type);
+    let text;
     switch (type) {
       case "api":
         text = "";
         break;
-      case "case":
+      case "issue":
+        text = "field:rule_type == 'TEST_CODE_SMELL'";
+        break;
+      case "sca":
+        text = defaultSearchText;
         break;
       default:
         text = defaultSearchText;
     }
 
     setSearchText(text);
-  }, [setSearchText]);
+  }, [setSearchText, setSelectType]);
 
   const onSystemChange = useCallback(
     (value) => {
@@ -73,11 +79,14 @@ function Insights() {
 
   const createInsight = useCallback((values: any) => {
     customInsight({
-      systemId: systemId, expression: searchText, name: values.name
+      type: selectType,
+      systemId: systemId,
+      expression: searchText,
+      name: values.name
     }).then(r => {
       refreshInsights();
     })
-  }, [systemId, searchText, refreshInsights])
+  }, [systemId, searchText, refreshInsights, selectType])
 
   useEffect(() => {
     refreshInsights();
@@ -98,6 +107,7 @@ function Insights() {
         customInsight({
           systemId: data.systemId,
           expression: data.expression,
+          type: data.type,
           name: data.name,
         }).then((r) => {
           refreshInsights();
@@ -135,7 +145,7 @@ function Insights() {
           <Form.Item name="insightType">
             <Select placeholder="Select a type" showSearch onChange={changeType} style={{ width: "200px"}}>
               <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
-              {/*<Option value="api">API</Option>*/}
+              <Option value="issue">Issue</Option>
             </Select>
           </Form.Item>
 
