@@ -8,8 +8,13 @@ import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView"
 import React from "react";
 import { PlusOutlined } from "@ant-design/icons";
 
+interface InsightModel {
+  size: number;
+  items: any[];
+}
+
 interface QueryChartProps {
-  card: any;
+  card: InsightModel;
   index: number;
   createInsight: (values: any) => void;
 }
@@ -18,7 +23,7 @@ function InsightQueryChart(props: QueryChartProps) {
   const graphData = [
     {
       date: new Date().toDateString(),
-      value: props.card.length,
+      value: props.card.size,
     },
   ];
 
