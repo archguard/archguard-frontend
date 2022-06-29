@@ -12,7 +12,7 @@ import { BaCard } from "@/components/Basic/Card/Card";
 import { groupBy } from "lodash";
 import InsightQueryChart from "@/pages/insights/InsightQueryChart";
 
-let defaultSearchText = "field:dep_name == /.*dubbo/ field:dep_version > 1.12.3";
+let defaultSearchText = "field:dep_name == %dubbo% field:dep_version > 1.12.3";
 
 function Insights() {
   const [form] = Form.useForm();
