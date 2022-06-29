@@ -11,10 +11,12 @@ import {
 import { BaCard } from "@/components/Basic/Card/Card";
 import { groupBy } from "lodash";
 import InsightQueryChart from "@/pages/insights/InsightQueryChart";
+import { useIntl } from "@@/plugin-locale/localeExports";
 
 let defaultSearchText = "field:dep_name == %dubbo% field:dep_version > 1.12.3";
 
 function Insights() {
+  const { formatMessage } = useIntl();
   const [form] = Form.useForm();
   const { Option } = Select;
   const [systemInfo] = useSystemList();
@@ -162,7 +164,7 @@ function Insights() {
 
       </div>
 
-      <h2>Subscribed Insight</h2>
+      <h2>{ formatMessage({ id: "SUBSCRIBED_INSIGHT"}) }</h2>
       <div className="history-container">
         {Object.keys(histories).map((key, i) => {
           return (
@@ -184,7 +186,7 @@ function Insights() {
         })}
       </div>
 
-      <h2>Temporary Insight</h2>
+      <h2>{ formatMessage({ id: "TEMPORARY_INSIGHT"}) }</h2>
       <div className="result-container">
         {cards?.map((card, i) => (
           <InsightQueryChart key={i} card={card} index={i} createInsight={createInsight} />
