@@ -171,16 +171,14 @@ function Insights() {
                 <div>{key}</div>
                 <ChartItem color={INDICATOR_LEVEL_COLOR.pass} graphData={histories[key]} />
               </BaCard>
-              <div className="insight-operation">
-                <Space align={"center"}>
-                  <Button type="primary" onClick={() => updateInsight(key)}>
-                    Update
-                  </Button>
-                  <Button danger onClick={() => deleteInsight(key)}>
-                    Delete
-                  </Button>
-                </Space>
-              </div>
+              <Space align={"center"} className="insight-operation">
+                <Button type="primary" onClick={() => updateInsight(key)}>
+                  Update
+                </Button>
+                <Button danger onClick={() => deleteInsight(key)}>
+                  Delete
+                </Button>
+              </Space>
             </div>
           );
         })}
