@@ -11,18 +11,28 @@ function textLiteral(line: string) {
 }
 
 export function addSearchSuggestion(monaco: Monaco) {
-  function createSuggestion(range): languages.CompletionItem[] {
+  function createSuggestion(range, inputType: string): languages.CompletionItem[] {
     // todo: need fetch suggestions by API and types
-    let completions = [];
+    let completions: any[];
 
-    completions = ['diff', 'commit', 'symbol', 'repo', 'path', 'file'].map((value) => ({
+    let types = [];
+    switch (inputType) {
+      case "sca":
+        types = ["dep_name", "dep_version"];
+        break;
+      case "issue":
+        types = ["name"];
+        break;
+    }
+
+    completions = [...types].map((value) => ({
       label: value,
       kind: monaco.languages.CompletionItemKind.Value,
       insertText: value,
       filterText: value,
       insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-      range: range
-    }))
+      range: range,
+    }));
 
     // by connection to type
     return completions;
@@ -30,6 +40,23 @@ export function addSearchSuggestion(monaco: Monaco) {
 
   monaco.languages.register({ id: "insights" });
   // todo: defineTheme
+
+  monaco.editor.defineTheme("insights", {
+    colors: {
+      'editor.background': '#fafafa',
+      'editor.foreground': '#5c6773',
+      'editorIndentGuide.background': '#ecebec',
+      'editorIndentGuide.activeBackground': '#e0e0e0',
+    },
+    encodedTokensColors: [],
+    inherit: false,
+    base: "vs-dark",
+    rules: [
+      { token: '', foreground: '5c6773' },
+      { token: 'keyword.field', foreground: '86b300' },
+    ],
+  });
+
   monaco.languages.setTokensProvider("insights", {
     getInitialState: () => State,
     tokenize: (line: string) => {
@@ -47,6 +74,7 @@ export function addSearchSuggestion(monaco: Monaco) {
   });
 
   monaco.languages.registerCompletionItemProvider("insights", {
+    triggerCharacters: [':'],
     provideCompletionItems: function(model, position) {
       model.getValueInRange({
         startLineNumber: 1,
@@ -56,15 +84,22 @@ export function addSearchSuggestion(monaco: Monaco) {
       });
 
       const word = model.getWordUntilPosition(position);
+
       const range = {
         startLineNumber: position.lineNumber,
         endLineNumber: position.lineNumber,
         startColumn: word.startColumn,
         endColumn: word.endColumn
       };
-      return {
-        suggestions: createSuggestion(range)
-      };
+
+      const textUntilPosition = model.getValueInRange({ startLineNumber: position.lineNumber, startColumn: 1, endLineNumber: position.lineNumber, endColumn: position.column })
+      if (textUntilPosition.match(/field:.*/m)) {
+        return {
+          suggestions: createSuggestion(range, 'sca')
+        };
+      } else {
+        return { suggestions: [] };
+      }
     }
   });
 }
