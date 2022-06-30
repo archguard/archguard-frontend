@@ -78,7 +78,7 @@ export default function MainHeader(props: any) {
               {formatMessage({ id: "OPERATION_DOCUMENT" })}
             </Button>
           )}
-          {version}
+          <span className="version-info">{version}</span>
         </div>
       </div>
 
