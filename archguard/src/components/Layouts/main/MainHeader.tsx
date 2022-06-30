@@ -31,13 +31,13 @@ export default function MainHeader(props: any) {
   };
 
   const HomeMenus: MenuProps['items'] = [
-    { key: "/workbench/home", label: formatMessage({ id: "MENU_WORKBENCH" }) },
-    { key: "/analysis/home", label: formatMessage({ id: "MENU_SUB_SYSTEM" }) },
     { key: "/insights/home", label: formatMessage({ id: "MENU_INSIGHT" }) },
+    { key: "/analysis/home", label: formatMessage({ id: "MENU_SUB_SYSTEM" }) },
     { key: "/analysis/code-analysis", label: formatMessage({ id: "MENU_CODE_ANALYSIS" }) },
     { key: "/analysis/change-diff", label: formatMessage({ id: "MENU_CHANGE_DIFF" })},
     { key: "/visual/database-map", label: formatMessage({ id: "MENU_DATABASE_MAP" }) },
     { key: "/visual/services-map", label: formatMessage({ id: "MENU_SERVICES_MAP" }) },
+    { key: "/workbench/home", label: formatMessage({ id: "MENU_WORKBENCH" }) },
     { key: "/visual/message-map", label: formatMessage({ id: "MENU_MESSAGE_MAP" }), disabled: true },
   ]
 
