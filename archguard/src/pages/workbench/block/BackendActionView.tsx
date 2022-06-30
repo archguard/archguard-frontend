@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
-import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
+import { BackendAction } from "@/pages/workbench/InteractiveToBackend";
 import { Button } from "antd";
-import { BlockTable } from "@/pages/interactiveAnalysis/block/components/BlockTable";
-import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
+import { BlockTable } from "@/pages/workbench/block/components/BlockTable";
+import { JsonView } from "@/pages/workbench/block/components/JsonView";
 
 export enum BackendActionType {
   CreateRepos,

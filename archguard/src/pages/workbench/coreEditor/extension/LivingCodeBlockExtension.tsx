@@ -1,4 +1,4 @@
-import { LivingCodeFenceExtension } from "@/pages/interactiveAnalysis/coreEditor/extension/LivingCodeFenceExtension";
+import { LivingCodeFenceExtension } from "@/pages/workbench/coreEditor/extension/LivingCodeFenceExtension";
 
 export class LivingCodeBlockExtension extends LivingCodeFenceExtension {
   get name() {

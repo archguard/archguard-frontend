@@ -1,7 +1,7 @@
 import { loader } from "@monaco-editor/react";
 import { languages } from "monaco-editor";
-import { dslCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/completions/dslCompletion";
-import { practisesCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/completions/practisesCompletion";
+import { dslCompletion } from "@/pages/workbench/coreEditor/cellEditor/completions/dslCompletion";
+import { practisesCompletion } from "@/pages/workbench/coreEditor/cellEditor/completions/practisesCompletion";
 
 let hasLoaderDsl = false;
 

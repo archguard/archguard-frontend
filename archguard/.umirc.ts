@@ -46,7 +46,7 @@ export default defineConfig({
       routes: [
         {
           path: "home",
-          component: "@/pages/interactiveAnalysis/InteractiveAnalysis",
+          component: "@/pages/workbench/Workbench",
           title: 'ArchGuard - Workbench (ALPHA)',
         },
       ],
@@ -58,7 +58,7 @@ export default defineConfig({
         {
           path: "home",
           component: "@/pages/insights/Insights",
-          title: 'ArchGuard Insight - Architecture Insight'
+          title: 'ArchGuard Insights - Architecture Insights'
         },
       ],
     },

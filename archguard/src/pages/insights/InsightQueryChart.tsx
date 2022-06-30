@@ -4,7 +4,7 @@ import {
   INDICATOR_LEVEL_COLOR,
 } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
 import { Button, Form, Input } from "antd";
-import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
+import { JsonView } from "@/pages/workbench/block/components/JsonView";
 import React from "react";
 import { PlusOutlined } from "@ant-design/icons";
 

@@ -2,7 +2,7 @@ import * as React from "react";
 import { textblockTypeInputRule } from "prosemirror-inputrules";
 import { NodeSelection, Selection } from "prosemirror-state";
 import Node from "rich-markdown-editor/dist/nodes/Node";
-import CellEditor from "@/pages/interactiveAnalysis/coreEditor/cellEditor/CellEditor";
+import CellEditor from "@/pages/workbench/coreEditor/cellEditor/CellEditor";
 import { Monaco } from "@monaco-editor/react";
 
 const DEFAULT_LANGUAGE = "kotlin";

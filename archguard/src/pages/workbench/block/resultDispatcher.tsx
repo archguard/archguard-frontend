@@ -1,14 +1,14 @@
 import { ActionType, ErrorContent, MsgType, ReplResult } from "@/types/ascode";
 import React from "react";
 import { Typography } from "antd";
-import { BlockTable } from "@/pages/interactiveAnalysis/block/components/BlockTable";
-import { GraphRender } from "@/pages/interactiveAnalysis/block/GraphRender";
+import { BlockTable } from "@/pages/workbench/block/components/BlockTable";
+import { GraphRender } from "@/pages/workbench/block/GraphRender";
 import {
   BackendActionView,
   BackendActionType,
-} from "@/pages/interactiveAnalysis/block/BackendActionView";
-import { JsonView } from "@/pages/interactiveAnalysis/block/components/JsonView";
-import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
+} from "@/pages/workbench/block/BackendActionView";
+import { JsonView } from "@/pages/workbench/block/components/JsonView";
+import { InteractiveAnalysisContext } from "@/pages/workbench/InteractiveAnalysisContext";
 
 const { Text } = Typography;
 

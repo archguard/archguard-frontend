@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from "react";
-import { FlowChart } from "@/pages/interactiveAnalysis/block/graph/FlowChart";
+import { FlowChart } from "@/pages/workbench/block/graph/FlowChart";
 import { GraphType, ReplResult } from "@/types/ascode";
 import { Select } from "antd";
-import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
+import { InteractiveAnalysisContext } from "@/pages/workbench/InteractiveAnalysisContext";
 
 export function GraphSelect(props: { change: any; value: any }) {
   const changeGraph = useCallback(

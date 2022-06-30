@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import CoreEditor from "@/pages/interactiveAnalysis/coreEditor/CoreEditor";
+import CoreEditor from "@/pages/workbench/coreEditor/CoreEditor";
 import {
   ExportOutlined,
   ForwardOutlined,
@@ -11,17 +11,17 @@ import { Button, Modal, Space, Tooltip } from "antd";
 import RichMarkdownEditor from "rich-markdown-editor";
 import copy from "copy-to-clipboard";
 
-import { exportDoc } from "@/pages/interactiveAnalysis/helper/exportDoc";
+import { exportDoc } from "@/pages/workbench/helper/exportDoc";
 import {
-  InteractiveAnalysisContext,
-  InteractiveAnalysisTheme,
-} from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
+  WorkbenchContext,
+  WorkbenchTheme,
+} from "@/pages/workbench/WorkbenchContext";
 import { webSocket } from "rxjs/webSocket";
-import { ReplService } from "@/pages/interactiveAnalysis/coreEditor/ReplService";
+import { ReplService } from "@/pages/workbench/coreEditor/ReplService";
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
-import { BackendAction } from "@/pages/interactiveAnalysis/InteractiveToBackend";
-import styles from "./InteractiveAnalysis.less";
-import { markdownToDsl } from "@/pages/interactiveAnalysis/helper/markdownToDsl";
+import { BackendAction } from "@/pages/workbench/InteractiveToBackend";
+import styles from "./Workbench.less";
+import { markdownToDsl } from "@/pages/workbench/helper/markdownToDsl";
 
 let sampleImportCode = `| name | scmUrl | language | branch |
 |-------|-------|---------|-------|
@@ -97,7 +97,7 @@ linter("Backend").layer()
 
   `;
 
-function InteractiveAnalysis() {
+function Workbench() {
   const [isRunning, setIsRunning] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
@@ -108,8 +108,8 @@ function InteractiveAnalysis() {
 
   const [replService] = useState(new ReplService(subject as WebSocketSubject<any>));
 
-  const context: InteractiveAnalysisContext = {
-    theme: InteractiveAnalysisTheme.WHITE,
+  const context: WorkbenchContext = {
+    theme: WorkbenchTheme.WHITE,
     replService: replService,
   };
 
@@ -246,4 +246,4 @@ function InteractiveAnalysis() {
   );
 }
 
-export default InteractiveAnalysis;
+export default Workbench;

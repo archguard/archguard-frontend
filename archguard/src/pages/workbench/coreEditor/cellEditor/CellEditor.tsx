@@ -5,9 +5,9 @@ import { Button, Tooltip } from "antd";
 import { CaretRightOutlined, StopOutlined } from "@ant-design/icons";
 import styles from "./CellEditor.less";
 import { ReplResult } from "@/types/ascode";
-import { ResultDispatcher } from "@/pages/interactiveAnalysis/block/resultDispatcher";
-import { addAutoCompletion } from "@/pages/interactiveAnalysis/coreEditor/cellEditor/autoCompletion";
-import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
+import { ResultDispatcher } from "@/pages/workbench/block/resultDispatcher";
+import { addAutoCompletion } from "@/pages/workbench/coreEditor/cellEditor/autoCompletion";
+import { WorkbenchContext } from "@/pages/workbench/WorkbenchContext";
 
 export const LANGUAGES = {
   none: "None", // additional entry to disable highlighting
@@ -39,7 +39,7 @@ interface BlockEditorProps {
   codeChange: (code: string, editor: Monaco) => any;
   languageChange: (event: any) => any;
   removeSelf: any;
-  context: InteractiveAnalysisContext;
+  context: WorkbenchContext;
 }
 
 function CellEditor(props: BlockEditorProps) {

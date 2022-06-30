@@ -1,13 +1,13 @@
 import React, { useCallback, useState } from "react";
 import RichMarkdownEditor from "rich-markdown-editor";
 
-import { LivingCodeFenceExtension } from "@/pages/interactiveAnalysis/coreEditor/extension/LivingCodeFenceExtension";
-import { LivingCodeBlockExtension } from "@/pages/interactiveAnalysis/coreEditor/extension/LivingCodeBlockExtension";
-import { InteractiveAnalysisContext } from "@/pages/interactiveAnalysis/InteractiveAnalysisContext";
+import { LivingCodeFenceExtension } from "@/pages/workbench/coreEditor/extension/LivingCodeFenceExtension";
+import { LivingCodeBlockExtension } from "@/pages/workbench/coreEditor/extension/LivingCodeBlockExtension";
+import { WorkbenchContext } from "@/pages/workbench/WorkbenchContext";
 
 interface CoreEditorProps {
   value: string;
-  context: InteractiveAnalysisContext;
+  context: WorkbenchContext;
   onChange: (value: string) => any;
   onSave: (value: string) => any;
 }
