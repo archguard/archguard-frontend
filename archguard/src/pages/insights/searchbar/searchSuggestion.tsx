@@ -63,6 +63,9 @@ export function addSearchSuggestion(monaco: Monaco) {
 
   // based on: [https://microsoft.github.io/monaco-editor/monarch.html](https://microsoft.github.io/monaco-editor/monarch.html)
   monaco.languages.setMonarchTokensProvider('insights', {
+    defaultToken: 'invalid',
+    tokenPostfix: '.insights',
+
     keywords: [
       'field'
     ],
@@ -73,9 +76,13 @@ export function addSearchSuggestion(monaco: Monaco) {
       '=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
     ],
 
+    symbols: /[=><!~?:&|+\-*\/\^]+/,
+
     escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
 
-    symbols:  /[=><!~?:%]+/,
+    regexpctl: /[(){}\[\]\$\^|\-*+?\.]/,
+    regexpesc: /\\(?:[bBdDfnrstvwWn0\\\/]|@regexpctl|c[A-Z]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4})/,
+
     tokenizer: {
       root: [
         [/[a-z_$][\w$]*/, { cases: { '@typeKeywords': 'keyword.type',
@@ -86,31 +93,70 @@ export function addSearchSuggestion(monaco: Monaco) {
 
         { include: '@whitespace' },
 
+        // regular expression: ensure it is terminated before beginning (otherwise it is an operator)
+        [/\/(?=([^\\\/]|\\.)+\/([gimsuy]*)(\s*)(\.|;|\/|,|\)|\]|\}|$))/, { token: 'regexp2', bracket: '@open', next: '@regexp' }],
 
-        [/[:;]/, 'delimiter'],
+        [/[:;,]/, 'delimiter'],
+
+        // todo: add versions
 
         [/@symbols/, { cases: { '@operators': 'operator', '@default'  : '' } } ],
 
         // strings
-        [/"([^"\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
-        [/'([^'\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
-        [/"/,  { token: 'string.quote', bracket: '@open', next: '@string' } ],
-        [/'/,  { token: 'string.quote', bracket: '@open', next: '@string' } ],
+        [/"([^"\\]|\\.)*$/, 'string.invalid'],  // non-teminated string
+        [/'([^'\\]|\\.)*$/, 'string.invalid'],  // non-teminated string
+        [/%([^%\\]|\\.)*$/, 'string.invalid'],  // non-teminated string
+        [/"/, 'string', '@string_double'],
+        [/'/, 'string', '@string_single'],
+        [/%/, 'string', '@string_like'],
       ],
 
-      string: [
-        [/[^\\']+/,  'string'],
-        [/[^\\"]+/,  'string'],
+      string_double: [
+        [/[^\\"]+/, 'string'],
         [/@escapes/, 'string.escape'],
-        [/\\./,      'string.escape.invalid'],
-        [/"/,        { token: 'string.quote', bracket: '@close', next: '@pop' } ],
-        [/'/,        { token: 'string.quote', bracket: '@close', next: '@pop' } ],
+        [/\\./, 'string.escape.invalid'],
+        [/"/, 'string', '@pop']
+      ],
+
+      string_single: [
+        [/[^\\']+/, 'string'],
+        [/@escapes/, 'string.escape'],
+        [/\\./, 'string.escape.invalid'],
+        [/'/, 'string', '@pop']
+      ],
+
+      string_like: [
+        [/[^\\%]+/, 'string'],
+        [/@escapes/, 'string.escape'],
+        [/\\./, 'string.escape.invalid'],
+        [/%/, 'string', '@pop']
       ],
 
       whitespace: [
         [/[ \t\r\n]+/, 'white']
       ],
-    }
+
+      // We match regular expression quite precisely
+      regexp: [
+        [/(\{)(\d+(?:,\d*)?)(\})/, ['regexp.escape.control', 'regexp.escape.control', 'regexp.escape.control']],
+        [/(\[)(\^?)(?=(?:[^\]\\\/]|\\.)+)/, ['regexp.escape.control', { token: 'regexp.escape.control', next: '@regexrange' }]],
+        [/(\()(\?:|\?=|\?!)/, ['regexp.escape.control', 'regexp.escape.control']],
+        [/[()]/, 'regexp.escape.control'],
+        [/@regexpctl/, 'regexp.escape.control'],
+        [/[^\\\/]/, 'regexp'],
+        [/@regexpesc/, 'regexp.escape'],
+        [/\\\./, 'regexp.invalid'],
+        [/(\/)([gimsuy]*)/, [{ token: 'regexp', bracket: '@close', next: '@pop' }, 'keyword.other']],
+      ],
+
+      regexrange: [
+        [/-/, 'regexp.escape.control'],
+        [/\^/, 'regexp.invalid'],
+        [/@regexpesc/, 'regexp.escape'],
+        [/[^\]]/, 'regexp'],
+        [/\]/, { token: 'regexp.escape.control', next: '@pop', bracket: '@close' }],
+      ],
+    } as any
   });
 
   monaco.languages.registerCompletionItemProvider("insights", {
