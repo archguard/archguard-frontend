@@ -116,17 +116,22 @@ function SmartSuggest(props: SmartSuggestProps) {
         editor.setPosition({ column: newContent.length + 1, lineNumber: 1 });
       });
 
-      addSearchSuggestion(monaco)
+      addSearchSuggestion(monaco);
     });
   }
 
-  return <Editor height="100%"
-    language={"insights"}
-    value={props.code}
-    onChange={changeCode}
-    onMount={handleEditorDidMount}
-    options={oneLineOption}
-  />
+  return (
+    <Editor
+      language={"insights"}
+      theme={"insights"}
+      value={props.code}
+      onChange={changeCode}
+      onMount={handleEditorDidMount}
+      // height="200px"
+      height="100%"
+      options={oneLineOption}
+    />
+  );
 }
 
 export default SmartSuggest

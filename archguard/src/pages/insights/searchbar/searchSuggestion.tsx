@@ -50,14 +50,22 @@ export function addSearchSuggestion(monaco: Monaco) {
     },
     encodedTokensColors: [],
     inherit: false,
-    base: "vs-dark",
+    base: "vs",
     rules: [
-      { token: '', foreground: '5c6773' },
-      { token: 'operator', foreground: '0451A5' },
-      { token: 'keyword', foreground: 'f2590c' },
-      { token: 'keyword.type', foreground: 'e7c547' },
-      { token: 'string', foreground: '86b300' },
-      { token: 'delimiter', foreground: 'e7c547' },
+      { token: '', foreground: '#5c6773' },
+
+      { token: 'keyword', foreground: '#ffa500' },
+
+      { token: 'string', foreground: '#86b300', fontStyle: 'bold'  },
+      { token: 'number.version', foreground: '#86b300', fontStyle: 'bold' },
+      { token: 'string.like', foreground: '#3a0505', fontStyle: 'bold' },
+
+      // make it in red for careful user
+      { token: 'regexp', foreground: '#ea4335', fontStyle: 'bold'  },
+
+      { token: 'identifier', foreground: '#0000ff' },
+
+      { token: 'delimiter', foreground: '#008000' },
     ],
   });
 
@@ -69,13 +77,13 @@ export function addSearchSuggestion(monaco: Monaco) {
       'field'
     ],
     typeKeywords: [
-      'dep_name', 'dep_version'
+
     ],
     operators: [
       '=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
     ],
 
-    symbols: /[=><!~?:&|+\-*\/\^]+/,
+    symbols: /[=><!~?&|+\-*\/\^]+/,
 
     escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
 
@@ -91,17 +99,12 @@ export function addSearchSuggestion(monaco: Monaco) {
 
     tokenizer: {
       root: [
-        [/[a-z_$][\w$]*/, { cases: { '@typeKeywords': 'keyword.type',
-            '@keywords': 'keyword',
-            '@default': 'identifier' } }],
-
-        [/[A-Z][\w$]*/, 'type.identifier' ],  // to show class names nicely
+        [/[a-zA-Z_$][\w$]*/, { cases: { '@keywords': 'keyword.$0', '@default': 'identifier' } }],
 
         { include: '@whitespace' },
 
         // regular expression: ensure it is terminated before beginning (otherwise it is an operator)
-        [/\/(?=([^\\\/]|\\.)+\/([gimsuy]*)(\s*)(\.|;|\/|,|\)|\]|\}|$))/, { token: 'regexp2', bracket: '@open', next: '@regexp' }],
-
+        [/\/(?=([^\\\/]|\\.)+\/([gimsuy]*)(\s*)(\.|;|\/|,|\)|\]|\}|$))/, { token: 'regexp', bracket: '@open', next: '@regexp' }],
 
         // numbers
         [/(@digits)\.(@digits)\.(@versionString)?/, 'number.version'],
@@ -113,7 +116,7 @@ export function addSearchSuggestion(monaco: Monaco) {
         [/0[bB](@binarydigits)/, 'number.binary'],
         [/(@digits)/, 'number'],
 
-        [/[:;,]/, 'delimiter'],
+        [/[:;]/, 'delimiter'],
 
         [/@symbols/, { cases: { '@operators': 'operator', '@default'  : '' } } ],
 
@@ -123,7 +126,7 @@ export function addSearchSuggestion(monaco: Monaco) {
         [/%([^%\\]|\\.)*$/, 'string.invalid'],  // non-teminated string
         [/"/, 'string', '@string_double'],
         [/'/, 'string', '@string_single'],
-        [/%/, 'string', '@string_like'],
+        [/%/, 'string.like', '@string_like'],
       ],
 
       string_double: [
@@ -141,10 +144,10 @@ export function addSearchSuggestion(monaco: Monaco) {
       ],
 
       string_like: [
-        [/[^\\%]+/, 'string'],
+        [/[^\\%]+/, 'string.like'],
         [/@escapes/, 'string.escape'],
         [/\\./, 'string.escape.invalid'],
-        [/%/, 'string', '@pop']
+        [/%/, 'string.like', '@pop']
       ],
 
       whitespace: [
