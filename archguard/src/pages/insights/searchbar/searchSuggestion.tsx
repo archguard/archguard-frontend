@@ -6,38 +6,49 @@ const State: languages.IState = {
   equals: () => false
 };
 
-function textLiteral(line: string) {
-  // todo: after design DSL
+function createNormal(
+  monaco: Monaco,
+  range: { endColumn: number; startColumn: number; endLineNumber: number; startLineNumber: number },
+): languages.CompletionItem[] {
+  // let symbols = ["==", "!=", ">=", "<=", "<", ">"];
+  return ["field"].map((value) => ({
+    label: value,
+    kind: monaco.languages.CompletionItemKind.Value,
+    insertText: value,
+    filterText: value,
+    insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+    range: range,
+  }));
+}
+
+function createSuggestion(range, inputType: string, monaco: Monaco): languages.CompletionItem[] {
+  // todo: need fetch suggestions by API and types
+  let completions: any[];
+
+  let types = [];
+  switch (inputType) {
+    case "sca":
+      types = ["dep_name", "dep_version"];
+      break;
+    case "issue":
+      types = ["name"];
+      break;
+  }
+
+  completions = [...types].map((value) => ({
+    label: value,
+    kind: monaco.languages.CompletionItemKind.Value,
+    insertText: value,
+    filterText: value,
+    insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+    range: range,
+  }));
+
+  // by connection to type
+  return completions;
 }
 
 export function addSearchSuggestion(monaco: Monaco) {
-  function createSuggestion(range, inputType: string): languages.CompletionItem[] {
-    // todo: need fetch suggestions by API and types
-    let completions: any[];
-
-    let types = [];
-    switch (inputType) {
-      case "sca":
-        types = ["dep_name", "dep_version"];
-        break;
-      case "issue":
-        types = ["name"];
-        break;
-    }
-
-    completions = [...types].map((value) => ({
-      label: value,
-      kind: monaco.languages.CompletionItemKind.Value,
-      insertText: value,
-      filterText: value,
-      insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-      range: range,
-    }));
-
-    // by connection to type
-    return completions;
-  }
-
   monaco.languages.register({ id: "insights" });
   // todo: defineTheme
 
@@ -179,7 +190,7 @@ export function addSearchSuggestion(monaco: Monaco) {
   // based on: [https://microsoft.github.io/monaco-editor/monarch.html](https://microsoft.github.io/monaco-editor/monarch.html)
 
   monaco.languages.registerCompletionItemProvider("insights", {
-    triggerCharacters: [':'],
+    triggerCharacters: [':', "f"],
     provideCompletionItems: function(model, position) {
       model.getValueInRange({
         startLineNumber: 1,
@@ -200,10 +211,10 @@ export function addSearchSuggestion(monaco: Monaco) {
       const textUntilPosition = model.getValueInRange({ startLineNumber: position.lineNumber, startColumn: 1, endLineNumber: position.lineNumber, endColumn: position.column })
       if (textUntilPosition.match(/field:.*/m)) {
         return {
-          suggestions: createSuggestion(range, 'sca')
+          suggestions: createSuggestion(range, 'sca', monaco)
         };
       } else {
-        return { suggestions: [] };
+        return { suggestions: createNormal(monaco, range) };
       }
     }
   });
