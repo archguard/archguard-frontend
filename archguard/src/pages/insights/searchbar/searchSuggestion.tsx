@@ -49,9 +49,10 @@ function createSuggestion(range, inputType: string, monaco: Monaco): languages.C
 }
 
 export function addSearchSuggestion(monaco: Monaco) {
-  monaco.languages.register({ id: "insights" });
+  const languageId = "insights";
+  monaco.languages.register({ id: languageId });
 
-  monaco.languages.setLanguageConfiguration("insights", {
+  monaco.languages.setLanguageConfiguration(languageId, {
     autoClosingPairs: [
       { open: '/', close: '/' },
       { open: '"', close: '"' },
@@ -60,7 +61,7 @@ export function addSearchSuggestion(monaco: Monaco) {
     ],
   });
 
-  monaco.editor.defineTheme("insights", {
+  monaco.editor.defineTheme(languageId, {
     colors: {
       'editor.background': '#fafafa',
       'editor.foreground': '#5c6773',
@@ -88,7 +89,7 @@ export function addSearchSuggestion(monaco: Monaco) {
     ],
   });
 
-  monaco.languages.setMonarchTokensProvider('insights', {
+  monaco.languages.setMonarchTokensProvider(languageId, {
     defaultToken: 'invalid',
     tokenPostfix: '.insights',
 
@@ -197,7 +198,7 @@ export function addSearchSuggestion(monaco: Monaco) {
   });
   // based on: [https://microsoft.github.io/monaco-editor/monarch.html](https://microsoft.github.io/monaco-editor/monarch.html)
 
-  monaco.languages.registerCompletionItemProvider("insights", {
+  monaco.languages.registerCompletionItemProvider(languageId, {
     triggerCharacters: [':', "f"],
     provideCompletionItems: function(model, position) {
       model.getValueInRange({
