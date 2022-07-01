@@ -50,7 +50,15 @@ function createSuggestion(range, inputType: string, monaco: Monaco): languages.C
 
 export function addSearchSuggestion(monaco: Monaco) {
   monaco.languages.register({ id: "insights" });
-  // todo: defineTheme
+
+  monaco.languages.setLanguageConfiguration("insights", {
+    autoClosingPairs: [
+      { open: '/', close: '/' },
+      { open: '"', close: '"' },
+      { open: "'", close: "'" },
+      { open: "%", close: "%" },
+    ],
+  });
 
   monaco.editor.defineTheme("insights", {
     colors: {
