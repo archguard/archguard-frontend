@@ -53,23 +53,36 @@ export function addSearchSuggestion(monaco: Monaco) {
     base: "vs-dark",
     rules: [
       { token: '', foreground: '5c6773' },
-      { token: 'keyword.field', foreground: '86b300' },
+      { token: 'operator', foreground: '0451A5' },
+      { token: 'keyword', foreground: 'f2590c' },
+      { token: 'keyword.type', foreground: 'e7c547' },
+      { token: 'string', foreground: '86b300' },
+      { token: 'delimiter', foreground: 'e7c547' },
     ],
   });
 
-  monaco.languages.setTokensProvider("insights", {
-    getInitialState: () => State,
-    tokenize: (line: string) => {
-      // todo: decorate token
-      textLiteral(line)
+// Register a tokens provider for the language
+  monaco.languages.setMonarchTokensProvider('insights', {
+    keywords: [
+      'field'
+    ],
+    typeKeywords: [
+      'dep_name', 'dep_version'
+    ],
+    operators: [
+      '=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
+    ],
+    symbols:  /[=><!~?:%]+/,
+    tokenizer: {
+      root: [
+        [/[a-z_$][\w$]*/, { cases: { '@typeKeywords': 'keyword.type',
+            '@keywords': 'keyword',
+            '@default': 'identifier' } }],
 
-      return {
-        endState: State,
-        tokens: [{
-          startIndex: 0,
-          scopes: "type"
-        }]
-      };
+        [/[:;]/, 'delimiter'],
+
+        [/@symbols/, { cases: { '@operators': 'operator', '@default'  : '' } } ],
+      ]
     }
   });
 
