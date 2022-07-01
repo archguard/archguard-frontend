@@ -61,7 +61,7 @@ export function addSearchSuggestion(monaco: Monaco) {
     ],
   });
 
-// Register a tokens provider for the language
+  // based on: [https://microsoft.github.io/monaco-editor/monarch.html](https://microsoft.github.io/monaco-editor/monarch.html)
   monaco.languages.setMonarchTokensProvider('insights', {
     keywords: [
       'field'
@@ -72,6 +72,9 @@ export function addSearchSuggestion(monaco: Monaco) {
     operators: [
       '=', '>', '<', '!', '~', '?', ':', '==', '<=', '>=', '!=',
     ],
+
+    escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
+
     symbols:  /[=><!~?:%]+/,
     tokenizer: {
       root: [
@@ -79,10 +82,34 @@ export function addSearchSuggestion(monaco: Monaco) {
             '@keywords': 'keyword',
             '@default': 'identifier' } }],
 
+        [/[A-Z][\w$]*/, 'type.identifier' ],  // to show class names nicely
+
+        { include: '@whitespace' },
+
+
         [/[:;]/, 'delimiter'],
 
         [/@symbols/, { cases: { '@operators': 'operator', '@default'  : '' } } ],
-      ]
+
+        // strings
+        [/"([^"\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
+        [/'([^'\\]|\\.)*$/, 'string.invalid' ],  // non-teminated string
+        [/"/,  { token: 'string.quote', bracket: '@open', next: '@string' } ],
+        [/'/,  { token: 'string.quote', bracket: '@open', next: '@string' } ],
+      ],
+
+      string: [
+        [/[^\\']+/,  'string'],
+        [/[^\\"]+/,  'string'],
+        [/@escapes/, 'string.escape'],
+        [/\\./,      'string.escape.invalid'],
+        [/"/,        { token: 'string.quote', bracket: '@close', next: '@pop' } ],
+        [/'/,        { token: 'string.quote', bracket: '@close', next: '@pop' } ],
+      ],
+
+      whitespace: [
+        [/[ \t\r\n]+/, 'white']
+      ],
     }
   });
 
