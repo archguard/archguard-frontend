@@ -1,6 +1,5 @@
 import { Monaco } from "@monaco-editor/react";
 import { languages } from "monaco-editor";
-import { insightTheme } from "@/pages/insights/searchbar/insightTheme";
 import { insightLangDef } from "@/pages/insights/searchbar/insightLangDef";
 
 const State: languages.IState = {
@@ -51,10 +50,9 @@ function createSuggestion(range, inputType: string, monaco: Monaco): languages.C
 }
 
 export function addSearchSuggestion(monaco: Monaco) {
-  const languageId = "insights";
-  monaco.languages.register({ id: languageId });
+  monaco.languages.register({ id: "insights" });
 
-  monaco.languages.setLanguageConfiguration(languageId, {
+  monaco.languages.setLanguageConfiguration("insights", {
     autoClosingPairs: [
       { open: "/", close: "/" },
       { open: '"', close: '"' },
@@ -63,11 +61,37 @@ export function addSearchSuggestion(monaco: Monaco) {
     ],
   });
 
-  monaco.editor.defineTheme(languageId, insightTheme as any);
+  monaco.editor.defineTheme("insights", {
+    colors: {
+      "editor.background": "#fafafa",
+      "editor.foreground": "#5c6773",
+      "editorIndentGuide.background": "#ecebec",
+      "editorIndentGuide.activeBackground": "#e0e0e0"
+    },
+    encodedTokensColors: [],
+    inherit: false,
+    base: "vs",
+    rules: [
+      { token: "", foreground: "#5c6773" },
 
-  monaco.languages.setMonarchTokensProvider(languageId, insightLangDef as any);
+      { token: "keyword", foreground: "#ffa500" },
 
-  monaco.languages.registerCompletionItemProvider(languageId, {
+      { token: "string", foreground: "#86b300", fontStyle: "bold" },
+      { token: "number.version", foreground: "#86b300", fontStyle: "bold" },
+      { token: "string.like", foreground: "#3a0505", fontStyle: "bold" },
+
+      // make it in red for careful user
+      { token: "regexp", foreground: "#ea4335", fontStyle: "bold" },
+
+      { token: "identifier", foreground: "#0000ff" },
+
+      { token: "delimiter", foreground: "#008000" }
+    ]
+  } as any);
+
+  monaco.languages.setMonarchTokensProvider("insights", insightLangDef as any);
+
+  monaco.languages.registerCompletionItemProvider("insights", {
     triggerCharacters: [":", "f"],
     provideCompletionItems: function (model, position) {
       model.getValueInRange({
