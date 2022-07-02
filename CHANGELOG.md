@@ -1,4 +1,29 @@
-# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.22...v) (2022-06-25)
+# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-beta.1...v) (2022-07-02)
+
+
+
+# [2.0.0-beta.1](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.23...v2.0.0-beta.1) (2022-07-02)
+
+
+### Bug Fixes
+
+* **insights:** add lost types [#12](https://github.com/archguard/archguard-frontend/issues/12) ([b0f2941](https://github.com/archguard/archguard-frontend/commit/b0f2941e736a5a32e4efd07c7e61504ca57a3abf))
+
+
+### Features
+
+* add auto closing [#10](https://github.com/archguard/archguard-frontend/issues/10) ([05634e1](https://github.com/archguard/archguard-frontend/commit/05634e1ec6e001b1c81837189b0c9f5495605a04))
+* add links to insights [#12](https://github.com/archguard/archguard-frontend/issues/12) ([2846947](https://github.com/archguard/archguard-frontend/commit/284694753192c30b192453f95f544f6e39940142))
+* add support for 'f' as field suggestions [#10](https://github.com/archguard/archguard-frontend/issues/10) ([7dbe952](https://github.com/archguard/archguard-frontend/commit/7dbe952547233abe37141985d05d189b6aedacf2))
+* **editor:** add basic simple and language support [#10](https://github.com/archguard/archguard-frontend/issues/10) ([f4801b6](https://github.com/archguard/archguard-frontend/commit/f4801b64512436670d62954a28d0e0e523d25379))
+* **editor:** add simple suggestions for field: [#10](https://github.com/archguard/archguard-frontend/issues/10) ([5be8f7b](https://github.com/archguard/archguard-frontend/commit/5be8f7b08474491c45954233908ad6123a2bb3d8))
+* **editor:** add string like [#10](https://github.com/archguard/archguard-frontend/issues/10) ([9be8490](https://github.com/archguard/archguard-frontend/commit/9be849074f83dce17e0408f0a523c6ffe6730683))
+* **editor:** make string works [#10](https://github.com/archguard/archguard-frontend/issues/10) ([905977d](https://github.com/archguard/archguard-frontend/commit/905977d0837d4a75ed129225a9203de867982c05))
+* **editor:** make version working [#10](https://github.com/archguard/archguard-frontend/issues/10) ([45b75d7](https://github.com/archguard/archguard-frontend/commit/45b75d7c06c414b480e2bbd03a1274047cda7f55))
+
+
+
+# [2.0.0-alpha.23](https://github.com/archguard/archguard-frontend/compare/v2.0.0-alpha.22...v2.0.0-alpha.23) (2022-06-25)
 
 
 ### Bug Fixes
