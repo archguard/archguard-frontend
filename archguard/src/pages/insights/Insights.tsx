@@ -1,17 +1,24 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Form, Select, Space} from "antd";
+import { Button, Form, Select, Space } from "antd";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SmartSuggest from "@/pages/insights/searchbar/SmartSuggest";
 import "./Insights.less";
-import { customInsight, deleteInsightByName, getByName, listInsights, snapshotInsight } from "@/api/insights/Insight";
+import {
+  customInsight,
+  deleteInsightByName,
+  getByName,
+  listInsights,
+  snapshotInsight,
+} from "@/api/insights/Insight";
 import {
   ChartItem,
-  INDICATOR_LEVEL_COLOR
+  INDICATOR_LEVEL_COLOR,
 } from "@/pages/system/systemEvolving/MeasureIndicators/Components/ChartCard";
 import { BaCard } from "@/components/Basic/Card/Card";
 import { groupBy } from "lodash";
 import InsightQueryChart from "@/pages/insights/InsightQueryChart";
 import { useIntl } from "@@/plugin-locale/localeExports";
+import { SearchOutlined } from "@ant-design/icons";
 
 let defaultSearchText = "field:dep_name == %dubbo% field:dep_version > 1.12.3";
 
@@ -23,34 +30,44 @@ function Insights() {
   const [systemId, setSystemId] = useState(-1);
   const [searchText, setSearchText] = useState(defaultSearchText);
   const [cards, setCards] = useState([]);
-  const [histories, setHistories] = useState({ });
+  const [histories, setHistories] = useState({});
   const [selectType, setSelectType] = useState("sca");
 
-  const onFinish = useCallback((values: any) => {
-    snapshotInsight({ systemId: systemId, expression: searchText, type: values['insightType'] }).then((data) => {
-      setCards((prevCards) => [...prevCards, data]);
-    });
-  }, [searchText, systemId, setCards]);
+  const onFinish = useCallback(
+    (values: any) => {
+      snapshotInsight({
+        systemId: systemId,
+        expression: searchText,
+        type: values["insightType"],
+      }).then((data) => {
+        setCards((prevCards) => [...prevCards, data]);
+      });
+    },
+    [searchText, systemId, setCards],
+  );
 
-  const changeType = useCallback((type: any) => {
-    setSelectType(type);
-    let text;
-    switch (type) {
-      case "api":
-        text = "";
-        break;
-      case "issue":
-        text = "field:rule_type == 'TEST_CODE_SMELL'";
-        break;
-      case "sca":
-        text = defaultSearchText;
-        break;
-      default:
-        text = defaultSearchText;
-    }
+  const changeType = useCallback(
+    (type: any) => {
+      setSelectType(type);
+      let text;
+      switch (type) {
+        case "api":
+          text = "";
+          break;
+        case "issue":
+          text = "field:rule_type == 'TEST_CODE_SMELL'";
+          break;
+        case "sca":
+          text = defaultSearchText;
+          break;
+        default:
+          text = defaultSearchText;
+      }
 
-    setSearchText(text);
-  }, [setSearchText, setSelectType]);
+      setSearchText(text);
+    },
+    [setSearchText, setSelectType],
+  );
 
   const onSystemChange = useCallback(
     (value) => {
@@ -77,18 +94,21 @@ function Insights() {
     listInsights().then((data) => {
       setHistories(groupBy(data, "name"));
     });
-  }, [setHistories])
+  }, [setHistories]);
 
-  const createInsight = useCallback((values: any) => {
-    customInsight({
-      type: selectType,
-      systemId: systemId,
-      expression: searchText,
-      name: values.name
-    }).then(r => {
-      refreshInsights();
-    })
-  }, [systemId, searchText, refreshInsights, selectType])
+  const createInsight = useCallback(
+    (values: any) => {
+      customInsight({
+        type: selectType,
+        systemId: systemId,
+        expression: searchText,
+        name: values.name,
+      }).then((r) => {
+        refreshInsights();
+      });
+    },
+    [systemId, searchText, refreshInsights, selectType],
+  );
 
   useEffect(() => {
     refreshInsights();
@@ -128,7 +148,7 @@ function Insights() {
               showSearch
               placeholder="Select a System"
               onChange={(value) => onSystemChange(value)}
-              style={{ width: "200px"}}
+              style={{ width: "200px" }}
             >
               <Select.Option value={"all"} key={`all`}>
                 All
@@ -145,26 +165,28 @@ function Insights() {
             </Select>
           </Form.Item>
           <Form.Item name="insightType">
-            <Select placeholder="Select a type" showSearch onChange={changeType} style={{ width: "200px"}}>
+            <Select
+              placeholder="Select a type"
+              showSearch
+              onChange={changeType}
+              style={{ width: "200px" }}
+            >
               <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
               <Option value="issue">Issue</Option>
             </Select>
           </Form.Item>
 
           <div style={{ height: "32px", width: "800px" }}>
-            <SmartSuggest onChange={changeSearchInput} code={searchText}/>
+            <SmartSuggest onChange={changeSearchInput} code={searchText} />
           </div>
 
           <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-            <Button type="primary" htmlType="submit">
-              Query
-            </Button>
+            <Button icon={<SearchOutlined />} type="primary" htmlType="submit" />
           </Form.Item>
         </Form>
-
       </div>
 
-      <h2>{ formatMessage({ id: "SUBSCRIBED_INSIGHT"}) }</h2>
+      <h2>{formatMessage({ id: "SUBSCRIBED_INSIGHT" })}</h2>
       <div className="history-container">
         {Object.keys(histories).map((key, i) => {
           return (
@@ -186,7 +208,7 @@ function Insights() {
         })}
       </div>
 
-      <h2>{ formatMessage({ id: "TEMPORARY_INSIGHT"}) }</h2>
+      <h2>{formatMessage({ id: "TEMPORARY_INSIGHT" })}</h2>
       <div className="result-container">
         {cards?.map((card, i) => (
           <InsightQueryChart key={i} card={card} index={i} createInsight={createInsight} />
