@@ -1,4 +1,4 @@
-export const insightLangDef = {
+export const insightsLangToken = {
   defaultToken: "",
   tokenPostfix: ".insights",
 

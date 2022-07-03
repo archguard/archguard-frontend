@@ -1,6 +1,6 @@
 import Editor, { loader } from "@monaco-editor/react";
 import React, { useCallback, useRef, useState } from "react";
-import { addSearchSuggestion } from "@/pages/insights/searchbar/searchSuggestion";
+import { insightsLanguage } from "@/pages/insights/searchbar/insightsLang";
 
 const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineHeight: 28,
@@ -88,6 +88,8 @@ function SmartSuggest(props: SmartSuggestProps) {
 
   function initEditor(editor) {
     loader.init().then((monaco) => {
+      insightsLanguage(monaco);
+
       // disable `F1` for command palette
       editor.addCommand(monaco.KeyCode.F1, () => {});
       // disable `CTRL` + `F` for search
@@ -115,8 +117,6 @@ function SmartSuggest(props: SmartSuggestProps) {
         textModel.setValue(newContent);
         editor.setPosition({ column: newContent.length + 1, lineNumber: 1 });
       });
-
-      addSearchSuggestion(monaco);
     });
   }
 
