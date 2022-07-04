@@ -9,7 +9,7 @@ const State: languages.IState = {
   equals: () => false,
 };
 
-export function insightsLanguage(monaco: Monaco) {
+export function addInsightsLanguage(monaco: Monaco) {
   let languageId = "insights";
 
   monaco.languages.register({ id: languageId });

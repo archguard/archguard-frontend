@@ -1,6 +1,6 @@
-import Editor, { loader } from "@monaco-editor/react";
-import React, { useCallback, useRef, useState } from "react";
-import { insightsLanguage } from "@/pages/insights/searchbar/insightsLang";
+import Editor, { loader, Monaco, useMonaco } from "@monaco-editor/react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { addInsightsLanguage } from "@/pages/insights/searchbar/insightsLang";
 
 const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineHeight: 28,
@@ -65,6 +65,49 @@ function SmartSuggest(props: SmartSuggestProps) {
   const editorRef = useRef(null as any);
   const [height, setHeight] = useState("100%");
 
+  const monaco = useMonaco();
+  useEffect(() => {
+    if (monaco) {
+      addInsightsLanguage(monaco);
+    }
+  }, [monaco]);
+
+  function configEditor(editor, monaco: Monaco) {
+    // disable `F1` for command palette
+    editor.addCommand(monaco.KeyCode.F1, () => {});
+    // disable `CTRL` + `F` for search
+    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyF, () => {});
+
+    // add handle for press enter
+    editor.addCommand(monaco.KeyCode.Enter, () => {
+      editor.trigger("", "acceptSelectedSuggestion");
+    });
+
+    // handle for paste
+    editor.onDidPaste((e) => {
+      // multiple rows will be merged to single row
+      if (e.range.endLineNumber <= 1) {
+        return;
+      }
+
+      let newContent = "";
+      const textModel = editor.getModel();
+      const lineCount = textModel.getLineCount();
+      // remove all line breaks
+      for (let i = 0; i < lineCount; i += 1) {
+        newContent += textModel.getLineContent(i + 1);
+      }
+      textModel.setValue(newContent);
+      editor.setPosition({ column: newContent.length + 1, lineNumber: 1 });
+    });
+  }
+
+  function initEditor(editor) {
+    loader.init().then((monaco) => {
+      configEditor(editor, monaco);
+    });
+  }
+
   const changeCode = useCallback(
     (code) => {
       if (editorRef.current) {
@@ -85,40 +128,6 @@ function SmartSuggest(props: SmartSuggestProps) {
     },
     [editorRef, setHeight],
   );
-
-  function initEditor(editor) {
-    loader.init().then((monaco) => {
-      insightsLanguage(monaco);
-
-      // disable `F1` for command palette
-      editor.addCommand(monaco.KeyCode.F1, () => {});
-      // disable `CTRL` + `F` for search
-      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyF, () => {});
-
-      // add handle for press enter
-      editor.addCommand(monaco.KeyCode.Enter, () => {
-        editor.trigger("", "acceptSelectedSuggestion");
-      });
-
-      // handle for paste
-      editor.onDidPaste((e) => {
-        // multiple rows will be merged to single row
-        if (e.range.endLineNumber <= 1) {
-          return;
-        }
-
-        let newContent = "";
-        const textModel = editor.getModel();
-        const lineCount = textModel.getLineCount();
-        // remove all line breaks
-        for (let i = 0; i < lineCount; i += 1) {
-          newContent += textModel.getLineContent(i + 1);
-        }
-        textModel.setValue(newContent);
-        editor.setPosition({ column: newContent.length + 1, lineNumber: 1 });
-      });
-    });
-  }
 
   return (
     <Editor

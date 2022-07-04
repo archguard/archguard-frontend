@@ -43,6 +43,7 @@ function createSuggestion(range, inputType: string, monaco: Monaco): languages.C
   return completions;
 }
 
+// todo: add filter by types
 export function insightsCompletion(monaco: Monaco) {
   return {
     triggerCharacters: [":", "f"],
