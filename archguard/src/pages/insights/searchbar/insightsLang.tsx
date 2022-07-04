@@ -10,9 +10,11 @@ const State: languages.IState = {
 };
 
 export function insightsLanguage(monaco: Monaco) {
-  monaco.languages.register({ id: "insights" });
+  let languageId = "insights";
 
-  monaco.languages.setLanguageConfiguration("insights", {
+  monaco.languages.register({ id: languageId });
+
+  monaco.languages.setLanguageConfiguration(languageId, {
     autoClosingPairs: [
       { open: "/", close: "/" },
       { open: '"', close: '"' },
@@ -21,9 +23,9 @@ export function insightsLanguage(monaco: Monaco) {
     ],
   });
 
-  monaco.editor.defineTheme("insights", insightsTheme());
+  monaco.editor.defineTheme(languageId, insightsTheme());
 
-  monaco.languages.setMonarchTokensProvider("insights", insightsLangToken as any);
+  monaco.languages.setMonarchTokensProvider(languageId, insightsLangToken as any);
 
-  monaco.languages.registerCompletionItemProvider("insights", insightsCompletion(monaco));
+  monaco.languages.registerCompletionItemProvider(languageId, insightsCompletion(monaco));
 }
