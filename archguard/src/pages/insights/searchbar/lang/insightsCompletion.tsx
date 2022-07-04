@@ -1,9 +1,10 @@
 import { Monaco } from "@monaco-editor/react";
 import { languages } from "monaco-editor";
+import { getSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 
 function createNormal(
   monaco: Monaco,
-  range: { endColumn: number; startColumn: number; endLineNumber: number; startLineNumber: number }
+  range: { endColumn: number; startColumn: number; endLineNumber: number; startLineNumber: number },
 ): languages.CompletionItem[] {
   // let symbols = ["==", "!=", ">=", "<=", "<", ">"];
   return ["field"].map((value) => ({
@@ -12,7 +13,7 @@ function createNormal(
     insertText: value,
     filterText: value,
     insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-    range: range
+    range: range,
   }));
 }
 
@@ -36,23 +37,22 @@ function createSuggestion(range, inputType: string, monaco: Monaco): languages.C
     insertText: value,
     filterText: value,
     insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-    range: range
+    range: range,
   }));
 
   // by connection to type
   return completions;
 }
 
-// todo: add filter by types
 export function insightsCompletion(monaco: Monaco) {
   return {
     triggerCharacters: [":", "f"],
-    provideCompletionItems: function(model, position) {
+    provideCompletionItems: function (model, position) {
       model.getValueInRange({
         startLineNumber: 1,
         startColumn: 1,
         endLineNumber: position.lineNumber,
-        endColumn: position.column
+        endColumn: position.column,
       });
 
       const word = model.getWordUntilPosition(position);
@@ -61,22 +61,22 @@ export function insightsCompletion(monaco: Monaco) {
         startLineNumber: position.lineNumber,
         endLineNumber: position.lineNumber,
         startColumn: word.startColumn,
-        endColumn: word.endColumn
+        endColumn: word.endColumn,
       };
 
       const textUntilPosition = model.getValueInRange({
         startLineNumber: position.lineNumber,
         startColumn: 1,
         endLineNumber: position.lineNumber,
-        endColumn: position.column
+        endColumn: position.column,
       });
       if (textUntilPosition.match(/field:.*/m)) {
         return {
-          suggestions: createSuggestion(range, window["editorType"] || "sca", monaco)
+          suggestions: createSuggestion(range, getSuggestType() || "sca", monaco),
         };
       } else {
         return { suggestions: createNormal(monaco, range) };
       }
-    }
+    },
   };
 }
