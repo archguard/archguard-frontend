@@ -46,6 +46,11 @@ function Insights() {
     [searchText, systemId, setCards],
   );
 
+  function setTypeForMonaco(text) {
+    window["editorType"] = text;
+  }
+  setTypeForMonaco(selectType)
+
   const changeType = useCallback(
     (type: any) => {
       setSelectType(type);
@@ -65,6 +70,7 @@ function Insights() {
       }
 
       setSearchText(text);
+      setTypeForMonaco(text);
     },
     [setSearchText, setSelectType],
   );

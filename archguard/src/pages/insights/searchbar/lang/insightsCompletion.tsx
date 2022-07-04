@@ -72,7 +72,7 @@ export function insightsCompletion(monaco: Monaco) {
       });
       if (textUntilPosition.match(/field:.*/m)) {
         return {
-          suggestions: createSuggestion(range, "sca", monaco)
+          suggestions: createSuggestion(range, window["editorType"] || "sca", monaco)
         };
       } else {
         return { suggestions: createNormal(monaco, range) };
