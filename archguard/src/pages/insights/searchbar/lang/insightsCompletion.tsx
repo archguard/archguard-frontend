@@ -6,7 +6,6 @@ function createNormal(
   monaco: Monaco,
   range: { endColumn: number; startColumn: number; endLineNumber: number; startLineNumber: number },
 ): languages.CompletionItem[] {
-  // let symbols = ["==", "!=", ">=", "<=", "<", ">"];
   return ["field"].map((value) => ({
     label: value,
     kind: monaco.languages.CompletionItemKind.Value,
@@ -18,7 +17,6 @@ function createNormal(
 }
 
 function createSuggestion(range, inputType: string, monaco: Monaco): languages.CompletionItem[] {
-  // todo: need fetch suggestions by API and types
   let completions: any[];
 
   let types = [];
@@ -40,7 +38,6 @@ function createSuggestion(range, inputType: string, monaco: Monaco): languages.C
     range: range,
   }));
 
-  // by connection to type
   return completions;
 }
 
