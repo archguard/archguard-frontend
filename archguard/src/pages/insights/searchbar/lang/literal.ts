@@ -55,11 +55,14 @@ export interface LikeKind extends CharacterRange {
 export type Token = Field | Separator | KeywordKind | StringKind | RegexKind;
 
 const charExp = /[a-zA-Z_]/;
+const comparison = /<>=!/;
 
 export function literal(text: string) {
   let end = text.length + 1;
   let current = 0;
   let tokens: Token[] = [];
+
+  let length = text.length;
 
   while (current < end) {
     let char = text.charAt(current);
@@ -69,7 +72,7 @@ export function literal(text: string) {
         var string = "" + char;
         var start = current;
 
-        while (charExp.test(text[current + 1])) {
+        while (current < length && charExp.test(text[current + 1])) {
           string += text[current + 1];
           current = current + 1;
         }
@@ -81,24 +84,33 @@ export function literal(text: string) {
           end: current,
         });
         break;
-      case char == ":":
-        tokens.push({ type: "separator", start: current, end: current + 1 });
-        break;
       case char == "'" || char == '"':
         var endChar = char;
         var value = "" + char;
-        var pos = current;
+        var startPos = current;
 
-        while (text[current + 1] != endChar) {
+        while (current + 1 <= length && text[current + 1] != endChar) {
+          value += text[current + 1];
           current = current + 1;
         }
 
-        tokens.push({
-          type: "string",
-          value: value,
-          start: pos,
-          end: current,
-        });
+        if (value != "" + char) {
+          // move to endChar
+          current = current + 1;
+
+          tokens.push({
+            type: "string",
+            value: value,
+            start: startPos,
+            end: current,
+          });
+        } else {
+          current = startPos;
+        }
+
+        break;
+      case char == ":":
+        tokens.push({ type: "separator", start: current, end: current + 1 });
         break;
       default:
         console.log("default: " + char);
