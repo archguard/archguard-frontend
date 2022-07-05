@@ -27,7 +27,32 @@ export interface Separator extends CharacterRange {
   type: "separator";
 }
 
-export type Token = Field | Separator | KeywordKind;
+/**
+ * `string` kind value, i.e.: 'log' or "log"
+ */
+export interface StringKind extends CharacterRange {
+  type: "string";
+  value: string;
+}
+
+/**
+ * `regex` kind value, i.e.: /log/
+ */
+export interface RegexKind extends CharacterRange {
+  type: "regex";
+  value: string;
+}
+
+
+/**
+ * `like` kind value, i.e.: %log%
+ */
+export interface LikeKind extends CharacterRange {
+  type: "regex";
+  value: string;
+}
+
+export type Token = Field | Separator | KeywordKind | StringKind | RegexKind;
 
 const charExp = /[a-zA-Z_]/;
 
@@ -59,7 +84,21 @@ export function literal(text: string) {
       case char == ":":
         tokens.push({ type: "separator", start: current, end: current + 1 });
         break;
-      case char == "'" || char == '"' || char == "%" || char == "/":
+      case char == "'" || char == '"':
+        var endChar = char;
+        var value = "" + char;
+        var pos = current;
+
+        while (text[current + 1] != endChar) {
+          current = current + 1;
+        }
+
+        tokens.push({
+          type: "string",
+          value: value,
+          start: pos,
+          end: current,
+        });
         break;
       default:
         console.log("default: " + char);
