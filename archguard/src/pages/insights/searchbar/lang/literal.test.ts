@@ -18,3 +18,11 @@ test("string value", async () => {
   expect(tokens.length).toBe(4);
   expect(tokens[3]).toEqual({ type: "string", value: "'log4j", start: 15, end: 21 });
 });
+
+test("comparison", async () => {
+  let sample = `field:dep_name = 'log4j'`;
+  let tokens = literal(sample);
+
+  expect(tokens.length).toBe(5);
+  expect(tokens[3]).toEqual({ type: "comparison", value: 0, start: 15, end: 16 });
+});
