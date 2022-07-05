@@ -1,6 +1,6 @@
 export default {
   SWITCH_LANGUAGE: "English",
-  MENU_INSIGHT: "洞  见",
+  MENU_TRENDS: "趋 势",
   MENU_WORKBENCH: "工作台（Alpha）",
   MENU_SUB_SYSTEM: "子系统分析",
   MENU_CODE_ANALYSIS: "代码分析",

@@ -1,6 +1,6 @@
 export default {
   SWITCH_LANGUAGE: "中文",
-  MENU_INSIGHT: "Insight",
+  MENU_TRENDS: "Insight",
   MENU_WORKBENCH: "Workbench",
   MENU_SUB_SYSTEM: "Sub-System",
   MENU_CODE_ANALYSIS: "Code Analysis",

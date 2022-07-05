@@ -31,7 +31,7 @@ export default function MainHeader(props: any) {
   };
 
   const HomeMenus: MenuProps['items'] = [
-    { key: "/insights/home", label: formatMessage({ id: "MENU_INSIGHT" }) },
+    { key: "/insights/home", label: formatMessage({ id: "MENU_TRENDS" }) },
     { key: "/analysis/home", label: formatMessage({ id: "MENU_SUB_SYSTEM" }) },
     { key: "/analysis/code-analysis", label: formatMessage({ id: "MENU_CODE_ANALYSIS" }) },
     { key: "/analysis/change-diff", label: formatMessage({ id: "MENU_CHANGE_DIFF" })},
