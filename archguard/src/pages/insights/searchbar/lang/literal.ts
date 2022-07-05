@@ -5,6 +5,34 @@ export enum KeywordKind {
   Not = "not",
 }
 
+export interface CharacterRange {
+  start: number;
+  end: number;
+}
+
+/**
+ * Represents a field in a search query.
+ * i.e., the `dep_name` in `field:dep_name`. field will be {@link Field} type
+ */
+export interface Field extends CharacterRange {
+  type: "literal";
+  value: string;
+  quoted: boolean;
+}
+
+/**
+ * separator
+ * i.e., the `:` in `field:dep_name`.
+ */
+export interface Separator extends CharacterRange {
+  type: 'separator'
+}
+
+
+export type Token =
+  | Field
+  | KeywordKind
+
 const charExp = /[a-zA-Z_]/;
 
 export function literal(text: string) {
