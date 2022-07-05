@@ -17,7 +17,6 @@ export interface CharacterRange {
 export interface Field extends CharacterRange {
   type: "literal";
   value: string;
-  quoted: boolean;
 }
 
 /**
@@ -25,20 +24,17 @@ export interface Field extends CharacterRange {
  * i.e., the `:` in `field:dep_name`.
  */
 export interface Separator extends CharacterRange {
-  type: 'separator'
+  type: "separator";
 }
 
-
-export type Token =
-  | Field
-  | KeywordKind
+export type Token = Field | Separator | KeywordKind;
 
 const charExp = /[a-zA-Z_]/;
 
 export function literal(text: string) {
   let end = text.length + 1;
   let current = 0;
-  let tokens = [];
+  let tokens: Token[] = [];
 
   while (current < end) {
     let char = text.charAt(current);
@@ -53,10 +49,15 @@ export function literal(text: string) {
           current = current + 1;
         }
 
-        tokens.push({ text: string, type: "token", start, end: current });
+        tokens.push({
+          type: "literal",
+          value: string,
+          start,
+          end: current,
+        });
         break;
       case char == ":":
-        tokens.push({ type: "delimiter", start: current, end: current + 1 });
+        tokens.push({ type: "separator", start: current, end: current + 1 });
         break;
       case char == "'" || char == '"' || char == "%" || char == "/":
         break;
