@@ -5,7 +5,7 @@ export enum KeywordKind {
   Not = "not",
 }
 
-export interface CharacterRange {
+export interface CharRange {
   start: number;
   end: number;
 }
@@ -14,7 +14,7 @@ export interface CharacterRange {
  * Represents a field in a search query.
  * i.e., the `dep_name` in `field:dep_name`. field will be {@link Field} type
  */
-export interface Field extends CharacterRange {
+export interface Field extends CharRange {
   type: "literal";
   value: string;
 }
@@ -23,14 +23,14 @@ export interface Field extends CharacterRange {
  * separator
  * i.e., the `:` in `field:dep_name`.
  */
-export interface Separator extends CharacterRange {
+export interface Separator extends CharRange {
   type: "separator";
 }
 
 /**
  * `string` kind value, i.e.: 'log' or "log"
  */
-export interface StringKind extends CharacterRange {
+export interface StringKind extends CharRange {
   type: "string";
   value: string;
 }
@@ -38,7 +38,7 @@ export interface StringKind extends CharacterRange {
 /**
  * `regex` kind value, i.e.: /log/
  */
-export interface RegexKind extends CharacterRange {
+export interface RegexKind extends CharRange {
   type: "regex";
   value: string;
 }
@@ -46,7 +46,7 @@ export interface RegexKind extends CharacterRange {
 /**
  * `like` kind value, i.e.: %log%
  */
-export interface LikeKind extends CharacterRange {
+export interface LikeKind extends CharRange {
   type: "regex";
   value: string;
 }
@@ -85,9 +85,13 @@ export namespace Comparison {
   }
 }
 
-export interface ComparisonKind extends CharacterRange {
+export interface ComparisonKind extends CharRange {
   type: "comparison";
   value: Comparison;
+}
+
+export interface Error extends CharRange {
+  type: "error";
 }
 
 export type Token =
@@ -97,7 +101,8 @@ export type Token =
   | StringKind
   | RegexKind
   | LikeKind
-  | ComparisonKind;
+  | ComparisonKind
+  | Error ;
 
 const charExp = /[a-zA-Z_]/;
 const comparison = /[<>=!]/;
@@ -150,6 +155,7 @@ export function literal(text: string) {
             end: current,
           });
         } else {
+          // reset position
           current = startPos;
         }
 
@@ -179,8 +185,12 @@ export function literal(text: string) {
       case char == ":":
         tokens.push({ type: "separator", start: current, end: current + 1 });
         break;
+      case char == " " || char.length == 0:
+        // skip spaces
+        break;
       default:
-        console.log("default: " + char);
+        console.log(`----${char}////`);
+        tokens.push({ type: "error", start: current, end: current + 1 });
         break;
     }
 

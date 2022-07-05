@@ -26,3 +26,10 @@ test("comparison", async () => {
   expect(tokens.length).toBe(5);
   expect(tokens[3]).toEqual({ type: "comparison", value: 0, start: 15, end: 16 });
 });
+
+test("multiple expression", async () => {
+  let sample = `field:dep_name = 'log4j' field:version = "1.2.3"`;
+  let tokens = literal(sample);
+
+  expect(tokens.length).toBe(10);
+});
