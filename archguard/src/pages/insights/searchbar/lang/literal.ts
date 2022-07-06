@@ -5,7 +5,8 @@ export enum KeywordKind {
   Not = "not",
 }
 
-export interface CharRange {
+// position
+export interface Position {
   start: number;
   end: number;
 }
@@ -14,7 +15,7 @@ export interface CharRange {
  * Represents a field in a search query.
  * i.e., the `dep_name` in `field:dep_name`. field will be {@link Field} type
  */
-export interface Field extends CharRange {
+export interface Field extends Position {
   type: "literal";
   value: string;
 }
@@ -23,14 +24,14 @@ export interface Field extends CharRange {
  * separator
  * i.e., the `:` in `field:dep_name`.
  */
-export interface Separator extends CharRange {
+export interface Separator extends Position {
   type: "separator";
 }
 
 /**
  * `string` kind value, i.e.: 'log' or "log"
  */
-export interface StringKind extends CharRange {
+export interface StringKind extends Position {
   type: "string";
   value: string;
 }
@@ -38,7 +39,7 @@ export interface StringKind extends CharRange {
 /**
  * `regex` kind value, i.e.: /log/
  */
-export interface RegexKind extends CharRange {
+export interface RegexKind extends Position {
   type: "regex";
   value: string;
 }
@@ -46,22 +47,25 @@ export interface RegexKind extends CharRange {
 /**
  * `like` kind value, i.e.: %log%
  */
-export interface LikeKind extends CharRange {
+export interface LikeKind extends Position {
   type: "like";
   value: string;
 }
 
-export interface ComparisonKind extends CharRange {
+/**
+ * comparison like: '==', '!=','>', '<', '>=', '<='
+ */
+export interface ComparisonKind extends Position {
   type: "comparison";
   value: Comparison;
 }
 
-export interface Error extends CharRange {
+export interface Error extends Position {
   type: "error";
   value?: string;
 }
 
-export interface Space extends CharRange {
+export interface Space extends Position {
   type: "space";
 }
 
@@ -158,6 +162,7 @@ export function literal(text: string) {
         });
         break;
       case char == "'" || char == '"' || char == "`" || char == "/" || char == "%":
+        // todo: process escape string
         var endChar = char;
         var value = "" + char;
         var startPos = current;
@@ -196,7 +201,6 @@ export function literal(text: string) {
         }
 
         current += 1;
-
         var comparisonType = Comparison.fromText(string);
 
         tokens.push({

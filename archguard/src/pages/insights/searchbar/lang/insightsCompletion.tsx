@@ -1,5 +1,5 @@
 import { Monaco } from "@monaco-editor/react";
-import { languages } from "monaco-editor";
+import {  languages } from "monaco-editor";
 import { getSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 import { InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
 
@@ -7,7 +7,7 @@ function byArray(
   monaco: Monaco,
   range: { endColumn: number; startColumn: number; endLineNumber: number; startLineNumber: number },
   items: string[],
-) {
+): languages.CompletionItem[] {
   return items.map((value) => ({
     label: value,
     kind: monaco.languages.CompletionItemKind.Value,
@@ -54,7 +54,7 @@ function suggestionsByLiteral(
   range: { endColumn: number; startColumn: number; endLineNumber: any; startLineNumber: any },
   tokens: InsightToken[],
   keywords: string[],
-) {
+): languages.CompletionItem[] {
   let suggestions = [];
   let latestType = tokens[tokens.length - 1]["type"];
 
@@ -104,9 +104,9 @@ function suggestionsByLiteral(
   return suggestions;
 }
 
-export function insightsCompletion(monaco: Monaco) {
+export function insightsCompletion(monaco: Monaco): languages.CompletionItemProvider {
   return {
-    triggerCharacters: printable,
+    triggerCharacters: [...printable],
     provideCompletionItems: function (model, position) {
       model.getValueInRange({
         startLineNumber: 1,
