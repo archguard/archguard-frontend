@@ -1,21 +1,18 @@
-// todo: add keyword kind
-export enum KeywordKind {
-  Or = "or",
-  And = "and",
-  Not = "not",
-}
-
 // position
 export interface Position {
   start: number;
   end: number;
 }
 
+export interface BaseToken extends Position {
+  type: InsightToken['type']
+}
+
 /**
  * Represents a field in a search query.
  * i.e., the `dep_name` in `field:dep_name`. field will be {@link Field} type
  */
-export interface Field extends Position {
+export interface Field extends BaseToken {
   type: "literal";
   value: string;
 }
@@ -24,14 +21,14 @@ export interface Field extends Position {
  * separator
  * i.e., the `:` in `field:dep_name`.
  */
-export interface Separator extends Position {
+export interface Separator extends BaseToken {
   type: "separator";
 }
 
 /**
  * `string` kind value, i.e.: 'log' or "log"
  */
-export interface StringKind extends Position {
+export interface StringKind extends BaseToken {
   type: "string";
   value: string;
 }
@@ -39,7 +36,7 @@ export interface StringKind extends Position {
 /**
  * `regex` kind value, i.e.: /log/
  */
-export interface RegexKind extends Position {
+export interface RegexKind extends BaseToken {
   type: "regex";
   value: string;
 }
@@ -47,7 +44,7 @@ export interface RegexKind extends Position {
 /**
  * `like` kind value, i.e.: %log%
  */
-export interface LikeKind extends Position {
+export interface LikeKind extends BaseToken {
   type: "like";
   value: string;
 }
@@ -55,17 +52,17 @@ export interface LikeKind extends Position {
 /**
  * comparison like: '==', '!=','>', '<', '>=', '<='
  */
-export interface ComparisonKind extends Position {
+export interface ComparisonKind extends BaseToken {
   type: "comparison";
   value: Comparison;
 }
 
-export interface Error extends Position {
+export interface Error extends BaseToken {
   type: "error";
   value?: string;
 }
 
-export interface Space extends Position {
+export interface Space extends BaseToken {
   type: "space";
 }
 
@@ -126,7 +123,6 @@ export type ValueToken = StringKind | RegexKind | LikeKind;
 export type InsightToken =
   | Field
   | Separator
-  | KeywordKind
   | StringKind
   | RegexKind
   | LikeKind
