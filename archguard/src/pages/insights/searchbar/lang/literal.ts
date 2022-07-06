@@ -1,4 +1,6 @@
 // position
+import { INSIGHTS_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
+
 export interface Position {
   start: number;
   end: number;
@@ -10,9 +12,18 @@ export interface BaseToken extends Position {
 
 /**
  * Represents a field in a search query.
- * i.e., the `dep_name` in `field:dep_name`. field will be {@link Field} type
+ * i.e., the `dep_name` in `field:dep_name`. field will be {@link FieldValue} type
  */
-export interface Field extends BaseToken {
+export interface Keyword extends BaseToken {
+  type: "keyword";
+  value: string;
+}
+
+/**
+ * Represents a field in a search query.
+ * i.e., the `dep_name` in `field:dep_name`. field will be {@link FieldValue} type
+ */
+export interface FieldValue extends BaseToken {
   type: "literal";
   value: string;
 }
@@ -121,7 +132,8 @@ function valueTypeFromChar(char: string) {
 export type ValueToken = StringKind | RegexKind | LikeKind;
 
 export type InsightToken =
-  | Field
+  | Keyword
+  | FieldValue
   | Separator
   | StringKind
   | RegexKind
@@ -150,12 +162,21 @@ export function literal(text: string) {
           current += 1;
         }
 
-        tokens.push({
-          type: "literal",
-          value: string,
-          start,
-          end: current,
-        });
+        if(INSIGHTS_KEYWORDS.includes(string)) {
+          tokens.push({
+            type: "keyword",
+            value: string,
+            start,
+            end: current,
+          });
+        } else {
+          tokens.push({
+            type: "literal",
+            value: string,
+            start,
+            end: current,
+          });
+        }
         break;
       case char == "'" || char == '"' || char == "`" || char == "/" || char == "%":
         // todo: process escape string

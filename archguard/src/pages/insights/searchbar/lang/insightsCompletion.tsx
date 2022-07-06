@@ -2,6 +2,7 @@ import { Monaco } from "@monaco-editor/react";
 import {  languages } from "monaco-editor";
 import { getSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 import { InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
+import { INSIGHTS_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
 
 function byArray(
   monaco: Monaco,
@@ -134,9 +135,9 @@ export function insightsCompletion(monaco: Monaco): languages.CompletionItemProv
       const tokens = literal(textUntilPosition);
 
       if (tokens.length > 0) {
-        return { suggestions: suggestionsByLiteral(monaco, range, tokens, insightKeywords) };
+        return { suggestions: suggestionsByLiteral(monaco, range, tokens, INSIGHTS_KEYWORDS) };
       } else {
-        return { suggestions: byArray(monaco, range, insightKeywords) };
+        return { suggestions: byArray(monaco, range, INSIGHTS_KEYWORDS) };
       }
     },
   };

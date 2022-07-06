@@ -1,8 +1,10 @@
+import { INSIGHTS_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
+
 export const insightsLangToken = {
   defaultToken: "",
   tokenPostfix: ".insights",
 
-  keywords: ["field"],
+  keywords: INSIGHTS_KEYWORDS,
   typeKeywords: [],
   operators: ["=", ">", "<", "!", "~", "?", ":", "==", "<=", ">=", "!="],
 
@@ -32,8 +34,8 @@ export const insightsLangToken = {
         {
           token: "regexp",
           bracket: "@open",
-          next: "@regexp"
-        }
+          next: "@regexp",
+        },
       ],
 
       // numbers
@@ -56,28 +58,28 @@ export const insightsLangToken = {
       [/%([^%\\]|\\.)*$/, "string.invalid"], // non-teminated string
       [/"/, "string", "@string_double"],
       [/'/, "string", "@string_single"],
-      [/%/, "string.like", "@string_like"]
+      [/%/, "string.like", "@string_like"],
     ],
 
     string_double: [
       [/[^\\"]+/, "string"],
       [/@escapes/, "string.escape"],
       [/\\./, "string.escape.invalid"],
-      [/"/, "string", "@pop"]
+      [/"/, "string", "@pop"],
     ],
 
     string_single: [
       [/[^\\']+/, "string"],
       [/@escapes/, "string.escape"],
       [/\\./, "string.escape.invalid"],
-      [/'/, "string", "@pop"]
+      [/'/, "string", "@pop"],
     ],
 
     string_like: [
       [/[^\\%]+/, "string.like"],
       [/@escapes/, "string.escape"],
       [/\\./, "string.escape.invalid"],
-      [/%/, "string.like", "@pop"]
+      [/%/, "string.like", "@pop"],
     ],
 
     whitespace: [[/[ \t\r\n]+/, "white"]],
@@ -86,7 +88,7 @@ export const insightsLangToken = {
     regexp: [
       [
         /(\{)(\d+(?:,\d*)?)(\})/,
-        ["regexp.escape.control", "regexp.escape.control", "regexp.escape.control"]
+        ["regexp.escape.control", "regexp.escape.control", "regexp.escape.control"],
       ],
       [
         /(\[)(\^?)(?=(?:[^\]\\\/]|\\.)+)/,
@@ -94,9 +96,9 @@ export const insightsLangToken = {
           "regexp.escape.control",
           {
             token: "regexp.escape.control",
-            next: "@regexrange"
-          }
-        ]
+            next: "@regexrange",
+          },
+        ],
       ],
       [/(\()(\?:|\?=|\?!)/, ["regexp.escape.control", "regexp.escape.control"]],
       [/[()]/, "regexp.escape.control"],
@@ -104,7 +106,7 @@ export const insightsLangToken = {
       [/[^\\\/]/, "regexp"],
       [/@regexpesc/, "regexp.escape"],
       [/\\\./, "regexp.invalid"],
-      [/(\/)([gimsuy]*)/, [{ token: "regexp", bracket: "@close", next: "@pop" }, "keyword.other"]]
+      [/(\/)([gimsuy]*)/, [{ token: "regexp", bracket: "@close", next: "@pop" }, "keyword.other"]],
     ],
 
     regexrange: [
@@ -112,7 +114,7 @@ export const insightsLangToken = {
       [/\^/, "regexp.invalid"],
       [/@regexpesc/, "regexp.escape"],
       [/[^\]]/, "regexp"],
-      [/\]/, { token: "regexp.escape.control", next: "@pop", bracket: "@close" }]
-    ]
-  }
+      [/\]/, { token: "regexp.escape.control", next: "@pop", bracket: "@close" }],
+    ],
+  },
 };

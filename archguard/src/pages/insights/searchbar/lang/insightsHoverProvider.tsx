@@ -24,6 +24,8 @@ export function insightsHoverProvider(monaco: Monaco): languages.HoverProvider {
 
       tokensAtCursor.map((token: InsightToken) => {
         switch (token.type) {
+          case "keyword":
+            break;
           case "separator":
             break;
           case "literal":
