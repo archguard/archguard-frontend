@@ -1,5 +1,5 @@
 import Editor, { loader, Monaco, useMonaco } from "@monaco-editor/react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import { addInsightsLanguage, LANG_ID } from "@/pages/insights/searchbar/insightsLang";
 
 const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
@@ -63,7 +63,6 @@ export interface SmartSuggestProps {
 
 function SmartSuggest(props: SmartSuggestProps) {
   const editorRef = useRef(null as any);
-  const [height, setHeight] = useState("100%");
 
   const monaco = useMonaco();
   useEffect(() => {
@@ -72,39 +71,35 @@ function SmartSuggest(props: SmartSuggestProps) {
     }
   }, [monaco]);
 
-  function configEditor(editor, monaco: Monaco) {
-    // disable `F1` for command palette
-    editor.addCommand(monaco.KeyCode.F1, () => {});
-    // disable `CTRL` + `F` for search
-    editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyF, () => {});
-
-    // add handle for press enter
-    editor.addCommand(monaco.KeyCode.Enter, () => {
-      editor.trigger("", "acceptSelectedSuggestion");
-    });
-
-    // handle for paste
-    editor.onDidPaste((e) => {
-      // multiple rows will be merged to single row
-      if (e.range.endLineNumber <= 1) {
-        return;
-      }
-
-      let newContent = "";
-      const textModel = editor.getModel();
-      const lineCount = textModel.getLineCount();
-      // remove all line breaks
-      for (let i = 0; i < lineCount; i += 1) {
-        newContent += textModel.getLineContent(i + 1);
-      }
-      textModel.setValue(newContent);
-      editor.setPosition({ column: newContent.length + 1, lineNumber: 1 });
-    });
-  }
-
   function initEditor(editor) {
     loader.init().then((monaco) => {
-      configEditor(editor, monaco);
+      // disable `F1` for command palette
+      editor.addCommand(monaco.KeyCode.F1, () => {});
+      // disable `CTRL` + `F` for search
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyF, () => {});
+
+      // add handle for press enter
+      editor.addCommand(monaco.KeyCode.Enter, () => {
+        editor.trigger("", "acceptSelectedSuggestion");
+      });
+
+      // handle for paste
+      editor.onDidPaste((e) => {
+        // multiple rows will be merged to single row
+        if (e.range.endLineNumber <= 1) {
+          return;
+        }
+
+        let newContent = "";
+        const textModel = editor.getModel();
+        const lineCount = textModel.getLineCount();
+        // remove all line breaks
+        for (let i = 0; i < lineCount; i += 1) {
+          newContent += textModel.getLineContent(i + 1);
+        }
+        textModel.setValue(newContent);
+        editor.setPosition({ column: newContent.length + 1, lineNumber: 1 });
+      });
 
       monaco.editor.setModelLanguage(editor.getModel(), LANG_ID);
       monaco.editor.setTheme(LANG_ID);
@@ -113,10 +108,6 @@ function SmartSuggest(props: SmartSuggestProps) {
 
   const changeCode = useCallback(
     (code) => {
-      if (editorRef.current) {
-        // adjustHeight(editorRef.current);
-      }
-
       props.onChange(code);
     },
     [editorRef],
@@ -129,7 +120,7 @@ function SmartSuggest(props: SmartSuggestProps) {
         initEditor(editor);
       }
     },
-    [editorRef, setHeight],
+    [editorRef],
   );
 
   return (
@@ -137,11 +128,10 @@ function SmartSuggest(props: SmartSuggestProps) {
       value={props.code}
       onChange={changeCode}
       onMount={handleEditorDidMount}
-      // height="200px"
       height="100%"
       options={oneLineOption}
     />
   );
 }
 
-export default SmartSuggest
+export default SmartSuggest;
