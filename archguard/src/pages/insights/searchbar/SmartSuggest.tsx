@@ -105,6 +105,9 @@ function SmartSuggest(props: SmartSuggestProps) {
   function initEditor(editor) {
     loader.init().then((monaco) => {
       configEditor(editor, monaco);
+
+      monaco.editor.setModelLanguage(editor.getModel(), "insights");
+      monaco.editor.setTheme("insights");
     });
   }
 
@@ -131,8 +134,6 @@ function SmartSuggest(props: SmartSuggestProps) {
 
   return (
     <Editor
-      language={"insights"}
-      theme={"insights"}
       value={props.code}
       onChange={changeCode}
       onMount={handleEditorDidMount}

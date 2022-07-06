@@ -1,6 +1,7 @@
 import { Monaco } from "@monaco-editor/react";
 import { languages } from "monaco-editor";
 import { getSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
+import { literal } from "@/pages/insights/searchbar/lang/literal";
 
 function createNormal(
   monaco: Monaco,
