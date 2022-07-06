@@ -72,7 +72,7 @@ function SmartSuggest(props: SmartSuggestProps) {
     }
   }, [monaco]);
 
-  function initEditor(editor) {
+  function initEditor(editor: editor.IStandaloneCodeEditor) {
     loader.init().then((monaco) => {
       // disable `F1` for command palette
       editor.addCommand(monaco.KeyCode.F1, () => {});
@@ -81,7 +81,7 @@ function SmartSuggest(props: SmartSuggestProps) {
 
       // add handle for press enter
       editor.addCommand(monaco.KeyCode.Enter, () => {
-        editor.trigger("", "acceptSelectedSuggestion");
+        editor.trigger("", "acceptSelectedSuggestion", undefined);
       });
 
       // handle for paste
@@ -93,6 +93,10 @@ function SmartSuggest(props: SmartSuggestProps) {
 
         let newContent = "";
         const textModel = editor.getModel();
+        if (!textModel) {
+          return;
+        }
+
         const lineCount = textModel.getLineCount();
         // remove all line breaks
         for (let i = 0; i < lineCount; i += 1) {
@@ -102,7 +106,10 @@ function SmartSuggest(props: SmartSuggestProps) {
         editor.setPosition({ column: newContent.length + 1, lineNumber: 1 });
       });
 
-      monaco.editor.setModelLanguage(editor.getModel(), LANG_ID);
+      const textModel = editor.getModel();
+      if (textModel) {
+        monaco.editor.setModelLanguage(textModel, LANG_ID);
+      }
       monaco.editor.setTheme(LANG_ID);
     });
   }
@@ -115,7 +122,7 @@ function SmartSuggest(props: SmartSuggestProps) {
   );
 
   const handleEditorDidMount = useCallback(
-    (editor: Editor) => {
+    (editor: editor.IStandaloneCodeEditor) => {
       editorRef.current = editor;
       if (editorRef.current) {
         initEditor(editor);
