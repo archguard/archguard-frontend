@@ -47,8 +47,18 @@ export interface RegexKind extends CharRange {
  * `like` kind value, i.e.: %log%
  */
 export interface LikeKind extends CharRange {
-  type: "regex";
+  type: "like";
   value: string;
+}
+
+export interface ComparisonKind extends CharRange {
+  type: "comparison";
+  value: Comparison;
+}
+
+export interface Error extends CharRange {
+  type: "error";
+  value?: string;
 }
 
 export enum Comparison {
@@ -85,14 +95,22 @@ export namespace Comparison {
   }
 }
 
-export interface ComparisonKind extends CharRange {
-  type: "comparison";
-  value: Comparison;
+const charExp = /[a-zA-Z_]/;
+const comparison = /[<>=!]/;
+
+function valueTypeFromChar(char: string) {
+  switch (char) {
+    case "'":
+    case '"':
+      return "string";
+    case "/":
+      return "regex";
+    default:
+      return "error";
+  }
 }
 
-export interface Error extends CharRange {
-  type: "error";
-}
+export type ValueToken = StringKind | RegexKind | LikeKind;
 
 export type Token =
   | Field
@@ -102,10 +120,7 @@ export type Token =
   | RegexKind
   | LikeKind
   | ComparisonKind
-  | Error ;
-
-const charExp = /[a-zA-Z_]/;
-const comparison = /[<>=!]/;
+  | Error;
 
 export function literal(text: string) {
   let end = text.length + 1;
@@ -134,7 +149,7 @@ export function literal(text: string) {
           end: current,
         });
         break;
-      case char == "'" || char == '"':
+      case char == "'" || char == '"' || char == "/":
         var endChar = char;
         var value = "" + char;
         var startPos = current;
@@ -147,13 +162,14 @@ export function literal(text: string) {
         if (value != "" + char) {
           // move to endChar
           current = current + 1;
+          value += text[current];
 
           tokens.push({
-            type: "string",
+            type: valueTypeFromChar(endChar),
             value: value,
             start: startPos,
             end: current,
-          });
+          } as ValueToken);
         } else {
           // reset position
           current = startPos;
