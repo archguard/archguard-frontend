@@ -140,9 +140,9 @@ export function literal(text: string) {
         var string = "" + char;
         var start = current;
 
-        while (current < length && charExp.test(text[current + 1])) {
+        while (current + 1 < length && charExp.test(text[current + 1])) {
           string += text[current + 1];
-          current = current + 1;
+          current += 1;
         }
 
         tokens.push({
@@ -159,7 +159,7 @@ export function literal(text: string) {
 
         while (current + 1 <= length && text[current + 1] != endChar) {
           value += text[current + 1];
-          current = current + 1;
+          current += 1;
         }
 
         if (value != "" + char) {
@@ -187,10 +187,10 @@ export function literal(text: string) {
 
         while (current < length && charExp.test(text[current + 1])) {
           string += text[current + 1];
-          current = current + 1;
+          current += 1;
         }
 
-        current = current + 1;
+        current += 1;
 
         var comparisonType = Comparison.fromText(string);
 

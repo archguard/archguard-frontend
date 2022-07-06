@@ -61,3 +61,11 @@ test("error", async () => {
   expect(tokens.length).toBe(4);
   expect(tokens[3]).toEqual({ type: "error", value: "&", start: 15, end: 16 });
 });
+
+test("new field", async () => {
+  let tokens = literal("fiel");
+
+  expect(tokens.length).toBe(1);
+  expect(tokens[0]).toEqual({ type: "literal", value: "fiel", start: 0, end: 3 });
+});
+
