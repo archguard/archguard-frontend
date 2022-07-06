@@ -12,11 +12,20 @@ test("normal dsl", async () => {
 });
 
 test("string value", async () => {
-  let sample = `field:dep_name 'log4j'`;
-  let tokens = literal(sample);
+  let tokens = literal(`field:dep_name 'log4j'`);
 
   expect(tokens.length).toBe(4);
   expect(tokens[3]).toEqual({ type: "string", value: "'log4j'", start: 15, end: 21 });
+
+  let tokens2 = literal(`field:dep_name "log4j"`);
+
+  expect(tokens2.length).toBe(4);
+  expect(tokens2[3]).toEqual({ type: "string", value: '"log4j"', start: 15, end: 21 });
+
+  let tokens3 = literal(`field:dep_name \`log4j\``);
+
+  expect(tokens3.length).toBe(4);
+  expect(tokens3[3]).toEqual({ type: "string", value: '`log4j`', start: 15, end: 21 });
 });
 
 test('regex value', async () => {
