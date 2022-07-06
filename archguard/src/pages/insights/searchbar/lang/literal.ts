@@ -61,6 +61,10 @@ export interface Error extends CharRange {
   value?: string;
 }
 
+export interface Space extends CharRange {
+  type: "space";
+}
+
 export enum Comparison {
   Equal,
   NotEqual,
@@ -115,7 +119,7 @@ function valueTypeFromChar(char: string) {
 
 export type ValueToken = StringKind | RegexKind | LikeKind;
 
-export type Token =
+export type InsightToken =
   | Field
   | Separator
   | KeywordKind
@@ -123,12 +127,13 @@ export type Token =
   | RegexKind
   | LikeKind
   | ComparisonKind
+  | Space
   | Error;
 
 export function literal(text: string) {
   let end = text.length + 1;
   let current = 0;
-  let tokens: Token[] = [];
+  let tokens: InsightToken[] = [];
 
   let length = text.length;
 
@@ -204,7 +209,10 @@ export function literal(text: string) {
       case char == ":":
         tokens.push({ type: "separator", start: current, end: current + 1 });
         break;
-      case char == " " || char.length == 0:
+      case char == " ":
+        tokens.push({ type: "space", start: current, end: current + 1 });
+        break;
+      case char.length == 0:
         // skip spaces
         break;
       default:
