@@ -10,12 +10,13 @@ const State: languages.IState = {
   equals: () => false,
 };
 
+export const LANG_ID = "insights";
+
 export function addInsightsLanguage(monaco: Monaco) {
-  let languageId = "insights";
 
-  monaco.languages.register({ id: languageId });
+  monaco.languages.register({ id: LANG_ID });
 
-  monaco.languages.setLanguageConfiguration(languageId, {
+  monaco.languages.setLanguageConfiguration(LANG_ID, {
     autoClosingPairs: [
       { open: "/", close: "/" },
       { open: '"', close: '"' },
@@ -24,13 +25,13 @@ export function addInsightsLanguage(monaco: Monaco) {
     ],
   });
 
-  monaco.editor.defineTheme(languageId, insightsTheme());
+  monaco.editor.defineTheme(LANG_ID, insightsTheme());
 
-  monaco.languages.setMonarchTokensProvider(languageId, insightsLangToken as any);
+  monaco.languages.setMonarchTokensProvider(LANG_ID, insightsLangToken as any);
 
-  monaco.languages.registerCompletionItemProvider(languageId, insightsCompletion(monaco));
+  monaco.languages.registerCompletionItemProvider(LANG_ID, insightsCompletion(monaco));
 
-  monaco.languages.registerHoverProvider(languageId, {
+  monaco.languages.registerHoverProvider(LANG_ID, {
     provideHover: function (model, position) {
       // todo: change to model and position
 

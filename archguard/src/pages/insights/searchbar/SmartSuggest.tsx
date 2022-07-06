@@ -1,6 +1,6 @@
 import Editor, { loader, Monaco, useMonaco } from "@monaco-editor/react";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { addInsightsLanguage } from "@/pages/insights/searchbar/insightsLang";
+import { addInsightsLanguage, LANG_ID } from "@/pages/insights/searchbar/insightsLang";
 
 const oneLineOption: monaco.editor.IStandaloneEditorConstructionOptions = {
   lineHeight: 28,
@@ -106,8 +106,8 @@ function SmartSuggest(props: SmartSuggestProps) {
     loader.init().then((monaco) => {
       configEditor(editor, monaco);
 
-      monaco.editor.setModelLanguage(editor.getModel(), "insights");
-      monaco.editor.setTheme("insights");
+      monaco.editor.setModelLanguage(editor.getModel(), LANG_ID);
+      monaco.editor.setTheme(LANG_ID);
     });
   }
 
