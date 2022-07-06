@@ -27,6 +27,14 @@ test('regex value', async () => {
   expect(tokens[3]).toEqual({ type: "regex", value: "/log4j/", start: 15, end: 21 });
 });
 
+test('like value', async () => {
+  let sample = `field:dep_name %log4j%`;
+  let tokens = literal(sample);
+
+  expect(tokens.length).toBe(4);
+  expect(tokens[3]).toEqual({ type: "like", value: "%log4j%", start: 15, end: 21 });
+});
+
 test("comparison", async () => {
   let sample = `field:dep_name = 'log4j'`;
   let tokens = literal(sample);

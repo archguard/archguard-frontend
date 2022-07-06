@@ -102,9 +102,12 @@ function valueTypeFromChar(char: string) {
   switch (char) {
     case "'":
     case '"':
+    case '`':
       return "string";
     case "/":
       return "regex";
+    case "%":
+      return "like";
     default:
       return "error";
   }
@@ -149,7 +152,7 @@ export function literal(text: string) {
           end: current,
         });
         break;
-      case char == "'" || char == '"' || char == "/":
+      case char == "'" || char == '"' || char == '`' || char == "/" || char == "%":
         var endChar = char;
         var value = "" + char;
         var startPos = current;
