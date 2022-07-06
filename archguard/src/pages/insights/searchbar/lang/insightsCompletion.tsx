@@ -2,7 +2,7 @@ import { Monaco } from "@monaco-editor/react";
 import { languages } from "monaco-editor";
 import { getSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 import { InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
-import { INSIGHTS_KEYWORDS, SCA_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
+import { INSIGHTS_KEYWORDS, ISSUE_KEYWORDS, SCA_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
 
 function byArray(
   monaco: Monaco,
@@ -28,7 +28,7 @@ function createSuggestion(range, inputType: string, monaco: Monaco): languages.C
       types = SCA_KEYWORDS;
       break;
     case "issue":
-      types = ["name"];
+      types = ISSUE_KEYWORDS;
       break;
   }
 
