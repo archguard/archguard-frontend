@@ -3,7 +3,7 @@ import { languages } from "monaco-editor";
 import { insightsLangToken } from "@/pages/insights/searchbar/lang/insightsLangToken";
 import { insightsTheme } from "@/pages/insights/searchbar/lang/insightsTheme";
 import { insightsCompletion } from "@/pages/insights/searchbar/lang/insightsCompletion";
-import { getSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
+import { insightsHoverProvider } from "@/pages/insights/searchbar/lang/insightsHoverProvider";
 
 const State: languages.IState = {
   clone: () => ({ ...State }),
@@ -31,26 +31,5 @@ export function addInsightsLanguage(monaco: Monaco) {
 
   monaco.languages.registerCompletionItemProvider(LANG_ID, insightsCompletion(monaco));
 
-  monaco.languages.registerHoverProvider(LANG_ID, {
-    provideHover: function (model, position) {
-      // todo: change to model and position
-
-      return {
-        range: new monaco.Range(
-          1,
-          1,
-          model.getLineCount(),
-          model.getLineMaxColumn(model.getLineCount()),
-        ),
-        contents: [
-          { value: `**Type: ${getSuggestType()}**` },
-          { value: `\`\`\`markdown
-examples:
-query for log4j: \`field:dep_name == %log4j%\`
-query for issues: \`field:name == "HTTP_API_SMELL"\`
-
-\`\`\`` }],
-      };
-    },
-  });
+  monaco.languages.registerHoverProvider(LANG_ID, insightsHoverProvider(monaco));
 }
