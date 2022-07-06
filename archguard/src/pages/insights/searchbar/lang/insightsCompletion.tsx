@@ -1,8 +1,8 @@
 import { Monaco } from "@monaco-editor/react";
-import {  languages } from "monaco-editor";
+import { languages } from "monaco-editor";
 import { getSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 import { InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
-import { INSIGHTS_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
+import { INSIGHTS_KEYWORDS, SCA_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
 
 function byArray(
   monaco: Monaco,
@@ -25,7 +25,7 @@ function createSuggestion(range, inputType: string, monaco: Monaco): languages.C
   let types = [];
   switch (inputType) {
     case "sca":
-      types = ["dep_name", "dep_version"];
+      types = SCA_KEYWORDS;
       break;
     case "issue":
       types = ["name"];
@@ -47,7 +47,6 @@ function createSuggestion(range, inputType: string, monaco: Monaco): languages.C
 const printable =
   " !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
 const comparisonSymbols = ["==", "!=", ">", "<", ">=", "<="];
-const insightKeywords = ["field"];
 const valueSymbols = ["''", '""', "%%", "//"];
 
 function suggestionsByLiteral(
@@ -102,7 +101,12 @@ function suggestionsByLiteral(
       suggestions = createSuggestion(range, getSuggestType() || "sca", monaco);
   }
 
-  return suggestions;
+  let literals = tokens.filter((token) => token["type"] === "literal").map((token) => token["value"]);
+  const newSuggestions = suggestions.filter((element) => {
+    return !literals.includes(element.label);
+  });
+
+  return newSuggestions;
 }
 
 export function insightsCompletion(monaco: Monaco): languages.CompletionItemProvider {
