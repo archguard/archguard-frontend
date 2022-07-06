@@ -102,7 +102,7 @@ function valueTypeFromChar(char: string) {
   switch (char) {
     case "'":
     case '"':
-    case '`':
+    case "`":
       return "string";
     case "/":
       return "regex";
@@ -152,7 +152,7 @@ export function literal(text: string) {
           end: current,
         });
         break;
-      case char == "'" || char == '"' || char == '`' || char == "/" || char == "%":
+      case char == "'" || char == '"' || char == "`" || char == "/" || char == "%":
         var endChar = char;
         var value = "" + char;
         var startPos = current;
@@ -208,8 +208,7 @@ export function literal(text: string) {
         // skip spaces
         break;
       default:
-        console.log(`----${char}////`);
-        tokens.push({ type: "error", start: current, end: current + 1 });
+        tokens.push({ type: "error", value: char, start: current, end: current + 1 });
         break;
     }
 

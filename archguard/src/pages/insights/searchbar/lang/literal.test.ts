@@ -1,8 +1,7 @@
 import { literal } from "./literal";
 
 test("normal dsl", async () => {
-  let sample = `field:dep_name `;
-  let tokens = literal(sample);
+  let tokens = literal(`field:dep_name `);
 
   expect(tokens.length).toBe(3);
 
@@ -25,20 +24,18 @@ test("string value", async () => {
   let tokens3 = literal(`field:dep_name \`log4j\``);
 
   expect(tokens3.length).toBe(4);
-  expect(tokens3[3]).toEqual({ type: "string", value: '`log4j`', start: 15, end: 21 });
+  expect(tokens3[3]).toEqual({ type: "string", value: "`log4j`", start: 15, end: 21 });
 });
 
-test('regex value', async () => {
-  let sample = `field:dep_name /log4j/`;
-  let tokens = literal(sample);
+test("regex value", async () => {
+  let tokens = literal(`field:dep_name /log4j/`);
 
   expect(tokens.length).toBe(4);
   expect(tokens[3]).toEqual({ type: "regex", value: "/log4j/", start: 15, end: 21 });
 });
 
-test('like value', async () => {
-  let sample = `field:dep_name %log4j%`;
-  let tokens = literal(sample);
+test("like value", async () => {
+  let tokens = literal(`field:dep_name %log4j%`);
 
   expect(tokens.length).toBe(4);
   expect(tokens[3]).toEqual({ type: "like", value: "%log4j%", start: 15, end: 21 });
@@ -53,8 +50,14 @@ test("comparison", async () => {
 });
 
 test("multiple expression", async () => {
-  let sample = `field:dep_name = 'log4j' field:version = "1.2.3"`;
-  let tokens = literal(sample);
+  let tokens = literal(`field:dep_name = 'log4j' field:version = "1.2.3"`);
 
   expect(tokens.length).toBe(10);
+});
+
+test("error", async () => {
+  let tokens = literal(`field:dep_name &`);
+
+  expect(tokens.length).toBe(4);
+  expect(tokens[3]).toEqual({ type: "error", value: "&", start: 15, end: 16 });
 });
