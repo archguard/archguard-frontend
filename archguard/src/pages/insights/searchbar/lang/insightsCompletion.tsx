@@ -1,6 +1,6 @@
 import { Monaco } from "@monaco-editor/react";
 import { languages } from "monaco-editor";
-import { getSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
+import { getEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 import { InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
 import { INSIGHTS_KEYWORDS, ISSUE_KEYWORDS, SCA_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
 
@@ -91,14 +91,14 @@ function suggestionsByLiteral(
       suggestions = byArray(monaco, range, keywords);
       break;
     case "separator":
-      suggestions = createSuggestion(range, getSuggestType() || "sca", monaco);
+      suggestions = createSuggestion(range, getEditorSuggestType() || "sca", monaco);
       break;
     case "like":
     case "regex":
     case "string":
       break;
     default:
-      suggestions = createSuggestion(range, getSuggestType() || "sca", monaco);
+      suggestions = createSuggestion(range, getEditorSuggestType() || "sca", monaco);
   }
 
   let literals = tokens.filter((token) => token["type"] === "literal").map((token) => token["value"]);

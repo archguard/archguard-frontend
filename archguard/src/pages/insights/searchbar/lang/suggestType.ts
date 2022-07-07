@@ -1,7 +1,8 @@
-export function setWindowEditorType(text) {
+// todo: change to localstorage
+export function setEditorSuggestType(text) {
   window["editorType"] = text;
 }
 
-export function getSuggestType() {
+export function getEditorSuggestType() {
   return window["editorType"];
 }

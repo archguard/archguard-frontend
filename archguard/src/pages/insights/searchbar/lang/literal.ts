@@ -12,7 +12,7 @@ export interface BaseToken extends Position {
 
 /**
  * Represents a field in a search query.
- * i.e., the `dep_name` in `field:dep_name`. field will be {@link FieldValue} type
+ * i.e., the `dep_name` in `field:dep_name`. field will be {@link Identifier} type
  */
 export interface Keyword extends BaseToken {
   type: "keyword";
@@ -21,10 +21,10 @@ export interface Keyword extends BaseToken {
 
 /**
  * Represents a field in a search query.
- * i.e., the `dep_name` in `field:dep_name`. field will be {@link FieldValue} type
+ * i.e., the `dep_name` in `field:dep_name`. field will be {@link Identifier} type
  */
-export interface FieldValue extends BaseToken {
-  type: "literal";
+export interface Identifier extends BaseToken {
+  type: "identifier";
   value: string;
 }
 
@@ -133,7 +133,7 @@ export type ValueToken = StringKind | RegexKind | LikeKind;
 
 export type InsightToken =
   | Keyword
-  | FieldValue
+  | Identifier
   | Separator
   | StringKind
   | RegexKind
@@ -171,7 +171,7 @@ export function literal(text: string) {
           });
         } else {
           tokens.push({
-            type: "literal",
+            type: "identifier",
             value: string,
             start,
             end: current,

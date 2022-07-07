@@ -19,7 +19,7 @@ import { groupBy } from "lodash";
 import InsightQueryChart from "@/pages/insights/InsightQueryChart";
 import { useIntl } from "@@/plugin-locale/localeExports";
 import { SearchOutlined } from "@ant-design/icons";
-import { setWindowEditorType } from "@/pages/insights/searchbar/lang/suggestType";
+import { setEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 
 let defaultSearchText = "field:dep_name == %dubbo% field:dep_version > 1.12.3";
 
@@ -48,7 +48,7 @@ function Insights() {
   );
 
   function setTypeForMonaco(text) {
-    setWindowEditorType(text);
+    setEditorSuggestType(text);
   }
   setTypeForMonaco(selectType)
 
