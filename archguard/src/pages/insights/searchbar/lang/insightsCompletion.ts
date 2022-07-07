@@ -1,7 +1,7 @@
 import { Monaco } from "@monaco-editor/react";
 import { languages, Range } from "monaco-editor";
 import { getEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
-import { InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
+import { getTokenValue, InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
 import {
   INSIGHTS_KEYWORDS,
   ISSUE_KEYWORDS,
@@ -100,7 +100,7 @@ function suggestionsByLiteral(
       }
 
       break;
-    case "literal":
+    case "keyword":
       suggestions = byArray(monaco, range, keywords);
       break;
     case "separator":
@@ -115,8 +115,8 @@ function suggestionsByLiteral(
   }
 
   let literals = tokens
-    .filter((token) => token["type"] === "literal")
-    .map((token) => token["value"]);
+    .filter((token) => token["type"] === "identifier")
+    .map((token) => getTokenValue(token));
   const newSuggestions = suggestions.filter((element) => {
     return !literals.includes(element.label);
   });
@@ -142,7 +142,7 @@ export function insightsCompletion(monaco: Monaco): languages.CompletionItemProv
         endLineNumber: position.lineNumber,
         startColumn: word.startColumn,
         endColumn: word.endColumn,
-      };
+      } as Range;
 
       const textUntilPosition = model.getValueInRange({
         startLineNumber: position.lineNumber,
