@@ -1,5 +1,5 @@
 // position
-import { INSIGHTS_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
+import { INSIGHTS_KEYWORDS, OP_KEYWORDS } from "./keywords";
 
 export interface Position {
   start: number;
@@ -7,7 +7,11 @@ export interface Position {
 }
 
 export interface BaseToken extends Position {
-  type: InsightToken['type']
+  type: InsightToken["type"];
+}
+
+export function getTokenValue<T extends BaseToken>(token: T): any {
+  return (token as any).value;
 }
 
 /**
@@ -16,6 +20,15 @@ export interface BaseToken extends Position {
  */
 export interface Keyword extends BaseToken {
   type: "keyword";
+  value: string;
+}
+
+/**
+ * Represents a special type of a keyword that used as a logic operator
+ * i.e., the `and` and `or` keyword
+ */
+export interface Operator extends BaseToken {
+  type: "operator";
   value: string;
 }
 
@@ -73,10 +86,6 @@ export interface Error extends BaseToken {
   value?: string;
 }
 
-export interface Space extends BaseToken {
-  type: "space";
-}
-
 export enum Comparison {
   Equal,
   NotEqual,
@@ -111,8 +120,8 @@ export namespace Comparison {
   }
 }
 
-const charExp = /[a-zA-Z_]/;
-const comparison = /[<>=!]/;
+const charRegExpr = /[a-zA-Z_]/;
+const comparisonRegExpr = /[<>=!]/;
 
 function valueTypeFromChar(char: string) {
   switch (char) {
@@ -133,13 +142,13 @@ export type ValueToken = StringKind | RegexKind | LikeKind;
 
 export type InsightToken =
   | Keyword
+  | Operator
   | Identifier
   | Separator
   | StringKind
   | RegexKind
   | LikeKind
   | ComparisonKind
-  | Space
   | Error;
 
 export function literal(text: string) {
@@ -153,18 +162,26 @@ export function literal(text: string) {
     let char = text.charAt(current);
 
     switch (true) {
-      case charExp.test(char):
+      case charRegExpr.test(char):
         var string = "" + char;
         var start = current;
 
-        while (current + 1 < length && charExp.test(text[current + 1])) {
+        while (current + 1 < length && charRegExpr.test(text[current + 1])) {
           string += text[current + 1];
           current += 1;
         }
+        current++;
 
-        if(INSIGHTS_KEYWORDS.includes(string)) {
+        if (INSIGHTS_KEYWORDS.includes(string)) {
           tokens.push({
             type: "keyword",
+            value: string,
+            start,
+            end: current,
+          });
+        } else if (OP_KEYWORDS.includes(string)) {
+          tokens.push({
+            type: "operator",
             value: string,
             start,
             end: current,
@@ -198,7 +215,7 @@ export function literal(text: string) {
             type: valueTypeFromChar(endChar),
             value: value,
             start: startPos,
-            end: current,
+            end: ++current,
           } as ValueToken);
         } else {
           // reset position
@@ -206,18 +223,18 @@ export function literal(text: string) {
         }
 
         break;
-      case comparison.test(char):
+      case comparisonRegExpr.test(char):
         // eslint-disable-next-line no-redeclare
         var string = "" + char;
         // eslint-disable-next-line no-redeclare
         var start = current;
 
-        while (current < length && charExp.test(text[current + 1])) {
+        while (current < length && comparisonRegExpr.test(text[current + 1])) {
           string += text[current + 1];
           current += 1;
         }
+        current++;
 
-        current += 1;
         var comparisonType = Comparison.fromText(string);
 
         tokens.push({
@@ -228,20 +245,19 @@ export function literal(text: string) {
         });
         break;
       case char == ":":
-        tokens.push({ type: "separator", start: current, end: current + 1 });
+        tokens.push({ type: "separator", start: current, end: ++current });
         break;
       case char == " ":
-        tokens.push({ type: "space", start: current, end: current + 1 });
+        current++;
         break;
-      case char.length == 0:
-        // skip spaces
+      case char.length === 0:
+        // skip last one
+        current++;
         break;
       default:
-        tokens.push({ type: "error", value: char, start: current, end: current + 1 });
+        tokens.push({ type: "error", value: char, start: current, end: ++current });
         break;
     }
-
-    current++;
   }
 
   return tokens;
