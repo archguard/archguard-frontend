@@ -1,8 +1,13 @@
 import { Monaco } from "@monaco-editor/react";
-import { languages } from "monaco-editor";
+import { languages, Range } from "monaco-editor";
 import { getEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 import { InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
-import { INSIGHTS_KEYWORDS, ISSUE_KEYWORDS, SCA_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
+import {
+  INSIGHTS_KEYWORDS,
+  ISSUE_KEYWORDS,
+  OP_KEYWORDS,
+  SCA_KEYWORDS,
+} from "@/pages/insights/searchbar/lang/keywords";
 
 function byArray(
   monaco: Monaco,
@@ -19,10 +24,14 @@ function byArray(
   }));
 }
 
-function createSuggestion(range, inputType: string, monaco: Monaco): languages.CompletionItem[] {
+function createSuggestion(
+  range: Range,
+  inputType: string,
+  monaco: Monaco,
+): languages.CompletionItem[] {
   let completions: any[];
 
-  let types = [];
+  let types: string[] = [];
   switch (inputType) {
     case "sca":
       types = SCA_KEYWORDS;
@@ -51,11 +60,11 @@ const valueSymbols = ["''", '""', "%%", "//"];
 
 function suggestionsByLiteral(
   monaco: Monaco,
-  range: { endColumn: number; startColumn: number; endLineNumber: any; startLineNumber: any },
+  range: Range,
   tokens: InsightToken[],
   keywords: string[],
 ): languages.CompletionItem[] {
-  let suggestions = [];
+  let suggestions: languages.CompletionItem[] = [];
   let latestType = tokens[tokens.length - 1]["type"];
 
   switch (latestType) {
@@ -75,6 +84,10 @@ function suggestionsByLiteral(
           case "regex":
             hasSuggest = true;
             suggestions = [...byArray(monaco, range, keywords)];
+            break;
+          case "space":
+            hasSuggest = true;
+            suggestions = [...byArray(monaco, range, OP_KEYWORDS)];
             break;
         }
       }
@@ -101,7 +114,9 @@ function suggestionsByLiteral(
       suggestions = createSuggestion(range, getEditorSuggestType() || "sca", monaco);
   }
 
-  let literals = tokens.filter((token) => token["type"] === "literal").map((token) => token["value"]);
+  let literals = tokens
+    .filter((token) => token["type"] === "literal")
+    .map((token) => token["value"]);
   const newSuggestions = suggestions.filter((element) => {
     return !literals.includes(element.label);
   });
