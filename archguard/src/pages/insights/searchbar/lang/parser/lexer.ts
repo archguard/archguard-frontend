@@ -1,124 +1,9 @@
-// position
 import { INSIGHTS_KEYWORDS, OP_KEYWORDS } from "./keywords";
-
-export interface Position {
-  start: number;
-  end: number;
-}
-
-export interface BaseToken extends Position {
-  type: InsightToken["type"];
-}
+import { Comparison } from "./comparison";
+import { BaseToken, InsightsToken } from "./insightsToken";
 
 export function getTokenValue<T extends BaseToken>(token: T): any {
   return (token as any).value;
-}
-
-/**
- * Represents a field in a search query.
- * i.e., the `dep_name` in `field:dep_name`. field will be {@link Identifier} type
- */
-export interface Keyword extends BaseToken {
-  type: "keyword";
-  value: string;
-}
-
-/**
- * Represents a special type of a keyword that used as a logic operator
- * i.e., the `and` and `or` keyword
- */
-export interface Operator extends BaseToken {
-  type: "operator";
-  value: string;
-}
-
-/**
- * Represents a field in a search query.
- * i.e., the `dep_name` in `field:dep_name`. field will be {@link Identifier} type
- */
-export interface Identifier extends BaseToken {
-  type: "identifier";
-  value: string;
-}
-
-/**
- * separator
- * i.e., the `:` in `field:dep_name`.
- */
-export interface Separator extends BaseToken {
-  type: "separator";
-}
-
-/**
- * `string` kind value, i.e.: 'log' or "log"
- */
-export interface StringKind extends BaseToken {
-  type: "string";
-  value: string;
-}
-
-/**
- * `regex` kind value, i.e.: /log/
- */
-export interface RegexKind extends BaseToken {
-  type: "regex";
-  value: string;
-}
-
-/**
- * `like` kind value, i.e.: %log%
- */
-export interface LikeKind extends BaseToken {
-  type: "like";
-  value: string;
-}
-
-/**
- * comparison like: '==', '!=','>', '<', '>=', '<='
- */
-export interface ComparisonKind extends BaseToken {
-  type: "comparison";
-  value: Comparison;
-}
-
-export interface Error extends BaseToken {
-  type: "error";
-  // for compatibility with monaco editor, we use `value` to store the error message
-  value: string;
-}
-
-export enum Comparison {
-  Equal,
-  NotEqual,
-  GreaterThan,
-  GreaterThanOrEqual,
-  LessThan,
-  LessThanOrEqual,
-  NotSupported,
-}
-
-// eslint-disable-next-line no-redeclare
-export namespace Comparison {
-  export function fromText(symbol: string) {
-    switch (symbol) {
-      case "==":
-        return Comparison.Equal;
-      case "=":
-        return Comparison.Equal;
-      case "!=":
-        return Comparison.NotEqual;
-      case ">":
-        return Comparison.GreaterThan;
-      case ">=":
-        return Comparison.GreaterThanOrEqual;
-      case "<":
-        return Comparison.LessThan;
-      case "<=":
-        return Comparison.LessThanOrEqual;
-      default:
-        return Comparison.NotSupported;
-    }
-  }
 }
 
 const charRegExpr = /[a-zA-Z_]/;
@@ -145,22 +30,11 @@ function valueTypeFromChar(char: string) {
   }
 }
 
-export type InsightToken =
-  | Keyword
-  | Operator
-  | Identifier
-  | Separator
-  | StringKind
-  | RegexKind
-  | LikeKind
-  | ComparisonKind
-  | Error;
-
 export function lexer(text: string) {
   const length = text.length;
   const end = length + 1;
   let current = 0;
-  let tokens: InsightToken[] = [];
+  let tokens: InsightsToken[] = [];
 
   while (current < end) {
     let char = text.charAt(current);
@@ -185,7 +59,7 @@ export function lexer(text: string) {
             break;
         }
 
-        tokens.push({ type, value: string, start, end: ++current } as InsightToken);
+        tokens.push({ type, value: string, start, end: ++current } as InsightsToken);
         break;
       case char == SINGLE_QUOTE || char == DOUBLE_QUOTE || char == BACKTICK || char == SLASH || char == PERCENT:
         // todo: process escape string
@@ -208,7 +82,7 @@ export function lexer(text: string) {
             value: value,
             start: startPos,
             end: ++current,
-          } as InsightToken);
+          } as InsightsToken);
         } else {
           current = startPos;
           tokens.push({

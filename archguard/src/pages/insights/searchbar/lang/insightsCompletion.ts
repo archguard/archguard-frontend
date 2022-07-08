@@ -1,13 +1,14 @@
 import { Monaco } from "@monaco-editor/react";
 import { languages, Range } from "monaco-editor";
 import { getEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
-import { getTokenValue, InsightToken, lexer } from "@/pages/insights/searchbar/lang/lexer";
+import { getTokenValue, lexer } from "@/pages/insights/searchbar/lang/parser/lexer";
 import {
   INSIGHTS_KEYWORDS,
   ISSUE_KEYWORDS,
   OP_KEYWORDS,
   SCA_KEYWORDS,
-} from "@/pages/insights/searchbar/lang/keywords";
+} from "@/pages/insights/searchbar/lang/parser/keywords";
+import { InsightsToken } from "@/pages/insights/searchbar/lang/parser/insightsToken";
 
 function byArray(
   monaco: Monaco,
@@ -61,7 +62,7 @@ const valueSymbols = ["''", '""', "%%", "//"];
 function suggestionsByLiteral(
   monaco: Monaco,
   range: Range,
-  tokens: InsightToken[],
+  tokens: InsightsToken[],
   keywords: string[],
 ): languages.CompletionItem[] {
   let suggestions: languages.CompletionItem[] = [];

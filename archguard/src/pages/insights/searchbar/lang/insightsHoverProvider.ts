@@ -1,8 +1,9 @@
 import { Monaco } from "@monaco-editor/react";
 import { editor, IMarkdownString, languages, Position } from "monaco-editor";
-import { InsightToken, lexer } from "@/pages/insights/searchbar/lang/lexer";
+import { lexer } from "@/pages/insights/searchbar/lang/parser/lexer";
+import { InsightsToken } from "@/pages/insights/searchbar/lang/parser/insightsToken";
 
-function tokenToPosition(textModel: editor.ITextModel, token: InsightToken, monaco: Monaco) {
+function tokenToPosition(textModel: editor.ITextModel, token: InsightsToken, monaco: Monaco) {
   const start = textModel.getPositionAt(token.start);
   const end = textModel.getPositionAt(token.end);
   return new monaco.Range(start.lineNumber, start.column, end.lineNumber, end.column);
@@ -83,7 +84,7 @@ function insightsHover(textModel: editor.ITextModel, position: Position, monaco:
 
   let hasTipForError = false;
 
-  tokensAtCursor.map((token: InsightToken) => {
+  tokensAtCursor.map((token: InsightsToken) => {
     switch (token.type) {
       case "keyword":
         values.push({ value: KEYWORD_TIP });

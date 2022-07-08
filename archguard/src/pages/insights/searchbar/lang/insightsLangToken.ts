@@ -1,4 +1,4 @@
-import { INSIGHTS_KEYWORDS, OP_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
+import { INSIGHTS_KEYWORDS, OP_KEYWORDS } from "@/pages/insights/searchbar/lang/parser/keywords";
 
 export const insightsLangToken = {
   defaultToken: "",
