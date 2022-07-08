@@ -152,11 +152,10 @@ export type InsightToken =
   | Error;
 
 export function literal(text: string) {
-  let end = text.length + 1;
+  const length = text.length;
+  const end = length + 1;
   let current = 0;
   let tokens: InsightToken[] = [];
-
-  let length = text.length;
 
   while (current < end) {
     let char = text.charAt(current);
@@ -168,7 +167,7 @@ export function literal(text: string) {
 
         while (current + 1 < length && charRegExpr.test(text[current + 1])) {
           string += text[current + 1];
-          current += 1;
+          current++;
         }
         current++;
 
@@ -201,14 +200,15 @@ export function literal(text: string) {
         var value = "" + char;
         var startPos = current;
 
-        while (current + 1 <= length && text[current + 1] != endChar) {
+        while (current + 1 < length && text[current + 1] != endChar) {
           value += text[current + 1];
-          current += 1;
+          current++;
         }
+
+        current++;
 
         if (value != "" + char) {
           // move to endChar
-          current = current + 1;
           value += text[current];
 
           tokens.push({
@@ -217,9 +217,6 @@ export function literal(text: string) {
             start: startPos,
             end: ++current,
           } as ValueToken);
-        } else {
-          // reset position
-          current = startPos;
         }
 
         break;

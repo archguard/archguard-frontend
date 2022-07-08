@@ -1,5 +1,5 @@
 import { Monaco } from "@monaco-editor/react";
-import { editor, IMarkdownString, languages } from "monaco-editor";
+import { editor, IMarkdownString, languages, Position } from "monaco-editor";
 import { InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
 
 function tokenToPosition(textModel: editor.ITextModel, token: InsightToken, monaco: Monaco) {
@@ -69,66 +69,68 @@ const KEYWORD_TIP = `
 
 `;
 
+function insightsHover(textModel: editor.ITextModel, position: Position, monaco: Monaco) {
+  const values: IMarkdownString[] = [];
+
+  let offsetAt = textModel.getOffsetAt(position);
+  let tokens = literal(textModel.getValue());
+
+  const tokensAtCursor = tokens.filter((token) => {
+    return token.start <= offsetAt && offsetAt <= token.end;
+  });
+
+  let range: monaco.Range | undefined = undefined;
+
+  let hasTipForError = false;
+
+  tokensAtCursor.map((token: InsightToken) => {
+    switch (token.type) {
+      case "keyword":
+        values.push({ value: KEYWORD_TIP });
+        range = tokenToPosition(textModel, token, monaco);
+        break;
+      case "identifier":
+        values.push({ value: SCA_TIP });
+        range = tokenToPosition(textModel, token, monaco);
+        break;
+      case "string":
+        values.push({ value: VALUE_TIP });
+        range = tokenToPosition(textModel, token, monaco);
+        break;
+      case "regex":
+        values.push({ value: VALUE_TIP });
+        range = tokenToPosition(textModel, token, monaco);
+        break;
+      case "like":
+        values.push({ value: VALUE_TIP });
+        range = tokenToPosition(textModel, token, monaco);
+        break;
+      case "comparison":
+        values.push({ value: COMPARISON_TIP });
+        range = tokenToPosition(textModel, token, monaco);
+        break;
+      case "separator":
+        break;
+      case "error":
+        if (!hasTipForError) {
+          values.push({ value: COMMON_HELP });
+          range = tokenToPosition(textModel, token, monaco);
+        }
+        hasTipForError = true;
+        break;
+    }
+  });
+
+  return {
+    range: range,
+    contents: values,
+  };
+}
+
 export function insightsHoverProvider(monaco: Monaco): languages.HoverProvider {
   return {
     provideHover: function (textModel, position) {
-      const values: IMarkdownString[] = [];
-
-      let offsetAt = textModel.getOffsetAt(position);
-      let tokens = literal(textModel.getValue());
-
-      const tokensAtCursor = tokens.filter((token) => {
-        return token.start <= offsetAt && offsetAt <= token.end;
-      });
-
-      let range: monaco.Range | undefined = undefined;
-
-      let hasTipForError = false;
-
-      tokensAtCursor.map((token: InsightToken) => {
-        switch (token.type) {
-          case "keyword":
-            values.push({ value: KEYWORD_TIP });
-            range = tokenToPosition(textModel, token, monaco);
-            break;
-          case "identifier":
-            values.push({ value: SCA_TIP });
-            range = tokenToPosition(textModel, token, monaco);
-            break;
-          case "string":
-            values.push({ value: VALUE_TIP });
-            range = tokenToPosition(textModel, token, monaco);
-            break;
-          case "regex":
-            values.push({ value: VALUE_TIP });
-            range = tokenToPosition(textModel, token, monaco);
-            break;
-          case "like":
-            values.push({ value: VALUE_TIP });
-            range = tokenToPosition(textModel, token, monaco);
-            break;
-          case "comparison":
-            values.push({ value: COMPARISON_TIP });
-            range = tokenToPosition(textModel, token, monaco);
-            break;
-          case "separator":
-            break;
-          case "space":
-            break;
-          case "error":
-            if(!hasTipForError) {
-              values.push({ value: COMMON_HELP });
-              range = tokenToPosition(textModel, token, monaco);
-            }
-            hasTipForError = true;
-            break;
-        }
-      });
-
-      return {
-        range: range,
-        contents: values,
-      };
+      return insightsHover(textModel, position, monaco);
     },
   };
 }

@@ -68,37 +68,16 @@ function suggestionsByLiteral(
   let latestType = tokens[tokens.length - 1]["type"];
 
   switch (latestType) {
-    case "space":
-      // eslint-disable-next-line no-case-declarations
-      let hasSuggest = false;
-
-      if (tokens.length > 2) {
-        let secondToLast = tokens[tokens.length - 2]["type"];
-        switch (secondToLast) {
-          case "comparison":
-            hasSuggest = true;
-            suggestions = [...byArray(monaco, range, valueSymbols)];
-            break;
-          case "string":
-          case "like":
-          case "regex":
-            hasSuggest = true;
-            suggestions = [...byArray(monaco, range, keywords)];
-            break;
-          case "space":
-            hasSuggest = true;
-            suggestions = [...byArray(monaco, range, OP_KEYWORDS)];
-            break;
-        }
-      }
-
-      if (!hasSuggest) {
-        suggestions = [
-          ...byArray(monaco, range, keywords),
-          ...byArray(monaco, range, comparisonSymbols),
-        ];
-      }
-
+    case "identifier":
+      suggestions = [...byArray(monaco, range, comparisonSymbols)];
+      break;
+    case "comparison":
+      suggestions = [...byArray(monaco, range, valueSymbols)];
+      break;
+    case "string":
+    case "like":
+    case "regex":
+      suggestions = [...byArray(monaco, range, keywords)];
       break;
     case "keyword":
       suggestions = byArray(monaco, range, keywords);
@@ -106,19 +85,16 @@ function suggestionsByLiteral(
     case "separator":
       suggestions = createSuggestion(range, getEditorSuggestType() || "sca", monaco);
       break;
-    case "like":
-    case "regex":
-    case "string":
-      break;
     default:
       suggestions = createSuggestion(range, getEditorSuggestType() || "sca", monaco);
   }
 
-  let literals = tokens
+  let alreadyUseIdentifier = tokens
     .filter((token) => token["type"] === "identifier")
     .map((token) => getTokenValue(token));
+
   const newSuggestions = suggestions.filter((element) => {
-    return !literals.includes(element.label);
+    return !alreadyUseIdentifier.includes(element.label);
   });
 
   return newSuggestions;
