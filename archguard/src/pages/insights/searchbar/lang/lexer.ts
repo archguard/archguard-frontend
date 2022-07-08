@@ -83,7 +83,8 @@ export interface ComparisonKind extends BaseToken {
 
 export interface Error extends BaseToken {
   type: "error";
-  value?: string;
+  // for compatibility with monaco editor, we use `value` to store the error message
+  value: string;
 }
 
 export enum Comparison {
@@ -98,7 +99,7 @@ export enum Comparison {
 
 // eslint-disable-next-line no-redeclare
 export namespace Comparison {
-  export function fromText(symbol: String) {
+  export function fromText(symbol: string) {
     switch (symbol) {
       case "==":
         return Comparison.Equal;
@@ -162,37 +163,25 @@ export function lexer(text: string) {
 
     switch (true) {
       case charRegExpr.test(char):
-        var string = "" + char;
+        var string = `${char}`;
         var start = current;
 
         while (current + 1 < length && charRegExpr.test(text[current + 1])) {
           string += text[current + 1];
           current++;
         }
-        current++;
 
-        if (INSIGHTS_KEYWORDS.includes(string)) {
-          tokens.push({
-            type: "keyword",
-            value: string,
-            start,
-            end: current,
-          });
-        } else if (OP_KEYWORDS.includes(string)) {
-          tokens.push({
-            type: "operator",
-            value: string,
-            start,
-            end: current,
-          });
-        } else {
-          tokens.push({
-            type: "identifier",
-            value: string,
-            start,
-            end: current,
-          });
+        var type = "identifier";
+        switch (true) {
+          case INSIGHTS_KEYWORDS.includes(string):
+            type = "keyword";
+            break;
+          case OP_KEYWORDS.includes(string):
+            type = "operator";
+            break;
         }
+
+        tokens.push({ type, value: string, start, end: ++current } as InsightToken);
         break;
       case char == "'" || char == '"' || char == "`" || char == "/" || char == "%":
         // todo: process escape string
@@ -208,14 +197,14 @@ export function lexer(text: string) {
         if (text[current + 1] === endChar) {
           // move to endChar
           current++;
-          value += text[current];
+          value += endChar;
 
           tokens.push({
             type: valueTypeFromChar(endChar),
             value: value,
             start: startPos,
             end: ++current,
-          } as ValueToken);
+          } as InsightToken);
         } else {
           current = startPos;
           tokens.push({
@@ -237,15 +226,12 @@ export function lexer(text: string) {
           string += text[current + 1];
           current += 1;
         }
-        current++;
-
-        var comparisonType = Comparison.fromText(string);
 
         tokens.push({
           type: "comparison",
-          value: comparisonType,
+          value: Comparison.fromText(string),
           start,
-          end: current,
+          end: ++current,
         });
         break;
       case char == ":":
