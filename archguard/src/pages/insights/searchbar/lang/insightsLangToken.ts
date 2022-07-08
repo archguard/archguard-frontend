@@ -19,8 +19,8 @@ export const insightsLangToken = {
 
   versionString: /[0-9a-zA-Z_-]+/,
 
-  regexpctl: /[(){}\[\]\$\^|\-*+?\.]/,
-  regexpesc: /\\(?:[bBdDfnrstvwWn0\\\/]|@regexpctl|c[A-Z]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4})/,
+  regexpctl: /[(){}[\]$^|\-*+?.]/,
+  regexpesc: /\\(?:[bBdDfnrstvwWn0\\/]|@regexpctl|c[A-Z]|x[0-9a-fA-F]{2}|u[0-9a-fA-F]{4})/,
 
   tokenizer: {
     root: [
@@ -30,7 +30,7 @@ export const insightsLangToken = {
 
       // regular expression: ensure it is terminated before beginning (otherwise it is an operator)
       [
-        /\/(?=([^\\\/]|\\.)+\/([gimsuy]*)(\s*)(\.|;|\/|,|\)|\]|\}|$))/,
+        /\/(?=([^\\/]|\\.)+\/([gimsuy]*)(\s*)(\.|;|\/|,|\)|\]|\}|$))/,
         {
           token: "regexp",
           bracket: "@open",
@@ -41,8 +41,8 @@ export const insightsLangToken = {
       // numbers
       [/(@digits)\.(@digits)\.(@versionString)?/, "number.version"],
       // normal numbers
-      [/(@digits)[eE]([\-+]?(@digits))?/, "number.float"],
-      [/(@digits)\.(@digits)([eE][\-+]?(@digits))?/, "number.float"],
+      [/(@digits)[eE]([-+]?(@digits))?/, "number.float"],
+      [/(@digits)\.(@digits)([eE][-+]?(@digits))?/, "number.float"],
       [/0[xX](@hexdigits)/, "number.hex"],
       [/0[oO]?(@octaldigits)/, "number.octal"],
       [/0[bB](@binarydigits)/, "number.binary"],
@@ -91,7 +91,7 @@ export const insightsLangToken = {
         ["regexp.escape.control", "regexp.escape.control", "regexp.escape.control"],
       ],
       [
-        /(\[)(\^?)(?=(?:[^\]\\\/]|\\.)+)/,
+        /(\[)(\^?)(?=(?:[^\]\\/]|\\.)+)/,
         [
           "regexp.escape.control",
           {
@@ -114,7 +114,7 @@ export const insightsLangToken = {
       [/\^/, "regexp.invalid"],
       [/@regexpesc/, "regexp.escape"],
       [/[^\]]/, "regexp"],
-      [/\]/, { token: "regexp.escape.control", next: "@pop", bracket: "@close" }],
+      [/]/, { token: "regexp.escape.control", next: "@pop", bracket: "@close" }],
     ],
   },
 };
