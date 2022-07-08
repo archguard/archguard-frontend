@@ -205,10 +205,9 @@ export function lexer(text: string) {
           current++;
         }
 
-        current++;
-
-        if (value != "" + char) {
+        if (text[current + 1] === endChar) {
           // move to endChar
+          current++;
           value += text[current];
 
           tokens.push({
@@ -217,6 +216,14 @@ export function lexer(text: string) {
             start: startPos,
             end: ++current,
           } as ValueToken);
+        } else {
+          current = startPos;
+          tokens.push({
+            type: "error",
+            value: endChar,
+            start: startPos,
+            end: ++current,
+          });
         }
 
         break;

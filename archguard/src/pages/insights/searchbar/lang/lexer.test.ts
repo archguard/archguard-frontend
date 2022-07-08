@@ -21,6 +21,11 @@ test("normal dsl", async () => {
   ].forEach((expected, index) => expect(tokens[index]).toEqual(expected));
 });
 
+test("unpaired wrapper", async () => {
+  let tokens = lexer(`field:dep_name = '"\`/%`);
+  expect(tokens.length).toBe(9);
+});
+
 test("string value", async () => {
   let tokens = lexer(`field:dep_name 'log4j'`);
 
