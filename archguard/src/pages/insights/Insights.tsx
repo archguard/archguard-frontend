@@ -21,7 +21,8 @@ import { useIntl } from "@@/plugin-locale/localeExports";
 import { SearchOutlined } from "@ant-design/icons";
 import { setEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 
-let defaultSearchText = "field:dep_name == %dubbo% and field:dep_version > '1.12.3'";
+const scaSearchText = "field:dep_name == %dubbo% and field:dep_version > '1.12.3'";
+const issueSearchText = "field:rule_type == 'TEST_CODE_SMELL'";
 
 function Insights() {
   const { formatMessage } = useIntl();
@@ -29,7 +30,7 @@ function Insights() {
   const { Option } = Select;
   const [systemInfo] = useSystemList();
   const [systemId, setSystemId] = useState(-1);
-  const [searchText, setSearchText] = useState(defaultSearchText);
+  const [searchText, setSearchText] = useState(scaSearchText);
   const [cards, setCards] = useState([]);
   const [histories, setHistories] = useState({});
   const [selectType, setSelectType] = useState("sca");
@@ -47,10 +48,7 @@ function Insights() {
     [searchText, systemId, setCards],
   );
 
-  function setTypeForMonaco(text) {
-    setEditorSuggestType(text);
-  }
-  setTypeForMonaco(selectType)
+  setEditorSuggestType(selectType);
 
   const changeType = useCallback(
     (type: any) => {
@@ -61,17 +59,17 @@ function Insights() {
           text = "";
           break;
         case "issue":
-          text = "field:rule_type == 'TEST_CODE_SMELL'";
+          text = issueSearchText;
           break;
         case "sca":
-          text = defaultSearchText;
+          text = scaSearchText;
           break;
         default:
-          text = defaultSearchText;
+          text = scaSearchText;
       }
 
       setSearchText(text);
-      setTypeForMonaco(text);
+      setEditorSuggestType(text);
     },
     [setSearchText, setSelectType],
   );
