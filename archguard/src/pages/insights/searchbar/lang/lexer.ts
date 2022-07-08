@@ -124,22 +124,26 @@ export namespace Comparison {
 const charRegExpr = /[a-zA-Z_]/;
 const comparisonRegExpr = /[<>=!]/;
 
+const SINGLE_QUOTE = "'";
+const DOUBLE_QUOTE = '"';
+const BACKTICK = "`";
+const SLASH = "/";
+const PERCENT = "%";
+
 function valueTypeFromChar(char: string) {
   switch (char) {
-    case "'":
-    case '"':
-    case "`":
+    case SINGLE_QUOTE:
+    case DOUBLE_QUOTE:
+    case BACKTICK:
       return "string";
-    case "/":
+    case SLASH:
       return "regex";
-    case "%":
+    case PERCENT:
       return "like";
     default:
       return "error";
   }
 }
-
-export type ValueToken = StringKind | RegexKind | LikeKind;
 
 export type InsightToken =
   | Keyword
@@ -183,7 +187,7 @@ export function lexer(text: string) {
 
         tokens.push({ type, value: string, start, end: ++current } as InsightToken);
         break;
-      case char == "'" || char == '"' || char == "`" || char == "/" || char == "%":
+      case char == SINGLE_QUOTE || char == DOUBLE_QUOTE || char == BACKTICK || char == SLASH || char == PERCENT:
         // todo: process escape string
         var endChar = char;
         var value = "" + char;
