@@ -79,6 +79,9 @@ function suggestionsByLiteral(
     case "regex":
       suggestions = [...byArray(monaco, range, keywords)];
       break;
+    case "operator":
+      suggestions = byArray(monaco, range, keywords);
+      break;
     case "keyword":
       suggestions = byArray(monaco, range, keywords);
       break;
