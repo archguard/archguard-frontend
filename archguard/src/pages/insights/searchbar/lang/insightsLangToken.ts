@@ -1,10 +1,10 @@
-import { INSIGHTS_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
+import { INSIGHTS_KEYWORDS, OP_KEYWORDS } from "@/pages/insights/searchbar/lang/keywords";
 
 export const insightsLangToken = {
   defaultToken: "",
   tokenPostfix: ".insights",
 
-  keywords: INSIGHTS_KEYWORDS,
+  keywords: [...INSIGHTS_KEYWORDS, ...OP_KEYWORDS],
   typeKeywords: [],
   operators: ["=", ">", "<", "!", "~", "?", ":", "==", "<=", ">=", "!="],
 
