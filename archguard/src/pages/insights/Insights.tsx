@@ -21,7 +21,7 @@ import { useIntl } from "@@/plugin-locale/localeExports";
 import { SearchOutlined } from "@ant-design/icons";
 import { setEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 
-let defaultSearchText = "field:dep_name == %dubbo% field:dep_version > 1.12.3";
+let defaultSearchText = "field:dep_name == %dubbo% and field:dep_version > '1.12.3'";
 
 function Insights() {
   const { formatMessage } = useIntl();
