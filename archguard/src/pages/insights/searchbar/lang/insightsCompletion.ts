@@ -1,7 +1,7 @@
 import { Monaco } from "@monaco-editor/react";
 import { languages, Range } from "monaco-editor";
 import { getEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
-import { getTokenValue, InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
+import { getTokenValue, InsightToken, lexer } from "@/pages/insights/searchbar/lang/lexer";
 import {
   INSIGHTS_KEYWORDS,
   ISSUE_KEYWORDS,
@@ -127,7 +127,7 @@ export function insightsCompletion(monaco: Monaco): languages.CompletionItemProv
         endColumn: position.column,
       });
 
-      const tokens = literal(textUntilPosition);
+      const tokens = lexer(textUntilPosition);
 
       if (tokens.length > 0) {
         return { suggestions: suggestionsByLiteral(monaco, range, tokens, INSIGHTS_KEYWORDS) };

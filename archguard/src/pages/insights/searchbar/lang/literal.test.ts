@@ -1,8 +1,8 @@
-import { literal } from "./literal";
+import { lexer } from "./lexer";
 
 test("normal dsl", async () => {
   // field is keyword, dep_name is identifier
-  let tokens = literal(`field:dep_name = "5" and field:version = "1.3.7"`);
+  let tokens = lexer(`field:dep_name = "5" and field:version = "1.3.7"`);
 
   expect(tokens.length).toBe(11);
 
@@ -22,31 +22,31 @@ test("normal dsl", async () => {
 });
 
 test("string value", async () => {
-  let tokens = literal(`field:dep_name 'log4j'`);
+  let tokens = lexer(`field:dep_name 'log4j'`);
 
   expect(tokens.length).toBe(4);
   expect(tokens[3]).toEqual({ type: "string", value: "'log4j'", start: 15, end: 22 });
 
-  let tokens2 = literal(`field:dep_name "log4j"`);
+  let tokens2 = lexer(`field:dep_name "log4j"`);
 
   expect(tokens2.length).toBe(4);
   expect(tokens2[3]).toEqual({ type: "string", value: '"log4j"', start: 15, end: 22 });
 
-  let tokens3 = literal(`field:dep_name \`log4j\``);
+  let tokens3 = lexer(`field:dep_name \`log4j\``);
 
   expect(tokens3.length).toBe(4);
   expect(tokens3[3]).toEqual({ type: "string", value: "`log4j`", start: 15, end: 22 });
 });
 
 test("regex value", async () => {
-  let tokens = literal(`field:dep_name /log4j/`);
+  let tokens = lexer(`field:dep_name /log4j/`);
 
   expect(tokens.length).toBe(4);
   expect(tokens[3]).toEqual({ type: "regex", value: "/log4j/", start: 15, end: 22 });
 });
 
 test("like value", async () => {
-  let tokens = literal(`field:dep_name %log4j%`);
+  let tokens = lexer(`field:dep_name %log4j%`);
 
   expect(tokens.length).toBe(4);
   expect(tokens[3]).toEqual({ type: "like", value: "%log4j%", start: 15, end: 22 });
@@ -54,27 +54,27 @@ test("like value", async () => {
 
 test("comparison", async () => {
   let sample = `field:dep_name = 'log4j'`;
-  let tokens = literal(sample);
+  let tokens = lexer(sample);
 
   expect(tokens.length).toBe(5);
   expect(tokens[3]).toEqual({ type: "comparison", value: 0, start: 15, end: 16 });
 });
 
 test("multiple expression", async () => {
-  let tokens = literal(`field:dep_name = 'log4j' field:version = "1.2.3"`);
+  let tokens = lexer(`field:dep_name = 'log4j' field:version = "1.2.3"`);
 
   expect(tokens.length).toBe(10);
 });
 
 test("error", async () => {
-  let tokens = literal(`field:dep_name &`);
+  let tokens = lexer(`field:dep_name &`);
 
   expect(tokens.length).toBe(4);
   expect(tokens[3]).toEqual({ type: "error", value: "&", start: 15, end: 16 });
 });
 
 test("new field", async () => {
-  let tokens = literal("fiel");
+  let tokens = lexer("fiel");
 
   expect(tokens.length).toBe(1);
   expect(tokens[0]).toEqual({ type: "identifier", value: "fiel", start: 0, end: 4 });

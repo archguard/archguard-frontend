@@ -151,7 +151,7 @@ export type InsightToken =
   | ComparisonKind
   | Error;
 
-export function literal(text: string) {
+export function lexer(text: string) {
   const length = text.length;
   const end = length + 1;
   let current = 0;

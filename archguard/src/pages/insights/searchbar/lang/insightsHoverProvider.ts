@@ -1,6 +1,6 @@
 import { Monaco } from "@monaco-editor/react";
 import { editor, IMarkdownString, languages, Position } from "monaco-editor";
-import { InsightToken, literal } from "@/pages/insights/searchbar/lang/literal";
+import { InsightToken, lexer } from "@/pages/insights/searchbar/lang/lexer";
 
 function tokenToPosition(textModel: editor.ITextModel, token: InsightToken, monaco: Monaco) {
   const start = textModel.getPositionAt(token.start);
@@ -73,7 +73,7 @@ function insightsHover(textModel: editor.ITextModel, position: Position, monaco:
   const values: IMarkdownString[] = [];
 
   let offsetAt = textModel.getOffsetAt(position);
-  let tokens = literal(textModel.getValue());
+  let tokens = lexer(textModel.getValue());
 
   const tokensAtCursor = tokens.filter((token) => {
     return token.start <= offsetAt && offsetAt <= token.end;
