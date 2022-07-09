@@ -5,15 +5,14 @@ import { getTokenValue, lexer } from "@/pages/insights/searchbar/lang/parser/lex
 import {
   INSIGHTS_KEYWORDS,
   ISSUE_KEYWORDS,
-  OP_KEYWORDS,
   SCA_KEYWORDS,
 } from "@/pages/insights/searchbar/lang/parser/keywords";
 import { InsightsToken } from "@/pages/insights/searchbar/lang/parser/insightsToken";
 
-function byArray(
-  monaco: Monaco,
-  range: { endColumn: number; startColumn: number; endLineNumber: number; startLineNumber: number },
+function suggestionsByValues(
   items: string[],
+  monaco: Monaco,
+  range: Range,
 ): languages.CompletionItem[] {
   return items.map((value) => ({
     label: value,
@@ -25,13 +24,11 @@ function byArray(
   }));
 }
 
-function createSuggestion(
-  range: Range,
+function suggestionsByType(
   inputType: string,
+  range: Range,
   monaco: Monaco,
 ): languages.CompletionItem[] {
-  let completions: any[];
-
   let types: string[] = [];
   switch (inputType) {
     case "sca":
@@ -42,16 +39,7 @@ function createSuggestion(
       break;
   }
 
-  completions = [...types].map((value) => ({
-    label: value,
-    kind: monaco.languages.CompletionItemKind.Value,
-    insertText: value,
-    filterText: value,
-    insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-    range: range,
-  }));
-
-  return completions;
+  return suggestionsByValues(types, monaco, range);
 }
 
 const printable =
@@ -70,38 +58,38 @@ function suggestionsByLiteral(
 
   switch (latestType) {
     case "identifier":
-      suggestions = [...byArray(monaco, range, comparisonSymbols)];
+      suggestions = [...suggestionsByValues(comparisonSymbols, monaco, range)];
       break;
     case "comparison":
-      suggestions = [...byArray(monaco, range, valueSymbols)];
+      suggestions = [...suggestionsByValues(valueSymbols, monaco, range)];
       break;
     case "string":
     case "like":
     case "regex":
-      suggestions = [...byArray(monaco, range, keywords)];
+      suggestions = [...suggestionsByValues(keywords, monaco, range)];
       break;
     case "operator":
-      suggestions = byArray(monaco, range, keywords);
+      suggestions = suggestionsByValues(keywords, monaco, range);
       break;
     case "keyword":
-      suggestions = byArray(monaco, range, keywords);
+      suggestions = suggestionsByValues(keywords, monaco, range);
       break;
     case "separator":
-      suggestions = createSuggestion(range, getEditorSuggestType() || "sca", monaco);
+      suggestions = suggestionsByType(getEditorSuggestType() || "sca", range, monaco);
       break;
     default:
-      suggestions = createSuggestion(range, getEditorSuggestType() || "sca", monaco);
+      suggestions = suggestionsByType(getEditorSuggestType() || "sca", range, monaco);
   }
 
   let alreadyUseIdentifier = tokens
     .filter((token) => token["type"] === "identifier")
     .map((token) => getTokenValue(token));
 
-  const newSuggestions = suggestions.filter((element) => {
+  const withoutUsedIdentifySuggestions = suggestions.filter((element) => {
     return !alreadyUseIdentifier.includes(element.label);
   });
 
-  return newSuggestions;
+  return withoutUsedIdentifySuggestions;
 }
 
 export function insightsCompletion(monaco: Monaco): languages.CompletionItemProvider {
@@ -135,9 +123,9 @@ export function insightsCompletion(monaco: Monaco): languages.CompletionItemProv
 
       if (tokens.length > 0) {
         return { suggestions: suggestionsByLiteral(monaco, range, tokens, INSIGHTS_KEYWORDS) };
-      } else {
-        return { suggestions: byArray(monaco, range, INSIGHTS_KEYWORDS) };
       }
+
+      return { suggestions: suggestionsByValues(INSIGHTS_KEYWORDS, monaco, range) };
     },
   };
 }
