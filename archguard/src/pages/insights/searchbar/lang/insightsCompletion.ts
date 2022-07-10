@@ -3,7 +3,7 @@ import { languages, Range } from "monaco-editor";
 import { getEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 import { getTokenValue, lexer } from "@/pages/insights/searchbar/lang/parser/lexer";
 import {
-  INSIGHTS_KEYWORDS,
+  COMBINATOR_KEYWORDS,
   ISSUE_KEYWORDS,
   SCA_KEYWORDS,
 } from "@/pages/insights/searchbar/lang/parser/keywords";
@@ -51,7 +51,6 @@ function suggestionsByLiteral(
   monaco: Monaco,
   range: Range,
   tokens: InsightsToken[],
-  keywords: string[],
 ): languages.CompletionItem[] {
   let suggestions: languages.CompletionItem[] = [];
   let latestType = tokens[tokens.length - 1]["type"];
@@ -66,16 +65,10 @@ function suggestionsByLiteral(
     case "string":
     case "like":
     case "regex":
-      suggestions = [...suggestionsByValues(keywords, monaco, range)];
+      suggestions = [...suggestionsByValues(COMBINATOR_KEYWORDS, monaco, range)];
       break;
-    case "operator":
-      suggestions = suggestionsByValues(keywords, monaco, range);
-      break;
-    case "keyword":
-      suggestions = suggestionsByValues(keywords, monaco, range);
-      break;
-    case "separator":
-      suggestions = suggestionsByType(getEditorSuggestType() || "sca", range, monaco);
+    case "combinator":
+      suggestions = [];
       break;
     default:
       suggestions = suggestionsByType(getEditorSuggestType() || "sca", range, monaco);
@@ -122,10 +115,10 @@ export function insightsCompletion(monaco: Monaco): languages.CompletionItemProv
       const tokens = lexer(textUntilPosition);
 
       if (tokens.length > 0) {
-        return { suggestions: suggestionsByLiteral(monaco, range, tokens, INSIGHTS_KEYWORDS) };
+        return { suggestions: suggestionsByLiteral(monaco, range, tokens) };
       }
 
-      return { suggestions: suggestionsByValues(INSIGHTS_KEYWORDS, monaco, range) };
+      return { suggestions: [] };
     },
   };
 }

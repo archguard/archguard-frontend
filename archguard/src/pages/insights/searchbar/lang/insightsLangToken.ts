@@ -1,10 +1,10 @@
-import { INSIGHTS_KEYWORDS, OP_KEYWORDS } from "@/pages/insights/searchbar/lang/parser/keywords";
+import { COMBINATOR_KEYWORDS } from "@/pages/insights/searchbar/lang/parser/keywords";
 
 export const insightsLangToken = {
   defaultToken: "",
   tokenPostfix: ".insights",
 
-  keywords: [...INSIGHTS_KEYWORDS, ...OP_KEYWORDS],
+  keywords: [...COMBINATOR_KEYWORDS],
   typeKeywords: [],
   operators: ["=", ">", "<", "!", "~", "?", ":", "==", "<=", ">=", "!="],
 
@@ -48,17 +48,15 @@ export const insightsLangToken = {
       [/0[bB](@binarydigits)/, "number.binary"],
       [/(@digits)/, "number"],
 
-      [/[:;]/, "delimiter"],
-
       [/@symbols/, { cases: { "@operators": "operator", "@default": "" } }],
 
       // strings
       [/"([^"\\]|\\.)*$/, "string.invalid"], // non-teminated string
       [/'([^'\\]|\\.)*$/, "string.invalid"], // non-teminated string
-      [/%([^%\\]|\\.)*$/, "string.invalid"], // non-teminated string
+      [/@([^@\\]|\\.)*$/, "string.invalid"], // non-teminated string
       [/"/, "string", "@string_double"],
       [/'/, "string", "@string_single"],
-      [/%/, "string.like", "@string_like"],
+      [/@/, "string.like", "@string_like"],
     ],
 
     string_double: [
@@ -76,10 +74,10 @@ export const insightsLangToken = {
     ],
 
     string_like: [
-      [/[^\\%]+/, "string.like"],
+      [/[^\\@]+/, "string.like"],
       [/@escapes/, "string.escape"],
       [/\\./, "string.escape.invalid"],
-      [/%/, "string.like", "@pop"],
+      [/@/, "string.like", "@pop"],
     ],
 
     whitespace: [[/[ \t\r\n]+/, "white"]],
