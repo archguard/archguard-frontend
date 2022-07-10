@@ -22,8 +22,8 @@ export interface Keyword extends BaseToken {
  * Represents a special type of a keyword that used as a logic operator
  * i.e., the `and` and `or` keyword
  */
-export interface Operator extends BaseToken {
-  type: "operator";
+export interface Combinator extends BaseToken {
+  type: "combinator";
   value: string;
 }
 
@@ -84,7 +84,7 @@ export interface Error extends BaseToken {
 
 export type InsightsToken =
   | Keyword
-  | Operator
+  | Combinator
   | Identifier
   | Separator
   | StringKind

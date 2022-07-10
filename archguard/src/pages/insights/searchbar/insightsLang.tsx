@@ -13,7 +13,6 @@ const State: languages.IState = {
 export const LANG_ID = "insights";
 
 export function addInsightsLanguage(monaco: Monaco) {
-
   monaco.languages.register({ id: LANG_ID });
 
   monaco.languages.setLanguageConfiguration(LANG_ID, {
@@ -21,7 +20,7 @@ export function addInsightsLanguage(monaco: Monaco) {
       { open: "/", close: "/" },
       { open: '"', close: '"' },
       { open: "'", close: "'" },
-      { open: "%", close: "%" },
+      { open: "@", close: "@" },
     ],
   });
 

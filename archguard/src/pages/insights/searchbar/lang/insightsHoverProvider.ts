@@ -10,9 +10,9 @@ function tokenToPosition(textModel: editor.ITextModel, token: InsightsToken, mon
 }
 
 let COMMON_HELP = `\`\`\`
-field:dep_name == /.*dubbo/
-|      |       |         |
-└─分割符└─字段   └─ 比较符  └─ 值
+dep_name == /.*dubbo/
+|      |         | 
+└─字段  └─ 比较符  └─ 值
 \`\`\`
 
 - 比较符。即：\`==\`、\`>\`、\`<\`、\`>=\`、\`<=\`、\`!=\`。
@@ -31,20 +31,19 @@ const SCA_TIP = `
 - dep_name：查询某个模块的所有版本。
 - dep_version：查询某个版本号，并可进行比较。
 
-${ COMMON_HELP }
-`
+${COMMON_HELP}
+`;
 
 const VALUE_TIP = `
 ## 值
 
-以 \`'\` 或者 \`"\` 在**始尾**表示字符串，\`/\` 在**始尾**表示为正则，\`%\` 在**始尾**表示为模糊匹配。
+以 \`'\` 或者 \`"\` 在**始尾**表示字符串，\`/\` 在**始尾**表示为正则，\`@\` 在**始尾**表示为模糊匹配。
 - 字符串（FilterType.NORMAL）。\`'xxx'\`、\`"xxx"\` 的形式，即视为字符串。
 - 正则（不推荐，FilterType.REGEX）。\`/xxx/\` 的形式，即视为正则。
-- 模糊匹配（**建议**，FilterType.LIKE）。\`%xxx%\` 的形式，即视为模糊匹配。
-  - 如果字符串以 \`%\` 开始或结束，也视为模糊匹配，示例：'xxx%'、'%xxx'。
+- 模糊匹配（**建议**，FilterType.LIKE）。\`@xxx@\` 的形式，即视为模糊匹配。
 - 版本号。示例：\`1.2.3-alpha\`
 
-`
+`;
 
 const COMPARISON_TIP = `
 ## 比较符
@@ -59,15 +58,19 @@ const COMPARISON_TIP = `
 - \`>=\`
 - \`<=\`
 - \`!=\`
-`
+`;
 
-const KEYWORD_TIP = `
-## 关键字
+const COMBINATOR_TIP = `
+## 连接符
 
-当前支持：
+连接不同的表达式
 
-- \`field\`：查询某个字段。
+常用: \`and\`
 
+- \`and\`
+- \`or\`
+- \`&&\`
+- \`||\`
 `;
 
 function insightsHover(textModel: editor.ITextModel, position: Position, monaco: Monaco) {
@@ -86,10 +89,6 @@ function insightsHover(textModel: editor.ITextModel, position: Position, monaco:
 
   tokensAtCursor.map((token: InsightsToken) => {
     switch (token.type) {
-      case "keyword":
-        values.push({ value: KEYWORD_TIP });
-        range = tokenToPosition(textModel, token, monaco);
-        break;
       case "identifier":
         values.push({ value: SCA_TIP });
         range = tokenToPosition(textModel, token, monaco);
@@ -110,7 +109,9 @@ function insightsHover(textModel: editor.ITextModel, position: Position, monaco:
         values.push({ value: COMPARISON_TIP });
         range = tokenToPosition(textModel, token, monaco);
         break;
-      case "separator":
+      case "combinator":
+        values.push({ value: COMBINATOR_TIP });
+        range = tokenToPosition(textModel, token, monaco);
         break;
       case "error":
         if (!hasTipForError) {

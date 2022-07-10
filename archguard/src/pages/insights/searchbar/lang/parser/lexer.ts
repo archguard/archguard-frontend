@@ -1,4 +1,4 @@
-import { INSIGHTS_KEYWORDS, OP_KEYWORDS } from "./keywords";
+import { COMBINATOR_KEYWORDS, COMPARATOR_KEYWORDS } from "./keywords";
 import { Comparison } from "./comparison";
 import { BaseToken, InsightsToken } from "./insightsToken";
 
@@ -13,7 +13,7 @@ const SINGLE_QUOTE = "'";
 const DOUBLE_QUOTE = '"';
 const BACKTICK = "`";
 const SLASH = "/";
-const PERCENT = "%";
+const AT = "@";
 
 function valueTypeFromChar(char: string) {
   switch (char) {
@@ -23,7 +23,7 @@ function valueTypeFromChar(char: string) {
       return "string";
     case SLASH:
       return "regex";
-    case PERCENT:
+    case AT:
       return "like";
     default:
       return "error";
@@ -50,18 +50,17 @@ export function lexer(text: string) {
         }
 
         var type = "identifier";
-        switch (true) {
-          case INSIGHTS_KEYWORDS.includes(string):
-            type = "keyword";
-            break;
-          case OP_KEYWORDS.includes(string):
-            type = "operator";
-            break;
+        if (COMBINATOR_KEYWORDS.includes(string)) {
+          type = "combinator";
         }
 
         tokens.push({ type, value: string, start, end: ++current } as InsightsToken);
         break;
-      case char == SINGLE_QUOTE || char == DOUBLE_QUOTE || char == BACKTICK || char == SLASH || char == PERCENT:
+      case char == SINGLE_QUOTE ||
+        char == DOUBLE_QUOTE ||
+        char == BACKTICK ||
+        char == SLASH ||
+        char == AT:
         // todo: process escape string
         var endChar = char;
         var value = "" + char;
@@ -72,7 +71,7 @@ export function lexer(text: string) {
           current++;
         }
 
-        if (text[current + 1] === endChar) {
+        if (current + 1 < length && text[current + 1] === endChar) {
           // move to endChar
           current++;
           value += endChar;
@@ -104,18 +103,45 @@ export function lexer(text: string) {
           string += text[current + 1];
           current += 1;
         }
+        current++;
+        if (COMPARATOR_KEYWORDS.includes(string)) {
+          tokens.push({
+            type: "comparison",
+            value: Comparison.fromText(string),
+            start,
+            end: current,
+          });
+        } else {
+          tokens.push({
+            type: "error",
+            value: string,
+            start,
+            end: current,
+          });
+        }
+        break;
 
-        tokens.push({
-          type: "comparison",
-          value: Comparison.fromText(string),
-          start,
-          end: ++current,
-        });
+      case char === "&" || char === "|": {
+        const start = current;
+        if (current + 1 < length && text[current + 1] === char) {
+          current += 2;
+          tokens.push({
+            type: "combinator",
+            value: `${char}${char}`,
+            start,
+            end: current,
+          });
+        } else {
+          tokens.push({
+            type: "error",
+            value: char + "",
+            start,
+            end: ++current,
+          });
+        }
         break;
-      case char == ":":
-        tokens.push({ type: "separator", start: current, end: ++current });
-        break;
-      case char == " ":
+      }
+      case char == " " || char == "\t":
         current++;
         break;
       case char.length === 0:
