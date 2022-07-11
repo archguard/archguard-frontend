@@ -21,7 +21,7 @@ import { useIntl } from "@@/plugin-locale/localeExports";
 import { SearchOutlined } from "@ant-design/icons";
 import { setEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestType";
 
-const scaSearchText = "dep_name == @dubbo@ and dep_version > '1.12.3' or dep_tag = /[a-zA-Z_]+/";
+const scaSearchText = "dep_name == @log@ and dep_version > '1.12.3'";
 const issueSearchText = "rule_type == 'TEST_CODE_SMELL'";
 
 function Insights() {
