@@ -92,14 +92,14 @@ function Insights() {
     (text: string) => {
       setSearchText(text);
     },
-    [setSearchText],
+    [],
   );
 
   const refreshInsights = useCallback(() => {
     listInsights().then((data) => {
       setHistories(groupBy(data, "name"));
     });
-  }, [setHistories]);
+  }, []);
 
   const createInsight = useCallback(
     (values: any) => {
