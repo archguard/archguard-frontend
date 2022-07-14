@@ -28,15 +28,20 @@ Node.js version: 16.x
 ### Tech decision (framework)
 
 - language：TypeScript
-- framework：React, UMI
+- framework：
+  - React
+  - UMI
 - graph engine: 
   - Antv/g6 for **Package** dependencies analysis
   - Cytoscape for **Class**, **Method** dependencies analysis
   - D3.js for custom layout in Dashboard
   - bizcharts for badsmell overview
   - Mermaid for Graph DSL
-- lint：ESLint
-- build tool：yarn
+- Editor:
+  - ProseMirror
+  - Monaco Editor
+- Build tool：yarn
+- Test tool：jest
 
 ### Local setup
 
