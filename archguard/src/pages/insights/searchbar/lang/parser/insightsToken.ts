@@ -61,7 +61,7 @@ export interface RegexKind extends BaseToken {
 }
 
 /**
- * `like` kind value, i.e.: %log%
+ * `like` kind value, i.e.: @log@
  */
 export interface LikeKind extends BaseToken {
   type: "like";
