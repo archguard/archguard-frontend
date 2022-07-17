@@ -85,3 +85,8 @@ test("new field", async () => {
   expect(tokens.length).toBe(1);
   expect(tokens[0]).toEqual({ type: "identifier", value: "fiel", start: 0, end: 4 });
 });
+
+test("then", async () => {
+  let tokens = lexer("name = 'world' then version = /.*7$/");
+  expect(tokens.length).toBe(7);
+});
