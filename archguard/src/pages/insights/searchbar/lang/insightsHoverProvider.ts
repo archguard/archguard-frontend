@@ -18,6 +18,10 @@ dep_name == /.*dubbo/
 - 比较符。即：\`==\`、\`>\`、\`<\`、\`>=\`、\`<=\`、\`!=\`。
 - 值。
 
+查询结构为 普通查询 then 后置查询，其中：
+- 后置查询仅支持**正则匹配**及**版本号匹配**
+- 普通查询仅支持**其他**查询
+
 `;
 
 const SCA_TIP = `
@@ -65,12 +69,13 @@ const COMBINATOR_TIP = `
 
 连接不同的表达式
 
-常用: \`and\`
+常用: \`and\` \`or\` \`then\`
 
 - \`and\`
 - \`or\`
 - \`&&\`
 - \`||\`
+- \`then\`
 `;
 
 function insightsHover(textModel: editor.ITextModel, position: Position, monaco: Monaco) {
