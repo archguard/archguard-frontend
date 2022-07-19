@@ -23,7 +23,7 @@ import { setEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestTyp
 
 const scaSearchText = "dep_name == @log@ then dep_version > '1.12.3'";
 const issueSearchText = "rule_type == 'TEST_CODE_SMELL'";
-const classSearchText = "name == 'InsightController'";
+const classSearchText = "class_name == 'InsightController'";
 
 function Insights() {
   const { formatMessage } = useIntl();
