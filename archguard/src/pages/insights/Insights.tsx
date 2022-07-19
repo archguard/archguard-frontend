@@ -23,6 +23,7 @@ import { setEditorSuggestType } from "@/pages/insights/searchbar/lang/suggestTyp
 
 const scaSearchText = "dep_name == @log@ then dep_version > '1.12.3'";
 const issueSearchText = "rule_type == 'TEST_CODE_SMELL'";
+const classSearchText = "name == 'InsightController'";
 
 function Insights() {
   const { formatMessage } = useIntl();
@@ -63,6 +64,9 @@ function Insights() {
           break;
         case "sca":
           text = scaSearchText;
+          break;
+        case "class":
+          text = classSearchText;
           break;
         default:
           text = scaSearchText;
@@ -175,6 +179,7 @@ function Insights() {
             >
               <Option value="sca">Package Dependencies (Gradle/NPM)</Option>
               <Option value="issue">Issue</Option>
+              <Option value="class">Class</Option>
             </Select>
           </Form.Item>
 
