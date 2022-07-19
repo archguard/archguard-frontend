@@ -11,7 +11,7 @@ function tokenToPosition(textModel: editor.ITextModel, token: InsightsToken, mon
 
 let COMMON_HELP = `\`\`\`
 dep_name == /.*dubbo/
-|      |         | 
+|      |         |
 └─字段  └─ 比较符  └─ 值
 \`\`\`
 
@@ -43,8 +43,8 @@ const VALUE_TIP = `
 
 以 \`'\` 或者 \`"\` 在**始尾**表示字符串，\`/\` 在**始尾**表示为正则，\`@\` 在**始尾**表示为模糊匹配。
 - 字符串（FilterType.NORMAL）。\`'xxx'\`、\`"xxx"\` 的形式，即视为字符串。
+- 模糊匹配（**建议**，FilterType.LIKE）。\`@xxx@\` 的形式，即视为模糊匹配，类似于 SQL 中 % 的用法，如：@%Controller@。
 - 正则（不推荐，FilterType.REGEX）。\`/xxx/\` 的形式，即视为正则。
-- 模糊匹配（**建议**，FilterType.LIKE）。\`@xxx@\` 的形式，即视为模糊匹配。
 - 版本号。示例：\`1.2.3-alpha\`
 
 `;
