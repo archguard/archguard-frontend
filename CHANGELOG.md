@@ -1,4 +1,29 @@
-# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-beta.1...v) (2022-07-02)
+# [](https://github.com/archguard/archguard-frontend/compare/v2.0.0-beta.1...v) (2022-07-30)
+
+
+### Bug Fixes
+
+* add suggestions for operators [#10](https://github.com/archguard/archguard-frontend/issues/10) ([16521ab](https://github.com/archguard/archguard-frontend/commit/16521abfbae1303e3cca61ca8b0fde41e52f0349))
+* fix all base component className pass through issues ([8660da3](https://github.com/archguard/archguard-frontend/commit/8660da3a69fa91cec0285004df030ceb7966277d))
+* fix highlights ([3f514b1](https://github.com/archguard/archguard-frontend/commit/3f514b1c76642ceab9fd6bf91671214888168fae))
+* fix literal issues for inputing itesm [#10](https://github.com/archguard/archguard-frontend/issues/10) ([6bd663f](https://github.com/archguard/archguard-frontend/commit/6bd663f74c41c82b6f63992a5e322da139f0bb90))
+* fix typos ([72010cc](https://github.com/archguard/archguard-frontend/commit/72010cc31946e286d4af9345043940ef2daf0c0f))
+* **insights:** insight tokenizer now works properly [#10](https://github.com/archguard/archguard-frontend/issues/10) ([acdadb0](https://github.com/archguard/archguard-frontend/commit/acdadb022638114a5d4e6ec3cff5d13b836f65dc))
+* make op_keywords highlight in keywords [#10](https://github.com/archguard/archguard-frontend/issues/10) ([d65aac1](https://github.com/archguard/archguard-frontend/commit/d65aac1b6e18ae394e8711a55af9a903de03eb2b))
+
+
+### Features
+
+* add basic literal token [#10](https://github.com/archguard/archguard-frontend/issues/10) ([809f8d2](https://github.com/archguard/archguard-frontend/commit/809f8d2c9a490aa3306fbb076192c399cca03491))
+* add class type to search ([b6b3e77](https://github.com/archguard/archguard-frontend/commit/b6b3e775a0c48e3898c7fb8de8815da2369976a9))
+* add more keywords for issues [#10](https://github.com/archguard/archguard-frontend/issues/10) ([b858c10](https://github.com/archguard/archguard-frontend/commit/b858c1086a78f5f73e956986ac9f926adff9420d))
+* add operatorish keywords ([fbd1982](https://github.com/archguard/archguard-frontend/commit/fbd1982bb1233df94ba625af8ce3971b6a7714ce))
+* add sample for hover with tips ([a02c98f](https://github.com/archguard/archguard-frontend/commit/a02c98f179c69882220e14f5b663706f4030fb49))
+* add support for already used keyword [#10](https://github.com/archguard/archguard-frontend/issues/10) ([be687bf](https://github.com/archguard/archguard-frontend/commit/be687bf6fc338409a6b9991f839604e36ac3a860))
+* add tips for hover [#10](https://github.com/archguard/archguard-frontend/issues/10) ([e8b251e](https://github.com/archguard/archguard-frontend/commit/e8b251e021336460fdd415be460d85a1ec07c0df))
+* init literal for test and prepare for [#10](https://github.com/archguard/archguard-frontend/issues/10) ([f5e0207](https://github.com/archguard/archguard-frontend/commit/f5e02075bbf2283981ddbfc0463b2aab69f079cf))
+* **insights:** postquery [#10](https://github.com/archguard/archguard-frontend/issues/10) ([0a9cab3](https://github.com/archguard/archguard-frontend/commit/0a9cab301df8582c92e8465d3e50a227f395f9d2))
+* **insights:** supporting unpaired wrapping chars [#10](https://github.com/archguard/archguard-frontend/issues/10) ([269c5f8](https://github.com/archguard/archguard-frontend/commit/269c5f80fc2dd46f67a6e8fc6ef308f2498f82ba))
 
 
 
