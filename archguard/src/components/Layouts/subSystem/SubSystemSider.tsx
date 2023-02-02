@@ -49,7 +49,7 @@ const menuList = configForTargets({
       text: "架构分析",
       icon: <BarChartOutlined />,
       children: [
-        { key: "/analysis/dependence", text: "依赖分析" },
+        // { key: "/analysis/dependence", text: "依赖分析" },
         { key: "/systemAnalysis/Issue", text: "问题分析" },
         { key: "/systemAnalysis/ApiAnalysis", text: "API 分析" },
       ],
