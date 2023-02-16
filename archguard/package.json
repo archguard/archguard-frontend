@@ -1,6 +1,6 @@
 {
   "name": "@archguard/frontend",
-  "version": "2.0.0-beta.2",
+  "version": "2.0.0",
   "dependencies": {
     "@ant-design/icons": "^4.6.0",
     "@antv/g6": "^4.6.3",
@@ -23,7 +23,7 @@
     "echarts-for-react": "^2.0.16",
     "js-base64": "^3.7.2",
     "markdown-navbar": "^1.4.2",
-    "mermaid": "9.1.1",
+    "mermaid": "9.1.2",
     "monaco-editor": "^0.33.0",
     "new-github-issue-url": "^1.0.0",
     "prosemirror-inputrules": "^1.1.3",
