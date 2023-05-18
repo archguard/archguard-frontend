@@ -10,31 +10,6 @@
 - 若存在子组件，则应该新建`components`文件夹放入
   > 配置文件命名以 `.config.ts` 结尾。（例如：DemoComponent.config.ts）
 
-## 脚手架使用
-
-> 为了保证代码规范和提高开发便捷性，该项目定制了一个脚手架[`arch-guard-cli`](https://github.com/archguard/arch-guard-cli)，请使用脚手架新建`组件`和`页面`
-
-### 安装
-
-```bash
-npm install arch-guard-cli -g
-```
-
-### 脚手架常用命令(必须在项目的**src**目录下运行)
-
-- 创建页面：`ag g p systemEvaluation/Demo 页面菜单名`
-  > 上述命令会在 `pages/systemEvaluation`文件夹下新建`Demo`页面，并且自动配置好`路由`和`菜单`（菜单名设置为最后一个参数：页面菜单名）
-- 创建基础组件：`ag g c 组件名 -ba`
-- 创建业务组件：`ag g c 组件名 -bu`
-- 直接在当前目录下创建组件：`ag g c 组件名`
-
-### 命令缩写解释
-
-- `g => generate`
-- `c => component`
-- `-ba => --basic`
-- `-bu => --business`
-
 ## 编码规范
 
 ## 页面开发规范
