@@ -21,5 +21,5 @@ jobs:
           BUILD_TARGET: zh
         run: |
           cd archguard
-          yarn
-          yarn build
+          npm install
+          npm run build
