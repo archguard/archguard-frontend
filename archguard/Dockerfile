@@ -3,11 +3,11 @@ FROM node:16-alpine as build
 WORKDIR /app
 RUN apk add --update alpine-sdk python3
 COPY package*.json nginx.conf ./
-RUN yarn install
+RUN npm install --legacy-peer-deps
 COPY . .
 # RUN npx browserslist@latest --update-db
-RUN export NODE_OPTIONS=--max_old_space_size=8192 && yarn build
-CMD ["yarn", "run"]
+RUN export NODE_OPTIONS=--max_old_space_size=8192 && npm run build
+#CMD ["yarn", "run"]
 
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
