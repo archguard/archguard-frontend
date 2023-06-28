@@ -27,8 +27,8 @@ jobs:
           BUILD_TARGET: zh
         run: |
           cd archguard
-          yarn
-          yarn build
+          npm install --legacy-peer-deps
+          npm run build
 
       - name: zip
         uses: montudor/action-zip@v1

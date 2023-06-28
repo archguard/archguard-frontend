@@ -21,5 +21,5 @@ jobs:
           BUILD_TARGET: zh
         run: |
           cd archguard
-          npm install
+          npm install --legacy-peer-deps
           npm run build
