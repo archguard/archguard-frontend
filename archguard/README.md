@@ -41,22 +41,14 @@
 - umirc.ts 路由配置
 - src/components/Business/Layouts/PageSider.tsx 菜单配置
 
-## 依赖管理工具
-
-yarn
-
-### 安装 yarn
-
-npm install -g yarn
-
 ## 安装依赖
 
-yarn install
+npm install
 
 ## 运行
 
-yarn start
+npm start
 
 ## 打包
 
-yarn build
+npm run build
