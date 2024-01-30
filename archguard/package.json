@@ -45,7 +45,7 @@
     "unified": "^10.1.2"
   },
   "scripts": {
-    "start": "umi dev",
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider umi dev",
     "start-zh": "cross-env BUILD_TARGET=zh umi dev",
     "build": "umi build",
     "build-zh": "cross-env BUILD_TARGET=zh umi build",
