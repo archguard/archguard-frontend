@@ -86,7 +86,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         <Select>
           {["GIT", "SVN", "LOCAL"].map((value) => (
             <Select.Option value={value} key={value}>
-              { value === "LOCAL" ? "LOCAL（仅限于本地开发时）" : value }
+              {value === "LOCAL" ? "LOCAL（仅限于本地开发时）" : value}
             </Select.Option>
           ))}
         </Select>
@@ -100,11 +100,11 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
         style={{ display: current === 0 ? 'initial' : 'none' }}
       >
         <Select>
-          { ["Java", "Kotlin", "TypeScript", "Golang", "Python", "C#", "JavaScript"].map((value) => (
-            <Select.Option value={ value } key={ value }>
-              { value }
+          {["Java", "Kotlin", "TypeScript", "Golang", "Python", "C#", "JavaScript", "C", "Cpp"].map((value) => (
+            <Select.Option value={value} key={value}>
+              {value}
             </Select.Option>
-          )) }
+          ))}
         </Select>
       </Form.Item>
       <Form.List name="repo">
@@ -121,7 +121,7 @@ const SystemInfoForm = (props: SystemInfoFormProps, ref: any) => {
                   }}
                 >
                   *
-                  </span>
+                </span>
                 <span>仓库地址（如：https://github.com/archguard/archguard）</span>
               </div>
               {fields.map((field) => (
