@@ -29,3 +29,4 @@ yarn-error.log*
 .umi
 .umi-production
 recording.jsonl
+pnpm-lock.yaml
