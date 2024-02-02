@@ -46,9 +46,9 @@
   },
   "scripts": {
     "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider umi dev",
-    "start-zh": "cross-env BUILD_TARGET=zh umi dev",
-    "build": "umi build",
-    "build-zh": "cross-env BUILD_TARGET=zh umi build",
+    "start-zh": "cross-env NODE_OPTIONS=--openssl-legacy-provider BUILD_TARGET=zh umi dev",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider umi build",
+    "build-zh": "cross-env NODE_OPTIONS=--openssl-legacy-provider BUILD_TARGET=zh umi build",
     "test": "umi test",
     "testWatch": "umi test --watch",
     "precommit": "umi-lint --staged --eslint.ext='ts,tsx,js,jsx' --stylelint --prettier --fix"
