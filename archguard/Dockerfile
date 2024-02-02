@@ -1,4 +1,4 @@
-FROM node:16-alpine as build
+FROM node:18-alpine as build
 # the webpack version used here have problem with node > 10: https://github.com/webpack/webpack/issues/14532
 WORKDIR /app
 RUN apk add --update alpine-sdk python3
