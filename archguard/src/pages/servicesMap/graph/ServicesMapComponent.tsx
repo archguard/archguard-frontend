@@ -1,11 +1,13 @@
 import React, { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
 import CytoscapeComponent from "react-cytoscapejs";
-import Cytoscape from "cytoscape";
 import dagre from "cytoscape-dagre";
 
 import { applyCubicBezierStyles } from "@/pages/servicesMap/graph/bazierStyle";
 import { iconForNode } from "@/pages/servicesMap/graph/servicesMapIcon";
+
+
 import cytoscape from "cytoscape";
+import Cytoscape from "cytoscape";
 
 export interface CytoscapeProps {
   children?: ReactNode;
@@ -15,7 +17,7 @@ export interface CytoscapeProps {
   style?: CSSProperties;
 }
 
-Cytoscape.use(dagre);
+// Cytoscape.use(dagre);
 
 function getWidth(node: cytoscape.NodeSingular) {
   let ratio = 4;
@@ -40,7 +42,7 @@ export default function ServicesMapComponent(props: CytoscapeProps) {
       return;
     }
 
-    cy.on("layoutstop", (event) => {
+    cy.on("layoutstop", (event: any) => {
       applyCubicBezierStyles(event.cy.edges());
     });
     cy.nodes().on("expandcollapse.beforeexpand", () => {
@@ -93,7 +95,6 @@ export default function ServicesMapComponent(props: CytoscapeProps) {
         "source-arrow-shape": "triangle",
         "source-arrow-color": "#686868",
         "target-arrow-shape": "triangle",
-        // @ts-expect-error
         "source-distance-from-node": 20,
         "target-distance-from-node": 20,
       },

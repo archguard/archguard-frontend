@@ -19,7 +19,7 @@ const npmImportants = {
 };
 
 export function stackNpm(deps: CompositionDependency[]) {
-  const result = {};
+  const result: any = {};
   const importantDeps = {};
   const icons = [];
   const importants = Object.keys(npmImportants);
