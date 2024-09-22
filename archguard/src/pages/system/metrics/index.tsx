@@ -1,11 +1,10 @@
 import React from "react";
 import { Tabs } from "antd";
-import { useHistory, useParams } from "umi";
+import { history, useParams } from "umi";
 import Dfms from "./Dfms";
 import ModuleCouplingTree from "./ModuleCouplingTree";
 
 const Metrics = () => {
-  const history = useHistory();
   const { systemId, type } = useParams();
 
   return (

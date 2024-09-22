@@ -2,20 +2,21 @@ import { defineConfig } from "umi";
 
 export default defineConfig({
   title: "ArchGuard - 守护架构，放权代码",
-  nodeModulesTransform: {
-    type: "none",
-    exclude: [],
-  },
+  // nodeModulesTransform: {
+  //   type: "none",
+  //   exclude: [],
+  // },
   // for Jupyter libs: zeromq, jmq,
   // extraBabelPlugins: ["@babel/plugin-transform-modules-commonjs"],
   devtool: false,
   hash: true,
-  antd: {},
-  dva: false,
+  // antd: {},
+  // dva: false,
+  plugins: ['@umijs/plugins/dist/locale'],
   locale: {
     default: "zh-CN",
   },
-  devServer: { port: 8081 },
+  // devServer: { port: 8081 },
   define: {
     "process.env.BUILD_TARGET": process.env.BUILD_TARGET,
   },

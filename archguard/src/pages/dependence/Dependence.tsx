@@ -1,7 +1,7 @@
 import SettingFilled from "@ant-design/icons/SettingFilled";
 import { Tabs } from "antd";
 import React, { useState } from "react";
-import { useHistory, useParams } from "umi";
+import { history, useParams } from "umi";
 import ClassDependence from "./ClassDependence";
 import DependenceConfig from "./DependenceConfig";
 import "./Dependence.css";
@@ -17,7 +17,6 @@ interface DependenceProp {
 }
 
 export default function Dependence(props: DependenceProp) {
-  const history = useHistory();
   const { tab } = useUrlQuery<{ tab: "class" | "method" | "package" | "module" }>();
   const { systemId } = useParams();
   const [currentId ] = useState(props.systemId || systemId)
