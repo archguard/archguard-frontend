@@ -10,13 +10,10 @@ import Help from "@/components/Layouts/main/help/Help";
 
 import "./MainLayout.less";
 import "antd/dist/antd.less";
-import { useLocation, history } from "umi";
 
 const pkg = require('../../../../package.json');
 
 export default function MainHeader(props: any) {
-  const location = useLocation();
-
   const { formatMessage } = useIntl();
   const [currentLanguage, setCurrentLanguage] = useState("zh-CN");
   const [helpModalVisible, setHelpModalVisible] = useState(false);
@@ -45,7 +42,7 @@ export default function MainHeader(props: any) {
   ]
 
   const onClick: MenuProps['onClick'] = e => {
-    history.push(e.key);
+    props.history.push(e.key);
   };
 
   return (
@@ -55,7 +52,7 @@ export default function MainHeader(props: any) {
         <span className="slogan">守护架构，放权代码</span>
       </div>
       <div className="header-menu">
-        <Menu mode="horizontal" onClick={onClick} selectedKeys={[location.pathname]} items={HomeMenus} />
+        <Menu mode="horizontal" onClick={onClick} selectedKeys={[props.location.pathname]} items={HomeMenus} />
       </div>
       <div className="header-user">
         <div>

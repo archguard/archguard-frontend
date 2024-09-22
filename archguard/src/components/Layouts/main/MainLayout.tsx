@@ -2,12 +2,12 @@ import React from "react";
 import { Layout } from "antd";
 import MainHeader from "@/components/Layouts/main/MainHeader";
 import "./MainLayout.less"
-import { useLocation, history } from "umi";
+import { history, Outlet } from "umi";
 
 const { Content } = Layout;
 
 export default function MainLayout(props: any) {
-  const location = useLocation();
+  const { location } = window;
 
   return (
     <Layout className="multiple-system-container" >
@@ -16,7 +16,7 @@ export default function MainLayout(props: any) {
       <Layout style={{ backgroundColor: "transparent", overflow: "auto", background: "none" }}>
         <Layout style={{ overflow: "auto", backgroundColor: "transparent", background: "none" }}>
           <Content style={{ marginTop: "60px", padding: "32px", minHeight: "auto", backgroundColor: "transparent" }}>
-            {props.children}
+            <Outlet />
           </Content>
         </Layout>
       </Layout>
