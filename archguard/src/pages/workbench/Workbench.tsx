@@ -7,7 +7,8 @@ import {
   SaveOutlined,
   StopOutlined,
 } from "@ant-design/icons";
-import { Button, Modal, Space, Tooltip, Input } from "antd";
+import { Button, Modal, Space, Tooltip } from "antd";
+import RichMarkdownEditor from "rich-markdown-editor";
 import copy from "copy-to-clipboard";
 
 import { exportDoc } from "@/pages/workbench/helper/exportDoc";
@@ -17,13 +18,10 @@ import {
 } from "@/pages/workbench/WorkbenchContext";
 import { webSocket } from "rxjs/webSocket";
 import { ReplService } from "@/pages/workbench/coreEditor/ReplService";
-// @ts-ignore
 import { WebSocketSubject } from "rxjs/src/internal/observable/dom/WebSocketSubject";
 import { BackendAction } from "@/pages/workbench/InteractiveToBackend";
 import styles from "./Workbench.less";
 import { markdownToDsl } from "@/pages/workbench/helper/markdownToDsl";
-
-const { TextArea } = Input;
 
 let sampleImportCode = `| name | scmUrl | language | branch |
 |-------|-------|---------|-------|
@@ -171,8 +169,9 @@ function Workbench() {
     setOpen(true)
   }, [setOpen]);
 
-  const changeImportValue = useCallback((value) => {
-    setImportText(value.replaceAll("\\\n", "\n"));
+  const changeImportValue = useCallback((value: () => string) => {
+    let val = value();
+    setImportText(val.replaceAll("\\\n", "\n"));
   }, []);
 
   const copyToDsl = useCallback(() =>{
@@ -233,13 +232,13 @@ function Workbench() {
         okText={"to DSL and Copy"}
         onCancel={() => setOpen(false)}
         width={1000}
+        height={500}
         zIndex={100}
       >
         <div className={styles.popupEditor}>
-          <TextArea
+          <RichMarkdownEditor
             defaultValue={sampleImportCode}
             onChange={changeImportValue}
-            rows={10}
           />
         </div>
       </Modal>
