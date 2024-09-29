@@ -105,7 +105,7 @@ function Workbench() {
   const host = process.env.NODE_ENV !== "production" ? "localhost:8080" : location.host;
   const subject = webSocket(`ws://${host}/ascode`);
   const [value, setValue] = useState('' as string);
-  const [visible, setVisible] = useState(false);
+  const [open, setOpen] = useState(false);
   const [importText, setImportText] = useState("");
 
   const [replService] = useState(new ReplService(subject as WebSocketSubject<any>));
@@ -168,22 +168,22 @@ function Workbench() {
   }, [setValue]);
 
   const onClickImport = useCallback(() => {
-    setVisible(true)
-  }, [setVisible]);
+    setOpen(true)
+  }, [setOpen]);
 
   const changeImportValue = useCallback((value) => {
     setImportText(value.replaceAll("\\\n", "\n"));
   }, []);
 
   const copyToDsl = useCallback(() =>{
-    setVisible(false)
+    setOpen(false)
 
     let dsl = `repos {
     ${markdownToDsl(importText).join("\n    ")}
 }`;
 
     copy(dsl)
-  }, [importText, setVisible])
+  }, [importText, setOpen])
 
   return (
     <div>
@@ -227,11 +227,11 @@ function Workbench() {
       <Modal
         title="Import Systems (Table Only): Paste or Edit you data by table, then copy"
         centered
-        visible={visible}
+        open={open}
         maskClosable={false}
         onOk={copyToDsl}
         okText={"to DSL and Copy"}
-        onCancel={() => setVisible(false)}
+        onCancel={() => setOpen(false)}
         width={1000}
         zIndex={100}
       >
