@@ -1,10 +1,9 @@
 import React, { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
 import CytoscapeComponent from "react-cytoscapejs";
-import dagre from "cytoscape-dagre";
+import * as dagre from "cytoscape-dagre";
 
 import { applyCubicBezierStyles } from "@/pages/servicesMap/graph/bazierStyle";
 import { iconForNode } from "@/pages/servicesMap/graph/servicesMapIcon";
-
 
 import cytoscape from "cytoscape";
 import Cytoscape from "cytoscape";
@@ -17,7 +16,7 @@ export interface CytoscapeProps {
   style?: CSSProperties;
 }
 
-// Cytoscape.use(dagre);
+dagre && Cytoscape.use(dagre);
 
 function getWidth(node: cytoscape.NodeSingular) {
   let ratio = 4;
