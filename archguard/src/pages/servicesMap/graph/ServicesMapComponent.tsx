@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
 import CytoscapeComponent from "react-cytoscapejs";
-import * as dagre from "cytoscape-dagre";
+import dagre from "cytoscape-dagre";
 
 import { applyCubicBezierStyles } from "@/pages/servicesMap/graph/bazierStyle";
 import { iconForNode } from "@/pages/servicesMap/graph/servicesMapIcon";
