@@ -12,6 +12,7 @@ export default defineConfig({
   hash: true,
   // antd: {},
   // dva: false,
+  esbuildMinifyIIFE: true,
   plugins: ['@umijs/plugins/dist/locale'],
   locale: {
     default: "zh-CN",
