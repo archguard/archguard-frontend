@@ -3,7 +3,7 @@ import {
   getQuotaListByLayer,
 
 
-} from "@/pages/system/metrics/ModuleCouplingTree/Report";
+} from "@/pages/system/metric/ModuleCouplingTree/Report";
 import { Form, Space, Button, Select, Input, Cascader } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useForm } from "antd/lib/form/Form";

@@ -1,6 +1,6 @@
 import axios from "../axios";
 import { methodDependency } from "@/pages/dependence/ModuleDependence/components/ModuleDependenceTable/columns";
-import { ReportMapper } from "@/pages/system/metrics/ModuleCouplingTree/Report";
+import { ReportMapper } from "@/pages/system/metric/ModuleCouplingTree/Report";
 import { storage } from "@/store/storage/sessionStorage";
 import { Module } from "@/types/module";
 

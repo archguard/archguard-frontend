@@ -137,8 +137,12 @@ export default defineConfig({
           component: "@/pages/system/systemEvaluation/CohesionEvaluation/CohesionEvaluation",
         },
         {
-          path: "analysis/metric/:type?",
-          component: "@/pages/system/metrics",
+          path: "analysis/metric",
+          component: "@/pages/system/metric/Metric",
+        },
+        {
+          path: "analysis/metric/Dfms",
+          component: "@/pages/system/metric/Dfms",
         },
         {
           path: "systemAnalysis/Issue",
