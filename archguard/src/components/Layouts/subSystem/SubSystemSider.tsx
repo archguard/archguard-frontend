@@ -3,10 +3,9 @@ import { Menu } from "antd";
 import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import CloudSyncOutlined from "@ant-design/icons/CloudSyncOutlined";
 import FileTextOutlined from "@ant-design/icons/FileTextOutlined";
-import { storage } from "@/store/storage/sessionStorage";
 import { SettingOutlined } from "@ant-design/icons";
-import { useMount } from "react-use";
 import { useParams } from "umi";
+import { useIntl } from "@@/plugin-locale/localeExports";
 
 export const BUILD_TARGET = process.env.BUILD_TARGET || "default";
 
@@ -15,59 +14,61 @@ export function configForTargets(configs: { [key: string]: any }) {
   return config || configs["default"];
 }
 
-const bottomMenu = configForTargets({
-  default: [
-    {
-      key: "metricConfig",
-      text: "指标设置",
-      icon: <SettingOutlined  />,
-      children: [
-        { key: "/systemEvolving/BadSmellThreshold", text: "坏味道阈值", },
-        { key: "/systemEvolving/QualityGateProfile", text: "质量阀", },
-      ],
-    }
-  ]
-});
-
-const menuList = configForTargets({
-  default: [
-    { key: "/systemSummary/Summary", text: "总览" },
-    {
-      key: "systemEvaluation",
-      text: "架构评估",
-      icon: <FileTextOutlined />,
-      children: [
-        { key: "/systemEvaluation/SizingEvaluation", text: "体量维度" },
-        { key: "/systemEvaluation/CouplingEvaluation", text: "耦合维度" },
-        { key: "/systemEvaluation/CohesionEvaluation", text: "内聚维度" },
-        { key: "/systemEvaluation/Redundancy", text: "冗余维度" },
-        { key: "/systemEvaluation/TestEvaluation", text: "质量维度" },
-      ],
-    },
-    {
-      key: "analysis",
-      text: "架构分析",
-      icon: <BarChartOutlined />,
-      children: [
-        // { key: "/analysis/dependence", text: "依赖分析" },
-        { key: "/systemAnalysis/Issue", text: "问题分析" },
-        { key: "/systemAnalysis/ApiAnalysis", text: "API 分析" },
-      ],
-    },
-    {
-      key: "systemEvolving",
-      text: "指标分析",
-      icon: <CloudSyncOutlined />,
-      children: [
-        { key: "/analysis/metric", text: "指标分析" },
-        { key: "/systemEvolving/MeasureIndicators", text: "指标看板", },
-      ],
-    }
-  ],
-});
 
 export default function SubSystemSider(props: any) {
   const { systemId } = useParams();
+  const { formatMessage } = useIntl();
+
+  const bottomMenu = configForTargets({
+    default: [
+      {
+        key: "metricConfig",
+        text: formatMessage({ id: 'MENU_METRIC_CONFIG' }),
+        icon: <SettingOutlined />,
+        children: [
+          { key: "/systemEvolving/BadSmellThreshold", text: formatMessage({ id: 'MENU_BAD_SMELL_THRESHOLD' }) },
+          { key: "/systemEvolving/QualityGateProfile", text: formatMessage({ id: 'MENU_QUALITY_GATE_PROFILE' }) },
+        ],
+      },
+    ],
+  });
+
+  const menuList = configForTargets({
+    default: [
+      { key: "/systemSummary/Summary", text: formatMessage({ id: 'MENU_SYSTEM_SUMMARY' }) },
+      {
+        key: "systemEvaluation",
+        text: formatMessage({ id: 'MENU_SYSTEM_EVALUATION' }),
+        icon: <FileTextOutlined />,
+        children: [
+          { key: "/systemEvaluation/SizingEvaluation", text: formatMessage({ id: 'MENU_SIZING_EVALUATION' }) },
+          { key: "/systemEvaluation/CouplingEvaluation", text: formatMessage({ id: 'MENU_COUPLING_EVALUATION' }) },
+          { key: "/systemEvaluation/CohesionEvaluation", text: formatMessage({ id: 'MENU_COHESION_EVALUATION' }) },
+          { key: "/systemEvaluation/Redundancy", text: formatMessage({ id: 'MENU_REDUNDANCY_EVALUATION' }) },
+          { key: "/systemEvaluation/TestEvaluation", text: formatMessage({ id: 'MENU_TEST_EVALUATION' }) },
+        ],
+      },
+      {
+        key: "analysis",
+        text: formatMessage({ id: 'MENU_ARCHITECTURE_ANALYSIS' }),
+        icon: <BarChartOutlined />,
+        children: [
+          { key: "/systemAnalysis/Issue", text: formatMessage({ id: 'MENU_ISSUE_ANALYSIS' }) },
+          { key: "/systemAnalysis/ApiAnalysis", text: formatMessage({ id: 'MENU_API_ANALYSIS' }) },
+        ],
+      },
+      {
+        key: "systemEvolving",
+        text: formatMessage({ id: 'MENU_METRIC_ANALYSIS' }),
+        icon: <CloudSyncOutlined />,
+        children: [
+          { key: "/analysis/metric", text: formatMessage({ id: 'MENU_METRIC_ANALYSIS_DETAIL' }) },
+          { key: "/systemEvolving/MeasureIndicators", text: formatMessage({ id: 'MENU_METRIC_DASHBOARD' }) },
+        ],
+      },
+    ],
+  });
+
 
   const renderMenuItem = (item: any) => {
     if (!item) return;

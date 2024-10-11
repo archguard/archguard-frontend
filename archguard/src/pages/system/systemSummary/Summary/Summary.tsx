@@ -143,7 +143,7 @@ function Summary() {
       </h2>
       <div>
         {stacks && stacks.icons && <div className="stack-icons">
-            {stacks.icons.map((item: string, index: number) => (
+            {stacks.icons.map((item: any, index: number) => (
               <div className="stack-item" key={index}>
                 <img src={item.img} alt={"text"} />
                 <p>{item.name}</p>
