@@ -1,5 +1,7 @@
 import React from "react";
 import { Layout } from "antd";
+import { history, Outlet } from 'umi';
+
 import SubSystemHeader from "./SubSystemHeader";
 import SubSystemSider from "./SubSystemSider";
 import SubSystemFooter from "./SubSystemFooter";
@@ -8,16 +10,18 @@ import "antd/dist/antd.less";
 
 const { Header, Sider, Content, Footer } = Layout;
 
-export default function SubSystemLayout(props: any) {
+export default function SubSystemLayout() {
+  const { location } = window;
+
   return (
     <Layout style={{ height: "100%" }}>
       <Header style={{ padding: 0, backgroundColor: "#3AAFAE" }}>
-        <SubSystemHeader history={props.history} />
+        <SubSystemHeader history={history} />
       </Header>
 
       <Layout>
         <Sider collapsible style={{ backgroundColor: "#f6f6f6" }}>
-          <SubSystemSider history={props.history} location={props.location} />
+          <SubSystemSider history={history} location={location} />
         </Sider>
 
         <Layout
@@ -32,7 +36,7 @@ export default function SubSystemLayout(props: any) {
               backgroundColor: "#fff",
             }}
           >
-            {props.children}
+            <Outlet />
           </Content>
 
           <Footer style={{ height: "28px" }}>
