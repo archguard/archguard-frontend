@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/components/Layouts/subSystem/SubSystemHeader";
 import Help from "@/components/Layouts/main/help/Help";
+import { history } from 'umi';
 
 import "./MainLayout.less";
 import "antd/dist/antd.less";
@@ -42,7 +43,7 @@ export default function MainHeader(props: any) {
   ]
 
   const onClick: MenuProps['onClick'] = e => {
-    props.history.push(e.key);
+    history.push(e.key);
   };
 
   return (

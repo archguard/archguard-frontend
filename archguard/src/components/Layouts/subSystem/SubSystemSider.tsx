@@ -4,7 +4,7 @@ import BarChartOutlined from "@ant-design/icons/BarChartOutlined";
 import CloudSyncOutlined from "@ant-design/icons/CloudSyncOutlined";
 import FileTextOutlined from "@ant-design/icons/FileTextOutlined";
 import { SettingOutlined } from "@ant-design/icons";
-import { useParams } from "umi";
+import { useParams, history } from "umi";
 import { useIntl } from "@@/plugin-locale/localeExports";
 
 export const BUILD_TARGET = process.env.BUILD_TARGET || "default";
@@ -103,9 +103,9 @@ export default function SubSystemSider(props: any) {
       <Menu
         theme="light"
         mode="inline"
-        onClick={(e) => props.history.push(e.key)}
+        onClick={(e) => history.push(e.key)}
         defaultOpenKeys={['systemEvaluation', 'analysis', 'systemEvolving']}
-        selectedKeys={[props.location.pathname]}
+        selectedKeys={[location.pathname]}
       >
         {menuList.map((item: any) => {
           return renderMenuItem(item);
@@ -115,9 +115,9 @@ export default function SubSystemSider(props: any) {
       <Menu
         theme="light"
         mode="inline"
-        onClick={(e) => props.history.push(e.key)}
-        defaultOpenKeys={[props.location.pathname]}
-        selectedKeys={[props.location.pathname]}
+        onClick={(e) => history.push(e.key)}
+        defaultOpenKeys={[location.pathname]}
+        selectedKeys={[location.pathname]}
       >
         {bottomMenu.map((item: any) => {
           return renderMenuItem(item);

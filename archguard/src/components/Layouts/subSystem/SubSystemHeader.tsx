@@ -54,7 +54,7 @@ export default function SubSystemHeader(props: any) {
       pathArray[1] = systemId.toString();
       window.location.href = pathArray.join("/");
     } else {
-      props.history.push("/home");
+      history.push("/home");
     }
   };
 
