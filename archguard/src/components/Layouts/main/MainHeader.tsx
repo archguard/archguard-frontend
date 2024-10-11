@@ -49,7 +49,7 @@ export default function MainHeader(props: any) {
     <div className="multiple-system-header">
       <div className="header-logo">
         <img src={require("@/assets/images/logo-small.png")} alt="logo" />
-        <span className="slogan">守护架构，放权代码</span>
+        <span className="slogan">{ formatMessage({ id: "SLOGAN" })}</span>
       </div>
       <div className="header-menu">
         <Menu mode="horizontal" onClick={onClick} selectedKeys={[props.location.pathname]} items={HomeMenus} />

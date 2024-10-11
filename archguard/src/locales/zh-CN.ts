@@ -1,5 +1,6 @@
 export default {
   SWITCH_LANGUAGE: "English",
+  SLOGAN: "守护架构，放权代码",
   MENU_TRENDS: "趋势与洞察",
   MENU_WORKBENCH: "工作台（Alpha）",
   MENU_SUB_SYSTEM: "子系统分析",

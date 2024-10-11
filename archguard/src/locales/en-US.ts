@@ -1,5 +1,6 @@
 export default {
   SWITCH_LANGUAGE: "中文",
+  SLOGAN: "Safeguard Architecture, Empower Code",
   MENU_TRENDS: "Insight",
   MENU_WORKBENCH: "Workbench",
   MENU_SUB_SYSTEM: "Sub-System",
