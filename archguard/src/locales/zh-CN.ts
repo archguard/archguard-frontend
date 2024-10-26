@@ -93,4 +93,7 @@ export default {
 
   'SUBSCRIBED_INSIGHT': '已订阅的趋势',
   'TEMPORARY_INSIGHT': '临时的趋势',
+
+  'ARCH_QUALITY_EVALUATION_INDICATOR': '架构质量评估指标看版',
+  'LAST_MONTH': '最近一个月',
 };

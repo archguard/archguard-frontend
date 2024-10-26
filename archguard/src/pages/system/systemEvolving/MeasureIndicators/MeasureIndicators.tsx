@@ -3,6 +3,7 @@ import { Group, IndicatorLevel } from "./Components/Group";
 import { MeasureIndicatorsData, useDashboard } from "@/api/module/codeLine";
 import styles from "./MeasureIndicators.less";
 import Select from "antd/lib/select";
+import { useIntl } from "@@/plugin-locale";
 
 export function getIndicatorLevel(data: MeasureIndicatorsData): IndicatorLevel {
   // 取数组内的最低评分 ，评分高低依次为：A > B >C >D
@@ -22,14 +23,15 @@ export function getIndicatorLevel(data: MeasureIndicatorsData): IndicatorLevel {
 }
 
 const MeasureIndicators = () => {
+  const { formatMessage } = useIntl();
   const { data } = useDashboard();
   return (
     <div>
       <div className={styles.header}>
-        <div className={styles.title}>架构质量评估指标看版</div>
+        <div className={styles.title}>{formatMessage({ id: "ARCH_QUALITY_EVALUATION_INDICATOR" })}</div>
         <div>
           <Select defaultValue="month" style={{ width: 260 }}>
-            <Select.Option value="month">当前一个月</Select.Option>
+            <Select.Option value="month">{formatMessage({ id: "LAST_MONTH" })}</Select.Option>
           </Select>
         </div>
       </div>

@@ -34,7 +34,7 @@ export default {
   SERVICES_MAP: "Container Analysis",
   INTERACTIVE_ANALYSIS: "Interactive Analysis（Alpha）",
   MESSAGE_QUEUE_ANALYSIS: "Message Queue Analysis",
-  SERVICES_MAP_TIPS: "API Consumer supported: (frontend) Axios、UMI-Request，(backend)：Java Spring + RestTemplate、Kotlin Spring + RestTemplate。",
+  SERVICES_MAP_TIPS_FE: "API Consumer supported: (frontend) Axios、UMI-Request，(backend)：Java Spring + RestTemplate、Kotlin Spring + RestTemplate。",
   SERVICES_MAP_TIPS_BE: "API Producer supported：Java/Kotlin + Spring、C# + .Net。",
   ADD_NEW_FRAMEWORK: "New frameworks or languages, please move to：",
   CODE_ANALYSIS: "Code Analysis",
@@ -95,4 +95,7 @@ export default {
 
   'SUBSCRIBED_INSIGHT': 'Subscribed Insight',
   'TEMPORARY_INSIGHT': 'Temporary Insight',
+
+  'ARCH_QUALITY_EVALUATION_INDICATOR': 'Architecture Quality Evaluation',
+  'LAST_MONTH': 'Last Month',
 };
