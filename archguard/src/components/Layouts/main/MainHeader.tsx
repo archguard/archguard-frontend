@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Button, Menu, MenuProps, Modal } from "antd";
+import { Button, Menu, MenuProps } from "antd";
 import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
-import { GlobalOutlined, QuestionCircleOutlined } from "@ant-design/icons";
-import { FEATURES, getFeature } from "@/components/Layouts/subSystem/SubSystemHeader";
+import { GlobalOutlined } from "@ant-design/icons";
 import { history } from 'umi';
 
 import "./MainLayout.less";
@@ -13,7 +12,6 @@ import pkg from "../../../../package.json";
 export default function MainHeader(props: any) {
   const { formatMessage } = useIntl();
   const [currentLanguage, setCurrentLanguage] = useState("zh-CN");
-  const [helpModalVisible, setHelpModalVisible] = useState(false);
 
   const version = pkg.version;
 
@@ -58,26 +56,7 @@ export default function MainHeader(props: any) {
           </Button>
         </div>
         <div>
-          <a href="https://archguard.org/faq" target={"_blank"}>
-            <Button type="link" style={{ color: "#ffffff" }} icon={<QuestionCircleOutlined />}>
-              FAQ
-            </Button>
-          </a>
-        </div>
-        <div>
-          {getFeature(FEATURES.INSIDE_FEATURE) && (
-            <Button
-              type="link"
-              style={{ color: "#ffffff" }}
-              icon={<QuestionCircleOutlined />}
-              onClick={() => {
-                window.open("https://archguard.org/", "_blank");
-              }}
-            >
-              {formatMessage({ id: "OPERATION_DOCUMENT" })}
-            </Button>
-          )}
-          <span className="version-info">{version}</span>
+          <span className="version-info">Version: {version}</span>
         </div>
       </div>
     </div>
