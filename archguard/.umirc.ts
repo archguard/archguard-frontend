@@ -24,7 +24,7 @@ export default defineConfig({
   lessLoader: { javascriptEnabled: true },
   proxy: {
     "/api": {
-      target: "https://archguard.dts.plus/",
+      target: "http://localhost:8080",
       changeOrigin: true,
       secure: false,
     },
