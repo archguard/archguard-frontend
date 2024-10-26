@@ -4,13 +4,12 @@ import useSystemList from "@/store/global-cache-state/useSystemList";
 import { Select } from "antd";
 import { storage } from "@/store/storage/sessionStorage";
 import { useIntl } from "@@/plugin-locale/localeExports";
-import { useParams } from "umi";
 
 const CodeAnalysis = () => {
   const { formatMessage } = useIntl();
   const [systemInfo] = useSystemList();
   const [isInChanging, setIsInChanging] = useState(false);
-  const [systemId, setSystemId] = useState(useParams().systemId);
+  const [id, setId] = useState<number | undefined>(undefined);
 
   const onSystemChange = useCallback((index: number) => {
     setIsInChanging(false)
@@ -19,13 +18,13 @@ const CodeAnalysis = () => {
       storage.setSystemId(system.id);
       storage.setSystemLanguage(system.language);
 
-      setSystemId(system.id)
+      setId(system.id as any)
       // todo: is a dirty fix for old code which no fetch system id
       setTimeout(() => {
         setIsInChanging(true)
       }, 50)
     }
-  }, [setIsInChanging]);
+  }, []);
 
   return (
     <div>
@@ -48,7 +47,7 @@ const CodeAnalysis = () => {
               </Select.Option>
             )) }
           </Select>
-          { isInChanging && systemId && <Dependence withRouter={ false } systemId={systemId} /> }
+          { isInChanging && id && <Dependence withRouter={ false } systemId={id} /> }
         </>
       }
     </div>

@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import { Button, Menu, MenuProps, Modal } from "antd";
 import { setLocale, useIntl } from "@@/plugin-locale/localeExports";
-import {
-  GlobalOutlined,
-  QuestionCircleOutlined
-} from "@ant-design/icons";
+import { GlobalOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 import { FEATURES, getFeature } from "@/components/Layouts/subSystem/SubSystemHeader";
-import Help from "@/components/Layouts/main/help/Help";
 import { history } from 'umi';
 
 import "./MainLayout.less";
 import "antd/dist/antd.less";
 
-const pkg = require('../../../../package.json');
+import pkg from "../../../../package.json";
 
 export default function MainHeader(props: any) {
   const { formatMessage } = useIntl();
@@ -74,7 +70,9 @@ export default function MainHeader(props: any) {
               type="link"
               style={{ color: "#ffffff" }}
               icon={<QuestionCircleOutlined />}
-              onClick={() => setHelpModalVisible(true)}
+              onClick={() => {
+                window.open("https://archguard.org/", "_blank");
+              }}
             >
               {formatMessage({ id: "OPERATION_DOCUMENT" })}
             </Button>
@@ -82,17 +80,6 @@ export default function MainHeader(props: any) {
           <span className="version-info">{version}</span>
         </div>
       </div>
-
-      <Modal
-        onCancel={() => setHelpModalVisible(false)}
-        width={1300}
-        footer={null}
-        maskClosable={true}
-        centered
-        visible={helpModalVisible}
-      >
-        <Help />
-      </Modal>
     </div>
   );
 }

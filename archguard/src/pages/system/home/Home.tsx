@@ -14,7 +14,6 @@ import { storage } from "@/store/storage/sessionStorage";
 import useSystemList from "@/store/global-cache-state/useSystemList";
 import SystemCard from "./components/SystemCard";
 import SystemInfoForm from "./components/SystemInfoForm";
-import Help from "../../../components/Layouts/main/help/Help";
 import { useIntl } from "@@/plugin-locale/localeExports";
 import newGithubIssueUrl from "new-github-issue-url";
 
@@ -26,11 +25,9 @@ const Home = () => {
   const [systemList, loadSystemList] = useSystemList();
   const [systemInfoList, setSystemInfoList] = useState<SystemInfo[]>([]);
   const [modalVisible, setModalVisible] = useState(false);
-  const [helpModalVisible, setHelpModalVisible] = useState(false);
   const [currentSystemInfo, setCurrentSystemInfo] = useState<SystemInfo>();
   const [current, setCurrent] = useState(0);
   const [currentAction, setCurrentAction] = useState('');
-  const [currentLanguage, setCurrentLanguage] = useState('zh-CN');
 
   useMount(() => {
     storage.clear();
@@ -229,17 +226,6 @@ ${log}
           current={ current }
           currentAction={ currentAction }
         />
-      </Modal>
-
-      <Modal
-        onCancel={ () => setHelpModalVisible(false) }
-        width={ 1300 }
-        footer={ null }
-        maskClosable={ true }
-        centered
-        visible={ helpModalVisible }
-      >
-        <Help/>
       </Modal>
     </div>
   );
