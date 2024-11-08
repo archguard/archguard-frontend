@@ -202,7 +202,7 @@ ${log}
       <Modal
         centered
         maskClosable={ false }
-        visible={ modalVisible }
+        open={ modalVisible }
         onCancel={ onCancel }
         onOk={ onSubmit }
         destroyOnClose={ true }

@@ -58,7 +58,7 @@ function ModuleConfigModal(props: ModuleConfigModalProps) {
       width={800}
       title={title}
       onCancel={onClose}
-      visible={visible}
+      open={visible}
       onOk={onOk}
       destroyOnClose={true}
     >
