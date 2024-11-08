@@ -101,6 +101,8 @@ export function transformCodeTreeToCascaderOptions(
       children = children.concat(classChildren);
     }
 
+    children.sort((a, b) => a.label.localeCompare(b.label));
+
     return {
       label: pkg.name,
       value: pkg.name,
@@ -133,6 +135,8 @@ export function transformCodeTreeToCascaderOptions(
 
         treeNodes = treeNodes.concat(classChildren);
       }
+
+      treeNodes.sort((a, b) => a.label.localeCompare(b.label));
       return {
         [tree.name]: toClass ? treeNodes : clearUndefinedChildren(treeNodes!),
       };
