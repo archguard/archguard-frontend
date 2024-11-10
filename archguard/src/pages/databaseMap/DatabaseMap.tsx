@@ -64,9 +64,8 @@ const DatabaseMap = () => {
             onChange={(index) => onSystemChange(index)}
             options={
               systemInfo?.value!.map((item) => ({
-                disabled: item.scanned !== "SCANNED",
                 key: `system-${item.id}`,
-                label: item.systemName,
+                label: item.systemName + (item.scanned !== "SCANNED" ? " (未完成扫描)" : ""),
                 value: item.id,
               })) as any[]
             }
