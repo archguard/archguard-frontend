@@ -1,6 +1,5 @@
+import React, { useEffect, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
-import { useEffect, useState } from "react";
-import React from 'react';
 import { useIntl } from "@@/plugin-locale/localeExports";
 
 interface DatamapSankeyProps {
@@ -10,139 +9,159 @@ interface DatamapSankeyProps {
 const DatamapSankey = (props: DatamapSankeyProps) => {
   const { formatMessage } = useIntl();
   const [dataSource] = useState(props.dataSource);
-  const [options, setOptions] = useState(null as any)
+  const [options, setOptions] = useState(null as any);
 
-  useEffect(() => {
-    if (!dataSource) {
-      return
+  // Detect cycles in the graph using DFS
+  const detectCycles = (graph: Map<string, Set<string>>, start: string): string[] => {
+    const visited = new Set<string>();
+    const path = new Set<string>();
+    const cycles: string[] = [];
+
+    const dfs = (node: string): boolean => {
+      visited.add(node);
+      path.add(node);
+
+      const neighbors = graph.get(node) || new Set();
+      for (const neighbor of neighbors) {
+        if (!visited.has(neighbor)) {
+          if (dfs(neighbor)) {
+            cycles.push(`${node}->${neighbor}`);
+          }
+        } else if (path.has(neighbor)) {
+          cycles.push(`${node}->${neighbor}`);
+          return true;
+        }
+      }
+
+      path.delete(node);
+      return false;
+    };
+
+    dfs(start);
+    return cycles;
+  };
+
+  // Build directed graph and remove cycles
+  const buildAcyclicGraph = (nodes: Set<string>, links: Map<string, number>) => {
+    // Build adjacency list
+    const graph = new Map<string, Set<string>>();
+    for (const [link, _] of links) {
+      const [source, target] = link.split('->');
+      if (!graph.has(source)) {
+        graph.set(source, new Set());
+      }
+      graph.get(source)?.add(target);
     }
 
-    let data: any = {
-      "nodes": [],
-      "links": []
-    }
-
-    let nodeMap: any = {}
-    let linkMap: any = {}
-    for (let datum of dataSource) {
-      let tables = datum.tables.split(",")
-      for (let table of tables) {
-        let nodeName = datum.className;
-        if (!nodeMap[nodeName]) {
-          nodeMap[nodeName] = {}
-        }
-        let packageName = datum.packageName;
-        if (!nodeMap[packageName]) {
-          nodeMap[packageName] = {}
-        }
-        if (!nodeMap[table]) {
-          nodeMap[table] = {}
-        }
-
-        let linkName = datum.className + "->" + table
-        let codeLinkName = datum.packageName + "->" + datum.className
-        if (!linkMap[linkName]) {
-          linkMap[linkName] = 1
-        } else  {
-          linkMap[linkName] ++
-        }
-
-        if (!linkMap[codeLinkName]) {
-          linkMap[codeLinkName] = 1
-        } else  {
-          linkMap[codeLinkName] ++
-        }
-
+    // Detect and remove cycles
+    const processedLinks = new Map(links);
+    for (const node of nodes) {
+      const cycles = detectCycles(graph, node);
+      for (const cycle of cycles) {
+        processedLinks.delete(cycle);
       }
     }
 
-    Object.keys(nodeMap).forEach((key) => {
-      data.nodes.push({
-        name: key
-      })
-    })
+    return processedLinks;
+  };
 
-    for (let key in linkMap) {
-      let splits = key.split("->");
-      data.links.push({
-        source: splits[0],
-        target: splits[1],
-        value: linkMap[key]
-      })
+  useEffect(() => {
+    if (!dataSource) {
+      return;
     }
 
+    const nodes = new Set<string>();
+    const links = new Map<string, number>();
+
+    // Process nodes and links
+    for (const datum of dataSource) {
+      const tables = datum.tables.split(",");
+      const className = datum.className;
+      const packageName = datum.packageName;
+
+      // Add nodes
+      nodes.add(className);
+      nodes.add(packageName);
+      tables.forEach(table => nodes.add(table));
+
+      // Process links
+      for (const table of tables) {
+        const classToTable = `${className}->${table}`;
+        const packageToClass = `${packageName}->${className}`;
+
+        links.set(classToTable, (links.get(classToTable) || 0) + 1);
+        links.set(packageToClass, (links.get(packageToClass) || 0) + 1);
+      }
+    }
+
+    // Remove cycles and build final data structure
+    const acyclicLinks = buildAcyclicGraph(nodes, links);
+    const data = {
+      nodes: Array.from(nodes).map(name => ({ name })),
+      links: Array.from(acyclicLinks.entries()).map(([key, value]) => {
+        const [source, target] = key.split('->');
+        return { source, target, value };
+      })
+    };
+
     setOptions({
-      // @ts-ignore
       title: {
-        text: formatMessage({ id: 'DATAMAP_DEP_CALL_MAP'})
+        text: formatMessage({ id: 'DATAMAP_DEP_CALL_MAP' })
       },
       tooltip: {
         trigger: 'item',
-        triggerOn: 'mousemove'
-      },
-      series: [
-        {
-          type: 'sankey',
-          data: data.nodes,
-          links: data.links,
-          emphasis: {
-            focus: 'adjacency'
-          },
-          levels: [
-            {
-              depth: 0,
-              itemStyle: {
-                color: '#fbb4ae'
-              },
-              lineStyle: {
-                color: 'source',
-                opacity: 0.6
-              }
-            },
-            {
-              depth: 1,
-              itemStyle: {
-                color: '#b3cde3'
-              },
-              lineStyle: {
-                color: 'source',
-                opacity: 0.6
-              }
-            },
-            {
-              depth: 2,
-              itemStyle: {
-                color: '#ccebc5'
-              },
-              lineStyle: {
-                color: 'source',
-                opacity: 0.6
-              }
-            },
-            {
-              depth: 3,
-              itemStyle: {
-                color: '#decbe4'
-              },
-              lineStyle: {
-                color: 'source',
-                opacity: 0.6
-              }
-            }
-          ],
-          lineStyle: {
-            curveness: 0.5
+        triggerOn: 'mousemove',
+        formatter: ({ data }: any) => {
+          if (data.source && data.target) {
+            return `${data.source} → ${data.target}<br/>Value: ${data.value}`;
           }
+          return data.name;
         }
-      ]
-    })
-  }, [dataSource, setOptions])
+      },
+      series: [{
+        type: 'sankey',
+        data: data.nodes,
+        links: data.links,
+        emphasis: {
+          focus: 'adjacency'
+        },
+        levels: [
+          {
+            depth: 0,
+            itemStyle: { color: '#fbb4ae' },
+            lineStyle: { color: 'source', opacity: 0.6 }
+          },
+          {
+            depth: 1,
+            itemStyle: { color: '#b3cde3' },
+            lineStyle: { color: 'source', opacity: 0.6 }
+          },
+          {
+            depth: 2,
+            itemStyle: { color: '#ccebc5' },
+            lineStyle: { color: 'source', opacity: 0.6 }
+          },
+          {
+            depth: 3,
+            itemStyle: { color: '#decbe4' },
+            lineStyle: { color: 'source', opacity: 0.6 }
+          }
+        ],
+        lineStyle: {
+          curveness: 0.5
+        }
+      }]
+    });
+  }, [dataSource, setOptions, formatMessage]);
 
   return (
-    options && <ReactECharts
-      option={ options }
-      style={ { height: '960px', width: '100%' } }/>
-  )
-}
+    options && (
+      <ReactECharts
+        option={options}
+        style={{ height: '960px', width: '100%' }}
+      />
+    )
+  );
+};
 
 export default DatamapSankey;
