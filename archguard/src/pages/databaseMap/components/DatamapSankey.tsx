@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { useIntl } from "@@/plugin-locale/localeExports";
+import * as echarts from 'echarts';
 
 interface DatamapSankeyProps {
   dataSource: any[]
@@ -10,6 +11,7 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
   const { formatMessage } = useIntl();
   const [dataSource] = useState(props.dataSource);
   const [options, setOptions] = useState(null as any);
+  const chartRef = useRef<any>(null);
 
   // Detect cycles in the graph using DFS
   const detectCycles = (graph: Map<string, Set<string>>, start: string): string[] => {
@@ -43,7 +45,6 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
 
   // Build directed graph and remove cycles
   const buildAcyclicGraph = (nodes: Set<string>, links: Map<string, number>) => {
-    // Build adjacency list
     const graph = new Map<string, Set<string>>();
     for (const [link, _] of links) {
       const [source, target] = link.split('->');
@@ -53,7 +54,6 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
       graph.get(source)?.add(target);
     }
 
-    // Detect and remove cycles
     const processedLinks = new Map(links);
     for (const node of nodes) {
       const cycles = detectCycles(graph, node);
@@ -79,12 +79,10 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
       const className = datum.className;
       const packageName = datum.packageName;
 
-      // Add nodes
       nodes.add(className);
       nodes.add(packageName);
-      tables.forEach(table => nodes.add(table));
+      tables.forEach((table: string) => nodes.add(table));
 
-      // Process links
       for (const table of tables) {
         const classToTable = `${className}->${table}`;
         const packageToClass = `${packageName}->${className}`;
@@ -118,13 +116,26 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
           return data.name;
         }
       },
+      // 添加工具栏
+      toolbox: {
+        feature: {
+          dataZoom: {
+            yAxisIndex: 'none'
+          },
+          restore: {},
+          saveAsImage: {}
+        }
+      },
       series: [{
         type: 'sankey',
         data: data.nodes,
         links: data.links,
+        draggable: true, // 启用节点拖拽
         emphasis: {
           focus: 'adjacency'
         },
+        nodeAlign: 'left', // 节点对齐方式
+        layoutIterations: 32, // 布局迭代次数，提高布局质量
         levels: [
           {
             depth: 0,
@@ -154,11 +165,59 @@ const DatamapSankey = (props: DatamapSankeyProps) => {
     });
   }, [dataSource, setOptions, formatMessage]);
 
+  // 在组件挂载后注册事件监听器
+  useEffect(() => {
+    const chart = chartRef.current?.getEchartsInstance();
+    if (chart) {
+      // 监听节点拖动事件
+      chart.on('dragstart', function (params: any) {
+        chart.dispatchAction({
+          type: 'sankeyFocusNodeAdjacency',
+          dataIndex: params.dataIndex
+        });
+      });
+
+      chart.on('dragend', function () {
+        chart.dispatchAction({
+          type: 'sankeyUnfocusNodeAdjacency'
+        });
+      });
+
+      // 双击恢复布局
+      chart.on('dblclick', function () {
+        chart.setOption(options);
+      });
+
+      const zr = chart.getZr();
+      chart.on('graphRoam', (e: { zoom: any; }) => {
+        const zoom = e.zoom;
+        if (zoom) {
+          var els = zr.storage.getDisplayList();
+          els.forEach((el: { style: { opacity: number; }; attr: (arg0: string, arg1: any[]) => void; }) => {
+            if (el.style.opacity > 0) {
+              el.attr('scale', [zoom, zoom]);
+            }
+          });
+        }
+      })
+    }
+
+    return () => {
+      if (chart) {
+        chart.off('dragstart');
+        chart.off('dragend');
+        chart.off('dblclick');
+      }
+    };
+  }, [options]);
+
   return (
     options && (
       <ReactECharts
+        ref={chartRef}
         option={options}
         style={{ height: '960px', width: '100%' }}
+        opts={{ renderer: 'canvas' }}
       />
     )
   );
