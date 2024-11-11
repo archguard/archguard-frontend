@@ -9,7 +9,7 @@ interface DatamapSankeyProps {
   dataSource: any[]
 }
 
-const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
+const D3DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
   const { formatMessage } = useIntl()
   const svgRef = useRef<SVGSVGElement>(null)
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
@@ -95,15 +95,13 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
 
     // Remove cycles and build final data structure
     const acyclicLinks = buildAcyclicGraph(nodes, links)
-    let nodesArray = Array.from(nodes);
+    let nodesArray = Array.from(nodes)
     const data = {
       nodes: nodesArray.map(name => ({ name })),
       links: Array.from(acyclicLinks.entries()).map(([key, value]) => {
         const [source, target] = key.split('->')
-        // return { source, target, value }
-        // get index of source and target
-        let sourceIndex = nodesArray.indexOf(source);
-        let targetIndex = nodesArray.indexOf(target);
+        let sourceIndex = nodesArray.indexOf(source)
+        let targetIndex = nodesArray.indexOf(target)
         return { source: sourceIndex, target: targetIndex, value }
       })
     }
@@ -114,6 +112,21 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
     const width = dimensions.width
     const height = dimensions.height
 
+    // Create zoom behavior
+    const zoom = d3.zoom()
+      .scaleExtent([0.1, 4])
+      .on('zoom', (event) => {
+        container.attr('transform', event.transform)
+      })
+
+    // Apply zoom behavior to svg
+    svg.call(zoom as any)
+      .on('dblclick.zoom', null) // Disable double-click zoom
+
+    // Create a container group for all elements
+    const container = svg.append('g')
+      .attr('class', 'container')
+
     const sankeyGenerator = sankey<SankeyNode, SankeyLink>()
       .nodeWidth(15)
       .nodePadding(10)
@@ -123,8 +136,9 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
 
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10)
 
-    // Draw links
-    svg.append('g')
+    // Draw links in container
+    container.append('g')
+      .attr('class', 'links')
       .selectAll('path')
       .data(sankeyLinks)
       .enter()
@@ -135,8 +149,9 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
       .attr('stroke-opacity', 0.4)
       .attr('stroke-width', (d: any) => Math.max(1, d.width))
 
-    // Draw nodes
-    const node = svg.append('g')
+    // Draw nodes in container
+    const node = container.append('g')
+      .attr('class', 'nodes')
       .selectAll('rect')
       .data(sankeyNodes)
       .enter()
@@ -148,8 +163,9 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
       .attr('fill', (d: any) => colorScale(d.name) as string)
       .attr('opacity', 0.8)
 
-    // Add node labels
-    svg.append('g')
+    // Add node labels in container
+    container.append('g')
+      .attr('class', 'labels')
       .selectAll('text')
       .data(sankeyNodes)
       .enter()
@@ -162,8 +178,9 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
       .attr('font-size', '10px')
       .attr('fill', '#000')
 
-    // Add title
+    // Add title (fixed position, outside of container)
     svg.append('text')
+      .attr('class', 'title')
       .attr('x', width / 2)
       .attr('y', 20)
       .attr('text-anchor', 'middle')
@@ -171,7 +188,7 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
       .attr('font-weight', 'bold')
       .text(formatMessage({ id: 'DATAMAP_DEP_CALL_MAP' }))
 
-    // Add tooltips
+    // Add tooltip
     const tooltip = d3.select('body').append('div')
       .attr('class', 'tooltip')
       .style('opacity', 0)
@@ -180,14 +197,87 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
       .style('border', '1px solid #ddd')
       .style('padding', '10px')
       .style('border-radius', '5px')
+      .style('pointer-events', 'none')
 
+    // Add zoom controls
+    const zoomControls = svg.append('g')
+      .attr('class', 'zoom-controls')
+      .attr('transform', `translate(20, ${height - 60})`)
+
+    // Zoom in button
+    zoomControls.append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', 30)
+      .attr('height', 30)
+      .attr('fill', '#f0f0f0')
+      .attr('stroke', '#999')
+      .style('cursor', 'pointer')
+      .on('click', () => {
+        svg.transition()
+          .duration(750)
+          .call(zoom.scaleBy as any, 1.2)
+      })
+
+    zoomControls.append('text')
+      .attr('x', 15)
+      .attr('y', 20)
+      .attr('text-anchor', 'middle')
+      .text('+')
+      .style('pointer-events', 'none')
+
+    // Zoom out button
+    zoomControls.append('rect')
+      .attr('x', 0)
+      .attr('y', 35)
+      .attr('width', 30)
+      .attr('height', 30)
+      .attr('fill', '#f0f0f0')
+      .attr('stroke', '#999')
+      .style('cursor', 'pointer')
+      .on('click', () => {
+        svg.transition()
+          .duration(750)
+          .call(zoom.scaleBy as any, 0.8)
+      })
+
+    zoomControls.append('text')
+      .attr('x', 15)
+      .attr('y', 55)
+      .attr('text-anchor', 'middle')
+      .text('-')
+      .style('pointer-events', 'none')
+
+    // Reset button
+    zoomControls.append('rect')
+      .attr('x', 35)
+      .attr('y', 0)
+      .attr('width', 50)
+      .attr('height', 30)
+      .attr('fill', '#f0f0f0')
+      .attr('stroke', '#999')
+      .style('cursor', 'pointer')
+      .on('click', () => {
+        svg.transition()
+          .duration(750)
+          .call(zoom.transform as any, d3.zoomIdentity)
+      })
+
+    zoomControls.append('text')
+      .attr('x', 60)
+      .attr('y', 20)
+      .attr('text-anchor', 'middle')
+      .text('Reset')
+      .style('pointer-events', 'none')
+
+    // Event handlers
     node.on('mouseover', (event: MouseEvent, d: any) => {
       tooltip.transition()
         .duration(200)
         .style('opacity', .9)
       tooltip.html(`${d.name}`)
-        .style('left', (event.pageX + 10) + 'px')
-        .style('top', (event.pageY - 28) + 'px')
+        .style('left', `${event.pageX + 10}px`)
+        .style('top', `${event.pageY - 28}px`)
     })
       .on('mouseout', () => {
         tooltip.transition()
@@ -195,14 +285,14 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
           .style('opacity', 0)
       })
 
-    svg.selectAll('path')
+    container.selectAll('path')
       .on('mouseover', (event: MouseEvent, d: any) => {
         tooltip.transition()
           .duration(200)
           .style('opacity', .9)
         tooltip.html(`${d.source.name} → ${d.target.name}<br/>Value: ${d.value}`)
-          .style('left', (event.pageX + 10) + 'px')
-          .style('top', (event.pageY - 28) + 'px')
+          .style('left', `${event.pageX + 10}px`)
+          .style('top', `${event.pageY - 28}px`)
       })
       .on('mouseout', () => {
         tooltip.transition()
@@ -233,4 +323,4 @@ const DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
   )
 }
 
-export default DatamapSankey
+export default D3DatamapSankey

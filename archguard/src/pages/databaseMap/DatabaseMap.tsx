@@ -6,6 +6,7 @@ import { queryDatamap } from "@/api/datamap/datamap";
 import { useParams } from "umi";
 import { useIntl } from "@@/plugin-locale/localeExports";
 import DatamapSankey from "@/pages/databaseMap/components/DatamapSankey";
+import D3DatamapSankey from "@/pages/databaseMap/components/D3DatamapSankey";
 import { ColumnsType } from "antd/lib/table/interface";
 
 const DatabaseMap = () => {
@@ -37,7 +38,7 @@ const DatabaseMap = () => {
   }
 
   const unmapColumns: ColumnsType['columns'] = [
-    { title: "packageName", key: "packageName", dataIndex: "packageName",  sorter: sortFunc("packageName") },
+    { title: "packageName", key: "packageName", dataIndex: "packageName", sorter: sortFunc("packageName") },
     { title: "className", key: "className", dataIndex: "className", sorter: sortFunc("className") },
     { title: "functionName", key: "functionName", dataIndex: "functionName", sorter: sortFunc("functionName") },
     { title: "tables", key: "tables", dataIndex: "tables", sorter: sortFunc("tables") },
@@ -49,7 +50,7 @@ const DatabaseMap = () => {
         <div>
           <div>
             <p>
-              {formatMessage({ id: "DATABASE_MAP_TIPS" })} <br />
+              {formatMessage({ id: "DATABASE_MAP_TIPS" })} <br/>
               {formatMessage({ id: "ADD_NEW_FRAMEWORK" })}
               <a href="https://github.com/archguard/archguard" target={"_blank"} rel="noreferrer">
                 https://github.com/archguard/archguard
@@ -70,8 +71,9 @@ const DatabaseMap = () => {
               })) as any[]
             }
           />
-          {isInChanging && systemId && <DatamapSankey dataSource={dbRecords} />}
-          {isInChanging && systemId && <Table dataSource={dbRecords} columns={unmapColumns} />}
+          {isInChanging && systemId && dbRecords.length < 1000 && <DatamapSankey dataSource={dbRecords}/>}
+          {isInChanging && systemId && dbRecords.length >= 1000 && <D3DatamapSankey dataSource={dbRecords}/>}
+          {isInChanging && systemId && <Table dataSource={dbRecords} columns={unmapColumns}/>}
         </div>
       )}
     </div>
