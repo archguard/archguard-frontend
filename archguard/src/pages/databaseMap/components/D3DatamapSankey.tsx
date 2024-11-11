@@ -75,18 +75,18 @@ const D3DatamapSankey: React.FC<DatamapSankeyProps> = ({ dataSource }) => {
     // Process nodes and links
     for (const datum of dataSource) {
       const tables = datum.tables.split(',')
-      const className = datum.className
-      const packageName = datum.packageName
+      const functionName = datum.functionName
+      const packageName = datum.packageName + "." + datum.className
 
       if (tables.length === 0) continue
 
-      nodes.add(className)
+      nodes.add(functionName)
       nodes.add(packageName)
       tables.forEach((table: string) => nodes.add(table))
 
       for (const table of tables) {
-        const classToTable = `${className}->${table}`
-        const packageToClass = `${packageName}->${className}`
+        const classToTable = `${functionName}->${table}`
+        const packageToClass = `${packageName}->${functionName}`
 
         links.set(classToTable, (links.get(classToTable) || 0) + 1)
         links.set(packageToClass, (links.get(packageToClass) || 0) + 1)
